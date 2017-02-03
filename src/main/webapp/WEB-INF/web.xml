@@ -88,7 +88,13 @@
     <!-- 404 error page -->
      <error-page>
         <error-code>404</error-code>
-        <location>/404.xhtml</location>
+        <location>/errorpage/404.xhtml</location>
     </error-page>
     <!-- 404 error page -->
+    <!-- 500 error page -->
+     <error-page>
+        <error-code>500</error-code>
+        <location>/errorpage/500.xhtml</location>
+    </error-page>
+    <!-- 500 error page -->
 </web-app>

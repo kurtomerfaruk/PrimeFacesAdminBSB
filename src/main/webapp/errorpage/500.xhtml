@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+
+        <title>Sign In | Bootstrap Based Admin Template - Material Design</title>
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css"/>
+
+        <!-- Bootstrap Core Css -->
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+
+        <!-- Waves Effect Css -->
+        <h:outputStylesheet library="css" name="waves.css"/>
+
+        <!-- Animation Css -->
+        <h:outputStylesheet library="css" name="animate.css"/>
+
+        <!-- Custom Css -->
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputStylesheet library="css" name="materialize.css"/>
+
+    </h:head>
+
+    <h:body class="four-zero-four">
+
+        <div class="four-zero-four-container">
+            <div class="error-code">500</div>
+            <div class="error-message">Internal Server Error</div>
+            <div class="button-place">
+                <a href="#{request.contextPath}/login.xhtml" class="btn bg-pink btn-lg waves-effect">GO TO HOMEPAGE</a>
+            </div>
+        </div>
+
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+
+        <!-- Bootstrap Core Js -->
+        <h:outputScript library="scripts" name="bootstrap.js"/>
+
+        <!-- Waves Effect Plugin Js -->
+        <h:outputScript library="scripts" name="waves.js"/>
+
+        <!-- Validation Plugin Js -->
+        <!--<script src="../../plugins/jquery-validation/jquery.validate.js"></script>-->
+        <h:outputScript library="scripts" name="jquery.validate.js"/>
+
+        <!-- Custom Js -->
+        <h:outputScript library="scripts" name="admin.js"/>
+        <h:outputScript library="scripts" name="pages/examples/sign-in.js"/>
+
+    </h:body>
+
+</html>
