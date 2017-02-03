@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductproductphotoEditDlg" widgetVar="ProductproductphotoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductproductphotoTitle}" closeOnEscape="true">
+
+            <h:form id="ProductproductphotoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productproductphotoController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductproductphotoLabel_productproductphotoPK_productID}" for="productproductphotoPK_productID" />
+                        <h:outputText id="productproductphotoPK_productID" value="#{productproductphotoController.selected.productproductphotoPK.productID}" />
+
+
+                        <h:outputLabel value="#{messages.EditProductproductphotoLabel_productproductphotoPK_productPhotoID}" for="productproductphotoPK_productPhotoID" />
+                        <h:outputText id="productproductphotoPK_productPhotoID" value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}" />
+
+                        <p:outputLabel value="#{messages.EditProductproductphotoLabel_primary}" for="primary" />
+                        <p:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}"/>
+
+                        <p:outputLabel value="#{messages.EditProductproductphotoLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productproductphotoController.selected.modifiedDate}" title="#{messages.EditProductproductphotoTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productproductphotoController.save}" value="#{messages.Save}" update="display,:ProductproductphotoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductproductphotoEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductproductphotoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

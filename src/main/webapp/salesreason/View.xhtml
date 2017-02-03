@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesreasonViewDlg" widgetVar="SalesreasonViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesreasonTitle}" closeOnEscape="true">
+
+            <h:form id="SalesreasonViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salesreasonController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSalesreasonLabel_salesReasonID}"/>
+                        <h:outputText value="#{salesreasonController.selected.salesReasonID}" title="#{messages.ViewSalesreasonTitle_salesReasonID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesreasonLabel_name}"/>
+                        <h:outputText value="#{salesreasonController.selected.name}" title="#{messages.ViewSalesreasonTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewSalesreasonLabel_reasonType}"/>
+                        <h:outputText value="#{salesreasonController.selected.reasonType}" title="#{messages.ViewSalesreasonTitle_reasonType}"/>
+
+                        <h:outputText value="#{messages.ViewSalesreasonLabel_modifiedDate}"/>
+                        <h:outputText value="#{salesreasonController.selected.modifiedDate}" title="#{messages.ViewSalesreasonTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesreasonViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

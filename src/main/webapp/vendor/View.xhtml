@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VendorViewDlg" widgetVar="VendorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewVendorTitle}" closeOnEscape="true">
+
+            <h:form id="VendorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{vendorController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewVendorLabel_vendorID}"/>
+                        <h:outputText value="#{vendorController.selected.vendorID}" title="#{messages.ViewVendorTitle_vendorID}"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_accountNumber}"/>
+                        <h:outputText value="#{vendorController.selected.accountNumber}" title="#{messages.ViewVendorTitle_accountNumber}"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_name}"/>
+                        <h:outputText value="#{vendorController.selected.name}" title="#{messages.ViewVendorTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_creditRating}"/>
+                        <h:outputText value="#{vendorController.selected.creditRating}" title="#{messages.ViewVendorTitle_creditRating}"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_preferredVendorStatus}"/>
+                        <h:selectBooleanCheckbox id="preferredVendorStatus" value="#{vendorController.selected.preferredVendorStatus}" title="#{messages.EditVendorTitle_preferredVendorStatus}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_preferredVendorStatus}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_activeFlag}"/>
+                        <h:selectBooleanCheckbox id="activeFlag" value="#{vendorController.selected.activeFlag}" title="#{messages.EditVendorTitle_activeFlag}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_activeFlag}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_purchasingWebServiceURL}"/>
+                        <h:outputText value="#{vendorController.selected.purchasingWebServiceURL}" title="#{messages.ViewVendorTitle_purchasingWebServiceURL}"/>
+
+                        <h:outputText value="#{messages.ViewVendorLabel_modifiedDate}"/>
+                        <h:outputText value="#{vendorController.selected.modifiedDate}" title="#{messages.ViewVendorTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('VendorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

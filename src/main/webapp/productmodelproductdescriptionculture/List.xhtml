@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductmodelproductdescriptioncultureListForm">
+
+        <p:panel header="#{messages.ListProductmodelproductdescriptioncultureTitle}">
+            <p:contextMenu id="ProductmodelproductdescriptioncultureDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductmodelproductdescriptioncultureListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductmodelproductdescriptioncultureListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductmodelproductdescriptioncultureListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductmodelproductdescriptioncultureListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productmodelproductdescriptioncultureController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productmodelproductdescriptioncultureController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productmodelproductdescriptioncultureController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productmodelproductdescriptionculturePK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductmodelproductdescriptioncultureDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductmodelproductdescriptioncultureDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductmodelproductdescriptioncultureListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productmodelproductdescriptionculturePK.productModelID}" filterBy="#{item.productmodelproductdescriptionculturePK.productModelID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productModelID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productmodelproductdescriptionculturePK.productModelID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productmodelproductdescriptionculturePK.productDescriptionID}" filterBy="#{item.productmodelproductdescriptionculturePK.productDescriptionID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productmodelproductdescriptionculturePK.productDescriptionID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productmodelproductdescriptionculturePK.cultureID}" filterBy="#{item.productmodelproductdescriptionculturePK.cultureID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_cultureID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productmodelproductdescriptionculturePK.cultureID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelproductdescriptioncultureTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productmodelproductdescriptioncultureController.prepareCreate}" update=":ProductmodelproductdescriptioncultureCreateForm" oncomplete="PF('ProductmodelproductdescriptioncultureCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductmodelproductdescriptioncultureViewForm" oncomplete="PF('ProductmodelproductdescriptioncultureViewDialog').show()" disabled="#{empty productmodelproductdescriptioncultureController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductmodelproductdescriptioncultureEditForm" oncomplete="PF('ProductmodelproductdescriptioncultureEditDialog').show()" disabled="#{empty productmodelproductdescriptioncultureController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productmodelproductdescriptioncultureController.delete}" update=":growl,datalist" disabled="#{empty productmodelproductdescriptioncultureController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

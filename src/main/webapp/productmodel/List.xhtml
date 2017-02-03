@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductmodelListForm">
+
+        <p:panel header="#{messages.ListProductmodelTitle}">
+            <p:contextMenu id="ProductmodelDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductmodelListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductmodelListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductmodelListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductmodelListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productmodelController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productmodelController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productmodelController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productModelID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductmodelDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductmodelDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductmodelListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productModelID}" filterBy="#{item.productModelID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelTitle_productModelID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productModelID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelTitle_name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.catalogDescription}" filterBy="#{item.catalogDescription}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelTitle_catalogDescription}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.catalogDescription}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.instructions}" filterBy="#{item.instructions}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelTitle_instructions}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.instructions}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelTitle_rowguid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rowguid}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductmodelTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productmodelController.prepareCreate}" update=":ProductmodelCreateForm" oncomplete="PF('ProductmodelCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductmodelViewForm" oncomplete="PF('ProductmodelViewDialog').show()" disabled="#{empty productmodelController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductmodelEditForm" oncomplete="PF('ProductmodelEditDialog').show()" disabled="#{empty productmodelController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productmodelController.delete}" update=":growl,datalist" disabled="#{empty productmodelController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ShipmethodCreateDlg" widgetVar="ShipmethodCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateShipmethodTitle}" closeOnEscape="true">
+
+            <h:form id="ShipmethodCreateForm">
+
+                <h:panelGroup id="display" rendered="#{shipmethodController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateShipmethodLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{shipmethodController.selected.name}" title="#{messages.CreateShipmethodTitle_name}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateShipmethodLabel_shipBase}" for="shipBase" />
+                        <p:inputText id="shipBase" value="#{shipmethodController.selected.shipBase}" title="#{messages.CreateShipmethodTitle_shipBase}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_shipBase}"/>
+
+                        <p:outputLabel value="#{messages.CreateShipmethodLabel_shipRate}" for="shipRate" />
+                        <p:inputText id="shipRate" value="#{shipmethodController.selected.shipRate}" title="#{messages.CreateShipmethodTitle_shipRate}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_shipRate}"/>
+
+                        <p:outputLabel value="#{messages.CreateShipmethodLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{shipmethodController.selected.rowguid}" title="#{messages.CreateShipmethodTitle_rowguid}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateShipmethodLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{shipmethodController.selected.modifiedDate}" title="#{messages.CreateShipmethodTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{shipmethodController.saveNew}" value="#{messages.Save}" update="display,:ShipmethodListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ShipmethodCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ShipmethodCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

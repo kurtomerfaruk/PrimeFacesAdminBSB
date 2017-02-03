@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeedepartmenthistoryViewDlg" widgetVar="EmployeedepartmenthistoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewEmployeedepartmenthistoryTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeedepartmenthistoryViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{employeedepartmenthistoryController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_employeeID}"/>
+                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.employeeID}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_employeeID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_departmentID}"/>
+                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.departmentID}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_departmentID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_shiftID}"/>
+                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.shiftID}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_shiftID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_startDate}"/>
+                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.startDate}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_endDate}"/>
+                        <h:outputText value="#{employeedepartmenthistoryController.selected.endDate}" title="#{messages.ViewEmployeedepartmenthistoryTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_modifiedDate}"/>
+                        <h:outputText value="#{employeedepartmenthistoryController.selected.modifiedDate}" title="#{messages.ViewEmployeedepartmenthistoryTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('EmployeedepartmenthistoryViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

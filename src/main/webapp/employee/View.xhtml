@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeeViewDlg" widgetVar="EmployeeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewEmployeeTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{employeeController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_employeeID}"/>
+                        <h:outputText value="#{employeeController.selected.employeeID}" title="#{messages.ViewEmployeeTitle_employeeID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_nationalIDNumber}"/>
+                        <h:outputText value="#{employeeController.selected.nationalIDNumber}" title="#{messages.ViewEmployeeTitle_nationalIDNumber}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_contactID}"/>
+                        <h:outputText value="#{employeeController.selected.contactID}" title="#{messages.ViewEmployeeTitle_contactID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_loginID}"/>
+                        <h:outputText value="#{employeeController.selected.loginID}" title="#{messages.ViewEmployeeTitle_loginID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_managerID}"/>
+                        <h:outputText value="#{employeeController.selected.managerID}" title="#{messages.ViewEmployeeTitle_managerID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_title}"/>
+                        <h:outputText value="#{employeeController.selected.title}" title="#{messages.ViewEmployeeTitle_title}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_birthDate}"/>
+                        <h:outputText value="#{employeeController.selected.birthDate}" title="#{messages.ViewEmployeeTitle_birthDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_maritalStatus}"/>
+                        <h:outputText value="#{employeeController.selected.maritalStatus}" title="#{messages.ViewEmployeeTitle_maritalStatus}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_gender}"/>
+                        <h:outputText value="#{employeeController.selected.gender}" title="#{messages.ViewEmployeeTitle_gender}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_hireDate}"/>
+                        <h:outputText value="#{employeeController.selected.hireDate}" title="#{messages.ViewEmployeeTitle_hireDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_salariedFlag}"/>
+                        <h:selectBooleanCheckbox id="salariedFlag" value="#{employeeController.selected.salariedFlag}" title="#{messages.EditEmployeeTitle_salariedFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_salariedFlag}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_vacationHours}"/>
+                        <h:outputText value="#{employeeController.selected.vacationHours}" title="#{messages.ViewEmployeeTitle_vacationHours}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_sickLeaveHours}"/>
+                        <h:outputText value="#{employeeController.selected.sickLeaveHours}" title="#{messages.ViewEmployeeTitle_sickLeaveHours}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_currentFlag}"/>
+                        <h:selectBooleanCheckbox id="currentFlag" value="#{employeeController.selected.currentFlag}" title="#{messages.EditEmployeeTitle_currentFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_currentFlag}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_rowguid}"/>
+                        <h:outputText value="#{employeeController.selected.rowguid}" title="#{messages.ViewEmployeeTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeLabel_modifiedDate}"/>
+                        <h:outputText value="#{employeeController.selected.modifiedDate}" title="#{messages.ViewEmployeeTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('EmployeeViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

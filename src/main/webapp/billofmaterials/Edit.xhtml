@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BillofmaterialsEditDlg" widgetVar="BillofmaterialsEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditBillofmaterialsTitle}" closeOnEscape="true">
+
+            <h:form id="BillofmaterialsEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{billofmaterialsController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditBillofmaterialsLabel_billOfMaterialsID}" for="billOfMaterialsID" />
+                        <h:outputText id="billOfMaterialsID" value="#{billofmaterialsController.selected.billOfMaterialsID}" />
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_productAssemblyID}" for="productAssemblyID" />
+                        <p:inputText id="productAssemblyID" value="#{billofmaterialsController.selected.productAssemblyID}" title="#{messages.EditBillofmaterialsTitle_productAssemblyID}"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_componentID}" for="componentID" />
+                        <p:inputText id="componentID" value="#{billofmaterialsController.selected.componentID}" title="#{messages.EditBillofmaterialsTitle_componentID}" required="true" requiredMessage="#{messages.EditBillofmaterialsRequiredMessage_componentID}"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{billofmaterialsController.selected.startDate}" title="#{messages.EditBillofmaterialsTitle_startDate}" required="true" requiredMessage="#{messages.EditBillofmaterialsRequiredMessage_startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{billofmaterialsController.selected.endDate}" title="#{messages.EditBillofmaterialsTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_unitMeasureCode}" for="unitMeasureCode" />
+                        <p:inputText id="unitMeasureCode" value="#{billofmaterialsController.selected.unitMeasureCode}" title="#{messages.EditBillofmaterialsTitle_unitMeasureCode}" required="true" requiredMessage="#{messages.EditBillofmaterialsRequiredMessage_unitMeasureCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_BOMLevel}" for="BOMLevel" />
+                        <p:inputText id="BOMLevel" value="#{billofmaterialsController.selected.BOMLevel}" title="#{messages.EditBillofmaterialsTitle_BOMLevel}" required="true" requiredMessage="#{messages.EditBillofmaterialsRequiredMessage_BOMLevel}"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_perAssemblyQty}" for="perAssemblyQty" />
+                        <p:inputText id="perAssemblyQty" value="#{billofmaterialsController.selected.perAssemblyQty}" title="#{messages.EditBillofmaterialsTitle_perAssemblyQty}" required="true" requiredMessage="#{messages.EditBillofmaterialsRequiredMessage_perAssemblyQty}"/>
+
+                        <p:outputLabel value="#{messages.EditBillofmaterialsLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{billofmaterialsController.selected.modifiedDate}" title="#{messages.EditBillofmaterialsTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditBillofmaterialsRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{billofmaterialsController.save}" value="#{messages.Save}" update="display,:BillofmaterialsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BillofmaterialsEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('BillofmaterialsEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

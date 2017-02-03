@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SalestaxrateEditDlg" widgetVar="SalestaxrateEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalestaxrateTitle}" closeOnEscape="true">
+
+            <h:form id="SalestaxrateEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{salestaxrateController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditSalestaxrateLabel_salesTaxRateID}" for="salesTaxRateID" />
+                        <h:outputText id="salesTaxRateID" value="#{salestaxrateController.selected.salesTaxRateID}" />
+
+                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_stateProvinceID}" for="stateProvinceID" />
+                        <p:inputText id="stateProvinceID" value="#{salestaxrateController.selected.stateProvinceID}" title="#{messages.EditSalestaxrateTitle_stateProvinceID}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_stateProvinceID}"/>
+
+                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_taxType}" for="taxType" />
+                        <p:inputText id="taxType" value="#{salestaxrateController.selected.taxType}" title="#{messages.EditSalestaxrateTitle_taxType}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_taxType}"/>
+
+                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_taxRate}" for="taxRate" />
+                        <p:inputText id="taxRate" value="#{salestaxrateController.selected.taxRate}" title="#{messages.EditSalestaxrateTitle_taxRate}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_taxRate}"/>
+
+                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{salestaxrateController.selected.name}" title="#{messages.EditSalestaxrateTitle_name}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salestaxrateController.selected.rowguid}" title="#{messages.EditSalestaxrateTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salestaxrateController.selected.modifiedDate}" title="#{messages.EditSalestaxrateTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salestaxrateController.save}" value="#{messages.Save}" update="display,:SalestaxrateListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalestaxrateEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalestaxrateEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

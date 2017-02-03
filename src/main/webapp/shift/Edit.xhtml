@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ShiftEditDlg" widgetVar="ShiftEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditShiftTitle}" closeOnEscape="true">
+
+            <h:form id="ShiftEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{shiftController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditShiftLabel_shiftID}" for="shiftID" />
+                        <h:outputText id="shiftID" value="#{shiftController.selected.shiftID}" />
+
+                        <p:outputLabel value="#{messages.EditShiftLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{shiftController.selected.name}" title="#{messages.EditShiftTitle_name}" required="true" requiredMessage="#{messages.EditShiftRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditShiftLabel_startTime}" for="startTime" />
+                        <p:calendar id="startTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{shiftController.selected.startTime}" title="#{messages.EditShiftTitle_startTime}" required="true" requiredMessage="#{messages.EditShiftRequiredMessage_startTime}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditShiftLabel_endTime}" for="endTime" />
+                        <p:calendar id="endTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{shiftController.selected.endTime}" title="#{messages.EditShiftTitle_endTime}" required="true" requiredMessage="#{messages.EditShiftRequiredMessage_endTime}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditShiftLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{shiftController.selected.modifiedDate}" title="#{messages.EditShiftTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditShiftRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{shiftController.save}" value="#{messages.Save}" update="display,:ShiftListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ShiftEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ShiftEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

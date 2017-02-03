@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeepayhistoryCreateDlg" widgetVar="EmployeepayhistoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateEmployeepayhistoryTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeepayhistoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{employeepayhistoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_employeepayhistoryPK_employeeID}" for="employeepayhistoryPK_employeeID" />
+                        <p:inputText id="employeepayhistoryPK_employeeID" value="#{employeepayhistoryController.selected.employeepayhistoryPK.employeeID}" title="#{messages.CreateEmployeepayhistoryTitle_employeepayhistoryPK_employeeID}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_employeepayhistoryPK_employeeID}"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_employeepayhistoryPK_rateChangeDate}" for="employeepayhistoryPK_rateChangeDate" />
+                        <p:calendar id="employeepayhistoryPK_rateChangeDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeepayhistoryController.selected.employeepayhistoryPK.rateChangeDate}" title="#{messages.CreateEmployeepayhistoryTitle_employeepayhistoryPK_rateChangeDate}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_employeepayhistoryPK_rateChangeDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_rate}" for="rate" />
+                        <p:inputText id="rate" value="#{employeepayhistoryController.selected.rate}" title="#{messages.CreateEmployeepayhistoryTitle_rate}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_rate}"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_payFrequency}" for="payFrequency" />
+                        <p:inputText id="payFrequency" value="#{employeepayhistoryController.selected.payFrequency}" title="#{messages.CreateEmployeepayhistoryTitle_payFrequency}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_payFrequency}"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeepayhistoryController.selected.modifiedDate}" title="#{messages.CreateEmployeepayhistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeepayhistoryController.saveNew}" value="#{messages.Save}" update="display,:EmployeepayhistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmployeepayhistoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('EmployeepayhistoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

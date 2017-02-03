@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StoreViewDlg" widgetVar="StoreViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewStoreTitle}" closeOnEscape="true">
+
+            <h:form id="StoreViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{storeController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewStoreLabel_customerID}"/>
+                        <h:outputText value="#{storeController.selected.customerID}" title="#{messages.ViewStoreTitle_customerID}"/>
+
+                        <h:outputText value="#{messages.ViewStoreLabel_name}"/>
+                        <h:outputText value="#{storeController.selected.name}" title="#{messages.ViewStoreTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewStoreLabel_salesPersonID}"/>
+                        <h:outputText value="#{storeController.selected.salesPersonID}" title="#{messages.ViewStoreTitle_salesPersonID}"/>
+
+                        <h:outputText value="#{messages.ViewStoreLabel_demographics}"/>
+                        <h:outputText value="#{storeController.selected.demographics}" title="#{messages.ViewStoreTitle_demographics}"/>
+
+                        <h:outputText value="#{messages.ViewStoreLabel_rowguid}"/>
+                        <h:outputText value="#{storeController.selected.rowguid}" title="#{messages.ViewStoreTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewStoreLabel_modifiedDate}"/>
+                        <h:outputText value="#{storeController.selected.modifiedDate}" title="#{messages.ViewStoreTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('StoreViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

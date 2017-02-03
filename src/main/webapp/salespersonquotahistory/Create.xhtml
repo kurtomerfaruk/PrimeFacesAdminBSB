@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalespersonquotahistoryCreateDlg" widgetVar="SalespersonquotahistoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSalespersonquotahistoryTitle}" closeOnEscape="true">
+
+            <h:form id="SalespersonquotahistoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{salespersonquotahistoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salespersonquotahistoryPK_salesPersonID}" for="salespersonquotahistoryPK_salesPersonID" />
+                        <p:inputText id="salespersonquotahistoryPK_salesPersonID" value="#{salespersonquotahistoryController.selected.salespersonquotahistoryPK.salesPersonID}" title="#{messages.CreateSalespersonquotahistoryTitle_salespersonquotahistoryPK_salesPersonID}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salespersonquotahistoryPK_salesPersonID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salespersonquotahistoryPK_quotaDate}" for="salespersonquotahistoryPK_quotaDate" />
+                        <p:calendar id="salespersonquotahistoryPK_quotaDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salespersonquotahistoryController.selected.salespersonquotahistoryPK.quotaDate}" title="#{messages.CreateSalespersonquotahistoryTitle_salespersonquotahistoryPK_quotaDate}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salespersonquotahistoryPK_quotaDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salesQuota}" for="salesQuota" />
+                        <p:inputText id="salesQuota" value="#{salespersonquotahistoryController.selected.salesQuota}" title="#{messages.CreateSalespersonquotahistoryTitle_salesQuota}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salesQuota}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salespersonquotahistoryController.selected.rowguid}" title="#{messages.CreateSalespersonquotahistoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salespersonquotahistoryController.selected.modifiedDate}" title="#{messages.CreateSalespersonquotahistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salespersonquotahistoryController.saveNew}" value="#{messages.Save}" update="display,:SalespersonquotahistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalespersonquotahistoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalespersonquotahistoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

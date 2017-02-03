@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SalesorderheaderListForm">
+
+        <p:panel header="#{messages.ListSalesorderheaderTitle}">
+            <p:contextMenu id="SalesorderheaderDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('SalesorderheaderListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalesorderheaderListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalesorderheaderListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalesorderheaderListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{salesorderheaderController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{salesorderheaderController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{salesorderheaderController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.salesOrderID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalesorderheaderDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalesorderheaderDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SalesorderheaderListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.salesOrderID}" filterBy="#{item.salesOrderID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesorderheaderTitle_salesOrderID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salesOrderID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.revisionNumber}" filterBy="#{item.revisionNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesorderheaderTitle_revisionNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.revisionNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.orderDate}" filterBy="#{item.orderDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesorderheaderTitle_orderDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.orderDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dueDate}" filterBy="#{item.dueDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesorderheaderTitle_dueDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dueDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.shipDate}" filterBy="#{item.shipDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesorderheaderTitle_shipDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shipDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.status}" filterBy="#{item.status}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesorderheaderTitle_status}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.status}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.onlineOrderFlag}" filterBy="#{item.onlineOrderFlag}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_onlineOrderFlag}"/>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox id="onlineOrderFlag" value="#{item.onlineOrderFlag}" title="#{messages.EditSalesorderheaderTitle_onlineOrderFlag}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_onlineOrderFlag}" disabled="true"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.salesOrderNumber}" filterBy="#{item.salesOrderNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_salesOrderNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.salesOrderNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.purchaseOrderNumber}" filterBy="#{item.purchaseOrderNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_purchaseOrderNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.purchaseOrderNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.accountNumber}" filterBy="#{item.accountNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_accountNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.accountNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.customerID}" filterBy="#{item.customerID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_customerID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.customerID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.contactID}" filterBy="#{item.contactID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_contactID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.contactID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.salesPersonID}" filterBy="#{item.salesPersonID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_salesPersonID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.salesPersonID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.territoryID}" filterBy="#{item.territoryID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_territoryID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.territoryID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.billToAddressID}" filterBy="#{item.billToAddressID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_billToAddressID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.billToAddressID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.shipToAddressID}" filterBy="#{item.shipToAddressID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_shipToAddressID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.shipToAddressID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.shipMethodID}" filterBy="#{item.shipMethodID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_shipMethodID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.shipMethodID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.creditCardID}" filterBy="#{item.creditCardID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_creditCardID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.creditCardID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.creditCardApprovalCode}" filterBy="#{item.creditCardApprovalCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_creditCardApprovalCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.creditCardApprovalCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.currencyRateID}" filterBy="#{item.currencyRateID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_currencyRateID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.currencyRateID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.subTotal}" filterBy="#{item.subTotal}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_subTotal}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.subTotal}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.taxAmt}" filterBy="#{item.taxAmt}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_taxAmt}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.taxAmt}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.freight}" filterBy="#{item.freight}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_freight}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.freight}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.totalDue}" filterBy="#{item.totalDue}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_totalDue}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.totalDue}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.comment}" filterBy="#{item.comment}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_comment}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.comment}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_rowguid}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rowguid}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesorderheaderTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{salesorderheaderController.prepareCreate}" update=":SalesorderheaderCreateForm" oncomplete="PF('SalesorderheaderCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":SalesorderheaderViewForm" oncomplete="PF('SalesorderheaderViewDialog').show()" disabled="#{empty salesorderheaderController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":SalesorderheaderEditForm" oncomplete="PF('SalesorderheaderEditDialog').show()" disabled="#{empty salesorderheaderController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{salesorderheaderController.delete}" update=":growl,datalist" disabled="#{empty salesorderheaderController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

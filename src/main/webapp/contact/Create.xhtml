@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContactCreateDlg" widgetVar="ContactCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateContactTitle}" closeOnEscape="true">
+
+            <h:form id="ContactCreateForm">
+
+                <h:panelGroup id="display" rendered="#{contactController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_nameStyle}" for="nameStyle" />
+                        <p:selectBooleanCheckbox id="nameStyle" value="#{contactController.selected.nameStyle}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_nameStyle}"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_title}" for="title" />
+                        <p:inputText id="title" value="#{contactController.selected.title}" title="#{messages.CreateContactTitle_title}" size="8" maxlength="8"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{contactController.selected.firstName}" title="#{messages.CreateContactTitle_firstName}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_firstName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_middleName}" for="middleName" />
+                        <p:inputText id="middleName" value="#{contactController.selected.middleName}" title="#{messages.CreateContactTitle_middleName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{contactController.selected.lastName}" title="#{messages.CreateContactTitle_lastName}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_lastName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_suffix}" for="suffix" />
+                        <p:inputText id="suffix" value="#{contactController.selected.suffix}" title="#{messages.CreateContactTitle_suffix}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_emailAddress}" for="emailAddress" />
+                        <p:inputText id="emailAddress" value="#{contactController.selected.emailAddress}" title="#{messages.CreateContactTitle_emailAddress}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_emailPromotion}" for="emailPromotion" />
+                        <p:inputText id="emailPromotion" value="#{contactController.selected.emailPromotion}" title="#{messages.CreateContactTitle_emailPromotion}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_emailPromotion}"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_phone}" for="phone" />
+                        <p:inputText id="phone" value="#{contactController.selected.phone}" title="#{messages.CreateContactTitle_phone}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_passwordHash}" for="passwordHash" />
+                        <p:inputText id="passwordHash" value="#{contactController.selected.passwordHash}" title="#{messages.CreateContactTitle_passwordHash}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_passwordHash}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_passwordSalt}" for="passwordSalt" />
+                        <p:inputText id="passwordSalt" value="#{contactController.selected.passwordSalt}" title="#{messages.CreateContactTitle_passwordSalt}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_passwordSalt}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_additionalContactInfo}" for="additionalContactInfo" />
+                        <p:inputTextarea rows="4" cols="30" id="additionalContactInfo" value="#{contactController.selected.additionalContactInfo}" title="#{messages.CreateContactTitle_additionalContactInfo}" />
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{contactController.selected.rowguid}" title="#{messages.CreateContactTitle_rowguid}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateContactLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{contactController.selected.modifiedDate}" title="#{messages.CreateContactTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contactController.saveNew}" value="#{messages.Save}" update="display,:ContactListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ContactCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ContactCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

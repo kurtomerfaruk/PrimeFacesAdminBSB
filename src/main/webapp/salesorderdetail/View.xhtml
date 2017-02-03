@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesorderdetailViewDlg" widgetVar="SalesorderdetailViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesorderdetailTitle}" closeOnEscape="true">
+
+            <h:form id="SalesorderdetailViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salesorderdetailController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_salesorderdetailPK_salesOrderID}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderID}" title="#{messages.ViewSalesorderdetailTitle_salesorderdetailPK_salesOrderID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_salesorderdetailPK_salesOrderDetailID}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderDetailID}" title="#{messages.ViewSalesorderdetailTitle_salesorderdetailPK_salesOrderDetailID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_carrierTrackingNumber}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.carrierTrackingNumber}" title="#{messages.ViewSalesorderdetailTitle_carrierTrackingNumber}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_orderQty}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.orderQty}" title="#{messages.ViewSalesorderdetailTitle_orderQty}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_productID}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.productID}" title="#{messages.ViewSalesorderdetailTitle_productID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_specialOfferID}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.specialOfferID}" title="#{messages.ViewSalesorderdetailTitle_specialOfferID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_unitPrice}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.unitPrice}" title="#{messages.ViewSalesorderdetailTitle_unitPrice}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_unitPriceDiscount}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.unitPriceDiscount}" title="#{messages.ViewSalesorderdetailTitle_unitPriceDiscount}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_lineTotal}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.lineTotal}" title="#{messages.ViewSalesorderdetailTitle_lineTotal}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_rowguid}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.rowguid}" title="#{messages.ViewSalesorderdetailTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderdetailLabel_modifiedDate}"/>
+                        <h:outputText value="#{salesorderdetailController.selected.modifiedDate}" title="#{messages.ViewSalesorderdetailTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesorderdetailViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

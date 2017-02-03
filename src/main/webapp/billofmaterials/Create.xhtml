@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BillofmaterialsCreateDlg" widgetVar="BillofmaterialsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateBillofmaterialsTitle}" closeOnEscape="true">
+
+            <h:form id="BillofmaterialsCreateForm">
+
+                <h:panelGroup id="display" rendered="#{billofmaterialsController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_productAssemblyID}" for="productAssemblyID" />
+                        <p:inputText id="productAssemblyID" value="#{billofmaterialsController.selected.productAssemblyID}" title="#{messages.CreateBillofmaterialsTitle_productAssemblyID}"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_componentID}" for="componentID" />
+                        <p:inputText id="componentID" value="#{billofmaterialsController.selected.componentID}" title="#{messages.CreateBillofmaterialsTitle_componentID}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_componentID}"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{billofmaterialsController.selected.startDate}" title="#{messages.CreateBillofmaterialsTitle_startDate}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{billofmaterialsController.selected.endDate}" title="#{messages.CreateBillofmaterialsTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_unitMeasureCode}" for="unitMeasureCode" />
+                        <p:inputText id="unitMeasureCode" value="#{billofmaterialsController.selected.unitMeasureCode}" title="#{messages.CreateBillofmaterialsTitle_unitMeasureCode}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_unitMeasureCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_BOMLevel}" for="BOMLevel" />
+                        <p:inputText id="BOMLevel" value="#{billofmaterialsController.selected.BOMLevel}" title="#{messages.CreateBillofmaterialsTitle_BOMLevel}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_BOMLevel}"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_perAssemblyQty}" for="perAssemblyQty" />
+                        <p:inputText id="perAssemblyQty" value="#{billofmaterialsController.selected.perAssemblyQty}" title="#{messages.CreateBillofmaterialsTitle_perAssemblyQty}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_perAssemblyQty}"/>
+
+                        <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{billofmaterialsController.selected.modifiedDate}" title="#{messages.CreateBillofmaterialsTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{billofmaterialsController.saveNew}" value="#{messages.Save}" update="display,:BillofmaterialsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BillofmaterialsCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('BillofmaterialsCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

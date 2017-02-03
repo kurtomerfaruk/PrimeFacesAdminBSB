@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductmodelillustrationCreateDlg" widgetVar="ProductmodelillustrationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductmodelillustrationTitle}" closeOnEscape="true">
+
+            <h:form id="ProductmodelillustrationCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productmodelillustrationController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_productModelID}" for="productmodelillustrationPK_productModelID" />
+                        <p:inputText id="productmodelillustrationPK_productModelID" value="#{productmodelillustrationController.selected.productmodelillustrationPK.productModelID}" title="#{messages.CreateProductmodelillustrationTitle_productmodelillustrationPK_productModelID}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodelillustrationPK_productModelID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_illustrationID}" for="productmodelillustrationPK_illustrationID" />
+                        <p:inputText id="productmodelillustrationPK_illustrationID" value="#{productmodelillustrationController.selected.productmodelillustrationPK.illustrationID}" title="#{messages.CreateProductmodelillustrationTitle_productmodelillustrationPK_illustrationID}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodelillustrationPK_illustrationID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productmodelillustrationController.selected.modifiedDate}" title="#{messages.CreateProductmodelillustrationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productmodelillustrationController.saveNew}" value="#{messages.Save}" update="display,:ProductmodelillustrationListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductmodelillustrationCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductmodelillustrationCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductmodelCreateDlg" widgetVar="ProductmodelCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductmodelTitle}" closeOnEscape="true">
+
+            <h:form id="ProductmodelCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productmodelController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductmodelLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{productmodelController.selected.name}" title="#{messages.CreateProductmodelTitle_name}" required="true" requiredMessage="#{messages.CreateProductmodelRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelLabel_catalogDescription}" for="catalogDescription" />
+                        <p:inputTextarea rows="4" cols="30" id="catalogDescription" value="#{productmodelController.selected.catalogDescription}" title="#{messages.CreateProductmodelTitle_catalogDescription}" />
+
+                        <p:outputLabel value="#{messages.CreateProductmodelLabel_instructions}" for="instructions" />
+                        <p:inputTextarea rows="4" cols="30" id="instructions" value="#{productmodelController.selected.instructions}" title="#{messages.CreateProductmodelTitle_instructions}" />
+
+                        <p:outputLabel value="#{messages.CreateProductmodelLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productmodelController.selected.rowguid}" title="#{messages.CreateProductmodelTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductmodelRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productmodelController.selected.modifiedDate}" title="#{messages.CreateProductmodelTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productmodelController.saveNew}" value="#{messages.Save}" update="display,:ProductmodelListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductmodelCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductmodelCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="IndividualEditDlg" widgetVar="IndividualEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditIndividualTitle}" closeOnEscape="true">
+
+            <h:form id="IndividualEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{individualController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditIndividualLabel_customerID}" for="customerID" />
+                        <h:outputText id="customerID" value="#{individualController.selected.customerID}" />
+
+                        <p:outputLabel value="#{messages.EditIndividualLabel_contactID}" for="contactID" />
+                        <p:inputText id="contactID" value="#{individualController.selected.contactID}" title="#{messages.EditIndividualTitle_contactID}" required="true" requiredMessage="#{messages.EditIndividualRequiredMessage_contactID}"/>
+
+                        <p:outputLabel value="#{messages.EditIndividualLabel_demographics}" for="demographics" />
+                        <p:inputTextarea rows="4" cols="30" id="demographics" value="#{individualController.selected.demographics}" title="#{messages.EditIndividualTitle_demographics}" />
+
+                        <p:outputLabel value="#{messages.EditIndividualLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{individualController.selected.modifiedDate}" title="#{messages.EditIndividualTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditIndividualRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{individualController.save}" value="#{messages.Save}" update="display,:IndividualListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('IndividualEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('IndividualEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

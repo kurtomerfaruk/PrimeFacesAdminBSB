@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalestaxrateViewDlg" widgetVar="SalestaxrateViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalestaxrateTitle}" closeOnEscape="true">
+
+            <h:form id="SalestaxrateViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salestaxrateController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_salesTaxRateID}"/>
+                        <h:outputText value="#{salestaxrateController.selected.salesTaxRateID}" title="#{messages.ViewSalestaxrateTitle_salesTaxRateID}"/>
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_stateProvinceID}"/>
+                        <h:outputText value="#{salestaxrateController.selected.stateProvinceID}" title="#{messages.ViewSalestaxrateTitle_stateProvinceID}"/>
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_taxType}"/>
+                        <h:outputText value="#{salestaxrateController.selected.taxType}" title="#{messages.ViewSalestaxrateTitle_taxType}"/>
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_taxRate}"/>
+                        <h:outputText value="#{salestaxrateController.selected.taxRate}" title="#{messages.ViewSalestaxrateTitle_taxRate}"/>
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_name}"/>
+                        <h:outputText value="#{salestaxrateController.selected.name}" title="#{messages.ViewSalestaxrateTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_rowguid}"/>
+                        <h:outputText value="#{salestaxrateController.selected.rowguid}" title="#{messages.ViewSalestaxrateTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewSalestaxrateLabel_modifiedDate}"/>
+                        <h:outputText value="#{salestaxrateController.selected.modifiedDate}" title="#{messages.ViewSalestaxrateTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalestaxrateViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="WorkorderroutingListForm">
+
+        <p:panel header="#{messages.ListWorkorderroutingTitle}">
+            <p:contextMenu id="WorkorderroutingDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('WorkorderroutingListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('WorkorderroutingListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('WorkorderroutingListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('WorkorderroutingListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{workorderroutingController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{workorderroutingController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{workorderroutingController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.workorderroutingPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:WorkorderroutingDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:WorkorderroutingDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('WorkorderroutingListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.workorderroutingPK.workOrderID}" filterBy="#{item.workorderroutingPK.workOrderID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderroutingTitle_workorderroutingPK_workOrderID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.workorderroutingPK.workOrderID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.workorderroutingPK.productID}" filterBy="#{item.workorderroutingPK.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderroutingTitle_workorderroutingPK_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.workorderroutingPK.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.workorderroutingPK.operationSequence}" filterBy="#{item.workorderroutingPK.operationSequence}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderroutingTitle_workorderroutingPK_operationSequence}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.workorderroutingPK.operationSequence}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.locationID}" filterBy="#{item.locationID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderroutingTitle_locationID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.locationID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.scheduledStartDate}" filterBy="#{item.scheduledStartDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderroutingTitle_scheduledStartDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.scheduledStartDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.scheduledEndDate}" filterBy="#{item.scheduledEndDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderroutingTitle_scheduledEndDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.scheduledEndDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.actualStartDate}" filterBy="#{item.actualStartDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderroutingTitle_actualStartDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.actualStartDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.actualEndDate}" filterBy="#{item.actualEndDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderroutingTitle_actualEndDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.actualEndDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.actualResourceHrs}" filterBy="#{item.actualResourceHrs}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderroutingTitle_actualResourceHrs}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.actualResourceHrs}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.plannedCost}" filterBy="#{item.plannedCost}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderroutingTitle_plannedCost}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.plannedCost}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.actualCost}" filterBy="#{item.actualCost}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderroutingTitle_actualCost}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.actualCost}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderroutingTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{workorderroutingController.prepareCreate}" update=":WorkorderroutingCreateForm" oncomplete="PF('WorkorderroutingCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":WorkorderroutingViewForm" oncomplete="PF('WorkorderroutingViewDialog').show()" disabled="#{empty workorderroutingController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":WorkorderroutingEditForm" oncomplete="PF('WorkorderroutingEditDialog').show()" disabled="#{empty workorderroutingController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{workorderroutingController.delete}" update=":growl,datalist" disabled="#{empty workorderroutingController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

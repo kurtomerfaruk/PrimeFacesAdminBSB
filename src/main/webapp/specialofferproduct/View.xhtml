@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SpecialofferproductViewDlg" widgetVar="SpecialofferproductViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSpecialofferproductTitle}" closeOnEscape="true">
+
+            <h:form id="SpecialofferproductViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{specialofferproductController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_specialofferproductPK_specialOfferID}"/>
+                        <h:outputText value="#{specialofferproductController.selected.specialofferproductPK.specialOfferID}" title="#{messages.ViewSpecialofferproductTitle_specialofferproductPK_specialOfferID}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_specialofferproductPK_productID}"/>
+                        <h:outputText value="#{specialofferproductController.selected.specialofferproductPK.productID}" title="#{messages.ViewSpecialofferproductTitle_specialofferproductPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_rowguid}"/>
+                        <h:outputText value="#{specialofferproductController.selected.rowguid}" title="#{messages.ViewSpecialofferproductTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_modifiedDate}"/>
+                        <h:outputText value="#{specialofferproductController.selected.modifiedDate}" title="#{messages.ViewSpecialofferproductTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SpecialofferproductViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

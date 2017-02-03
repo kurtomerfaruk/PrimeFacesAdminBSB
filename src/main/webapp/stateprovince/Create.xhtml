@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StateprovinceCreateDlg" widgetVar="StateprovinceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateStateprovinceTitle}" closeOnEscape="true">
+
+            <h:form id="StateprovinceCreateForm">
+
+                <h:panelGroup id="display" rendered="#{stateprovinceController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_stateProvinceCode}" for="stateProvinceCode" />
+                        <p:inputText id="stateProvinceCode" value="#{stateprovinceController.selected.stateProvinceCode}" title="#{messages.CreateStateprovinceTitle_stateProvinceCode}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_stateProvinceCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_countryRegionCode}" for="countryRegionCode" />
+                        <p:inputText id="countryRegionCode" value="#{stateprovinceController.selected.countryRegionCode}" title="#{messages.CreateStateprovinceTitle_countryRegionCode}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_countryRegionCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_isOnlyStateProvinceFlag}" for="isOnlyStateProvinceFlag" />
+                        <p:selectBooleanCheckbox id="isOnlyStateProvinceFlag" value="#{stateprovinceController.selected.isOnlyStateProvinceFlag}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_isOnlyStateProvinceFlag}"/>
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{stateprovinceController.selected.name}" title="#{messages.CreateStateprovinceTitle_name}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_territoryID}" for="territoryID" />
+                        <p:inputText id="territoryID" value="#{stateprovinceController.selected.territoryID}" title="#{messages.CreateStateprovinceTitle_territoryID}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_territoryID}"/>
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{stateprovinceController.selected.rowguid}" title="#{messages.CreateStateprovinceTitle_rowguid}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateStateprovinceLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{stateprovinceController.selected.modifiedDate}" title="#{messages.CreateStateprovinceTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{stateprovinceController.saveNew}" value="#{messages.Save}" update="display,:StateprovinceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('StateprovinceCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('StateprovinceCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AwbuildversionCreateDlg" widgetVar="AwbuildversionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateAwbuildversionTitle}" closeOnEscape="true">
+
+            <h:form id="AwbuildversionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{awbuildversionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateAwbuildversionLabel_databaseVersion}" for="databaseVersion" />
+                        <p:inputText id="databaseVersion" value="#{awbuildversionController.selected.databaseVersion}" title="#{messages.CreateAwbuildversionTitle_databaseVersion}" required="true" requiredMessage="#{messages.CreateAwbuildversionRequiredMessage_databaseVersion}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{messages.CreateAwbuildversionLabel_versionDate}" for="versionDate" />
+                        <p:calendar id="versionDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{awbuildversionController.selected.versionDate}" title="#{messages.CreateAwbuildversionTitle_versionDate}" required="true" requiredMessage="#{messages.CreateAwbuildversionRequiredMessage_versionDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateAwbuildversionLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{awbuildversionController.selected.modifiedDate}" title="#{messages.CreateAwbuildversionTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateAwbuildversionRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{awbuildversionController.saveNew}" value="#{messages.Save}" update="display,:AwbuildversionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AwbuildversionCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('AwbuildversionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

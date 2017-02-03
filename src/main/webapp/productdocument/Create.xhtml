@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductdocumentCreateDlg" widgetVar="ProductdocumentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductdocumentTitle}" closeOnEscape="true">
+
+            <h:form id="ProductdocumentCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productdocumentController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductdocumentLabel_productdocumentPK_productID}" for="productdocumentPK_productID" />
+                        <p:inputText id="productdocumentPK_productID" value="#{productdocumentController.selected.productdocumentPK.productID}" title="#{messages.CreateProductdocumentTitle_productdocumentPK_productID}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_productdocumentPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductdocumentLabel_productdocumentPK_documentID}" for="productdocumentPK_documentID" />
+                        <p:inputText id="productdocumentPK_documentID" value="#{productdocumentController.selected.productdocumentPK.documentID}" title="#{messages.CreateProductdocumentTitle_productdocumentPK_documentID}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_productdocumentPK_documentID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductdocumentLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productdocumentController.selected.modifiedDate}" title="#{messages.CreateProductdocumentTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productdocumentController.saveNew}" value="#{messages.Save}" update="display,:ProductdocumentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductdocumentCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductdocumentCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductlistpricehistoryEditDlg" widgetVar="ProductlistpricehistoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductlistpricehistoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductlistpricehistoryEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productlistpricehistoryController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductlistpricehistoryLabel_productlistpricehistoryPK_productID}" for="productlistpricehistoryPK_productID" />
+                        <h:outputText id="productlistpricehistoryPK_productID" value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.productID}" />
+
+
+                        <h:outputLabel value="#{messages.EditProductlistpricehistoryLabel_productlistpricehistoryPK_startDate}" for="productlistpricehistoryPK_startDate" />
+                        <h:outputText id="productlistpricehistoryPK_startDate" value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.startDate}" />
+
+                        <p:outputLabel value="#{messages.EditProductlistpricehistoryLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productlistpricehistoryController.selected.endDate}" title="#{messages.EditProductlistpricehistoryTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditProductlistpricehistoryLabel_listPrice}" for="listPrice" />
+                        <p:inputText id="listPrice" value="#{productlistpricehistoryController.selected.listPrice}" title="#{messages.EditProductlistpricehistoryTitle_listPrice}" required="true" requiredMessage="#{messages.EditProductlistpricehistoryRequiredMessage_listPrice}"/>
+
+                        <p:outputLabel value="#{messages.EditProductlistpricehistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productlistpricehistoryController.selected.modifiedDate}" title="#{messages.EditProductlistpricehistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductlistpricehistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productlistpricehistoryController.save}" value="#{messages.Save}" update="display,:ProductlistpricehistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductlistpricehistoryEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductlistpricehistoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CurrencyrateListForm">
+
+        <p:panel header="#{messages.ListCurrencyrateTitle}">
+            <p:contextMenu id="CurrencyrateDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('CurrencyrateListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('CurrencyrateListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('CurrencyrateListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('CurrencyrateListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{currencyrateController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{currencyrateController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{currencyrateController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.currencyRateID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CurrencyrateDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CurrencyrateDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CurrencyrateListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.currencyRateID}" filterBy="#{item.currencyRateID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCurrencyrateTitle_currencyRateID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.currencyRateID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.currencyRateDate}" filterBy="#{item.currencyRateDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCurrencyrateTitle_currencyRateDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.currencyRateDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fromCurrencyCode}" filterBy="#{item.fromCurrencyCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCurrencyrateTitle_fromCurrencyCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fromCurrencyCode}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.toCurrencyCode}" filterBy="#{item.toCurrencyCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCurrencyrateTitle_toCurrencyCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.toCurrencyCode}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.averageRate}" filterBy="#{item.averageRate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCurrencyrateTitle_averageRate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.averageRate}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.endOfDayRate}" filterBy="#{item.endOfDayRate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCurrencyrateTitle_endOfDayRate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.endOfDayRate}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListCurrencyrateTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{currencyrateController.prepareCreate}" update=":CurrencyrateCreateForm" oncomplete="PF('CurrencyrateCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":CurrencyrateViewForm" oncomplete="PF('CurrencyrateViewDialog').show()" disabled="#{empty currencyrateController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":CurrencyrateEditForm" oncomplete="PF('CurrencyrateEditDialog').show()" disabled="#{empty currencyrateController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{currencyrateController.delete}" update=":growl,datalist" disabled="#{empty currencyrateController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

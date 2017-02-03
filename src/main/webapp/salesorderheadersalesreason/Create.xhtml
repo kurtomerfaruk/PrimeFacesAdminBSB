@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesorderheadersalesreasonCreateDlg" widgetVar="SalesorderheadersalesreasonCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSalesorderheadersalesreasonTitle}" closeOnEscape="true">
+
+            <h:form id="SalesorderheadersalesreasonCreateForm">
+
+                <h:panelGroup id="display" rendered="#{salesorderheadersalesreasonController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesOrderID}" for="salesorderheadersalesreasonPK_salesOrderID" />
+                        <p:inputText id="salesorderheadersalesreasonPK_salesOrderID" value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesOrderID}" title="#{messages.CreateSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesOrderID}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheadersalesreasonPK_salesOrderID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesReasonID}" for="salesorderheadersalesreasonPK_salesReasonID" />
+                        <p:inputText id="salesorderheadersalesreasonPK_salesReasonID" value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesReasonID}" title="#{messages.CreateSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesReasonID}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheadersalesreasonPK_salesReasonID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderheadersalesreasonController.selected.modifiedDate}" title="#{messages.CreateSalesorderheadersalesreasonTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salesorderheadersalesreasonController.saveNew}" value="#{messages.Save}" update="display,:SalesorderheadersalesreasonListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesorderheadersalesreasonCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesorderheadersalesreasonCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

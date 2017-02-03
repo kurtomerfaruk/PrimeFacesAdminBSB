@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductsubcategoryEditDlg" widgetVar="ProductsubcategoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductsubcategoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductsubcategoryEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productsubcategoryController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductsubcategoryLabel_productSubcategoryID}" for="productSubcategoryID" />
+                        <h:outputText id="productSubcategoryID" value="#{productsubcategoryController.selected.productSubcategoryID}" />
+
+                        <p:outputLabel value="#{messages.EditProductsubcategoryLabel_productCategoryID}" for="productCategoryID" />
+                        <p:inputText id="productCategoryID" value="#{productsubcategoryController.selected.productCategoryID}" title="#{messages.EditProductsubcategoryTitle_productCategoryID}" required="true" requiredMessage="#{messages.EditProductsubcategoryRequiredMessage_productCategoryID}"/>
+
+                        <p:outputLabel value="#{messages.EditProductsubcategoryLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{productsubcategoryController.selected.name}" title="#{messages.EditProductsubcategoryTitle_name}" required="true" requiredMessage="#{messages.EditProductsubcategoryRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditProductsubcategoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productsubcategoryController.selected.rowguid}" title="#{messages.EditProductsubcategoryTitle_rowguid}" required="true" requiredMessage="#{messages.EditProductsubcategoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditProductsubcategoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productsubcategoryController.selected.modifiedDate}" title="#{messages.EditProductsubcategoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductsubcategoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productsubcategoryController.save}" value="#{messages.Save}" update="display,:ProductsubcategoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductsubcategoryEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductsubcategoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

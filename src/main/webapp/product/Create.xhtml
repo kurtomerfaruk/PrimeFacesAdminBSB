@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductCreateDlg" widgetVar="ProductCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductTitle}" closeOnEscape="true">
+
+            <h:form id="ProductCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productController.selected != null}">
+                    <p:tabView id="ProductTabView">
+
+                        <p:tab id="ProductTab1" title="#{messages.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{messages.CreateProductLabel_name}" for="name" />
+                                <p:inputText id="name" value="#{productController.selected.name}" title="#{messages.CreateProductTitle_name}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_name}" size="50" maxlength="50"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_productNumber}" for="productNumber" />
+                                <p:inputText id="productNumber" value="#{productController.selected.productNumber}" title="#{messages.CreateProductTitle_productNumber}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_productNumber}" size="25" maxlength="25"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_makeFlag}" for="makeFlag" />
+                                <p:selectBooleanCheckbox id="makeFlag" value="#{productController.selected.makeFlag}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_makeFlag}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_finishedGoodsFlag}" for="finishedGoodsFlag" />
+                                <p:selectBooleanCheckbox id="finishedGoodsFlag" value="#{productController.selected.finishedGoodsFlag}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_finishedGoodsFlag}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_color}" for="color" />
+                                <p:inputText id="color" value="#{productController.selected.color}" title="#{messages.CreateProductTitle_color}" size="15" maxlength="15"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_safetyStockLevel}" for="safetyStockLevel" />
+                                <p:inputText id="safetyStockLevel" value="#{productController.selected.safetyStockLevel}" title="#{messages.CreateProductTitle_safetyStockLevel}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_safetyStockLevel}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_reorderPoint}" for="reorderPoint" />
+                                <p:inputText id="reorderPoint" value="#{productController.selected.reorderPoint}" title="#{messages.CreateProductTitle_reorderPoint}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_reorderPoint}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_standardCost}" for="standardCost" />
+                                <p:inputText id="standardCost" value="#{productController.selected.standardCost}" title="#{messages.CreateProductTitle_standardCost}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_standardCost}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_listPrice}" for="listPrice" />
+                                <p:inputText id="listPrice" value="#{productController.selected.listPrice}" title="#{messages.CreateProductTitle_listPrice}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_listPrice}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_size}" for="size" />
+                                <p:inputText id="size" value="#{productController.selected.size}" title="#{messages.CreateProductTitle_size}" size="5" maxlength="5"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_sizeUnitMeasureCode}" for="sizeUnitMeasureCode" />
+                                <p:inputText id="sizeUnitMeasureCode" value="#{productController.selected.sizeUnitMeasureCode}" title="#{messages.CreateProductTitle_sizeUnitMeasureCode}" size="3" maxlength="3"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_weightUnitMeasureCode}" for="weightUnitMeasureCode" />
+                                <p:inputText id="weightUnitMeasureCode" value="#{productController.selected.weightUnitMeasureCode}" title="#{messages.CreateProductTitle_weightUnitMeasureCode}" size="3" maxlength="3"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_weight}" for="weight" />
+                                <p:inputText id="weight" value="#{productController.selected.weight}" title="#{messages.CreateProductTitle_weight}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_daysToManufacture}" for="daysToManufacture" />
+                                <p:inputText id="daysToManufacture" value="#{productController.selected.daysToManufacture}" title="#{messages.CreateProductTitle_daysToManufacture}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_daysToManufacture}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_productLine}" for="productLine" />
+                                <p:inputText id="productLine" value="#{productController.selected.productLine}" title="#{messages.CreateProductTitle_productLine}" size="2" maxlength="2"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_class1}" for="class1" />
+                                <p:inputText id="class1" value="#{productController.selected.class1}" title="#{messages.CreateProductTitle_class1}" size="2" maxlength="2"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_style}" for="style" />
+                                <p:inputText id="style" value="#{productController.selected.style}" title="#{messages.CreateProductTitle_style}" size="2" maxlength="2"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_productSubcategoryID}" for="productSubcategoryID" />
+                                <p:inputText id="productSubcategoryID" value="#{productController.selected.productSubcategoryID}" title="#{messages.CreateProductTitle_productSubcategoryID}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_productModelID}" for="productModelID" />
+                                <p:inputText id="productModelID" value="#{productController.selected.productModelID}" title="#{messages.CreateProductTitle_productModelID}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_sellStartDate}" for="sellStartDate" />
+                                <p:calendar id="sellStartDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.sellStartDate}" title="#{messages.CreateProductTitle_sellStartDate}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_sellStartDate}" showOn="button"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="ProductTab2" title="#{messages.TabHeaderPrefix} 2">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{messages.CreateProductLabel_sellEndDate}" for="sellEndDate" />
+                                <p:calendar id="sellEndDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.sellEndDate}" title="#{messages.CreateProductTitle_sellEndDate}"  showOn="button"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_discontinuedDate}" for="discontinuedDate" />
+                                <p:calendar id="discontinuedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.discontinuedDate}" title="#{messages.CreateProductTitle_discontinuedDate}"  showOn="button"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_rowguid}" for="rowguid" />
+                                <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productController.selected.rowguid}" title="#{messages.CreateProductTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_rowguid}"/>
+
+                                <p:outputLabel value="#{messages.CreateProductLabel_modifiedDate}" for="modifiedDate" />
+                                <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.modifiedDate}" title="#{messages.CreateProductTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_modifiedDate}" showOn="button"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{productController.saveNew}" value="#{messages.Save}" update="display,:ProductListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

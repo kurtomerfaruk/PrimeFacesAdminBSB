@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CreditcardViewDlg" widgetVar="CreditcardViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewCreditcardTitle}" closeOnEscape="true">
+
+            <h:form id="CreditcardViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{creditcardController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewCreditcardLabel_creditCardID}"/>
+                        <h:outputText value="#{creditcardController.selected.creditCardID}" title="#{messages.ViewCreditcardTitle_creditCardID}"/>
+
+                        <h:outputText value="#{messages.ViewCreditcardLabel_cardType}"/>
+                        <h:outputText value="#{creditcardController.selected.cardType}" title="#{messages.ViewCreditcardTitle_cardType}"/>
+
+                        <h:outputText value="#{messages.ViewCreditcardLabel_cardNumber}"/>
+                        <h:outputText value="#{creditcardController.selected.cardNumber}" title="#{messages.ViewCreditcardTitle_cardNumber}"/>
+
+                        <h:outputText value="#{messages.ViewCreditcardLabel_expMonth}"/>
+                        <h:outputText value="#{creditcardController.selected.expMonth}" title="#{messages.ViewCreditcardTitle_expMonth}"/>
+
+                        <h:outputText value="#{messages.ViewCreditcardLabel_expYear}"/>
+                        <h:outputText value="#{creditcardController.selected.expYear}" title="#{messages.ViewCreditcardTitle_expYear}"/>
+
+                        <h:outputText value="#{messages.ViewCreditcardLabel_modifiedDate}"/>
+                        <h:outputText value="#{creditcardController.selected.modifiedDate}" title="#{messages.ViewCreditcardTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('CreditcardViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

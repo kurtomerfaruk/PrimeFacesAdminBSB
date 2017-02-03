@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductreviewCreateDlg" widgetVar="ProductreviewCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductreviewTitle}" closeOnEscape="true">
+
+            <h:form id="ProductreviewCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productreviewController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_productID}" for="productID" />
+                        <p:inputText id="productID" value="#{productreviewController.selected.productID}" title="#{messages.CreateProductreviewTitle_productID}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_reviewerName}" for="reviewerName" />
+                        <p:inputText id="reviewerName" value="#{productreviewController.selected.reviewerName}" title="#{messages.CreateProductreviewTitle_reviewerName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_reviewDate}" for="reviewDate" />
+                        <p:calendar id="reviewDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productreviewController.selected.reviewDate}" title="#{messages.CreateProductreviewTitle_reviewDate}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_reviewDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_emailAddress}" for="emailAddress" />
+                        <p:inputText id="emailAddress" value="#{productreviewController.selected.emailAddress}" title="#{messages.CreateProductreviewTitle_emailAddress}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_rating}" for="rating" />
+                        <p:inputText id="rating" value="#{productreviewController.selected.rating}" title="#{messages.CreateProductreviewTitle_rating}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_rating}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_comments}" for="comments" />
+                        <p:inputTextarea rows="4" cols="30" id="comments" value="#{productreviewController.selected.comments}" title="#{messages.CreateProductreviewTitle_comments}" />
+
+                        <p:outputLabel value="#{messages.CreateProductreviewLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productreviewController.selected.modifiedDate}" title="#{messages.CreateProductreviewTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productreviewController.saveNew}" value="#{messages.Save}" update="display,:ProductreviewListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductreviewCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductreviewCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContactcreditcardCreateDlg" widgetVar="ContactcreditcardCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateContactcreditcardTitle}" closeOnEscape="true">
+
+            <h:form id="ContactcreditcardCreateForm">
+
+                <h:panelGroup id="display" rendered="#{contactcreditcardController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateContactcreditcardLabel_contactcreditcardPK_contactID}" for="contactcreditcardPK_contactID" />
+                        <p:inputText id="contactcreditcardPK_contactID" value="#{contactcreditcardController.selected.contactcreditcardPK.contactID}" title="#{messages.CreateContactcreditcardTitle_contactcreditcardPK_contactID}" required="true" requiredMessage="#{messages.CreateContactcreditcardRequiredMessage_contactcreditcardPK_contactID}"/>
+
+                        <p:outputLabel value="#{messages.CreateContactcreditcardLabel_contactcreditcardPK_creditCardID}" for="contactcreditcardPK_creditCardID" />
+                        <p:inputText id="contactcreditcardPK_creditCardID" value="#{contactcreditcardController.selected.contactcreditcardPK.creditCardID}" title="#{messages.CreateContactcreditcardTitle_contactcreditcardPK_creditCardID}" required="true" requiredMessage="#{messages.CreateContactcreditcardRequiredMessage_contactcreditcardPK_creditCardID}"/>
+
+                        <p:outputLabel value="#{messages.CreateContactcreditcardLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{contactcreditcardController.selected.modifiedDate}" title="#{messages.CreateContactcreditcardTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateContactcreditcardRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contactcreditcardController.saveNew}" value="#{messages.Save}" update="display,:ContactcreditcardListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ContactcreditcardCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ContactcreditcardCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

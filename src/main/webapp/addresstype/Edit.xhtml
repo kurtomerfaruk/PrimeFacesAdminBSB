@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AddresstypeEditDlg" widgetVar="AddresstypeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditAddresstypeTitle}" closeOnEscape="true">
+
+            <h:form id="AddresstypeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{addresstypeController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditAddresstypeLabel_addressTypeID}" for="addressTypeID" />
+                        <h:outputText id="addressTypeID" value="#{addresstypeController.selected.addressTypeID}" />
+
+                        <p:outputLabel value="#{messages.EditAddresstypeLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{addresstypeController.selected.name}" title="#{messages.EditAddresstypeTitle_name}" required="true" requiredMessage="#{messages.EditAddresstypeRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditAddresstypeLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{addresstypeController.selected.rowguid}" title="#{messages.EditAddresstypeTitle_rowguid}" required="true" requiredMessage="#{messages.EditAddresstypeRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditAddresstypeLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{addresstypeController.selected.modifiedDate}" title="#{messages.EditAddresstypeTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditAddresstypeRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{addresstypeController.save}" value="#{messages.Save}" update="display,:AddresstypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AddresstypeEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('AddresstypeEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

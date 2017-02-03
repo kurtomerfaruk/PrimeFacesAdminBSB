@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductcategoryEditDlg" widgetVar="ProductcategoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductcategoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductcategoryEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productcategoryController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductcategoryLabel_productCategoryID}" for="productCategoryID" />
+                        <h:outputText id="productCategoryID" value="#{productcategoryController.selected.productCategoryID}" />
+
+                        <p:outputLabel value="#{messages.EditProductcategoryLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{productcategoryController.selected.name}" title="#{messages.EditProductcategoryTitle_name}" required="true" requiredMessage="#{messages.EditProductcategoryRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditProductcategoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productcategoryController.selected.rowguid}" title="#{messages.EditProductcategoryTitle_rowguid}" required="true" requiredMessage="#{messages.EditProductcategoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditProductcategoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcategoryController.selected.modifiedDate}" title="#{messages.EditProductcategoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductcategoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productcategoryController.save}" value="#{messages.Save}" update="display,:ProductcategoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductcategoryEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductcategoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

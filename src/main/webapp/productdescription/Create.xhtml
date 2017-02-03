@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductdescriptionCreateDlg" widgetVar="ProductdescriptionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductdescriptionTitle}" closeOnEscape="true">
+
+            <h:form id="ProductdescriptionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productdescriptionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductdescriptionLabel_description}" for="description" />
+                        <p:inputTextarea rows="4" cols="30" id="description" value="#{productdescriptionController.selected.description}" title="#{messages.CreateProductdescriptionTitle_description}" required="true" requiredMessage="#{messages.CreateProductdescriptionRequiredMessage_description}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductdescriptionLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productdescriptionController.selected.rowguid}" title="#{messages.CreateProductdescriptionTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductdescriptionRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductdescriptionLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productdescriptionController.selected.modifiedDate}" title="#{messages.CreateProductdescriptionTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductdescriptionRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productdescriptionController.saveNew}" value="#{messages.Save}" update="display,:ProductdescriptionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductdescriptionCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductdescriptionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

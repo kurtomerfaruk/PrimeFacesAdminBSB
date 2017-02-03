@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SalesorderdetailEditDlg" widgetVar="SalesorderdetailEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalesorderdetailTitle}" closeOnEscape="true">
+
+            <h:form id="SalesorderdetailEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{salesorderdetailController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditSalesorderdetailLabel_salesorderdetailPK_salesOrderID}" for="salesorderdetailPK_salesOrderID" />
+                        <h:outputText id="salesorderdetailPK_salesOrderID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderID}" />
+
+
+                        <h:outputLabel value="#{messages.EditSalesorderdetailLabel_salesorderdetailPK_salesOrderDetailID}" for="salesorderdetailPK_salesOrderDetailID" />
+                        <h:outputText id="salesorderdetailPK_salesOrderDetailID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderDetailID}" />
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_carrierTrackingNumber}" for="carrierTrackingNumber" />
+                        <p:inputText id="carrierTrackingNumber" value="#{salesorderdetailController.selected.carrierTrackingNumber}" title="#{messages.EditSalesorderdetailTitle_carrierTrackingNumber}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_orderQty}" for="orderQty" />
+                        <p:inputText id="orderQty" value="#{salesorderdetailController.selected.orderQty}" title="#{messages.EditSalesorderdetailTitle_orderQty}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_orderQty}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_productID}" for="productID" />
+                        <p:inputText id="productID" value="#{salesorderdetailController.selected.productID}" title="#{messages.EditSalesorderdetailTitle_productID}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_productID}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_specialOfferID}" for="specialOfferID" />
+                        <p:inputText id="specialOfferID" value="#{salesorderdetailController.selected.specialOfferID}" title="#{messages.EditSalesorderdetailTitle_specialOfferID}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_specialOfferID}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_unitPrice}" for="unitPrice" />
+                        <p:inputText id="unitPrice" value="#{salesorderdetailController.selected.unitPrice}" title="#{messages.EditSalesorderdetailTitle_unitPrice}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_unitPrice}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_unitPriceDiscount}" for="unitPriceDiscount" />
+                        <p:inputText id="unitPriceDiscount" value="#{salesorderdetailController.selected.unitPriceDiscount}" title="#{messages.EditSalesorderdetailTitle_unitPriceDiscount}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_unitPriceDiscount}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_lineTotal}" for="lineTotal" />
+                        <p:inputText id="lineTotal" value="#{salesorderdetailController.selected.lineTotal}" title="#{messages.EditSalesorderdetailTitle_lineTotal}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_lineTotal}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesorderdetailController.selected.rowguid}" title="#{messages.EditSalesorderdetailTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesorderdetailLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderdetailController.selected.modifiedDate}" title="#{messages.EditSalesorderdetailTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salesorderdetailController.save}" value="#{messages.Save}" update="display,:SalesorderdetailListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesorderdetailEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesorderdetailEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

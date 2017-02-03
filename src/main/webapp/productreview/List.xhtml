@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductreviewListForm">
+
+        <p:panel header="#{messages.ListProductreviewTitle}">
+            <p:contextMenu id="ProductreviewDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductreviewListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductreviewListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductreviewListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductreviewListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productreviewController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productreviewController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productreviewController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productReviewID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductreviewDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductreviewDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductreviewListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productReviewID}" filterBy="#{item.productReviewID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductreviewTitle_productReviewID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productReviewID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductreviewTitle_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.reviewerName}" filterBy="#{item.reviewerName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductreviewTitle_reviewerName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.reviewerName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.reviewDate}" filterBy="#{item.reviewDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductreviewTitle_reviewDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.reviewDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.emailAddress}" filterBy="#{item.emailAddress}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductreviewTitle_emailAddress}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.emailAddress}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rating}" filterBy="#{item.rating}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductreviewTitle_rating}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rating}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.comments}" filterBy="#{item.comments}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductreviewTitle_comments}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.comments}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductreviewTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productreviewController.prepareCreate}" update=":ProductreviewCreateForm" oncomplete="PF('ProductreviewCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductreviewViewForm" oncomplete="PF('ProductreviewViewDialog').show()" disabled="#{empty productreviewController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductreviewEditForm" oncomplete="PF('ProductreviewEditDialog').show()" disabled="#{empty productreviewController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productreviewController.delete}" update=":growl,datalist" disabled="#{empty productreviewController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

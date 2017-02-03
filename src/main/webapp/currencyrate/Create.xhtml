@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CurrencyrateCreateDlg" widgetVar="CurrencyrateCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateCurrencyrateTitle}" closeOnEscape="true">
+
+            <h:form id="CurrencyrateCreateForm">
+
+                <h:panelGroup id="display" rendered="#{currencyrateController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateCurrencyrateLabel_currencyRateDate}" for="currencyRateDate" />
+                        <p:calendar id="currencyRateDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{currencyrateController.selected.currencyRateDate}" title="#{messages.CreateCurrencyrateTitle_currencyRateDate}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_currencyRateDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyrateLabel_fromCurrencyCode}" for="fromCurrencyCode" />
+                        <p:inputText id="fromCurrencyCode" value="#{currencyrateController.selected.fromCurrencyCode}" title="#{messages.CreateCurrencyrateTitle_fromCurrencyCode}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_fromCurrencyCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyrateLabel_toCurrencyCode}" for="toCurrencyCode" />
+                        <p:inputText id="toCurrencyCode" value="#{currencyrateController.selected.toCurrencyCode}" title="#{messages.CreateCurrencyrateTitle_toCurrencyCode}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_toCurrencyCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyrateLabel_averageRate}" for="averageRate" />
+                        <p:inputText id="averageRate" value="#{currencyrateController.selected.averageRate}" title="#{messages.CreateCurrencyrateTitle_averageRate}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_averageRate}"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyrateLabel_endOfDayRate}" for="endOfDayRate" />
+                        <p:inputText id="endOfDayRate" value="#{currencyrateController.selected.endOfDayRate}" title="#{messages.CreateCurrencyrateTitle_endOfDayRate}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_endOfDayRate}"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyrateLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{currencyrateController.selected.modifiedDate}" title="#{messages.CreateCurrencyrateTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{currencyrateController.saveNew}" value="#{messages.Save}" update="display,:CurrencyrateListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CurrencyrateCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CurrencyrateCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

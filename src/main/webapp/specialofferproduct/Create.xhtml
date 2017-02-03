@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SpecialofferproductCreateDlg" widgetVar="SpecialofferproductCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSpecialofferproductTitle}" closeOnEscape="true">
+
+            <h:form id="SpecialofferproductCreateForm">
+
+                <h:panelGroup id="display" rendered="#{specialofferproductController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_specialofferproductPK_specialOfferID}" for="specialofferproductPK_specialOfferID" />
+                        <p:inputText id="specialofferproductPK_specialOfferID" value="#{specialofferproductController.selected.specialofferproductPK.specialOfferID}" title="#{messages.CreateSpecialofferproductTitle_specialofferproductPK_specialOfferID}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_specialofferproductPK_specialOfferID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_specialofferproductPK_productID}" for="specialofferproductPK_productID" />
+                        <p:inputText id="specialofferproductPK_productID" value="#{specialofferproductController.selected.specialofferproductPK.productID}" title="#{messages.CreateSpecialofferproductTitle_specialofferproductPK_productID}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_specialofferproductPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{specialofferproductController.selected.rowguid}" title="#{messages.CreateSpecialofferproductTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{specialofferproductController.selected.modifiedDate}" title="#{messages.CreateSpecialofferproductTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{specialofferproductController.saveNew}" value="#{messages.Save}" update="display,:SpecialofferproductListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SpecialofferproductCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SpecialofferproductCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

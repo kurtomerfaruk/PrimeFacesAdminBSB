@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SalesorderheaderEditDlg" widgetVar="SalesorderheaderEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalesorderheaderTitle}" closeOnEscape="true">
+
+            <h:form id="SalesorderheaderEditForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="SalesorderheaderTabView">
+
+                        <p:tab id="SalesorderheaderTab1" title="#{messages.TabHeaderPrefix} 1">
+                            <p:panelGrid  columns="2" columnClasses="column" rendered="#{salesorderheaderController.selected != null}">
+
+                                <h:outputLabel value="#{messages.EditSalesorderheaderLabel_salesOrderID}" for="salesOrderID" />
+                                <h:outputText id="salesOrderID" value="#{salesorderheaderController.selected.salesOrderID}" />
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_revisionNumber}" for="revisionNumber" />
+                                <p:inputText id="revisionNumber" value="#{salesorderheaderController.selected.revisionNumber}" title="#{messages.EditSalesorderheaderTitle_revisionNumber}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_revisionNumber}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_orderDate}" for="orderDate" />
+                                <p:calendar id="orderDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderheaderController.selected.orderDate}" title="#{messages.EditSalesorderheaderTitle_orderDate}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_orderDate}" showOn="button"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_dueDate}" for="dueDate" />
+                                <p:calendar id="dueDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderheaderController.selected.dueDate}" title="#{messages.EditSalesorderheaderTitle_dueDate}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_dueDate}" showOn="button"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_shipDate}" for="shipDate" />
+                                <p:calendar id="shipDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderheaderController.selected.shipDate}" title="#{messages.EditSalesorderheaderTitle_shipDate}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_shipDate}" showOn="button"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_status}" for="status" />
+                                <p:inputText id="status" value="#{salesorderheaderController.selected.status}" title="#{messages.EditSalesorderheaderTitle_status}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_status}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_onlineOrderFlag}" for="onlineOrderFlag" />
+                                <p:selectBooleanCheckbox id="onlineOrderFlag" value="#{salesorderheaderController.selected.onlineOrderFlag}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_onlineOrderFlag}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_salesOrderNumber}" for="salesOrderNumber" />
+                                <p:inputText id="salesOrderNumber" value="#{salesorderheaderController.selected.salesOrderNumber}" title="#{messages.EditSalesorderheaderTitle_salesOrderNumber}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_salesOrderNumber}" size="25" maxlength="25"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_purchaseOrderNumber}" for="purchaseOrderNumber" />
+                                <p:inputText id="purchaseOrderNumber" value="#{salesorderheaderController.selected.purchaseOrderNumber}" title="#{messages.EditSalesorderheaderTitle_purchaseOrderNumber}" size="25" maxlength="25"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_accountNumber}" for="accountNumber" />
+                                <p:inputText id="accountNumber" value="#{salesorderheaderController.selected.accountNumber}" title="#{messages.EditSalesorderheaderTitle_accountNumber}" size="15" maxlength="15"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_customerID}" for="customerID" />
+                                <p:inputText id="customerID" value="#{salesorderheaderController.selected.customerID}" title="#{messages.EditSalesorderheaderTitle_customerID}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_customerID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_contactID}" for="contactID" />
+                                <p:inputText id="contactID" value="#{salesorderheaderController.selected.contactID}" title="#{messages.EditSalesorderheaderTitle_contactID}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_contactID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_salesPersonID}" for="salesPersonID" />
+                                <p:inputText id="salesPersonID" value="#{salesorderheaderController.selected.salesPersonID}" title="#{messages.EditSalesorderheaderTitle_salesPersonID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_territoryID}" for="territoryID" />
+                                <p:inputText id="territoryID" value="#{salesorderheaderController.selected.territoryID}" title="#{messages.EditSalesorderheaderTitle_territoryID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_billToAddressID}" for="billToAddressID" />
+                                <p:inputText id="billToAddressID" value="#{salesorderheaderController.selected.billToAddressID}" title="#{messages.EditSalesorderheaderTitle_billToAddressID}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_billToAddressID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_shipToAddressID}" for="shipToAddressID" />
+                                <p:inputText id="shipToAddressID" value="#{salesorderheaderController.selected.shipToAddressID}" title="#{messages.EditSalesorderheaderTitle_shipToAddressID}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_shipToAddressID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_shipMethodID}" for="shipMethodID" />
+                                <p:inputText id="shipMethodID" value="#{salesorderheaderController.selected.shipMethodID}" title="#{messages.EditSalesorderheaderTitle_shipMethodID}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_shipMethodID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_creditCardID}" for="creditCardID" />
+                                <p:inputText id="creditCardID" value="#{salesorderheaderController.selected.creditCardID}" title="#{messages.EditSalesorderheaderTitle_creditCardID}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_creditCardApprovalCode}" for="creditCardApprovalCode" />
+                                <p:inputText id="creditCardApprovalCode" value="#{salesorderheaderController.selected.creditCardApprovalCode}" title="#{messages.EditSalesorderheaderTitle_creditCardApprovalCode}" size="15" maxlength="15"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_currencyRateID}" for="currencyRateID" />
+                                <p:inputText id="currencyRateID" value="#{salesorderheaderController.selected.currencyRateID}" title="#{messages.EditSalesorderheaderTitle_currencyRateID}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="SalesorderheaderTab2" title="#{messages.TabHeaderPrefix} 2">
+                            <p:panelGrid  columns="2" columnClasses="column" rendered="#{salesorderheaderController.selected != null}">
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_subTotal}" for="subTotal" />
+                                <p:inputText id="subTotal" value="#{salesorderheaderController.selected.subTotal}" title="#{messages.EditSalesorderheaderTitle_subTotal}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_subTotal}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_taxAmt}" for="taxAmt" />
+                                <p:inputText id="taxAmt" value="#{salesorderheaderController.selected.taxAmt}" title="#{messages.EditSalesorderheaderTitle_taxAmt}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_taxAmt}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_freight}" for="freight" />
+                                <p:inputText id="freight" value="#{salesorderheaderController.selected.freight}" title="#{messages.EditSalesorderheaderTitle_freight}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_freight}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_totalDue}" for="totalDue" />
+                                <p:inputText id="totalDue" value="#{salesorderheaderController.selected.totalDue}" title="#{messages.EditSalesorderheaderTitle_totalDue}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_totalDue}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_comment}" for="comment" />
+                                <p:inputText id="comment" value="#{salesorderheaderController.selected.comment}" title="#{messages.EditSalesorderheaderTitle_comment}" size="128" maxlength="128"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_rowguid}" for="rowguid" />
+                                <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesorderheaderController.selected.rowguid}" title="#{messages.EditSalesorderheaderTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_rowguid}"/>
+
+                                <p:outputLabel value="#{messages.EditSalesorderheaderLabel_modifiedDate}" for="modifiedDate" />
+                                <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderheaderController.selected.modifiedDate}" title="#{messages.EditSalesorderheaderTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_modifiedDate}" showOn="button"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{salesorderheaderController.save}" value="#{messages.Save}" update="display,:SalesorderheaderListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesorderheaderEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesorderheaderEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

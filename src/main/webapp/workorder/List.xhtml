@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="WorkorderListForm">
+
+        <p:panel header="#{messages.ListWorkorderTitle}">
+            <p:contextMenu id="WorkorderDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('WorkorderListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('WorkorderListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('WorkorderListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('WorkorderListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{workorderController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{workorderController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{workorderController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.workOrderID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:WorkorderDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:WorkorderDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('WorkorderListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.workOrderID}" filterBy="#{item.workOrderID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderTitle_workOrderID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.workOrderID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderTitle_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.orderQty}" filterBy="#{item.orderQty}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderTitle_orderQty}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.orderQty}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.stockedQty}" filterBy="#{item.stockedQty}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderTitle_stockedQty}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.stockedQty}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.scrappedQty}" filterBy="#{item.scrappedQty}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderTitle_scrappedQty}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.scrappedQty}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.startDate}" filterBy="#{item.startDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListWorkorderTitle_startDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.startDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderTitle_endDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.endDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.dueDate}" filterBy="#{item.dueDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderTitle_dueDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dueDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.scrapReasonID}" filterBy="#{item.scrapReasonID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderTitle_scrapReasonID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.scrapReasonID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListWorkorderTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{workorderController.prepareCreate}" update=":WorkorderCreateForm" oncomplete="PF('WorkorderCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":WorkorderViewForm" oncomplete="PF('WorkorderViewDialog').show()" disabled="#{empty workorderController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":WorkorderEditForm" oncomplete="PF('WorkorderEditDialog').show()" disabled="#{empty workorderController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{workorderController.delete}" update=":growl,datalist" disabled="#{empty workorderController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

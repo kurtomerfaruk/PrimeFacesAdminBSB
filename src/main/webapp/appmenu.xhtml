@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:composition>
+        <h:form id="menuForm">
+
+            <ul class="list">
+                <li class="header">MAIN NAVIGATION</li>
+                <li class="active">
+                    <a href="#{request.contextPath}/index.xhtml">
+                        <i class="material-icons">home</i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">swap_calls</i>
+                        <span>#{messages.Maintenance}</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li><a href="#{request.contextPath}/address/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.AddressHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/addresstype/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.AddresstypeHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/awbuildversion/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.AwbuildversionHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/billofmaterials/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.BillofmaterialsHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/contact/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ContactHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/contactcreditcard/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ContactcreditcardHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/contacttype/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ContacttypeHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/countryregion/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CountryregionHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/countryregioncurrency/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CountryregioncurrencyHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/creditcard/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CreditcardHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/culture/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CultureHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/currency/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CurrencyHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/currencyrate/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CurrencyrateHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/customer/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CustomerHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/customeraddress/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.CustomeraddressHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/department/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.DepartmentHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/document/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.DocumentHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/employee/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.EmployeeHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/employeeaddress/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.EmployeeaddressHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/employeedepartmenthistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.EmployeedepartmenthistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/employeepayhistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.EmployeepayhistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/illustration/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.IllustrationHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/individual/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.IndividualHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/jobcandidate/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.JobcandidateHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/location/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.LocationHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/product/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productcategory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductcategoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productcosthistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductcosthistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productdescription/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductdescriptionHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productdocument/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductdocumentHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productinventory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductinventoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productlistpricehistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductlistpricehistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productmodel/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductmodelHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productmodelillustration/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductmodelillustrationHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productmodelproductdescriptionculture/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductmodelproductdescriptioncultureHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productphoto/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductphotoHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productproductphoto/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductproductphotoHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productreview/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductreviewHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productsubcategory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductsubcategoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/productvendor/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ProductvendorHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/purchaseorderdetail/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.PurchaseorderdetailHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesorderdetail/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalesorderdetailHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesorderheader/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalesorderheaderHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesorderheadersalesreason/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalesorderheadersalesreasonHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesperson/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalespersonHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salespersonquotahistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalespersonquotahistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesreason/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalesreasonHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salestaxrate/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalestaxrateHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesterritory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalesterritoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/salesterritoryhistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SalesterritoryhistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/scrapreason/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ScrapreasonHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/shift/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ShiftHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/shipmethod/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ShipmethodHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/shoppingcartitem/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.ShoppingcartitemHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/specialoffer/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SpecialofferHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/specialofferproduct/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.SpecialofferproductHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/stateprovince/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.StateprovinceHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/store/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.StoreHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/storecontact/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.StorecontactHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/transactionhistory/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.TransactionhistoryHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/transactionhistoryarchive/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.TransactionhistoryarchiveHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/unitmeasure/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.UnitmeasureHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/vendor/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.VendorHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/vendoraddress/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.VendoraddressHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/vendorcontact/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.VendorcontactHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/workorder/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.WorkorderHeading}...</a></li>
+                        <li><a href="#{request.contextPath}/workorderrouting/index.xhtml"><i class="fa fa-circle-o"></i>#{messages.WorkorderroutingHeading}...</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+
+        </h:form>
+    </ui:composition>
+
+</html>

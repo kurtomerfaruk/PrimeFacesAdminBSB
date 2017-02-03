@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductvendorEditDlg" widgetVar="ProductvendorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductvendorTitle}" closeOnEscape="true">
+
+            <h:form id="ProductvendorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productvendorController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductvendorLabel_productvendorPK_productID}" for="productvendorPK_productID" />
+                        <h:outputText id="productvendorPK_productID" value="#{productvendorController.selected.productvendorPK.productID}" />
+
+
+                        <h:outputLabel value="#{messages.EditProductvendorLabel_productvendorPK_vendorID}" for="productvendorPK_vendorID" />
+                        <h:outputText id="productvendorPK_vendorID" value="#{productvendorController.selected.productvendorPK.vendorID}" />
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_averageLeadTime}" for="averageLeadTime" />
+                        <p:inputText id="averageLeadTime" value="#{productvendorController.selected.averageLeadTime}" title="#{messages.EditProductvendorTitle_averageLeadTime}" required="true" requiredMessage="#{messages.EditProductvendorRequiredMessage_averageLeadTime}"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_standardPrice}" for="standardPrice" />
+                        <p:inputText id="standardPrice" value="#{productvendorController.selected.standardPrice}" title="#{messages.EditProductvendorTitle_standardPrice}" required="true" requiredMessage="#{messages.EditProductvendorRequiredMessage_standardPrice}"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_lastReceiptCost}" for="lastReceiptCost" />
+                        <p:inputText id="lastReceiptCost" value="#{productvendorController.selected.lastReceiptCost}" title="#{messages.EditProductvendorTitle_lastReceiptCost}"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_lastReceiptDate}" for="lastReceiptDate" />
+                        <p:calendar id="lastReceiptDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productvendorController.selected.lastReceiptDate}" title="#{messages.EditProductvendorTitle_lastReceiptDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_minOrderQty}" for="minOrderQty" />
+                        <p:inputText id="minOrderQty" value="#{productvendorController.selected.minOrderQty}" title="#{messages.EditProductvendorTitle_minOrderQty}"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_maxOrderQty}" for="maxOrderQty" />
+                        <p:inputText id="maxOrderQty" value="#{productvendorController.selected.maxOrderQty}" title="#{messages.EditProductvendorTitle_maxOrderQty}" required="true" requiredMessage="#{messages.EditProductvendorRequiredMessage_maxOrderQty}"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_onOrderQty}" for="onOrderQty" />
+                        <p:inputText id="onOrderQty" value="#{productvendorController.selected.onOrderQty}" title="#{messages.EditProductvendorTitle_onOrderQty}"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_unitMeasureCode}" for="unitMeasureCode" />
+                        <p:inputText id="unitMeasureCode" value="#{productvendorController.selected.unitMeasureCode}" title="#{messages.EditProductvendorTitle_unitMeasureCode}" required="true" requiredMessage="#{messages.EditProductvendorRequiredMessage_unitMeasureCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.EditProductvendorLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productvendorController.selected.modifiedDate}" title="#{messages.EditProductvendorTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductvendorRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productvendorController.save}" value="#{messages.Save}" update="display,:ProductvendorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductvendorEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductvendorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

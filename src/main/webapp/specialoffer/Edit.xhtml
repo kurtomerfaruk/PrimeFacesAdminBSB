@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SpecialofferEditDlg" widgetVar="SpecialofferEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSpecialofferTitle}" closeOnEscape="true">
+
+            <h:form id="SpecialofferEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{specialofferController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditSpecialofferLabel_specialOfferID}" for="specialOfferID" />
+                        <h:outputText id="specialOfferID" value="#{specialofferController.selected.specialOfferID}" />
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{specialofferController.selected.description}" title="#{messages.EditSpecialofferTitle_description}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_description}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_discountPct}" for="discountPct" />
+                        <p:inputText id="discountPct" value="#{specialofferController.selected.discountPct}" title="#{messages.EditSpecialofferTitle_discountPct}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_discountPct}"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_type}" for="type" />
+                        <p:inputText id="type" value="#{specialofferController.selected.type}" title="#{messages.EditSpecialofferTitle_type}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_type}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_category}" for="category" />
+                        <p:inputText id="category" value="#{specialofferController.selected.category}" title="#{messages.EditSpecialofferTitle_category}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_category}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{specialofferController.selected.startDate}" title="#{messages.EditSpecialofferTitle_startDate}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{specialofferController.selected.endDate}" title="#{messages.EditSpecialofferTitle_endDate}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_endDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_minQty}" for="minQty" />
+                        <p:inputText id="minQty" value="#{specialofferController.selected.minQty}" title="#{messages.EditSpecialofferTitle_minQty}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_minQty}"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_maxQty}" for="maxQty" />
+                        <p:inputText id="maxQty" value="#{specialofferController.selected.maxQty}" title="#{messages.EditSpecialofferTitle_maxQty}"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{specialofferController.selected.rowguid}" title="#{messages.EditSpecialofferTitle_rowguid}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditSpecialofferLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{specialofferController.selected.modifiedDate}" title="#{messages.EditSpecialofferTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSpecialofferRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{specialofferController.save}" value="#{messages.Save}" update="display,:SpecialofferListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SpecialofferEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SpecialofferEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SalespersonEditDlg" widgetVar="SalespersonEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalespersonTitle}" closeOnEscape="true">
+
+            <h:form id="SalespersonEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{salespersonController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditSalespersonLabel_salesPersonID}" for="salesPersonID" />
+                        <h:outputText id="salesPersonID" value="#{salespersonController.selected.salesPersonID}" />
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_territoryID}" for="territoryID" />
+                        <p:inputText id="territoryID" value="#{salespersonController.selected.territoryID}" title="#{messages.EditSalespersonTitle_territoryID}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_salesQuota}" for="salesQuota" />
+                        <p:inputText id="salesQuota" value="#{salespersonController.selected.salesQuota}" title="#{messages.EditSalespersonTitle_salesQuota}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_bonus}" for="bonus" />
+                        <p:inputText id="bonus" value="#{salespersonController.selected.bonus}" title="#{messages.EditSalespersonTitle_bonus}" required="true" requiredMessage="#{messages.EditSalespersonRequiredMessage_bonus}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_commissionPct}" for="commissionPct" />
+                        <p:inputText id="commissionPct" value="#{salespersonController.selected.commissionPct}" title="#{messages.EditSalespersonTitle_commissionPct}" required="true" requiredMessage="#{messages.EditSalespersonRequiredMessage_commissionPct}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_salesYTD}" for="salesYTD" />
+                        <p:inputText id="salesYTD" value="#{salespersonController.selected.salesYTD}" title="#{messages.EditSalespersonTitle_salesYTD}" required="true" requiredMessage="#{messages.EditSalespersonRequiredMessage_salesYTD}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_salesLastYear}" for="salesLastYear" />
+                        <p:inputText id="salesLastYear" value="#{salespersonController.selected.salesLastYear}" title="#{messages.EditSalespersonTitle_salesLastYear}" required="true" requiredMessage="#{messages.EditSalespersonRequiredMessage_salesLastYear}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salespersonController.selected.rowguid}" title="#{messages.EditSalespersonTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalespersonRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditSalespersonLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salespersonController.selected.modifiedDate}" title="#{messages.EditSalespersonTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalespersonRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salespersonController.save}" value="#{messages.Save}" update="display,:SalespersonListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalespersonEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalespersonEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

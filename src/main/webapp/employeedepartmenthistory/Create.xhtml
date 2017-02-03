@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeedepartmenthistoryCreateDlg" widgetVar="EmployeedepartmenthistoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateEmployeedepartmenthistoryTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeedepartmenthistoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{employeedepartmenthistoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_employeeID}" for="employeedepartmenthistoryPK_employeeID" />
+                        <p:inputText id="employeedepartmenthistoryPK_employeeID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.employeeID}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_employeeID}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_employeeID}"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_departmentID}" for="employeedepartmenthistoryPK_departmentID" />
+                        <p:inputText id="employeedepartmenthistoryPK_departmentID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.departmentID}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_departmentID}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_departmentID}"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_shiftID}" for="employeedepartmenthistoryPK_shiftID" />
+                        <p:inputText id="employeedepartmenthistoryPK_shiftID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.shiftID}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_shiftID}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_shiftID}"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_startDate}" for="employeedepartmenthistoryPK_startDate" />
+                        <p:calendar id="employeedepartmenthistoryPK_startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.startDate}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeedepartmenthistoryController.selected.endDate}" title="#{messages.CreateEmployeedepartmenthistoryTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeedepartmenthistoryController.selected.modifiedDate}" title="#{messages.CreateEmployeedepartmenthistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeedepartmenthistoryController.saveNew}" value="#{messages.Save}" update="display,:EmployeedepartmenthistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmployeedepartmenthistoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('EmployeedepartmenthistoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductinventoryViewDlg" widgetVar="ProductinventoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductinventoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductinventoryViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productinventoryController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_productinventoryPK_productID}"/>
+                        <h:outputText value="#{productinventoryController.selected.productinventoryPK.productID}" title="#{messages.ViewProductinventoryTitle_productinventoryPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_productinventoryPK_locationID}"/>
+                        <h:outputText value="#{productinventoryController.selected.productinventoryPK.locationID}" title="#{messages.ViewProductinventoryTitle_productinventoryPK_locationID}"/>
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_shelf}"/>
+                        <h:outputText value="#{productinventoryController.selected.shelf}" title="#{messages.ViewProductinventoryTitle_shelf}"/>
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_bin}"/>
+                        <h:outputText value="#{productinventoryController.selected.bin}" title="#{messages.ViewProductinventoryTitle_bin}"/>
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_quantity}"/>
+                        <h:outputText value="#{productinventoryController.selected.quantity}" title="#{messages.ViewProductinventoryTitle_quantity}"/>
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_rowguid}"/>
+                        <h:outputText value="#{productinventoryController.selected.rowguid}" title="#{messages.ViewProductinventoryTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewProductinventoryLabel_modifiedDate}"/>
+                        <h:outputText value="#{productinventoryController.selected.modifiedDate}" title="#{messages.ViewProductinventoryTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductinventoryViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

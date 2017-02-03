@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductEditDlg" widgetVar="ProductEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductTitle}" closeOnEscape="true">
+
+            <h:form id="ProductEditForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="ProductTabView">
+
+                        <p:tab id="ProductTab1" title="#{messages.TabHeaderPrefix} 1">
+                            <p:panelGrid  columns="2" columnClasses="column" rendered="#{productController.selected != null}">
+
+                                <h:outputLabel value="#{messages.EditProductLabel_productID}" for="productID" />
+                                <h:outputText id="productID" value="#{productController.selected.productID}" />
+
+                                <p:outputLabel value="#{messages.EditProductLabel_name}" for="name" />
+                                <p:inputText id="name" value="#{productController.selected.name}" title="#{messages.EditProductTitle_name}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_name}" size="50" maxlength="50"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_productNumber}" for="productNumber" />
+                                <p:inputText id="productNumber" value="#{productController.selected.productNumber}" title="#{messages.EditProductTitle_productNumber}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_productNumber}" size="25" maxlength="25"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_makeFlag}" for="makeFlag" />
+                                <p:selectBooleanCheckbox id="makeFlag" value="#{productController.selected.makeFlag}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_makeFlag}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_finishedGoodsFlag}" for="finishedGoodsFlag" />
+                                <p:selectBooleanCheckbox id="finishedGoodsFlag" value="#{productController.selected.finishedGoodsFlag}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_finishedGoodsFlag}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_color}" for="color" />
+                                <p:inputText id="color" value="#{productController.selected.color}" title="#{messages.EditProductTitle_color}" size="15" maxlength="15"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_safetyStockLevel}" for="safetyStockLevel" />
+                                <p:inputText id="safetyStockLevel" value="#{productController.selected.safetyStockLevel}" title="#{messages.EditProductTitle_safetyStockLevel}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_safetyStockLevel}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_reorderPoint}" for="reorderPoint" />
+                                <p:inputText id="reorderPoint" value="#{productController.selected.reorderPoint}" title="#{messages.EditProductTitle_reorderPoint}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_reorderPoint}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_standardCost}" for="standardCost" />
+                                <p:inputText id="standardCost" value="#{productController.selected.standardCost}" title="#{messages.EditProductTitle_standardCost}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_standardCost}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_listPrice}" for="listPrice" />
+                                <p:inputText id="listPrice" value="#{productController.selected.listPrice}" title="#{messages.EditProductTitle_listPrice}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_listPrice}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_size}" for="size" />
+                                <p:inputText id="size" value="#{productController.selected.size}" title="#{messages.EditProductTitle_size}" size="5" maxlength="5"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_sizeUnitMeasureCode}" for="sizeUnitMeasureCode" />
+                                <p:inputText id="sizeUnitMeasureCode" value="#{productController.selected.sizeUnitMeasureCode}" title="#{messages.EditProductTitle_sizeUnitMeasureCode}" size="3" maxlength="3"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_weightUnitMeasureCode}" for="weightUnitMeasureCode" />
+                                <p:inputText id="weightUnitMeasureCode" value="#{productController.selected.weightUnitMeasureCode}" title="#{messages.EditProductTitle_weightUnitMeasureCode}" size="3" maxlength="3"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_weight}" for="weight" />
+                                <p:inputText id="weight" value="#{productController.selected.weight}" title="#{messages.EditProductTitle_weight}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_daysToManufacture}" for="daysToManufacture" />
+                                <p:inputText id="daysToManufacture" value="#{productController.selected.daysToManufacture}" title="#{messages.EditProductTitle_daysToManufacture}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_daysToManufacture}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_productLine}" for="productLine" />
+                                <p:inputText id="productLine" value="#{productController.selected.productLine}" title="#{messages.EditProductTitle_productLine}" size="2" maxlength="2"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_class1}" for="class1" />
+                                <p:inputText id="class1" value="#{productController.selected.class1}" title="#{messages.EditProductTitle_class1}" size="2" maxlength="2"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_style}" for="style" />
+                                <p:inputText id="style" value="#{productController.selected.style}" title="#{messages.EditProductTitle_style}" size="2" maxlength="2"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_productSubcategoryID}" for="productSubcategoryID" />
+                                <p:inputText id="productSubcategoryID" value="#{productController.selected.productSubcategoryID}" title="#{messages.EditProductTitle_productSubcategoryID}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_productModelID}" for="productModelID" />
+                                <p:inputText id="productModelID" value="#{productController.selected.productModelID}" title="#{messages.EditProductTitle_productModelID}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="ProductTab2" title="#{messages.TabHeaderPrefix} 2">
+                            <p:panelGrid  columns="2" columnClasses="column" rendered="#{productController.selected != null}">
+                                <p:outputLabel value="#{messages.EditProductLabel_sellStartDate}" for="sellStartDate" />
+                                <p:calendar id="sellStartDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.sellStartDate}" title="#{messages.EditProductTitle_sellStartDate}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_sellStartDate}" showOn="button"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_sellEndDate}" for="sellEndDate" />
+                                <p:calendar id="sellEndDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.sellEndDate}" title="#{messages.EditProductTitle_sellEndDate}"  showOn="button"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_discontinuedDate}" for="discontinuedDate" />
+                                <p:calendar id="discontinuedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.discontinuedDate}" title="#{messages.EditProductTitle_discontinuedDate}"  showOn="button"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_rowguid}" for="rowguid" />
+                                <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productController.selected.rowguid}" title="#{messages.EditProductTitle_rowguid}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_rowguid}"/>
+
+                                <p:outputLabel value="#{messages.EditProductLabel_modifiedDate}" for="modifiedDate" />
+                                <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.modifiedDate}" title="#{messages.EditProductTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_modifiedDate}" showOn="button"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{productController.save}" value="#{messages.Save}" update="display,:ProductListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

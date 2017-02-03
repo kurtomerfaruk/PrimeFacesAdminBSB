@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TransactionhistoryViewDlg" widgetVar="TransactionhistoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewTransactionhistoryTitle}" closeOnEscape="true">
+
+            <h:form id="TransactionhistoryViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{transactionhistoryController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_transactionID}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.transactionID}" title="#{messages.ViewTransactionhistoryTitle_transactionID}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_productID}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.productID}" title="#{messages.ViewTransactionhistoryTitle_productID}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_referenceOrderID}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.referenceOrderID}" title="#{messages.ViewTransactionhistoryTitle_referenceOrderID}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_referenceOrderLineID}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.referenceOrderLineID}" title="#{messages.ViewTransactionhistoryTitle_referenceOrderLineID}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_transactionDate}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.transactionDate}" title="#{messages.ViewTransactionhistoryTitle_transactionDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_transactionType}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.transactionType}" title="#{messages.ViewTransactionhistoryTitle_transactionType}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_quantity}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.quantity}" title="#{messages.ViewTransactionhistoryTitle_quantity}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_actualCost}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.actualCost}" title="#{messages.ViewTransactionhistoryTitle_actualCost}"/>
+
+                        <h:outputText value="#{messages.ViewTransactionhistoryLabel_modifiedDate}"/>
+                        <h:outputText value="#{transactionhistoryController.selected.modifiedDate}" title="#{messages.ViewTransactionhistoryTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('TransactionhistoryViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

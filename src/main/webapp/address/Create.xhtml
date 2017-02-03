@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="AddressCreateDlg" 
+                  widgetVar="AddressCreateDialog" 
+                  modal="true" 
+                  resizable="false" 
+                  appendTo="@(body)" 
+                  header="#{messages.CreateAddressTitle}" 
+                  closeOnEscape="true"
+                  responsive="true">
+
+            <h:form id="AddressCreateForm">
+
+                <h:panelGroup id="display" rendered="#{addressController.selected != null}">
+                    <p:focus context="display"/>
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_addressLine1}" for="addressLine1" />
+                        <p:inputText id="addressLine1" value="#{addressController.selected.addressLine1}" title="#{messages.CreateAddressTitle_addressLine1}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_addressLine1}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_addressLine2}" for="addressLine2" />
+                        <p:inputText id="addressLine2" value="#{addressController.selected.addressLine2}" title="#{messages.CreateAddressTitle_addressLine2}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_city}" for="city" />
+                        <p:inputText id="city" value="#{addressController.selected.city}" title="#{messages.CreateAddressTitle_city}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_city}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_stateProvinceID}" for="stateProvinceID" />
+                        <p:inputText id="stateProvinceID" value="#{addressController.selected.stateProvinceID}" title="#{messages.CreateAddressTitle_stateProvinceID}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_stateProvinceID}"/>
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_postalCode}" for="postalCode" />
+                        <p:inputText id="postalCode" value="#{addressController.selected.postalCode}" title="#{messages.CreateAddressTitle_postalCode}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_postalCode}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{addressController.selected.rowguid}" title="#{messages.CreateAddressTitle_rowguid}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateAddressLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{addressController.selected.modifiedDate}" title="#{messages.CreateAddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_modifiedDate}" showOn="button"/>
+
+                        <f:facet name="footer">
+                            <div class="footer-right">
+                                <p:commandButton actionListener="#{addressController.saveNew}" value="#{messages.Save}" update="display,:AddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AddressCreateDialog'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton value="#{messages.Cancel}" oncomplete="PF('AddressCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </div>
+                        </f:facet>
+
+                    </p:panelGrid>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

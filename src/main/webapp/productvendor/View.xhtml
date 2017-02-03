@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductvendorViewDlg" widgetVar="ProductvendorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductvendorTitle}" closeOnEscape="true">
+
+            <h:form id="ProductvendorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productvendorController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_productvendorPK_productID}"/>
+                        <h:outputText value="#{productvendorController.selected.productvendorPK.productID}" title="#{messages.ViewProductvendorTitle_productvendorPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_productvendorPK_vendorID}"/>
+                        <h:outputText value="#{productvendorController.selected.productvendorPK.vendorID}" title="#{messages.ViewProductvendorTitle_productvendorPK_vendorID}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_averageLeadTime}"/>
+                        <h:outputText value="#{productvendorController.selected.averageLeadTime}" title="#{messages.ViewProductvendorTitle_averageLeadTime}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_standardPrice}"/>
+                        <h:outputText value="#{productvendorController.selected.standardPrice}" title="#{messages.ViewProductvendorTitle_standardPrice}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_lastReceiptCost}"/>
+                        <h:outputText value="#{productvendorController.selected.lastReceiptCost}" title="#{messages.ViewProductvendorTitle_lastReceiptCost}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_lastReceiptDate}"/>
+                        <h:outputText value="#{productvendorController.selected.lastReceiptDate}" title="#{messages.ViewProductvendorTitle_lastReceiptDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_minOrderQty}"/>
+                        <h:outputText value="#{productvendorController.selected.minOrderQty}" title="#{messages.ViewProductvendorTitle_minOrderQty}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_maxOrderQty}"/>
+                        <h:outputText value="#{productvendorController.selected.maxOrderQty}" title="#{messages.ViewProductvendorTitle_maxOrderQty}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_onOrderQty}"/>
+                        <h:outputText value="#{productvendorController.selected.onOrderQty}" title="#{messages.ViewProductvendorTitle_onOrderQty}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_unitMeasureCode}"/>
+                        <h:outputText value="#{productvendorController.selected.unitMeasureCode}" title="#{messages.ViewProductvendorTitle_unitMeasureCode}"/>
+
+                        <h:outputText value="#{messages.ViewProductvendorLabel_modifiedDate}"/>
+                        <h:outputText value="#{productvendorController.selected.modifiedDate}" title="#{messages.ViewProductvendorTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductvendorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

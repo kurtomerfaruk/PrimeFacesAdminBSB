@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkorderViewDlg" widgetVar="WorkorderViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewWorkorderTitle}" closeOnEscape="true">
+
+            <h:form id="WorkorderViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{workorderController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_workOrderID}"/>
+                        <h:outputText value="#{workorderController.selected.workOrderID}" title="#{messages.ViewWorkorderTitle_workOrderID}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_productID}"/>
+                        <h:outputText value="#{workorderController.selected.productID}" title="#{messages.ViewWorkorderTitle_productID}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_orderQty}"/>
+                        <h:outputText value="#{workorderController.selected.orderQty}" title="#{messages.ViewWorkorderTitle_orderQty}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_stockedQty}"/>
+                        <h:outputText value="#{workorderController.selected.stockedQty}" title="#{messages.ViewWorkorderTitle_stockedQty}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_scrappedQty}"/>
+                        <h:outputText value="#{workorderController.selected.scrappedQty}" title="#{messages.ViewWorkorderTitle_scrappedQty}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_startDate}"/>
+                        <h:outputText value="#{workorderController.selected.startDate}" title="#{messages.ViewWorkorderTitle_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_endDate}"/>
+                        <h:outputText value="#{workorderController.selected.endDate}" title="#{messages.ViewWorkorderTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_dueDate}"/>
+                        <h:outputText value="#{workorderController.selected.dueDate}" title="#{messages.ViewWorkorderTitle_dueDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_scrapReasonID}"/>
+                        <h:outputText value="#{workorderController.selected.scrapReasonID}" title="#{messages.ViewWorkorderTitle_scrapReasonID}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderLabel_modifiedDate}"/>
+                        <h:outputText value="#{workorderController.selected.modifiedDate}" title="#{messages.ViewWorkorderTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('WorkorderViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

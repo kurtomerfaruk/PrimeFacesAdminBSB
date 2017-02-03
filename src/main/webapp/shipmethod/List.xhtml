@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ShipmethodListForm">
+
+        <p:panel header="#{messages.ListShipmethodTitle}">
+            <p:contextMenu id="ShipmethodDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ShipmethodListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ShipmethodListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ShipmethodListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ShipmethodListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{shipmethodController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{shipmethodController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{shipmethodController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.shipMethodID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ShipmethodDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ShipmethodDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ShipmethodListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.shipMethodID}" filterBy="#{item.shipMethodID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShipmethodTitle_shipMethodID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shipMethodID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShipmethodTitle_name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.shipBase}" filterBy="#{item.shipBase}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShipmethodTitle_shipBase}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shipBase}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.shipRate}" filterBy="#{item.shipRate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShipmethodTitle_shipRate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shipRate}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShipmethodTitle_rowguid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rowguid}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShipmethodTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{shipmethodController.prepareCreate}" update=":ShipmethodCreateForm" oncomplete="PF('ShipmethodCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ShipmethodViewForm" oncomplete="PF('ShipmethodViewDialog').show()" disabled="#{empty shipmethodController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ShipmethodEditForm" oncomplete="PF('ShipmethodEditDialog').show()" disabled="#{empty shipmethodController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{shipmethodController.delete}" update=":growl,datalist" disabled="#{empty shipmethodController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

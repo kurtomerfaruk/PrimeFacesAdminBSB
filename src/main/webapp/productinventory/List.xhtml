@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductinventoryListForm">
+
+        <p:panel header="#{messages.ListProductinventoryTitle}">
+            <p:contextMenu id="ProductinventoryDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductinventoryListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductinventoryListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductinventoryListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductinventoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productinventoryController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productinventoryController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productinventoryController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productinventoryPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductinventoryDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductinventoryDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductinventoryListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productinventoryPK.productID}" filterBy="#{item.productinventoryPK.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductinventoryTitle_productinventoryPK_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productinventoryPK.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productinventoryPK.locationID}" filterBy="#{item.productinventoryPK.locationID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductinventoryTitle_productinventoryPK_locationID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productinventoryPK.locationID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.shelf}" filterBy="#{item.shelf}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductinventoryTitle_shelf}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shelf}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.bin}" filterBy="#{item.bin}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductinventoryTitle_bin}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bin}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.quantity}" filterBy="#{item.quantity}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductinventoryTitle_quantity}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.quantity}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductinventoryTitle_rowguid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rowguid}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductinventoryTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productinventoryController.prepareCreate}" update=":ProductinventoryCreateForm" oncomplete="PF('ProductinventoryCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductinventoryViewForm" oncomplete="PF('ProductinventoryViewDialog').show()" disabled="#{empty productinventoryController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductinventoryEditForm" oncomplete="PF('ProductinventoryEditDialog').show()" disabled="#{empty productinventoryController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productinventoryController.delete}" update=":growl,datalist" disabled="#{empty productinventoryController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkorderroutingViewDlg" widgetVar="WorkorderroutingViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewWorkorderroutingTitle}" closeOnEscape="true">
+
+            <h:form id="WorkorderroutingViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{workorderroutingController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_workorderroutingPK_workOrderID}"/>
+                        <h:outputText value="#{workorderroutingController.selected.workorderroutingPK.workOrderID}" title="#{messages.ViewWorkorderroutingTitle_workorderroutingPK_workOrderID}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_workorderroutingPK_productID}"/>
+                        <h:outputText value="#{workorderroutingController.selected.workorderroutingPK.productID}" title="#{messages.ViewWorkorderroutingTitle_workorderroutingPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_workorderroutingPK_operationSequence}"/>
+                        <h:outputText value="#{workorderroutingController.selected.workorderroutingPK.operationSequence}" title="#{messages.ViewWorkorderroutingTitle_workorderroutingPK_operationSequence}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_locationID}"/>
+                        <h:outputText value="#{workorderroutingController.selected.locationID}" title="#{messages.ViewWorkorderroutingTitle_locationID}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_scheduledStartDate}"/>
+                        <h:outputText value="#{workorderroutingController.selected.scheduledStartDate}" title="#{messages.ViewWorkorderroutingTitle_scheduledStartDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_scheduledEndDate}"/>
+                        <h:outputText value="#{workorderroutingController.selected.scheduledEndDate}" title="#{messages.ViewWorkorderroutingTitle_scheduledEndDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_actualStartDate}"/>
+                        <h:outputText value="#{workorderroutingController.selected.actualStartDate}" title="#{messages.ViewWorkorderroutingTitle_actualStartDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_actualEndDate}"/>
+                        <h:outputText value="#{workorderroutingController.selected.actualEndDate}" title="#{messages.ViewWorkorderroutingTitle_actualEndDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_actualResourceHrs}"/>
+                        <h:outputText value="#{workorderroutingController.selected.actualResourceHrs}" title="#{messages.ViewWorkorderroutingTitle_actualResourceHrs}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_plannedCost}"/>
+                        <h:outputText value="#{workorderroutingController.selected.plannedCost}" title="#{messages.ViewWorkorderroutingTitle_plannedCost}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_actualCost}"/>
+                        <h:outputText value="#{workorderroutingController.selected.actualCost}" title="#{messages.ViewWorkorderroutingTitle_actualCost}"/>
+
+                        <h:outputText value="#{messages.ViewWorkorderroutingLabel_modifiedDate}"/>
+                        <h:outputText value="#{workorderroutingController.selected.modifiedDate}" title="#{messages.ViewWorkorderroutingTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('WorkorderroutingViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

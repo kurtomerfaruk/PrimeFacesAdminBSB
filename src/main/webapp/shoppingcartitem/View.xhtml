@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ShoppingcartitemViewDlg" widgetVar="ShoppingcartitemViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewShoppingcartitemTitle}" closeOnEscape="true">
+
+            <h:form id="ShoppingcartitemViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{shoppingcartitemController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewShoppingcartitemLabel_shoppingCartItemID}"/>
+                        <h:outputText value="#{shoppingcartitemController.selected.shoppingCartItemID}" title="#{messages.ViewShoppingcartitemTitle_shoppingCartItemID}"/>
+
+                        <h:outputText value="#{messages.ViewShoppingcartitemLabel_shoppingCartID}"/>
+                        <h:outputText value="#{shoppingcartitemController.selected.shoppingCartID}" title="#{messages.ViewShoppingcartitemTitle_shoppingCartID}"/>
+
+                        <h:outputText value="#{messages.ViewShoppingcartitemLabel_quantity}"/>
+                        <h:outputText value="#{shoppingcartitemController.selected.quantity}" title="#{messages.ViewShoppingcartitemTitle_quantity}"/>
+
+                        <h:outputText value="#{messages.ViewShoppingcartitemLabel_productID}"/>
+                        <h:outputText value="#{shoppingcartitemController.selected.productID}" title="#{messages.ViewShoppingcartitemTitle_productID}"/>
+
+                        <h:outputText value="#{messages.ViewShoppingcartitemLabel_dateCreated}"/>
+                        <h:outputText value="#{shoppingcartitemController.selected.dateCreated}" title="#{messages.ViewShoppingcartitemTitle_dateCreated}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewShoppingcartitemLabel_modifiedDate}"/>
+                        <h:outputText value="#{shoppingcartitemController.selected.modifiedDate}" title="#{messages.ViewShoppingcartitemTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ShoppingcartitemViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

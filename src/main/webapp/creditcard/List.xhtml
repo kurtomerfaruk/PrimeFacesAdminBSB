@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CreditcardListForm">
+
+        <p:panel header="#{messages.ListCreditcardTitle}">
+            <p:contextMenu id="CreditcardDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('CreditcardListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('CreditcardListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('CreditcardListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('CreditcardListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{creditcardController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{creditcardController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{creditcardController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.creditCardID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CreditcardDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CreditcardDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CreditcardListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.creditCardID}" filterBy="#{item.creditCardID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCreditcardTitle_creditCardID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.creditCardID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cardType}" filterBy="#{item.cardType}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCreditcardTitle_cardType}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cardType}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cardNumber}" filterBy="#{item.cardNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCreditcardTitle_cardNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cardNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.expMonth}" filterBy="#{item.expMonth}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCreditcardTitle_expMonth}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.expMonth}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.expYear}" filterBy="#{item.expYear}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCreditcardTitle_expYear}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.expYear}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCreditcardTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{creditcardController.prepareCreate}" update=":CreditcardCreateForm" oncomplete="PF('CreditcardCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":CreditcardViewForm" oncomplete="PF('CreditcardViewDialog').show()" disabled="#{empty creditcardController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":CreditcardEditForm" oncomplete="PF('CreditcardEditDialog').show()" disabled="#{empty creditcardController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{creditcardController.delete}" update=":growl,datalist" disabled="#{empty creditcardController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

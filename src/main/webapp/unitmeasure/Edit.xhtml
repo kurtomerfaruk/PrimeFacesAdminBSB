@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UnitmeasureEditDlg" widgetVar="UnitmeasureEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditUnitmeasureTitle}" closeOnEscape="true">
+
+            <h:form id="UnitmeasureEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{unitmeasureController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditUnitmeasureLabel_unitMeasureCode}" for="unitMeasureCode" />
+                        <h:outputText id="unitMeasureCode" value="#{unitmeasureController.selected.unitMeasureCode}" />
+
+                        <p:outputLabel value="#{messages.EditUnitmeasureLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{unitmeasureController.selected.name}" title="#{messages.EditUnitmeasureTitle_name}" required="true" requiredMessage="#{messages.EditUnitmeasureRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditUnitmeasureLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{unitmeasureController.selected.modifiedDate}" title="#{messages.EditUnitmeasureTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditUnitmeasureRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{unitmeasureController.save}" value="#{messages.Save}" update="display,:UnitmeasureListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UnitmeasureEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('UnitmeasureEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

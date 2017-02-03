@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductphotoEditDlg" widgetVar="ProductphotoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductphotoTitle}" closeOnEscape="true">
+
+            <h:form id="ProductphotoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productphotoController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductphotoLabel_productPhotoID}" for="productPhotoID" />
+                        <h:outputText id="productPhotoID" value="#{productphotoController.selected.productPhotoID}" />
+
+                        <p:outputLabel value="#{messages.EditProductphotoLabel_thumbNailPhoto}" for="thumbNailPhoto" />
+                        <p:inputTextarea rows="4" cols="30" id="thumbNailPhoto" value="#{productphotoController.selected.thumbNailPhoto}" title="#{messages.EditProductphotoTitle_thumbNailPhoto}" />
+
+                        <p:outputLabel value="#{messages.EditProductphotoLabel_thumbnailPhotoFileName}" for="thumbnailPhotoFileName" />
+                        <p:inputText id="thumbnailPhotoFileName" value="#{productphotoController.selected.thumbnailPhotoFileName}" title="#{messages.EditProductphotoTitle_thumbnailPhotoFileName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditProductphotoLabel_largePhoto}" for="largePhoto" />
+                        <p:inputTextarea rows="4" cols="30" id="largePhoto" value="#{productphotoController.selected.largePhoto}" title="#{messages.EditProductphotoTitle_largePhoto}" />
+
+                        <p:outputLabel value="#{messages.EditProductphotoLabel_largePhotoFileName}" for="largePhotoFileName" />
+                        <p:inputText id="largePhotoFileName" value="#{productphotoController.selected.largePhotoFileName}" title="#{messages.EditProductphotoTitle_largePhotoFileName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditProductphotoLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productphotoController.selected.modifiedDate}" title="#{messages.EditProductphotoTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductphotoRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productphotoController.save}" value="#{messages.Save}" update="display,:ProductphotoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductphotoEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductphotoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

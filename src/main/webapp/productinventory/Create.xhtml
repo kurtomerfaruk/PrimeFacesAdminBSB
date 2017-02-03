@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductinventoryCreateDlg" widgetVar="ProductinventoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductinventoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductinventoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productinventoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_productinventoryPK_productID}" for="productinventoryPK_productID" />
+                        <p:inputText id="productinventoryPK_productID" value="#{productinventoryController.selected.productinventoryPK.productID}" title="#{messages.CreateProductinventoryTitle_productinventoryPK_productID}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_productinventoryPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_productinventoryPK_locationID}" for="productinventoryPK_locationID" />
+                        <p:inputText id="productinventoryPK_locationID" value="#{productinventoryController.selected.productinventoryPK.locationID}" title="#{messages.CreateProductinventoryTitle_productinventoryPK_locationID}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_productinventoryPK_locationID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_shelf}" for="shelf" />
+                        <p:inputText id="shelf" value="#{productinventoryController.selected.shelf}" title="#{messages.CreateProductinventoryTitle_shelf}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_shelf}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_bin}" for="bin" />
+                        <p:inputText id="bin" value="#{productinventoryController.selected.bin}" title="#{messages.CreateProductinventoryTitle_bin}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_bin}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_quantity}" for="quantity" />
+                        <p:inputText id="quantity" value="#{productinventoryController.selected.quantity}" title="#{messages.CreateProductinventoryTitle_quantity}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_quantity}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productinventoryController.selected.rowguid}" title="#{messages.CreateProductinventoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductinventoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productinventoryController.selected.modifiedDate}" title="#{messages.CreateProductinventoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productinventoryController.saveNew}" value="#{messages.Save}" update="display,:ProductinventoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductinventoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductinventoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

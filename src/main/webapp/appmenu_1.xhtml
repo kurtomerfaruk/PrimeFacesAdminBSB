@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{messages.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="#{messages.Maintenance}">
+                    <p:menuitem value="#{messages.AddressHeading}..." outcome="/address/index" />
+                    <p:menuitem value="#{messages.AddresstypeHeading}..." outcome="/addresstype/index" />
+                    <p:menuitem value="#{messages.AwbuildversionHeading}..." outcome="/awbuildversion/index" />
+                    <p:menuitem value="#{messages.BillofmaterialsHeading}..." outcome="/billofmaterials/index" />
+                    <p:menuitem value="#{messages.ContactHeading}..." outcome="/contact/index" />
+                    <p:menuitem value="#{messages.ContactcreditcardHeading}..." outcome="/contactcreditcard/index" />
+                    <p:menuitem value="#{messages.ContacttypeHeading}..." outcome="/contacttype/index" />
+                    <p:menuitem value="#{messages.CountryregionHeading}..." outcome="/countryregion/index" />
+                    <p:menuitem value="#{messages.CountryregioncurrencyHeading}..." outcome="/countryregioncurrency/index" />
+                    <p:menuitem value="#{messages.CreditcardHeading}..." outcome="/creditcard/index" />
+                    <p:menuitem value="#{messages.CultureHeading}..." outcome="/culture/index" />
+                    <p:menuitem value="#{messages.CurrencyHeading}..." outcome="/currency/index" />
+                    <p:menuitem value="#{messages.CurrencyrateHeading}..." outcome="/currencyrate/index" />
+                    <p:menuitem value="#{messages.CustomerHeading}..." outcome="/customer/index" />
+                    <p:menuitem value="#{messages.CustomeraddressHeading}..." outcome="/customeraddress/index" />
+                    <p:menuitem value="#{messages.DepartmentHeading}..." outcome="/department/index" />
+                    <p:menuitem value="#{messages.DocumentHeading}..." outcome="/document/index" />
+                    <p:menuitem value="#{messages.EmployeeHeading}..." outcome="/employee/index" />
+                    <p:menuitem value="#{messages.EmployeeaddressHeading}..." outcome="/employeeaddress/index" />
+                    <p:menuitem value="#{messages.EmployeedepartmenthistoryHeading}..." outcome="/employeedepartmenthistory/index" />
+                    <p:menuitem value="#{messages.EmployeepayhistoryHeading}..." outcome="/employeepayhistory/index" />
+                    <p:menuitem value="#{messages.IllustrationHeading}..." outcome="/illustration/index" />
+                    <p:menuitem value="#{messages.IndividualHeading}..." outcome="/individual/index" />
+                    <p:menuitem value="#{messages.JobcandidateHeading}..." outcome="/jobcandidate/index" />
+                    <p:menuitem value="#{messages.LocationHeading}..." outcome="/location/index" />
+                    <p:menuitem value="#{messages.ProductHeading}..." outcome="/product/index" />
+                    <p:menuitem value="#{messages.ProductcategoryHeading}..." outcome="/productcategory/index" />
+                    <p:menuitem value="#{messages.ProductcosthistoryHeading}..." outcome="/productcosthistory/index" />
+                    <p:menuitem value="#{messages.ProductdescriptionHeading}..." outcome="/productdescription/index" />
+                    <p:menuitem value="#{messages.ProductdocumentHeading}..." outcome="/productdocument/index" />
+                    <p:menuitem value="#{messages.ProductinventoryHeading}..." outcome="/productinventory/index" />
+                    <p:menuitem value="#{messages.ProductlistpricehistoryHeading}..." outcome="/productlistpricehistory/index" />
+                    <p:menuitem value="#{messages.ProductmodelHeading}..." outcome="/productmodel/index" />
+                    <p:menuitem value="#{messages.ProductmodelillustrationHeading}..." outcome="/productmodelillustration/index" />
+                    <p:menuitem value="#{messages.ProductmodelproductdescriptioncultureHeading}..." outcome="/productmodelproductdescriptionculture/index" />
+                    <p:menuitem value="#{messages.ProductphotoHeading}..." outcome="/productphoto/index" />
+                    <p:menuitem value="#{messages.ProductproductphotoHeading}..." outcome="/productproductphoto/index" />
+                    <p:menuitem value="#{messages.ProductreviewHeading}..." outcome="/productreview/index" />
+                    <p:menuitem value="#{messages.ProductsubcategoryHeading}..." outcome="/productsubcategory/index" />
+                    <p:menuitem value="#{messages.ProductvendorHeading}..." outcome="/productvendor/index" />
+                    <p:menuitem value="#{messages.PurchaseorderdetailHeading}..." outcome="/purchaseorderdetail/index" />
+                    <p:menuitem value="#{messages.SalesorderdetailHeading}..." outcome="/salesorderdetail/index" />
+                    <p:menuitem value="#{messages.SalesorderheaderHeading}..." outcome="/salesorderheader/index" />
+                    <p:menuitem value="#{messages.SalesorderheadersalesreasonHeading}..." outcome="/salesorderheadersalesreason/index" />
+                    <p:menuitem value="#{messages.SalespersonHeading}..." outcome="/salesperson/index" />
+                    <p:menuitem value="#{messages.SalespersonquotahistoryHeading}..." outcome="/salespersonquotahistory/index" />
+                    <p:menuitem value="#{messages.SalesreasonHeading}..." outcome="/salesreason/index" />
+                    <p:menuitem value="#{messages.SalestaxrateHeading}..." outcome="/salestaxrate/index" />
+                    <p:menuitem value="#{messages.SalesterritoryHeading}..." outcome="/salesterritory/index" />
+                    <p:menuitem value="#{messages.SalesterritoryhistoryHeading}..." outcome="/salesterritoryhistory/index" />
+                    <p:menuitem value="#{messages.ScrapreasonHeading}..." outcome="/scrapreason/index" />
+                    <p:menuitem value="#{messages.ShiftHeading}..." outcome="/shift/index" />
+                    <p:menuitem value="#{messages.ShipmethodHeading}..." outcome="/shipmethod/index" />
+                    <p:menuitem value="#{messages.ShoppingcartitemHeading}..." outcome="/shoppingcartitem/index" />
+                    <p:menuitem value="#{messages.SpecialofferHeading}..." outcome="/specialoffer/index" />
+                    <p:menuitem value="#{messages.SpecialofferproductHeading}..." outcome="/specialofferproduct/index" />
+                    <p:menuitem value="#{messages.StateprovinceHeading}..." outcome="/stateprovince/index" />
+                    <p:menuitem value="#{messages.StoreHeading}..." outcome="/store/index" />
+                    <p:menuitem value="#{messages.StorecontactHeading}..." outcome="/storecontact/index" />
+                    <p:menuitem value="#{messages.TransactionhistoryHeading}..." outcome="/transactionhistory/index" />
+                    <p:menuitem value="#{messages.TransactionhistoryarchiveHeading}..." outcome="/transactionhistoryarchive/index" />
+                    <p:menuitem value="#{messages.UnitmeasureHeading}..." outcome="/unitmeasure/index" />
+                    <p:menuitem value="#{messages.VendorHeading}..." outcome="/vendor/index" />
+                    <p:menuitem value="#{messages.VendoraddressHeading}..." outcome="/vendoraddress/index" />
+                    <p:menuitem value="#{messages.VendorcontactHeading}..." outcome="/vendorcontact/index" />
+                    <p:menuitem value="#{messages.WorkorderHeading}..." outcome="/workorder/index" />
+                    <p:menuitem value="#{messages.WorkorderroutingHeading}..." outcome="/workorderrouting/index" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+
+</html>

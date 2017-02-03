@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="IllustrationCreateDlg" widgetVar="IllustrationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateIllustrationTitle}" closeOnEscape="true">
+
+            <h:form id="IllustrationCreateForm">
+
+                <h:panelGroup id="display" rendered="#{illustrationController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateIllustrationLabel_diagram}" for="diagram" />
+                        <p:inputTextarea rows="4" cols="30" id="diagram" value="#{illustrationController.selected.diagram}" title="#{messages.CreateIllustrationTitle_diagram}" />
+
+                        <p:outputLabel value="#{messages.CreateIllustrationLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{illustrationController.selected.modifiedDate}" title="#{messages.CreateIllustrationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateIllustrationRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{illustrationController.saveNew}" value="#{messages.Save}" update="display,:IllustrationListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('IllustrationCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('IllustrationCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

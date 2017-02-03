@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductphotoCreateDlg" widgetVar="ProductphotoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductphotoTitle}" closeOnEscape="true">
+
+            <h:form id="ProductphotoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productphotoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductphotoLabel_thumbNailPhoto}" for="thumbNailPhoto" />
+                        <p:inputTextarea rows="4" cols="30" id="thumbNailPhoto" value="#{productphotoController.selected.thumbNailPhoto}" title="#{messages.CreateProductphotoTitle_thumbNailPhoto}" />
+
+                        <p:outputLabel value="#{messages.CreateProductphotoLabel_thumbnailPhotoFileName}" for="thumbnailPhotoFileName" />
+                        <p:inputText id="thumbnailPhotoFileName" value="#{productphotoController.selected.thumbnailPhotoFileName}" title="#{messages.CreateProductphotoTitle_thumbnailPhotoFileName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateProductphotoLabel_largePhoto}" for="largePhoto" />
+                        <p:inputTextarea rows="4" cols="30" id="largePhoto" value="#{productphotoController.selected.largePhoto}" title="#{messages.CreateProductphotoTitle_largePhoto}" />
+
+                        <p:outputLabel value="#{messages.CreateProductphotoLabel_largePhotoFileName}" for="largePhotoFileName" />
+                        <p:inputText id="largePhotoFileName" value="#{productphotoController.selected.largePhotoFileName}" title="#{messages.CreateProductphotoTitle_largePhotoFileName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateProductphotoLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productphotoController.selected.modifiedDate}" title="#{messages.CreateProductphotoTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductphotoRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productphotoController.saveNew}" value="#{messages.Save}" update="display,:ProductphotoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductphotoCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductphotoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

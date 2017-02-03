@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContactViewDlg" widgetVar="ContactViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewContactTitle}" closeOnEscape="true">
+
+            <h:form id="ContactViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{contactController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewContactLabel_contactID}"/>
+                        <h:outputText value="#{contactController.selected.contactID}" title="#{messages.ViewContactTitle_contactID}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_nameStyle}"/>
+                        <h:selectBooleanCheckbox id="nameStyle" value="#{contactController.selected.nameStyle}" title="#{messages.EditContactTitle_nameStyle}" required="true" requiredMessage="#{messages.EditContactRequiredMessage_nameStyle}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_title}"/>
+                        <h:outputText value="#{contactController.selected.title}" title="#{messages.ViewContactTitle_title}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_firstName}"/>
+                        <h:outputText value="#{contactController.selected.firstName}" title="#{messages.ViewContactTitle_firstName}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_middleName}"/>
+                        <h:outputText value="#{contactController.selected.middleName}" title="#{messages.ViewContactTitle_middleName}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_lastName}"/>
+                        <h:outputText value="#{contactController.selected.lastName}" title="#{messages.ViewContactTitle_lastName}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_suffix}"/>
+                        <h:outputText value="#{contactController.selected.suffix}" title="#{messages.ViewContactTitle_suffix}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_emailAddress}"/>
+                        <h:outputText value="#{contactController.selected.emailAddress}" title="#{messages.ViewContactTitle_emailAddress}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_emailPromotion}"/>
+                        <h:outputText value="#{contactController.selected.emailPromotion}" title="#{messages.ViewContactTitle_emailPromotion}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_phone}"/>
+                        <h:outputText value="#{contactController.selected.phone}" title="#{messages.ViewContactTitle_phone}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_passwordHash}"/>
+                        <h:outputText value="#{contactController.selected.passwordHash}" title="#{messages.ViewContactTitle_passwordHash}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_passwordSalt}"/>
+                        <h:outputText value="#{contactController.selected.passwordSalt}" title="#{messages.ViewContactTitle_passwordSalt}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_additionalContactInfo}"/>
+                        <h:outputText value="#{contactController.selected.additionalContactInfo}" title="#{messages.ViewContactTitle_additionalContactInfo}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_rowguid}"/>
+                        <h:outputText value="#{contactController.selected.rowguid}" title="#{messages.ViewContactTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewContactLabel_modifiedDate}"/>
+                        <h:outputText value="#{contactController.selected.modifiedDate}" title="#{messages.ViewContactTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ContactViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

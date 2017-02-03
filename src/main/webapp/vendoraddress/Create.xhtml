@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VendoraddressCreateDlg" widgetVar="VendoraddressCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateVendoraddressTitle}" closeOnEscape="true">
+
+            <h:form id="VendoraddressCreateForm">
+
+                <h:panelGroup id="display" rendered="#{vendoraddressController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateVendoraddressLabel_vendoraddressPK_vendorID}" for="vendoraddressPK_vendorID" />
+                        <p:inputText id="vendoraddressPK_vendorID" value="#{vendoraddressController.selected.vendoraddressPK.vendorID}" title="#{messages.CreateVendoraddressTitle_vendoraddressPK_vendorID}" required="true" requiredMessage="#{messages.CreateVendoraddressRequiredMessage_vendoraddressPK_vendorID}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendoraddressLabel_vendoraddressPK_addressID}" for="vendoraddressPK_addressID" />
+                        <p:inputText id="vendoraddressPK_addressID" value="#{vendoraddressController.selected.vendoraddressPK.addressID}" title="#{messages.CreateVendoraddressTitle_vendoraddressPK_addressID}" required="true" requiredMessage="#{messages.CreateVendoraddressRequiredMessage_vendoraddressPK_addressID}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendoraddressLabel_addressTypeID}" for="addressTypeID" />
+                        <p:inputText id="addressTypeID" value="#{vendoraddressController.selected.addressTypeID}" title="#{messages.CreateVendoraddressTitle_addressTypeID}" required="true" requiredMessage="#{messages.CreateVendoraddressRequiredMessage_addressTypeID}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendoraddressLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vendoraddressController.selected.modifiedDate}" title="#{messages.CreateVendoraddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateVendoraddressRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vendoraddressController.saveNew}" value="#{messages.Save}" update="display,:VendoraddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VendoraddressCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('VendoraddressCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

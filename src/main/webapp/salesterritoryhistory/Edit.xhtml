@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SalesterritoryhistoryEditDlg" widgetVar="SalesterritoryhistoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalesterritoryhistoryTitle}" closeOnEscape="true">
+
+            <h:form id="SalesterritoryhistoryEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{salesterritoryhistoryController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditSalesterritoryhistoryLabel_salesterritoryhistoryPK_salesPersonID}" for="salesterritoryhistoryPK_salesPersonID" />
+                        <h:outputText id="salesterritoryhistoryPK_salesPersonID" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.salesPersonID}" />
+
+
+                        <h:outputLabel value="#{messages.EditSalesterritoryhistoryLabel_salesterritoryhistoryPK_territoryID}" for="salesterritoryhistoryPK_territoryID" />
+                        <h:outputText id="salesterritoryhistoryPK_territoryID" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.territoryID}" />
+
+
+                        <h:outputLabel value="#{messages.EditSalesterritoryhistoryLabel_salesterritoryhistoryPK_startDate}" for="salesterritoryhistoryPK_startDate" />
+                        <h:outputText id="salesterritoryhistoryPK_startDate" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.startDate}" />
+
+                        <p:outputLabel value="#{messages.EditSalesterritoryhistoryLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesterritoryhistoryController.selected.endDate}" title="#{messages.EditSalesterritoryhistoryTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditSalesterritoryhistoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesterritoryhistoryController.selected.rowguid}" title="#{messages.EditSalesterritoryhistoryTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalesterritoryhistoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditSalesterritoryhistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesterritoryhistoryController.selected.modifiedDate}" title="#{messages.EditSalesterritoryhistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalesterritoryhistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salesterritoryhistoryController.save}" value="#{messages.Save}" update="display,:SalesterritoryhistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesterritoryhistoryEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesterritoryhistoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

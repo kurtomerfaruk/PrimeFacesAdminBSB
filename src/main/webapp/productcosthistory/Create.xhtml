@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductcosthistoryCreateDlg" widgetVar="ProductcosthistoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductcosthistoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductcosthistoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productcosthistoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_productcosthistoryPK_productID}" for="productcosthistoryPK_productID" />
+                        <p:inputText id="productcosthistoryPK_productID" value="#{productcosthistoryController.selected.productcosthistoryPK.productID}" title="#{messages.CreateProductcosthistoryTitle_productcosthistoryPK_productID}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_productcosthistoryPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_productcosthistoryPK_startDate}" for="productcosthistoryPK_startDate" />
+                        <p:calendar id="productcosthistoryPK_startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcosthistoryController.selected.productcosthistoryPK.startDate}" title="#{messages.CreateProductcosthistoryTitle_productcosthistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_productcosthistoryPK_startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcosthistoryController.selected.endDate}" title="#{messages.CreateProductcosthistoryTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_standardCost}" for="standardCost" />
+                        <p:inputText id="standardCost" value="#{productcosthistoryController.selected.standardCost}" title="#{messages.CreateProductcosthistoryTitle_standardCost}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_standardCost}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcosthistoryController.selected.modifiedDate}" title="#{messages.CreateProductcosthistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productcosthistoryController.saveNew}" value="#{messages.Save}" update="display,:ProductcosthistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductcosthistoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductcosthistoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

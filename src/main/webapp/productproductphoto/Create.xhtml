@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductproductphotoCreateDlg" widgetVar="ProductproductphotoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductproductphotoTitle}" closeOnEscape="true">
+
+            <h:form id="ProductproductphotoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productproductphotoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductproductphotoLabel_productproductphotoPK_productID}" for="productproductphotoPK_productID" />
+                        <p:inputText id="productproductphotoPK_productID" value="#{productproductphotoController.selected.productproductphotoPK.productID}" title="#{messages.CreateProductproductphotoTitle_productproductphotoPK_productID}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_productproductphotoPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductproductphotoLabel_productproductphotoPK_productPhotoID}" for="productproductphotoPK_productPhotoID" />
+                        <p:inputText id="productproductphotoPK_productPhotoID" value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}" title="#{messages.CreateProductproductphotoTitle_productproductphotoPK_productPhotoID}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_productproductphotoPK_productPhotoID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductproductphotoLabel_primary}" for="primary" />
+                        <p:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_primary}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductproductphotoLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productproductphotoController.selected.modifiedDate}" title="#{messages.CreateProductproductphotoTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productproductphotoController.saveNew}" value="#{messages.Save}" update="display,:ProductproductphotoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductproductphotoCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductproductphotoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

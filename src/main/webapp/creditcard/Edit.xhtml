@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CreditcardEditDlg" widgetVar="CreditcardEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditCreditcardTitle}" closeOnEscape="true">
+
+            <h:form id="CreditcardEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{creditcardController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditCreditcardLabel_creditCardID}" for="creditCardID" />
+                        <h:outputText id="creditCardID" value="#{creditcardController.selected.creditCardID}" />
+
+                        <p:outputLabel value="#{messages.EditCreditcardLabel_cardType}" for="cardType" />
+                        <p:inputText id="cardType" value="#{creditcardController.selected.cardType}" title="#{messages.EditCreditcardTitle_cardType}" required="true" requiredMessage="#{messages.EditCreditcardRequiredMessage_cardType}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditCreditcardLabel_cardNumber}" for="cardNumber" />
+                        <p:inputText id="cardNumber" value="#{creditcardController.selected.cardNumber}" title="#{messages.EditCreditcardTitle_cardNumber}" required="true" requiredMessage="#{messages.EditCreditcardRequiredMessage_cardNumber}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{messages.EditCreditcardLabel_expMonth}" for="expMonth" />
+                        <p:inputText id="expMonth" value="#{creditcardController.selected.expMonth}" title="#{messages.EditCreditcardTitle_expMonth}" required="true" requiredMessage="#{messages.EditCreditcardRequiredMessage_expMonth}"/>
+
+                        <p:outputLabel value="#{messages.EditCreditcardLabel_expYear}" for="expYear" />
+                        <p:inputText id="expYear" value="#{creditcardController.selected.expYear}" title="#{messages.EditCreditcardTitle_expYear}" required="true" requiredMessage="#{messages.EditCreditcardRequiredMessage_expYear}"/>
+
+                        <p:outputLabel value="#{messages.EditCreditcardLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{creditcardController.selected.modifiedDate}" title="#{messages.EditCreditcardTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditCreditcardRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{creditcardController.save}" value="#{messages.Save}" update="display,:CreditcardListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CreditcardEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CreditcardEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

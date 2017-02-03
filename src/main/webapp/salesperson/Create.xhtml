@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalespersonCreateDlg" widgetVar="SalespersonCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSalespersonTitle}" closeOnEscape="true">
+
+            <h:form id="SalespersonCreateForm">
+
+                <h:panelGroup id="display" rendered="#{salespersonController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_salesPersonID}" for="salesPersonID" />
+                        <p:inputText id="salesPersonID" value="#{salespersonController.selected.salesPersonID}" title="#{messages.CreateSalespersonTitle_salesPersonID}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_salesPersonID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_territoryID}" for="territoryID" />
+                        <p:inputText id="territoryID" value="#{salespersonController.selected.territoryID}" title="#{messages.CreateSalespersonTitle_territoryID}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_salesQuota}" for="salesQuota" />
+                        <p:inputText id="salesQuota" value="#{salespersonController.selected.salesQuota}" title="#{messages.CreateSalespersonTitle_salesQuota}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_bonus}" for="bonus" />
+                        <p:inputText id="bonus" value="#{salespersonController.selected.bonus}" title="#{messages.CreateSalespersonTitle_bonus}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_bonus}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_commissionPct}" for="commissionPct" />
+                        <p:inputText id="commissionPct" value="#{salespersonController.selected.commissionPct}" title="#{messages.CreateSalespersonTitle_commissionPct}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_commissionPct}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_salesYTD}" for="salesYTD" />
+                        <p:inputText id="salesYTD" value="#{salespersonController.selected.salesYTD}" title="#{messages.CreateSalespersonTitle_salesYTD}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_salesYTD}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_salesLastYear}" for="salesLastYear" />
+                        <p:inputText id="salesLastYear" value="#{salespersonController.selected.salesLastYear}" title="#{messages.CreateSalespersonTitle_salesLastYear}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_salesLastYear}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salespersonController.selected.rowguid}" title="#{messages.CreateSalespersonTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalespersonLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salespersonController.selected.modifiedDate}" title="#{messages.CreateSalespersonTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salespersonController.saveNew}" value="#{messages.Save}" update="display,:SalespersonListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalespersonCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalespersonCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

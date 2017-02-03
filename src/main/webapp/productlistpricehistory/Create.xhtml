@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductlistpricehistoryCreateDlg" widgetVar="ProductlistpricehistoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductlistpricehistoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductlistpricehistoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productlistpricehistoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductlistpricehistoryLabel_productlistpricehistoryPK_productID}" for="productlistpricehistoryPK_productID" />
+                        <p:inputText id="productlistpricehistoryPK_productID" value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.productID}" title="#{messages.CreateProductlistpricehistoryTitle_productlistpricehistoryPK_productID}" required="true" requiredMessage="#{messages.CreateProductlistpricehistoryRequiredMessage_productlistpricehistoryPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductlistpricehistoryLabel_productlistpricehistoryPK_startDate}" for="productlistpricehistoryPK_startDate" />
+                        <p:calendar id="productlistpricehistoryPK_startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.startDate}" title="#{messages.CreateProductlistpricehistoryTitle_productlistpricehistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateProductlistpricehistoryRequiredMessage_productlistpricehistoryPK_startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateProductlistpricehistoryLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productlistpricehistoryController.selected.endDate}" title="#{messages.CreateProductlistpricehistoryTitle_endDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateProductlistpricehistoryLabel_listPrice}" for="listPrice" />
+                        <p:inputText id="listPrice" value="#{productlistpricehistoryController.selected.listPrice}" title="#{messages.CreateProductlistpricehistoryTitle_listPrice}" required="true" requiredMessage="#{messages.CreateProductlistpricehistoryRequiredMessage_listPrice}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductlistpricehistoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productlistpricehistoryController.selected.modifiedDate}" title="#{messages.CreateProductlistpricehistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductlistpricehistoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productlistpricehistoryController.saveNew}" value="#{messages.Save}" update="display,:ProductlistpricehistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductlistpricehistoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductlistpricehistoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ShoppingcartitemEditDlg" widgetVar="ShoppingcartitemEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditShoppingcartitemTitle}" closeOnEscape="true">
+
+            <h:form id="ShoppingcartitemEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{shoppingcartitemController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditShoppingcartitemLabel_shoppingCartItemID}" for="shoppingCartItemID" />
+                        <h:outputText id="shoppingCartItemID" value="#{shoppingcartitemController.selected.shoppingCartItemID}" />
+
+                        <p:outputLabel value="#{messages.EditShoppingcartitemLabel_shoppingCartID}" for="shoppingCartID" />
+                        <p:inputText id="shoppingCartID" value="#{shoppingcartitemController.selected.shoppingCartID}" title="#{messages.EditShoppingcartitemTitle_shoppingCartID}" required="true" requiredMessage="#{messages.EditShoppingcartitemRequiredMessage_shoppingCartID}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditShoppingcartitemLabel_quantity}" for="quantity" />
+                        <p:inputText id="quantity" value="#{shoppingcartitemController.selected.quantity}" title="#{messages.EditShoppingcartitemTitle_quantity}" required="true" requiredMessage="#{messages.EditShoppingcartitemRequiredMessage_quantity}"/>
+
+                        <p:outputLabel value="#{messages.EditShoppingcartitemLabel_productID}" for="productID" />
+                        <p:inputText id="productID" value="#{shoppingcartitemController.selected.productID}" title="#{messages.EditShoppingcartitemTitle_productID}" required="true" requiredMessage="#{messages.EditShoppingcartitemRequiredMessage_productID}"/>
+
+                        <p:outputLabel value="#{messages.EditShoppingcartitemLabel_dateCreated}" for="dateCreated" />
+                        <p:calendar id="dateCreated" pattern="MM/dd/yyyy HH:mm:ss" value="#{shoppingcartitemController.selected.dateCreated}" title="#{messages.EditShoppingcartitemTitle_dateCreated}" required="true" requiredMessage="#{messages.EditShoppingcartitemRequiredMessage_dateCreated}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditShoppingcartitemLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{shoppingcartitemController.selected.modifiedDate}" title="#{messages.EditShoppingcartitemTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditShoppingcartitemRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{shoppingcartitemController.save}" value="#{messages.Save}" update="display,:ShoppingcartitemListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ShoppingcartitemEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ShoppingcartitemEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

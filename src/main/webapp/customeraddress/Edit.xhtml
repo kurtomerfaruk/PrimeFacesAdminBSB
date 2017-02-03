@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CustomeraddressEditDlg" widgetVar="CustomeraddressEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditCustomeraddressTitle}" closeOnEscape="true">
+
+            <h:form id="CustomeraddressEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{customeraddressController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditCustomeraddressLabel_customeraddressPK_customerID}" for="customeraddressPK_customerID" />
+                        <h:outputText id="customeraddressPK_customerID" value="#{customeraddressController.selected.customeraddressPK.customerID}" />
+
+
+                        <h:outputLabel value="#{messages.EditCustomeraddressLabel_customeraddressPK_addressID}" for="customeraddressPK_addressID" />
+                        <h:outputText id="customeraddressPK_addressID" value="#{customeraddressController.selected.customeraddressPK.addressID}" />
+
+                        <p:outputLabel value="#{messages.EditCustomeraddressLabel_addressTypeID}" for="addressTypeID" />
+                        <p:inputText id="addressTypeID" value="#{customeraddressController.selected.addressTypeID}" title="#{messages.EditCustomeraddressTitle_addressTypeID}" required="true" requiredMessage="#{messages.EditCustomeraddressRequiredMessage_addressTypeID}"/>
+
+                        <p:outputLabel value="#{messages.EditCustomeraddressLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{customeraddressController.selected.rowguid}" title="#{messages.EditCustomeraddressTitle_rowguid}" required="true" requiredMessage="#{messages.EditCustomeraddressRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditCustomeraddressLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{customeraddressController.selected.modifiedDate}" title="#{messages.EditCustomeraddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditCustomeraddressRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{customeraddressController.save}" value="#{messages.Save}" update="display,:CustomeraddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CustomeraddressEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CustomeraddressEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

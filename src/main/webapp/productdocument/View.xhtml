@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductdocumentViewDlg" widgetVar="ProductdocumentViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductdocumentTitle}" closeOnEscape="true">
+
+            <h:form id="ProductdocumentViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productdocumentController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductdocumentLabel_productdocumentPK_productID}"/>
+                        <h:outputText value="#{productdocumentController.selected.productdocumentPK.productID}" title="#{messages.ViewProductdocumentTitle_productdocumentPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewProductdocumentLabel_productdocumentPK_documentID}"/>
+                        <h:outputText value="#{productdocumentController.selected.productdocumentPK.documentID}" title="#{messages.ViewProductdocumentTitle_productdocumentPK_documentID}"/>
+
+                        <h:outputText value="#{messages.ViewProductdocumentLabel_modifiedDate}"/>
+                        <h:outputText value="#{productdocumentController.selected.modifiedDate}" title="#{messages.ViewProductdocumentTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductdocumentViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

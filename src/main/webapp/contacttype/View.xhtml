@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContacttypeViewDlg" widgetVar="ContacttypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewContacttypeTitle}" closeOnEscape="true">
+
+            <h:form id="ContacttypeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{contacttypeController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewContacttypeLabel_contactTypeID}"/>
+                        <h:outputText value="#{contacttypeController.selected.contactTypeID}" title="#{messages.ViewContacttypeTitle_contactTypeID}"/>
+
+                        <h:outputText value="#{messages.ViewContacttypeLabel_name}"/>
+                        <h:outputText value="#{contacttypeController.selected.name}" title="#{messages.ViewContacttypeTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewContacttypeLabel_modifiedDate}"/>
+                        <h:outputText value="#{contacttypeController.selected.modifiedDate}" title="#{messages.ViewContacttypeTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ContacttypeViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

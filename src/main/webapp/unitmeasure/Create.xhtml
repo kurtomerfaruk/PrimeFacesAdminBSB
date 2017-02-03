@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UnitmeasureCreateDlg" widgetVar="UnitmeasureCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateUnitmeasureTitle}" closeOnEscape="true">
+
+            <h:form id="UnitmeasureCreateForm">
+
+                <h:panelGroup id="display" rendered="#{unitmeasureController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateUnitmeasureLabel_unitMeasureCode}" for="unitMeasureCode" />
+                        <p:inputText id="unitMeasureCode" value="#{unitmeasureController.selected.unitMeasureCode}" title="#{messages.CreateUnitmeasureTitle_unitMeasureCode}" required="true" requiredMessage="#{messages.CreateUnitmeasureRequiredMessage_unitMeasureCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateUnitmeasureLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{unitmeasureController.selected.name}" title="#{messages.CreateUnitmeasureTitle_name}" required="true" requiredMessage="#{messages.CreateUnitmeasureRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateUnitmeasureLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{unitmeasureController.selected.modifiedDate}" title="#{messages.CreateUnitmeasureTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateUnitmeasureRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{unitmeasureController.saveNew}" value="#{messages.Save}" update="display,:UnitmeasureListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UnitmeasureCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('UnitmeasureCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

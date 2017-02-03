@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JobcandidateViewDlg" widgetVar="JobcandidateViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewJobcandidateTitle}" closeOnEscape="true">
+
+            <h:form id="JobcandidateViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{jobcandidateController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewJobcandidateLabel_jobCandidateID}"/>
+                        <h:outputText value="#{jobcandidateController.selected.jobCandidateID}" title="#{messages.ViewJobcandidateTitle_jobCandidateID}"/>
+
+                        <h:outputText value="#{messages.ViewJobcandidateLabel_employeeID}"/>
+                        <h:outputText value="#{jobcandidateController.selected.employeeID}" title="#{messages.ViewJobcandidateTitle_employeeID}"/>
+
+                        <h:outputText value="#{messages.ViewJobcandidateLabel_resume}"/>
+                        <h:outputText value="#{jobcandidateController.selected.resume}" title="#{messages.ViewJobcandidateTitle_resume}"/>
+
+                        <h:outputText value="#{messages.ViewJobcandidateLabel_modifiedDate}"/>
+                        <h:outputText value="#{jobcandidateController.selected.modifiedDate}" title="#{messages.ViewJobcandidateTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('JobcandidateViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

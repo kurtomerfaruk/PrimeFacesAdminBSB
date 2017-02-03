@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CustomerViewDlg" widgetVar="CustomerViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewCustomerTitle}" closeOnEscape="true">
+
+            <h:form id="CustomerViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{customerController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewCustomerLabel_customerID}"/>
+                        <h:outputText value="#{customerController.selected.customerID}" title="#{messages.ViewCustomerTitle_customerID}"/>
+
+                        <h:outputText value="#{messages.ViewCustomerLabel_territoryID}"/>
+                        <h:outputText value="#{customerController.selected.territoryID}" title="#{messages.ViewCustomerTitle_territoryID}"/>
+
+                        <h:outputText value="#{messages.ViewCustomerLabel_accountNumber}"/>
+                        <h:outputText value="#{customerController.selected.accountNumber}" title="#{messages.ViewCustomerTitle_accountNumber}"/>
+
+                        <h:outputText value="#{messages.ViewCustomerLabel_customerType}"/>
+                        <h:outputText value="#{customerController.selected.customerType}" title="#{messages.ViewCustomerTitle_customerType}"/>
+
+                        <h:outputText value="#{messages.ViewCustomerLabel_rowguid}"/>
+                        <h:outputText value="#{customerController.selected.rowguid}" title="#{messages.ViewCustomerTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewCustomerLabel_modifiedDate}"/>
+                        <h:outputText value="#{customerController.selected.modifiedDate}" title="#{messages.ViewCustomerTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('CustomerViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

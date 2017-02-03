@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkorderroutingCreateDlg" widgetVar="WorkorderroutingCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateWorkorderroutingTitle}" closeOnEscape="true">
+
+            <h:form id="WorkorderroutingCreateForm">
+
+                <h:panelGroup id="display" rendered="#{workorderroutingController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_workorderroutingPK_workOrderID}" for="workorderroutingPK_workOrderID" />
+                        <p:inputText id="workorderroutingPK_workOrderID" value="#{workorderroutingController.selected.workorderroutingPK.workOrderID}" title="#{messages.CreateWorkorderroutingTitle_workorderroutingPK_workOrderID}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_workorderroutingPK_workOrderID}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_workorderroutingPK_productID}" for="workorderroutingPK_productID" />
+                        <p:inputText id="workorderroutingPK_productID" value="#{workorderroutingController.selected.workorderroutingPK.productID}" title="#{messages.CreateWorkorderroutingTitle_workorderroutingPK_productID}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_workorderroutingPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_workorderroutingPK_operationSequence}" for="workorderroutingPK_operationSequence" />
+                        <p:inputText id="workorderroutingPK_operationSequence" value="#{workorderroutingController.selected.workorderroutingPK.operationSequence}" title="#{messages.CreateWorkorderroutingTitle_workorderroutingPK_operationSequence}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_workorderroutingPK_operationSequence}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_locationID}" for="locationID" />
+                        <p:inputText id="locationID" value="#{workorderroutingController.selected.locationID}" title="#{messages.CreateWorkorderroutingTitle_locationID}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_locationID}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_scheduledStartDate}" for="scheduledStartDate" />
+                        <p:calendar id="scheduledStartDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderroutingController.selected.scheduledStartDate}" title="#{messages.CreateWorkorderroutingTitle_scheduledStartDate}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_scheduledStartDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_scheduledEndDate}" for="scheduledEndDate" />
+                        <p:calendar id="scheduledEndDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderroutingController.selected.scheduledEndDate}" title="#{messages.CreateWorkorderroutingTitle_scheduledEndDate}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_scheduledEndDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_actualStartDate}" for="actualStartDate" />
+                        <p:calendar id="actualStartDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderroutingController.selected.actualStartDate}" title="#{messages.CreateWorkorderroutingTitle_actualStartDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_actualEndDate}" for="actualEndDate" />
+                        <p:calendar id="actualEndDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderroutingController.selected.actualEndDate}" title="#{messages.CreateWorkorderroutingTitle_actualEndDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_actualResourceHrs}" for="actualResourceHrs" />
+                        <p:inputText id="actualResourceHrs" value="#{workorderroutingController.selected.actualResourceHrs}" title="#{messages.CreateWorkorderroutingTitle_actualResourceHrs}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_plannedCost}" for="plannedCost" />
+                        <p:inputText id="plannedCost" value="#{workorderroutingController.selected.plannedCost}" title="#{messages.CreateWorkorderroutingTitle_plannedCost}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_plannedCost}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_actualCost}" for="actualCost" />
+                        <p:inputText id="actualCost" value="#{workorderroutingController.selected.actualCost}" title="#{messages.CreateWorkorderroutingTitle_actualCost}"/>
+
+                        <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderroutingController.selected.modifiedDate}" title="#{messages.CreateWorkorderroutingTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{workorderroutingController.saveNew}" value="#{messages.Save}" update="display,:WorkorderroutingListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('WorkorderroutingCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('WorkorderroutingCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

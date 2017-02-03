@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CurrencyrateEditDlg" widgetVar="CurrencyrateEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditCurrencyrateTitle}" closeOnEscape="true">
+
+            <h:form id="CurrencyrateEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{currencyrateController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditCurrencyrateLabel_currencyRateID}" for="currencyRateID" />
+                        <h:outputText id="currencyRateID" value="#{currencyrateController.selected.currencyRateID}" />
+
+                        <p:outputLabel value="#{messages.EditCurrencyrateLabel_currencyRateDate}" for="currencyRateDate" />
+                        <p:calendar id="currencyRateDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{currencyrateController.selected.currencyRateDate}" title="#{messages.EditCurrencyrateTitle_currencyRateDate}" required="true" requiredMessage="#{messages.EditCurrencyrateRequiredMessage_currencyRateDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditCurrencyrateLabel_fromCurrencyCode}" for="fromCurrencyCode" />
+                        <p:inputText id="fromCurrencyCode" value="#{currencyrateController.selected.fromCurrencyCode}" title="#{messages.EditCurrencyrateTitle_fromCurrencyCode}" required="true" requiredMessage="#{messages.EditCurrencyrateRequiredMessage_fromCurrencyCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.EditCurrencyrateLabel_toCurrencyCode}" for="toCurrencyCode" />
+                        <p:inputText id="toCurrencyCode" value="#{currencyrateController.selected.toCurrencyCode}" title="#{messages.EditCurrencyrateTitle_toCurrencyCode}" required="true" requiredMessage="#{messages.EditCurrencyrateRequiredMessage_toCurrencyCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.EditCurrencyrateLabel_averageRate}" for="averageRate" />
+                        <p:inputText id="averageRate" value="#{currencyrateController.selected.averageRate}" title="#{messages.EditCurrencyrateTitle_averageRate}" required="true" requiredMessage="#{messages.EditCurrencyrateRequiredMessage_averageRate}"/>
+
+                        <p:outputLabel value="#{messages.EditCurrencyrateLabel_endOfDayRate}" for="endOfDayRate" />
+                        <p:inputText id="endOfDayRate" value="#{currencyrateController.selected.endOfDayRate}" title="#{messages.EditCurrencyrateTitle_endOfDayRate}" required="true" requiredMessage="#{messages.EditCurrencyrateRequiredMessage_endOfDayRate}"/>
+
+                        <p:outputLabel value="#{messages.EditCurrencyrateLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{currencyrateController.selected.modifiedDate}" title="#{messages.EditCurrencyrateTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditCurrencyrateRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{currencyrateController.save}" value="#{messages.Save}" update="display,:CurrencyrateListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CurrencyrateEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CurrencyrateEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

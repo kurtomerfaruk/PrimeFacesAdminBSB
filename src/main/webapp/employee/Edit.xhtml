@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EmployeeEditDlg" widgetVar="EmployeeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditEmployeeTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{employeeController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditEmployeeLabel_employeeID}" for="employeeID" />
+                        <h:outputText id="employeeID" value="#{employeeController.selected.employeeID}" />
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_nationalIDNumber}" for="nationalIDNumber" />
+                        <p:inputText id="nationalIDNumber" value="#{employeeController.selected.nationalIDNumber}" title="#{messages.EditEmployeeTitle_nationalIDNumber}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_nationalIDNumber}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_contactID}" for="contactID" />
+                        <p:inputText id="contactID" value="#{employeeController.selected.contactID}" title="#{messages.EditEmployeeTitle_contactID}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_contactID}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_loginID}" for="loginID" />
+                        <p:inputTextarea rows="4" cols="30" id="loginID" value="#{employeeController.selected.loginID}" title="#{messages.EditEmployeeTitle_loginID}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_loginID}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_managerID}" for="managerID" />
+                        <p:inputText id="managerID" value="#{employeeController.selected.managerID}" title="#{messages.EditEmployeeTitle_managerID}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_title}" for="title" />
+                        <p:inputText id="title" value="#{employeeController.selected.title}" title="#{messages.EditEmployeeTitle_title}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_title}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_birthDate}" for="birthDate" />
+                        <p:calendar id="birthDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeeController.selected.birthDate}" title="#{messages.EditEmployeeTitle_birthDate}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_birthDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_maritalStatus}" for="maritalStatus" />
+                        <p:inputText id="maritalStatus" value="#{employeeController.selected.maritalStatus}" title="#{messages.EditEmployeeTitle_maritalStatus}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_maritalStatus}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_gender}" for="gender" />
+                        <p:inputText id="gender" value="#{employeeController.selected.gender}" title="#{messages.EditEmployeeTitle_gender}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_gender}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_hireDate}" for="hireDate" />
+                        <p:calendar id="hireDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeeController.selected.hireDate}" title="#{messages.EditEmployeeTitle_hireDate}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_hireDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_salariedFlag}" for="salariedFlag" />
+                        <p:selectBooleanCheckbox id="salariedFlag" value="#{employeeController.selected.salariedFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_salariedFlag}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_vacationHours}" for="vacationHours" />
+                        <p:inputText id="vacationHours" value="#{employeeController.selected.vacationHours}" title="#{messages.EditEmployeeTitle_vacationHours}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_vacationHours}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_sickLeaveHours}" for="sickLeaveHours" />
+                        <p:inputText id="sickLeaveHours" value="#{employeeController.selected.sickLeaveHours}" title="#{messages.EditEmployeeTitle_sickLeaveHours}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_sickLeaveHours}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_currentFlag}" for="currentFlag" />
+                        <p:selectBooleanCheckbox id="currentFlag" value="#{employeeController.selected.currentFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_currentFlag}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{employeeController.selected.rowguid}" title="#{messages.EditEmployeeTitle_rowguid}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeeController.selected.modifiedDate}" title="#{messages.EditEmployeeTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeeController.save}" value="#{messages.Save}" update="display,:EmployeeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmployeeEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('EmployeeEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

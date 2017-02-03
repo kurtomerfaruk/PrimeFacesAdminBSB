@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductreviewEditDlg" widgetVar="ProductreviewEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductreviewTitle}" closeOnEscape="true">
+
+            <h:form id="ProductreviewEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productreviewController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductreviewLabel_productReviewID}" for="productReviewID" />
+                        <h:outputText id="productReviewID" value="#{productreviewController.selected.productReviewID}" />
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_productID}" for="productID" />
+                        <p:inputText id="productID" value="#{productreviewController.selected.productID}" title="#{messages.EditProductreviewTitle_productID}" required="true" requiredMessage="#{messages.EditProductreviewRequiredMessage_productID}"/>
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_reviewerName}" for="reviewerName" />
+                        <p:inputText id="reviewerName" value="#{productreviewController.selected.reviewerName}" title="#{messages.EditProductreviewTitle_reviewerName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_reviewDate}" for="reviewDate" />
+                        <p:calendar id="reviewDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productreviewController.selected.reviewDate}" title="#{messages.EditProductreviewTitle_reviewDate}" required="true" requiredMessage="#{messages.EditProductreviewRequiredMessage_reviewDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_emailAddress}" for="emailAddress" />
+                        <p:inputText id="emailAddress" value="#{productreviewController.selected.emailAddress}" title="#{messages.EditProductreviewTitle_emailAddress}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_rating}" for="rating" />
+                        <p:inputText id="rating" value="#{productreviewController.selected.rating}" title="#{messages.EditProductreviewTitle_rating}" required="true" requiredMessage="#{messages.EditProductreviewRequiredMessage_rating}"/>
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_comments}" for="comments" />
+                        <p:inputTextarea rows="4" cols="30" id="comments" value="#{productreviewController.selected.comments}" title="#{messages.EditProductreviewTitle_comments}" />
+
+                        <p:outputLabel value="#{messages.EditProductreviewLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productreviewController.selected.modifiedDate}" title="#{messages.EditProductreviewTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductreviewRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productreviewController.save}" value="#{messages.Save}" update="display,:ProductreviewListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductreviewEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductreviewEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductinventoryEditDlg" widgetVar="ProductinventoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductinventoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductinventoryEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productinventoryController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditProductinventoryLabel_productinventoryPK_productID}" for="productinventoryPK_productID" />
+                        <h:outputText id="productinventoryPK_productID" value="#{productinventoryController.selected.productinventoryPK.productID}" />
+
+
+                        <h:outputLabel value="#{messages.EditProductinventoryLabel_productinventoryPK_locationID}" for="productinventoryPK_locationID" />
+                        <h:outputText id="productinventoryPK_locationID" value="#{productinventoryController.selected.productinventoryPK.locationID}" />
+
+                        <p:outputLabel value="#{messages.EditProductinventoryLabel_shelf}" for="shelf" />
+                        <p:inputText id="shelf" value="#{productinventoryController.selected.shelf}" title="#{messages.EditProductinventoryTitle_shelf}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_shelf}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{messages.EditProductinventoryLabel_bin}" for="bin" />
+                        <p:inputText id="bin" value="#{productinventoryController.selected.bin}" title="#{messages.EditProductinventoryTitle_bin}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_bin}"/>
+
+                        <p:outputLabel value="#{messages.EditProductinventoryLabel_quantity}" for="quantity" />
+                        <p:inputText id="quantity" value="#{productinventoryController.selected.quantity}" title="#{messages.EditProductinventoryTitle_quantity}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_quantity}"/>
+
+                        <p:outputLabel value="#{messages.EditProductinventoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productinventoryController.selected.rowguid}" title="#{messages.EditProductinventoryTitle_rowguid}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditProductinventoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productinventoryController.selected.modifiedDate}" title="#{messages.EditProductinventoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productinventoryController.save}" value="#{messages.Save}" update="display,:ProductinventoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductinventoryEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductinventoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

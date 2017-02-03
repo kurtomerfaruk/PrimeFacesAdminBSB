@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductphotoViewDlg" widgetVar="ProductphotoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductphotoTitle}" closeOnEscape="true">
+
+            <h:form id="ProductphotoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productphotoController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductphotoLabel_productPhotoID}"/>
+                        <h:outputText value="#{productphotoController.selected.productPhotoID}" title="#{messages.ViewProductphotoTitle_productPhotoID}"/>
+
+                        <h:outputText value="#{messages.ViewProductphotoLabel_thumbNailPhoto}"/>
+                        <h:outputText value="#{productphotoController.selected.thumbNailPhoto}" title="#{messages.ViewProductphotoTitle_thumbNailPhoto}"/>
+
+                        <h:outputText value="#{messages.ViewProductphotoLabel_thumbnailPhotoFileName}"/>
+                        <h:outputText value="#{productphotoController.selected.thumbnailPhotoFileName}" title="#{messages.ViewProductphotoTitle_thumbnailPhotoFileName}"/>
+
+                        <h:outputText value="#{messages.ViewProductphotoLabel_largePhoto}"/>
+                        <h:outputText value="#{productphotoController.selected.largePhoto}" title="#{messages.ViewProductphotoTitle_largePhoto}"/>
+
+                        <h:outputText value="#{messages.ViewProductphotoLabel_largePhotoFileName}"/>
+                        <h:outputText value="#{productphotoController.selected.largePhotoFileName}" title="#{messages.ViewProductphotoTitle_largePhotoFileName}"/>
+
+                        <h:outputText value="#{messages.ViewProductphotoLabel_modifiedDate}"/>
+                        <h:outputText value="#{productphotoController.selected.modifiedDate}" title="#{messages.ViewProductphotoTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductphotoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EmployeeaddressEditDlg" widgetVar="EmployeeaddressEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditEmployeeaddressTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeeaddressEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{employeeaddressController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditEmployeeaddressLabel_employeeaddressPK_employeeID}" for="employeeaddressPK_employeeID" />
+                        <h:outputText id="employeeaddressPK_employeeID" value="#{employeeaddressController.selected.employeeaddressPK.employeeID}" />
+
+
+                        <h:outputLabel value="#{messages.EditEmployeeaddressLabel_employeeaddressPK_addressID}" for="employeeaddressPK_addressID" />
+                        <h:outputText id="employeeaddressPK_addressID" value="#{employeeaddressController.selected.employeeaddressPK.addressID}" />
+
+                        <p:outputLabel value="#{messages.EditEmployeeaddressLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{employeeaddressController.selected.rowguid}" title="#{messages.EditEmployeeaddressTitle_rowguid}" required="true" requiredMessage="#{messages.EditEmployeeaddressRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditEmployeeaddressLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeeaddressController.selected.modifiedDate}" title="#{messages.EditEmployeeaddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditEmployeeaddressRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeeaddressController.save}" value="#{messages.Save}" update="display,:EmployeeaddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmployeeaddressEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('EmployeeaddressEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

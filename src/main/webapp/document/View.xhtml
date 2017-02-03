@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DocumentViewDlg" widgetVar="DocumentViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewDocumentTitle}" closeOnEscape="true">
+
+            <h:form id="DocumentViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{documentController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_documentID}"/>
+                        <h:outputText value="#{documentController.selected.documentID}" title="#{messages.ViewDocumentTitle_documentID}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_title}"/>
+                        <h:outputText value="#{documentController.selected.title}" title="#{messages.ViewDocumentTitle_title}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_fileName}"/>
+                        <h:outputText value="#{documentController.selected.fileName}" title="#{messages.ViewDocumentTitle_fileName}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_fileExtension}"/>
+                        <h:outputText value="#{documentController.selected.fileExtension}" title="#{messages.ViewDocumentTitle_fileExtension}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_revision}"/>
+                        <h:outputText value="#{documentController.selected.revision}" title="#{messages.ViewDocumentTitle_revision}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_changeNumber}"/>
+                        <h:outputText value="#{documentController.selected.changeNumber}" title="#{messages.ViewDocumentTitle_changeNumber}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_status}"/>
+                        <h:outputText value="#{documentController.selected.status}" title="#{messages.ViewDocumentTitle_status}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_documentSummary}"/>
+                        <h:outputText value="#{documentController.selected.documentSummary}" title="#{messages.ViewDocumentTitle_documentSummary}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_document}"/>
+                        <h:outputText value="#{documentController.selected.document}" title="#{messages.ViewDocumentTitle_document}"/>
+
+                        <h:outputText value="#{messages.ViewDocumentLabel_modifiedDate}"/>
+                        <h:outputText value="#{documentController.selected.modifiedDate}" title="#{messages.ViewDocumentTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('DocumentViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

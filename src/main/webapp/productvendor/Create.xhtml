@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductvendorCreateDlg" widgetVar="ProductvendorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductvendorTitle}" closeOnEscape="true">
+
+            <h:form id="ProductvendorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productvendorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_productvendorPK_productID}" for="productvendorPK_productID" />
+                        <p:inputText id="productvendorPK_productID" value="#{productvendorController.selected.productvendorPK.productID}" title="#{messages.CreateProductvendorTitle_productvendorPK_productID}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_productvendorPK_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_productvendorPK_vendorID}" for="productvendorPK_vendorID" />
+                        <p:inputText id="productvendorPK_vendorID" value="#{productvendorController.selected.productvendorPK.vendorID}" title="#{messages.CreateProductvendorTitle_productvendorPK_vendorID}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_productvendorPK_vendorID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_averageLeadTime}" for="averageLeadTime" />
+                        <p:inputText id="averageLeadTime" value="#{productvendorController.selected.averageLeadTime}" title="#{messages.CreateProductvendorTitle_averageLeadTime}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_averageLeadTime}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_standardPrice}" for="standardPrice" />
+                        <p:inputText id="standardPrice" value="#{productvendorController.selected.standardPrice}" title="#{messages.CreateProductvendorTitle_standardPrice}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_standardPrice}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_lastReceiptCost}" for="lastReceiptCost" />
+                        <p:inputText id="lastReceiptCost" value="#{productvendorController.selected.lastReceiptCost}" title="#{messages.CreateProductvendorTitle_lastReceiptCost}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_lastReceiptDate}" for="lastReceiptDate" />
+                        <p:calendar id="lastReceiptDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productvendorController.selected.lastReceiptDate}" title="#{messages.CreateProductvendorTitle_lastReceiptDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_minOrderQty}" for="minOrderQty" />
+                        <p:inputText id="minOrderQty" value="#{productvendorController.selected.minOrderQty}" title="#{messages.CreateProductvendorTitle_minOrderQty}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_maxOrderQty}" for="maxOrderQty" />
+                        <p:inputText id="maxOrderQty" value="#{productvendorController.selected.maxOrderQty}" title="#{messages.CreateProductvendorTitle_maxOrderQty}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_maxOrderQty}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_onOrderQty}" for="onOrderQty" />
+                        <p:inputText id="onOrderQty" value="#{productvendorController.selected.onOrderQty}" title="#{messages.CreateProductvendorTitle_onOrderQty}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_unitMeasureCode}" for="unitMeasureCode" />
+                        <p:inputText id="unitMeasureCode" value="#{productvendorController.selected.unitMeasureCode}" title="#{messages.CreateProductvendorTitle_unitMeasureCode}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_unitMeasureCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateProductvendorLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productvendorController.selected.modifiedDate}" title="#{messages.CreateProductvendorTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productvendorController.saveNew}" value="#{messages.Save}" update="display,:ProductvendorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductvendorCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductvendorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

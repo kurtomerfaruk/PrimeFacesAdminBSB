@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartmentViewDlg" widgetVar="DepartmentViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewDepartmentTitle}" closeOnEscape="true">
+
+            <h:form id="DepartmentViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{departmentController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewDepartmentLabel_departmentID}"/>
+                        <h:outputText value="#{departmentController.selected.departmentID}" title="#{messages.ViewDepartmentTitle_departmentID}"/>
+
+                        <h:outputText value="#{messages.ViewDepartmentLabel_name}"/>
+                        <h:outputText value="#{departmentController.selected.name}" title="#{messages.ViewDepartmentTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewDepartmentLabel_groupName}"/>
+                        <h:outputText value="#{departmentController.selected.groupName}" title="#{messages.ViewDepartmentTitle_groupName}"/>
+
+                        <h:outputText value="#{messages.ViewDepartmentLabel_modifiedDate}"/>
+                        <h:outputText value="#{departmentController.selected.modifiedDate}" title="#{messages.ViewDepartmentTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('DepartmentViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

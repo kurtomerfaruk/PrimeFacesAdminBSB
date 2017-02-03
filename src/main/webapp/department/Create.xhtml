@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartmentCreateDlg" widgetVar="DepartmentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateDepartmentTitle}" closeOnEscape="true">
+
+            <h:form id="DepartmentCreateForm">
+
+                <h:panelGroup id="display" rendered="#{departmentController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateDepartmentLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{departmentController.selected.name}" title="#{messages.CreateDepartmentTitle_name}" required="true" requiredMessage="#{messages.CreateDepartmentRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateDepartmentLabel_groupName}" for="groupName" />
+                        <p:inputText id="groupName" value="#{departmentController.selected.groupName}" title="#{messages.CreateDepartmentTitle_groupName}" required="true" requiredMessage="#{messages.CreateDepartmentRequiredMessage_groupName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateDepartmentLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{departmentController.selected.modifiedDate}" title="#{messages.CreateDepartmentTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateDepartmentRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{departmentController.saveNew}" value="#{messages.Save}" update="display,:DepartmentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DepartmentCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('DepartmentCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

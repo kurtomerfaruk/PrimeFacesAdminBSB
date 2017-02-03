@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductproductphotoViewDlg" widgetVar="ProductproductphotoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductproductphotoTitle}" closeOnEscape="true">
+
+            <h:form id="ProductproductphotoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productproductphotoController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductproductphotoLabel_productproductphotoPK_productID}"/>
+                        <h:outputText value="#{productproductphotoController.selected.productproductphotoPK.productID}" title="#{messages.ViewProductproductphotoTitle_productproductphotoPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewProductproductphotoLabel_productproductphotoPK_productPhotoID}"/>
+                        <h:outputText value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}" title="#{messages.ViewProductproductphotoTitle_productproductphotoPK_productPhotoID}"/>
+
+                        <h:outputText value="#{messages.ViewProductproductphotoLabel_primary}"/>
+                        <h:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" title="#{messages.EditProductproductphotoTitle_primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewProductproductphotoLabel_modifiedDate}"/>
+                        <h:outputText value="#{productproductphotoController.selected.modifiedDate}" title="#{messages.ViewProductproductphotoTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductproductphotoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

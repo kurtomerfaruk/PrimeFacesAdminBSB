@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StateprovinceViewDlg" widgetVar="StateprovinceViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewStateprovinceTitle}" closeOnEscape="true">
+
+            <h:form id="StateprovinceViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{stateprovinceController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_stateProvinceID}"/>
+                        <h:outputText value="#{stateprovinceController.selected.stateProvinceID}" title="#{messages.ViewStateprovinceTitle_stateProvinceID}"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_stateProvinceCode}"/>
+                        <h:outputText value="#{stateprovinceController.selected.stateProvinceCode}" title="#{messages.ViewStateprovinceTitle_stateProvinceCode}"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_countryRegionCode}"/>
+                        <h:outputText value="#{stateprovinceController.selected.countryRegionCode}" title="#{messages.ViewStateprovinceTitle_countryRegionCode}"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_isOnlyStateProvinceFlag}"/>
+                        <h:selectBooleanCheckbox id="isOnlyStateProvinceFlag" value="#{stateprovinceController.selected.isOnlyStateProvinceFlag}" title="#{messages.EditStateprovinceTitle_isOnlyStateProvinceFlag}" required="true" requiredMessage="#{messages.EditStateprovinceRequiredMessage_isOnlyStateProvinceFlag}" disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_name}"/>
+                        <h:outputText value="#{stateprovinceController.selected.name}" title="#{messages.ViewStateprovinceTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_territoryID}"/>
+                        <h:outputText value="#{stateprovinceController.selected.territoryID}" title="#{messages.ViewStateprovinceTitle_territoryID}"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_rowguid}"/>
+                        <h:outputText value="#{stateprovinceController.selected.rowguid}" title="#{messages.ViewStateprovinceTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewStateprovinceLabel_modifiedDate}"/>
+                        <h:outputText value="#{stateprovinceController.selected.modifiedDate}" title="#{messages.ViewStateprovinceTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('StateprovinceViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

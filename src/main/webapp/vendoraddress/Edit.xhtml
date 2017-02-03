@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="VendoraddressEditDlg" widgetVar="VendoraddressEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditVendoraddressTitle}" closeOnEscape="true">
+
+            <h:form id="VendoraddressEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{vendoraddressController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditVendoraddressLabel_vendoraddressPK_vendorID}" for="vendoraddressPK_vendorID" />
+                        <h:outputText id="vendoraddressPK_vendorID" value="#{vendoraddressController.selected.vendoraddressPK.vendorID}" />
+
+
+                        <h:outputLabel value="#{messages.EditVendoraddressLabel_vendoraddressPK_addressID}" for="vendoraddressPK_addressID" />
+                        <h:outputText id="vendoraddressPK_addressID" value="#{vendoraddressController.selected.vendoraddressPK.addressID}" />
+
+                        <p:outputLabel value="#{messages.EditVendoraddressLabel_addressTypeID}" for="addressTypeID" />
+                        <p:inputText id="addressTypeID" value="#{vendoraddressController.selected.addressTypeID}" title="#{messages.EditVendoraddressTitle_addressTypeID}" required="true" requiredMessage="#{messages.EditVendoraddressRequiredMessage_addressTypeID}"/>
+
+                        <p:outputLabel value="#{messages.EditVendoraddressLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vendoraddressController.selected.modifiedDate}" title="#{messages.EditVendoraddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditVendoraddressRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vendoraddressController.save}" value="#{messages.Save}" update="display,:VendoraddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VendoraddressEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('VendoraddressEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

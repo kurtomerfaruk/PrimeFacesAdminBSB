@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalespersonViewDlg" widgetVar="SalespersonViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalespersonTitle}" closeOnEscape="true">
+
+            <h:form id="SalespersonViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salespersonController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_salesPersonID}"/>
+                        <h:outputText value="#{salespersonController.selected.salesPersonID}" title="#{messages.ViewSalespersonTitle_salesPersonID}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_territoryID}"/>
+                        <h:outputText value="#{salespersonController.selected.territoryID}" title="#{messages.ViewSalespersonTitle_territoryID}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_salesQuota}"/>
+                        <h:outputText value="#{salespersonController.selected.salesQuota}" title="#{messages.ViewSalespersonTitle_salesQuota}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_bonus}"/>
+                        <h:outputText value="#{salespersonController.selected.bonus}" title="#{messages.ViewSalespersonTitle_bonus}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_commissionPct}"/>
+                        <h:outputText value="#{salespersonController.selected.commissionPct}" title="#{messages.ViewSalespersonTitle_commissionPct}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_salesYTD}"/>
+                        <h:outputText value="#{salespersonController.selected.salesYTD}" title="#{messages.ViewSalespersonTitle_salesYTD}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_salesLastYear}"/>
+                        <h:outputText value="#{salespersonController.selected.salesLastYear}" title="#{messages.ViewSalespersonTitle_salesLastYear}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_rowguid}"/>
+                        <h:outputText value="#{salespersonController.selected.rowguid}" title="#{messages.ViewSalespersonTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewSalespersonLabel_modifiedDate}"/>
+                        <h:outputText value="#{salespersonController.selected.modifiedDate}" title="#{messages.ViewSalespersonTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalespersonViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

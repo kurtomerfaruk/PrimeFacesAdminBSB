@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PurchaseorderdetailListForm">
+
+        <p:panel header="#{messages.ListPurchaseorderdetailTitle}">
+            <p:contextMenu id="PurchaseorderdetailDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('PurchaseorderdetailListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('PurchaseorderdetailListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('PurchaseorderdetailListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('PurchaseorderdetailListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{purchaseorderdetailController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{purchaseorderdetailController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{purchaseorderdetailController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.purchaseorderdetailPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PurchaseorderdetailDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PurchaseorderdetailDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PurchaseorderdetailListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.purchaseorderdetailPK.purchaseOrderID}" filterBy="#{item.purchaseorderdetailPK.purchaseOrderID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListPurchaseorderdetailTitle_purchaseorderdetailPK_purchaseOrderID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.purchaseorderdetailPK.purchaseOrderID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.purchaseorderdetailPK.purchaseOrderDetailID}" filterBy="#{item.purchaseorderdetailPK.purchaseOrderDetailID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListPurchaseorderdetailTitle_purchaseorderdetailPK_purchaseOrderDetailID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.purchaseorderdetailPK.purchaseOrderDetailID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dueDate}" filterBy="#{item.dueDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListPurchaseorderdetailTitle_dueDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dueDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.orderQty}" filterBy="#{item.orderQty}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListPurchaseorderdetailTitle_orderQty}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.orderQty}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListPurchaseorderdetailTitle_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.unitPrice}" filterBy="#{item.unitPrice}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListPurchaseorderdetailTitle_unitPrice}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.unitPrice}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.lineTotal}" filterBy="#{item.lineTotal}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListPurchaseorderdetailTitle_lineTotal}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.lineTotal}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.receivedQty}" filterBy="#{item.receivedQty}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListPurchaseorderdetailTitle_receivedQty}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.receivedQty}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.rejectedQty}" filterBy="#{item.rejectedQty}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListPurchaseorderdetailTitle_rejectedQty}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rejectedQty}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.stockedQty}" filterBy="#{item.stockedQty}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListPurchaseorderdetailTitle_stockedQty}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.stockedQty}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListPurchaseorderdetailTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{purchaseorderdetailController.prepareCreate}" update=":PurchaseorderdetailCreateForm" oncomplete="PF('PurchaseorderdetailCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":PurchaseorderdetailViewForm" oncomplete="PF('PurchaseorderdetailViewDialog').show()" disabled="#{empty purchaseorderdetailController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":PurchaseorderdetailEditForm" oncomplete="PF('PurchaseorderdetailEditDialog').show()" disabled="#{empty purchaseorderdetailController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{purchaseorderdetailController.delete}" update=":growl,datalist" disabled="#{empty purchaseorderdetailController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

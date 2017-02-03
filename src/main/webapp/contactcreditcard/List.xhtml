@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ContactcreditcardListForm">
+
+        <p:panel header="#{messages.ListContactcreditcardTitle}">
+            <p:contextMenu id="ContactcreditcardDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ContactcreditcardListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ContactcreditcardListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ContactcreditcardListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ContactcreditcardListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{contactcreditcardController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{contactcreditcardController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{contactcreditcardController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.contactcreditcardPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ContactcreditcardDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ContactcreditcardDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ContactcreditcardListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.contactcreditcardPK.contactID}" filterBy="#{item.contactcreditcardPK.contactID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListContactcreditcardTitle_contactcreditcardPK_contactID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.contactcreditcardPK.contactID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.contactcreditcardPK.creditCardID}" filterBy="#{item.contactcreditcardPK.creditCardID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListContactcreditcardTitle_contactcreditcardPK_creditCardID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.contactcreditcardPK.creditCardID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListContactcreditcardTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{contactcreditcardController.prepareCreate}" update=":ContactcreditcardCreateForm" oncomplete="PF('ContactcreditcardCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ContactcreditcardViewForm" oncomplete="PF('ContactcreditcardViewDialog').show()" disabled="#{empty contactcreditcardController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ContactcreditcardEditForm" oncomplete="PF('ContactcreditcardEditDialog').show()" disabled="#{empty contactcreditcardController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{contactcreditcardController.delete}" update=":growl,datalist" disabled="#{empty contactcreditcardController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

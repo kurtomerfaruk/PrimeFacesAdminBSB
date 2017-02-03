@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductmodelproductdescriptioncultureCreateDlg" widgetVar="ProductmodelproductdescriptioncultureCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductmodelproductdescriptioncultureTitle}" closeOnEscape="true">
+
+            <h:form id="ProductmodelproductdescriptioncultureCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productmodelproductdescriptioncultureController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productModelID}" for="productmodelproductdescriptionculturePK_productModelID" />
+                        <p:inputText id="productmodelproductdescriptionculturePK_productModelID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productModelID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productModelID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_productModelID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productDescriptionID}" for="productmodelproductdescriptionculturePK_productDescriptionID" />
+                        <p:inputText id="productmodelproductdescriptionculturePK_productDescriptionID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productDescriptionID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productDescriptionID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_cultureID}" for="productmodelproductdescriptionculturePK_cultureID" />
+                        <p:inputText id="productmodelproductdescriptionculturePK_cultureID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.cultureID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_cultureID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_cultureID}" size="6" maxlength="6"/>
+
+                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productmodelproductdescriptioncultureController.selected.modifiedDate}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productmodelproductdescriptioncultureController.saveNew}" value="#{messages.Save}" update="display,:ProductmodelproductdescriptioncultureListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductmodelproductdescriptioncultureCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductmodelproductdescriptioncultureCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

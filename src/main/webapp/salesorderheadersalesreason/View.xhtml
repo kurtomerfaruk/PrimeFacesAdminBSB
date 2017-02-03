@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesorderheadersalesreasonViewDlg" widgetVar="SalesorderheadersalesreasonViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesorderheadersalesreasonTitle}" closeOnEscape="true">
+
+            <h:form id="SalesorderheadersalesreasonViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salesorderheadersalesreasonController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesOrderID}"/>
+                        <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesOrderID}" title="#{messages.ViewSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesOrderID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesReasonID}"/>
+                        <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesReasonID}" title="#{messages.ViewSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesReasonID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesorderheadersalesreasonLabel_modifiedDate}"/>
+                        <h:outputText value="#{salesorderheadersalesreasonController.selected.modifiedDate}" title="#{messages.ViewSalesorderheadersalesreasonTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesorderheadersalesreasonViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

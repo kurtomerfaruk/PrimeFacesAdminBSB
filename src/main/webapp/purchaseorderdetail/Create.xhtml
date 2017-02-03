@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PurchaseorderdetailCreateDlg" widgetVar="PurchaseorderdetailCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreatePurchaseorderdetailTitle}" closeOnEscape="true">
+
+            <h:form id="PurchaseorderdetailCreateForm">
+
+                <h:panelGroup id="display" rendered="#{purchaseorderdetailController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_purchaseorderdetailPK_purchaseOrderID}" for="purchaseorderdetailPK_purchaseOrderID" />
+                        <p:inputText id="purchaseorderdetailPK_purchaseOrderID" value="#{purchaseorderdetailController.selected.purchaseorderdetailPK.purchaseOrderID}" title="#{messages.CreatePurchaseorderdetailTitle_purchaseorderdetailPK_purchaseOrderID}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_purchaseorderdetailPK_purchaseOrderID}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_purchaseorderdetailPK_purchaseOrderDetailID}" for="purchaseorderdetailPK_purchaseOrderDetailID" />
+                        <p:inputText id="purchaseorderdetailPK_purchaseOrderDetailID" value="#{purchaseorderdetailController.selected.purchaseorderdetailPK.purchaseOrderDetailID}" title="#{messages.CreatePurchaseorderdetailTitle_purchaseorderdetailPK_purchaseOrderDetailID}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_purchaseorderdetailPK_purchaseOrderDetailID}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_dueDate}" for="dueDate" />
+                        <p:calendar id="dueDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{purchaseorderdetailController.selected.dueDate}" title="#{messages.CreatePurchaseorderdetailTitle_dueDate}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_dueDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_orderQty}" for="orderQty" />
+                        <p:inputText id="orderQty" value="#{purchaseorderdetailController.selected.orderQty}" title="#{messages.CreatePurchaseorderdetailTitle_orderQty}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_orderQty}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_productID}" for="productID" />
+                        <p:inputText id="productID" value="#{purchaseorderdetailController.selected.productID}" title="#{messages.CreatePurchaseorderdetailTitle_productID}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_unitPrice}" for="unitPrice" />
+                        <p:inputText id="unitPrice" value="#{purchaseorderdetailController.selected.unitPrice}" title="#{messages.CreatePurchaseorderdetailTitle_unitPrice}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_unitPrice}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_lineTotal}" for="lineTotal" />
+                        <p:inputText id="lineTotal" value="#{purchaseorderdetailController.selected.lineTotal}" title="#{messages.CreatePurchaseorderdetailTitle_lineTotal}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_lineTotal}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_receivedQty}" for="receivedQty" />
+                        <p:inputText id="receivedQty" value="#{purchaseorderdetailController.selected.receivedQty}" title="#{messages.CreatePurchaseorderdetailTitle_receivedQty}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_receivedQty}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_rejectedQty}" for="rejectedQty" />
+                        <p:inputText id="rejectedQty" value="#{purchaseorderdetailController.selected.rejectedQty}" title="#{messages.CreatePurchaseorderdetailTitle_rejectedQty}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_rejectedQty}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_stockedQty}" for="stockedQty" />
+                        <p:inputText id="stockedQty" value="#{purchaseorderdetailController.selected.stockedQty}" title="#{messages.CreatePurchaseorderdetailTitle_stockedQty}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_stockedQty}"/>
+
+                        <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{purchaseorderdetailController.selected.modifiedDate}" title="#{messages.CreatePurchaseorderdetailTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{purchaseorderdetailController.saveNew}" value="#{messages.Save}" update="display,:PurchaseorderdetailListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PurchaseorderdetailCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('PurchaseorderdetailCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ContacttypeEditDlg" widgetVar="ContacttypeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditContacttypeTitle}" closeOnEscape="true">
+
+            <h:form id="ContacttypeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{contacttypeController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditContacttypeLabel_contactTypeID}" for="contactTypeID" />
+                        <h:outputText id="contactTypeID" value="#{contacttypeController.selected.contactTypeID}" />
+
+                        <p:outputLabel value="#{messages.EditContacttypeLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{contacttypeController.selected.name}" title="#{messages.EditContacttypeTitle_name}" required="true" requiredMessage="#{messages.EditContacttypeRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditContacttypeLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{contacttypeController.selected.modifiedDate}" title="#{messages.EditContacttypeTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditContacttypeRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contacttypeController.save}" value="#{messages.Save}" update="display,:ContacttypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ContacttypeEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ContacttypeEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="AddressListForm" class="form-width">
+
+
+        <p:contextMenu id="AddressDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('AddressListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('AddressListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('AddressListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('AddressListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{addressController.lazyItems}"
+                        rowKey="#{item.addressID}"
+                        selection="#{addressController.selected}"
+                        filtered="#{addressController.filtered}"
+                        rowselect=":AddressListForm:datalist:datalist:createButton,:AddressListForm:datalist:datalist:viewButton,:AddressListForm:datalist:datalist:editButton,:AddressListForm:datalist:datalist:deleteButton,:AddressListForm:AddressDataTableContextMenu"
+                        rowDblselect="document.getElementById('AddressListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":AddressListForm:datalist:datalist:createButton :AddressListForm:datalist:datalist:viewButton :AddressListForm:datalist:datalist:editButton :AddressListForm:datalist:datalist:deleteButton"
+                        selectListener="#{addressController.resetParents()}">
+
+            <f:facet name="header">
+                <h:outputText value="#{messages.ListAddressTitle}"/>   
+            </f:facet>
+
+            <p:column sortBy="#{item.addressID}" filterBy="#{item.addressID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListAddressTitle_addressID}"/>
+                </f:facet>
+                <h:outputText value="#{item.addressID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.addressLine1}" filterBy="#{item.addressLine1}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListAddressTitle_addressLine1}"/>
+                </f:facet>
+                <h:outputText value="#{item.addressLine1}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.addressLine2}" filterBy="#{item.addressLine2}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListAddressTitle_addressLine2}"/>
+                </f:facet>
+                <h:outputText value="#{item.addressLine2}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.city}" filterBy="#{item.city}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListAddressTitle_city}"/>
+                </f:facet>
+                <h:outputText value="#{item.city}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.stateProvinceID}" filterBy="#{item.stateProvinceID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListAddressTitle_stateProvinceID}"/>
+                </f:facet>
+                <h:outputText value="#{item.stateProvinceID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.postalCode}" filterBy="#{item.postalCode}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListAddressTitle_postalCode}"/>
+                </f:facet>
+                <h:outputText value="#{item.postalCode}"/>
+            </p:column>
+
+            <!--
+                                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListAddressTitle_rowguid}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.rowguid}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListAddressTitle_modifiedDate}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.modifiedDate}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                    </h:outputText>
+                                </p:column>
+            -->
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{addressController.prepareCreate}" update=":AddressCreateForm" oncomplete="PF('AddressCreateDialog').show()"/>
+                    <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":AddressViewForm" oncomplete="PF('AddressViewDialog').show()" disabled="#{empty addressController.selected}"/>
+                    <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":AddressEditForm" oncomplete="PF('AddressEditDialog').show()" disabled="#{empty addressController.selected}"/>
+                    <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{addressController.delete}" update=":growl,datalist" disabled="#{empty addressController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+
+        </coco:datatable>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VendorcontactCreateDlg" widgetVar="VendorcontactCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateVendorcontactTitle}" closeOnEscape="true">
+
+            <h:form id="VendorcontactCreateForm">
+
+                <h:panelGroup id="display" rendered="#{vendorcontactController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateVendorcontactLabel_vendorcontactPK_vendorID}" for="vendorcontactPK_vendorID" />
+                        <p:inputText id="vendorcontactPK_vendorID" value="#{vendorcontactController.selected.vendorcontactPK.vendorID}" title="#{messages.CreateVendorcontactTitle_vendorcontactPK_vendorID}" required="true" requiredMessage="#{messages.CreateVendorcontactRequiredMessage_vendorcontactPK_vendorID}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorcontactLabel_vendorcontactPK_contactID}" for="vendorcontactPK_contactID" />
+                        <p:inputText id="vendorcontactPK_contactID" value="#{vendorcontactController.selected.vendorcontactPK.contactID}" title="#{messages.CreateVendorcontactTitle_vendorcontactPK_contactID}" required="true" requiredMessage="#{messages.CreateVendorcontactRequiredMessage_vendorcontactPK_contactID}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorcontactLabel_contactTypeID}" for="contactTypeID" />
+                        <p:inputText id="contactTypeID" value="#{vendorcontactController.selected.contactTypeID}" title="#{messages.CreateVendorcontactTitle_contactTypeID}" required="true" requiredMessage="#{messages.CreateVendorcontactRequiredMessage_contactTypeID}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorcontactLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vendorcontactController.selected.modifiedDate}" title="#{messages.CreateVendorcontactTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateVendorcontactRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vendorcontactController.saveNew}" value="#{messages.Save}" update="display,:VendorcontactListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VendorcontactCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('VendorcontactCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

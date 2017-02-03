@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="StorecontactEditDlg" widgetVar="StorecontactEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditStorecontactTitle}" closeOnEscape="true">
+
+            <h:form id="StorecontactEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{storecontactController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditStorecontactLabel_storecontactPK_customerID}" for="storecontactPK_customerID" />
+                        <h:outputText id="storecontactPK_customerID" value="#{storecontactController.selected.storecontactPK.customerID}" />
+
+
+                        <h:outputLabel value="#{messages.EditStorecontactLabel_storecontactPK_contactID}" for="storecontactPK_contactID" />
+                        <h:outputText id="storecontactPK_contactID" value="#{storecontactController.selected.storecontactPK.contactID}" />
+
+                        <p:outputLabel value="#{messages.EditStorecontactLabel_contactTypeID}" for="contactTypeID" />
+                        <p:inputText id="contactTypeID" value="#{storecontactController.selected.contactTypeID}" title="#{messages.EditStorecontactTitle_contactTypeID}" required="true" requiredMessage="#{messages.EditStorecontactRequiredMessage_contactTypeID}"/>
+
+                        <p:outputLabel value="#{messages.EditStorecontactLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{storecontactController.selected.rowguid}" title="#{messages.EditStorecontactTitle_rowguid}" required="true" requiredMessage="#{messages.EditStorecontactRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.EditStorecontactLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{storecontactController.selected.modifiedDate}" title="#{messages.EditStorecontactTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditStorecontactRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{storecontactController.save}" value="#{messages.Save}" update="display,:StorecontactListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('StorecontactEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('StorecontactEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

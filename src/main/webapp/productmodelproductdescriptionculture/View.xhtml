@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductmodelproductdescriptioncultureViewDlg" widgetVar="ProductmodelproductdescriptioncultureViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductmodelproductdescriptioncultureTitle}" closeOnEscape="true">
+
+            <h:form id="ProductmodelproductdescriptioncultureViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productmodelproductdescriptioncultureController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productModelID}"/>
+                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productModelID}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productModelID}"/>
+
+                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productDescriptionID}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+
+                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_cultureID}"/>
+                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.cultureID}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_cultureID}"/>
+
+                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_modifiedDate}"/>
+                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.modifiedDate}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductmodelproductdescriptioncultureViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

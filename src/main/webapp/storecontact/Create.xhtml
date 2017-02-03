@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StorecontactCreateDlg" widgetVar="StorecontactCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateStorecontactTitle}" closeOnEscape="true">
+
+            <h:form id="StorecontactCreateForm">
+
+                <h:panelGroup id="display" rendered="#{storecontactController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateStorecontactLabel_storecontactPK_customerID}" for="storecontactPK_customerID" />
+                        <p:inputText id="storecontactPK_customerID" value="#{storecontactController.selected.storecontactPK.customerID}" title="#{messages.CreateStorecontactTitle_storecontactPK_customerID}" required="true" requiredMessage="#{messages.CreateStorecontactRequiredMessage_storecontactPK_customerID}"/>
+
+                        <p:outputLabel value="#{messages.CreateStorecontactLabel_storecontactPK_contactID}" for="storecontactPK_contactID" />
+                        <p:inputText id="storecontactPK_contactID" value="#{storecontactController.selected.storecontactPK.contactID}" title="#{messages.CreateStorecontactTitle_storecontactPK_contactID}" required="true" requiredMessage="#{messages.CreateStorecontactRequiredMessage_storecontactPK_contactID}"/>
+
+                        <p:outputLabel value="#{messages.CreateStorecontactLabel_contactTypeID}" for="contactTypeID" />
+                        <p:inputText id="contactTypeID" value="#{storecontactController.selected.contactTypeID}" title="#{messages.CreateStorecontactTitle_contactTypeID}" required="true" requiredMessage="#{messages.CreateStorecontactRequiredMessage_contactTypeID}"/>
+
+                        <p:outputLabel value="#{messages.CreateStorecontactLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{storecontactController.selected.rowguid}" title="#{messages.CreateStorecontactTitle_rowguid}" required="true" requiredMessage="#{messages.CreateStorecontactRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateStorecontactLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{storecontactController.selected.modifiedDate}" title="#{messages.CreateStorecontactTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateStorecontactRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{storecontactController.saveNew}" value="#{messages.Save}" update="display,:StorecontactListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('StorecontactCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('StorecontactCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

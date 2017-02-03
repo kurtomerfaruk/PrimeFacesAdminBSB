@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="LocationEditDlg" widgetVar="LocationEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditLocationTitle}" closeOnEscape="true">
+
+            <h:form id="LocationEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{locationController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditLocationLabel_locationID}" for="locationID" />
+                        <h:outputText id="locationID" value="#{locationController.selected.locationID}" />
+
+                        <p:outputLabel value="#{messages.EditLocationLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{locationController.selected.name}" title="#{messages.EditLocationTitle_name}" required="true" requiredMessage="#{messages.EditLocationRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditLocationLabel_costRate}" for="costRate" />
+                        <p:inputText id="costRate" value="#{locationController.selected.costRate}" title="#{messages.EditLocationTitle_costRate}" required="true" requiredMessage="#{messages.EditLocationRequiredMessage_costRate}"/>
+
+                        <p:outputLabel value="#{messages.EditLocationLabel_availability}" for="availability" />
+                        <p:inputText id="availability" value="#{locationController.selected.availability}" title="#{messages.EditLocationTitle_availability}" required="true" requiredMessage="#{messages.EditLocationRequiredMessage_availability}"/>
+
+                        <p:outputLabel value="#{messages.EditLocationLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{locationController.selected.modifiedDate}" title="#{messages.EditLocationTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditLocationRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{locationController.save}" value="#{messages.Save}" update="display,:LocationListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('LocationEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('LocationEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

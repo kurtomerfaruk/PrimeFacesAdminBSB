@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LocationViewDlg" widgetVar="LocationViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewLocationTitle}" closeOnEscape="true">
+
+            <h:form id="LocationViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{locationController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewLocationLabel_locationID}"/>
+                        <h:outputText value="#{locationController.selected.locationID}" title="#{messages.ViewLocationTitle_locationID}"/>
+
+                        <h:outputText value="#{messages.ViewLocationLabel_name}"/>
+                        <h:outputText value="#{locationController.selected.name}" title="#{messages.ViewLocationTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewLocationLabel_costRate}"/>
+                        <h:outputText value="#{locationController.selected.costRate}" title="#{messages.ViewLocationTitle_costRate}"/>
+
+                        <h:outputText value="#{messages.ViewLocationLabel_availability}"/>
+                        <h:outputText value="#{locationController.selected.availability}" title="#{messages.ViewLocationTitle_availability}"/>
+
+                        <h:outputText value="#{messages.ViewLocationLabel_modifiedDate}"/>
+                        <h:outputText value="#{locationController.selected.modifiedDate}" title="#{messages.ViewLocationTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('LocationViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

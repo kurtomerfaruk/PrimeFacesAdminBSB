@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CurrencyrateViewDlg" widgetVar="CurrencyrateViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewCurrencyrateTitle}" closeOnEscape="true">
+
+            <h:form id="CurrencyrateViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{currencyrateController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_currencyRateID}"/>
+                        <h:outputText value="#{currencyrateController.selected.currencyRateID}" title="#{messages.ViewCurrencyrateTitle_currencyRateID}"/>
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_currencyRateDate}"/>
+                        <h:outputText value="#{currencyrateController.selected.currencyRateDate}" title="#{messages.ViewCurrencyrateTitle_currencyRateDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_fromCurrencyCode}"/>
+                        <h:outputText value="#{currencyrateController.selected.fromCurrencyCode}" title="#{messages.ViewCurrencyrateTitle_fromCurrencyCode}"/>
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_toCurrencyCode}"/>
+                        <h:outputText value="#{currencyrateController.selected.toCurrencyCode}" title="#{messages.ViewCurrencyrateTitle_toCurrencyCode}"/>
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_averageRate}"/>
+                        <h:outputText value="#{currencyrateController.selected.averageRate}" title="#{messages.ViewCurrencyrateTitle_averageRate}"/>
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_endOfDayRate}"/>
+                        <h:outputText value="#{currencyrateController.selected.endOfDayRate}" title="#{messages.ViewCurrencyrateTitle_endOfDayRate}"/>
+
+                        <h:outputText value="#{messages.ViewCurrencyrateLabel_modifiedDate}"/>
+                        <h:outputText value="#{currencyrateController.selected.modifiedDate}" title="#{messages.ViewCurrencyrateTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('CurrencyrateViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

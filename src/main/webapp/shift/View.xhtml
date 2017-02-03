@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ShiftViewDlg" widgetVar="ShiftViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewShiftTitle}" closeOnEscape="true">
+
+            <h:form id="ShiftViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{shiftController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewShiftLabel_shiftID}"/>
+                        <h:outputText value="#{shiftController.selected.shiftID}" title="#{messages.ViewShiftTitle_shiftID}"/>
+
+                        <h:outputText value="#{messages.ViewShiftLabel_name}"/>
+                        <h:outputText value="#{shiftController.selected.name}" title="#{messages.ViewShiftTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewShiftLabel_startTime}"/>
+                        <h:outputText value="#{shiftController.selected.startTime}" title="#{messages.ViewShiftTitle_startTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewShiftLabel_endTime}"/>
+                        <h:outputText value="#{shiftController.selected.endTime}" title="#{messages.ViewShiftTitle_endTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewShiftLabel_modifiedDate}"/>
+                        <h:outputText value="#{shiftController.selected.modifiedDate}" title="#{messages.ViewShiftTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ShiftViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

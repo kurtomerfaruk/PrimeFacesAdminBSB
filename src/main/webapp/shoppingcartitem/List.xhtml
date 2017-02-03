@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ShoppingcartitemListForm">
+
+        <p:panel header="#{messages.ListShoppingcartitemTitle}">
+            <p:contextMenu id="ShoppingcartitemDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ShoppingcartitemListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ShoppingcartitemListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ShoppingcartitemListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ShoppingcartitemListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{shoppingcartitemController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{shoppingcartitemController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{shoppingcartitemController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.shoppingCartItemID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ShoppingcartitemDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ShoppingcartitemDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ShoppingcartitemListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.shoppingCartItemID}" filterBy="#{item.shoppingCartItemID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShoppingcartitemTitle_shoppingCartItemID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shoppingCartItemID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.shoppingCartID}" filterBy="#{item.shoppingCartID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShoppingcartitemTitle_shoppingCartID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.shoppingCartID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.quantity}" filterBy="#{item.quantity}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShoppingcartitemTitle_quantity}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.quantity}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShoppingcartitemTitle_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dateCreated}" filterBy="#{item.dateCreated}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShoppingcartitemTitle_dateCreated}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dateCreated}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListShoppingcartitemTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{shoppingcartitemController.prepareCreate}" update=":ShoppingcartitemCreateForm" oncomplete="PF('ShoppingcartitemCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ShoppingcartitemViewForm" oncomplete="PF('ShoppingcartitemViewDialog').show()" disabled="#{empty shoppingcartitemController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ShoppingcartitemEditForm" oncomplete="PF('ShoppingcartitemEditDialog').show()" disabled="#{empty shoppingcartitemController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{shoppingcartitemController.delete}" update=":growl,datalist" disabled="#{empty shoppingcartitemController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

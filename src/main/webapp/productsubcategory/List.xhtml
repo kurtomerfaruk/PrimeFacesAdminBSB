@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductsubcategoryListForm">
+
+        <p:panel header="#{messages.ListProductsubcategoryTitle}">
+            <p:contextMenu id="ProductsubcategoryDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductsubcategoryListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductsubcategoryListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductsubcategoryListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductsubcategoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productsubcategoryController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productsubcategoryController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productsubcategoryController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productSubcategoryID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductsubcategoryDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductsubcategoryDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductsubcategoryListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productSubcategoryID}" filterBy="#{item.productSubcategoryID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductsubcategoryTitle_productSubcategoryID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productSubcategoryID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productCategoryID}" filterBy="#{item.productCategoryID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductsubcategoryTitle_productCategoryID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productCategoryID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductsubcategoryTitle_name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductsubcategoryTitle_rowguid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rowguid}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductsubcategoryTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productsubcategoryController.prepareCreate}" update=":ProductsubcategoryCreateForm" oncomplete="PF('ProductsubcategoryCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductsubcategoryViewForm" oncomplete="PF('ProductsubcategoryViewDialog').show()" disabled="#{empty productsubcategoryController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductsubcategoryEditForm" oncomplete="PF('ProductsubcategoryEditDialog').show()" disabled="#{empty productsubcategoryController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productsubcategoryController.delete}" update=":growl,datalist" disabled="#{empty productsubcategoryController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeeaddressViewDlg" widgetVar="EmployeeaddressViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewEmployeeaddressTitle}" closeOnEscape="true">
+
+            <h:form id="EmployeeaddressViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{employeeaddressController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewEmployeeaddressLabel_employeeaddressPK_employeeID}"/>
+                        <h:outputText value="#{employeeaddressController.selected.employeeaddressPK.employeeID}" title="#{messages.ViewEmployeeaddressTitle_employeeaddressPK_employeeID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeaddressLabel_employeeaddressPK_addressID}"/>
+                        <h:outputText value="#{employeeaddressController.selected.employeeaddressPK.addressID}" title="#{messages.ViewEmployeeaddressTitle_employeeaddressPK_addressID}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeaddressLabel_rowguid}"/>
+                        <h:outputText value="#{employeeaddressController.selected.rowguid}" title="#{messages.ViewEmployeeaddressTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewEmployeeaddressLabel_modifiedDate}"/>
+                        <h:outputText value="#{employeeaddressController.selected.modifiedDate}" title="#{messages.ViewEmployeeaddressTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('EmployeeaddressViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

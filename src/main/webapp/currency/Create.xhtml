@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CurrencyCreateDlg" widgetVar="CurrencyCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateCurrencyTitle}" closeOnEscape="true">
+
+            <h:form id="CurrencyCreateForm">
+
+                <h:panelGroup id="display" rendered="#{currencyController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateCurrencyLabel_currencyCode}" for="currencyCode" />
+                        <p:inputText id="currencyCode" value="#{currencyController.selected.currencyCode}" title="#{messages.CreateCurrencyTitle_currencyCode}" required="true" requiredMessage="#{messages.CreateCurrencyRequiredMessage_currencyCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{currencyController.selected.name}" title="#{messages.CreateCurrencyTitle_name}" required="true" requiredMessage="#{messages.CreateCurrencyRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateCurrencyLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{currencyController.selected.modifiedDate}" title="#{messages.CreateCurrencyTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCurrencyRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{currencyController.saveNew}" value="#{messages.Save}" update="display,:CurrencyListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CurrencyCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CurrencyCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

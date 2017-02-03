@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesterritoryCreateDlg" widgetVar="SalesterritoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSalesterritoryTitle}" closeOnEscape="true">
+
+            <h:form id="SalesterritoryCreateForm">
+
+                <h:panelGroup id="display" rendered="#{salesterritoryController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{salesterritoryController.selected.name}" title="#{messages.CreateSalesterritoryTitle_name}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_countryRegionCode}" for="countryRegionCode" />
+                        <p:inputText id="countryRegionCode" value="#{salesterritoryController.selected.countryRegionCode}" title="#{messages.CreateSalesterritoryTitle_countryRegionCode}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_countryRegionCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_group}" for="group" />
+                        <p:inputText id="group" value="#{salesterritoryController.selected.group}" title="#{messages.CreateSalesterritoryTitle_group}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_group}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_salesYTD}" for="salesYTD" />
+                        <p:inputText id="salesYTD" value="#{salesterritoryController.selected.salesYTD}" title="#{messages.CreateSalesterritoryTitle_salesYTD}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_salesYTD}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_salesLastYear}" for="salesLastYear" />
+                        <p:inputText id="salesLastYear" value="#{salesterritoryController.selected.salesLastYear}" title="#{messages.CreateSalesterritoryTitle_salesLastYear}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_salesLastYear}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_costYTD}" for="costYTD" />
+                        <p:inputText id="costYTD" value="#{salesterritoryController.selected.costYTD}" title="#{messages.CreateSalesterritoryTitle_costYTD}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_costYTD}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_costLastYear}" for="costLastYear" />
+                        <p:inputText id="costLastYear" value="#{salesterritoryController.selected.costLastYear}" title="#{messages.CreateSalesterritoryTitle_costLastYear}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_costLastYear}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesterritoryController.selected.rowguid}" title="#{messages.CreateSalesterritoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_rowguid}"/>
+
+                        <p:outputLabel value="#{messages.CreateSalesterritoryLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesterritoryController.selected.modifiedDate}" title="#{messages.CreateSalesterritoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{salesterritoryController.saveNew}" value="#{messages.Save}" update="display,:SalesterritoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesterritoryCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesterritoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

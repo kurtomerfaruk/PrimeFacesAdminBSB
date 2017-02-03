@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DepartmentEditDlg" widgetVar="DepartmentEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditDepartmentTitle}" closeOnEscape="true">
+
+            <h:form id="DepartmentEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{departmentController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditDepartmentLabel_departmentID}" for="departmentID" />
+                        <h:outputText id="departmentID" value="#{departmentController.selected.departmentID}" />
+
+                        <p:outputLabel value="#{messages.EditDepartmentLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{departmentController.selected.name}" title="#{messages.EditDepartmentTitle_name}" required="true" requiredMessage="#{messages.EditDepartmentRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditDepartmentLabel_groupName}" for="groupName" />
+                        <p:inputText id="groupName" value="#{departmentController.selected.groupName}" title="#{messages.EditDepartmentTitle_groupName}" required="true" requiredMessage="#{messages.EditDepartmentRequiredMessage_groupName}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditDepartmentLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{departmentController.selected.modifiedDate}" title="#{messages.EditDepartmentTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditDepartmentRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{departmentController.save}" value="#{messages.Save}" update="display,:DepartmentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DepartmentEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('DepartmentEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

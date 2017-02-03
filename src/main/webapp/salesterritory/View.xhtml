@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesterritoryViewDlg" widgetVar="SalesterritoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesterritoryTitle}" closeOnEscape="true">
+
+            <h:form id="SalesterritoryViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salesterritoryController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_territoryID}"/>
+                        <h:outputText value="#{salesterritoryController.selected.territoryID}" title="#{messages.ViewSalesterritoryTitle_territoryID}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_name}"/>
+                        <h:outputText value="#{salesterritoryController.selected.name}" title="#{messages.ViewSalesterritoryTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_countryRegionCode}"/>
+                        <h:outputText value="#{salesterritoryController.selected.countryRegionCode}" title="#{messages.ViewSalesterritoryTitle_countryRegionCode}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_group}"/>
+                        <h:outputText value="#{salesterritoryController.selected.group}" title="#{messages.ViewSalesterritoryTitle_group}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_salesYTD}"/>
+                        <h:outputText value="#{salesterritoryController.selected.salesYTD}" title="#{messages.ViewSalesterritoryTitle_salesYTD}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_salesLastYear}"/>
+                        <h:outputText value="#{salesterritoryController.selected.salesLastYear}" title="#{messages.ViewSalesterritoryTitle_salesLastYear}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_costYTD}"/>
+                        <h:outputText value="#{salesterritoryController.selected.costYTD}" title="#{messages.ViewSalesterritoryTitle_costYTD}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_costLastYear}"/>
+                        <h:outputText value="#{salesterritoryController.selected.costLastYear}" title="#{messages.ViewSalesterritoryTitle_costLastYear}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_rowguid}"/>
+                        <h:outputText value="#{salesterritoryController.selected.rowguid}" title="#{messages.ViewSalesterritoryTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewSalesterritoryLabel_modifiedDate}"/>
+                        <h:outputText value="#{salesterritoryController.selected.modifiedDate}" title="#{messages.ViewSalesterritoryTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesterritoryViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

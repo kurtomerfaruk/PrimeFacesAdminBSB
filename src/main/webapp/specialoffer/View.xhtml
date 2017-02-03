@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SpecialofferViewDlg" widgetVar="SpecialofferViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSpecialofferTitle}" closeOnEscape="true">
+
+            <h:form id="SpecialofferViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{specialofferController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_specialOfferID}"/>
+                        <h:outputText value="#{specialofferController.selected.specialOfferID}" title="#{messages.ViewSpecialofferTitle_specialOfferID}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_description}"/>
+                        <h:outputText value="#{specialofferController.selected.description}" title="#{messages.ViewSpecialofferTitle_description}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_discountPct}"/>
+                        <h:outputText value="#{specialofferController.selected.discountPct}" title="#{messages.ViewSpecialofferTitle_discountPct}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_type}"/>
+                        <h:outputText value="#{specialofferController.selected.type}" title="#{messages.ViewSpecialofferTitle_type}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_category}"/>
+                        <h:outputText value="#{specialofferController.selected.category}" title="#{messages.ViewSpecialofferTitle_category}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_startDate}"/>
+                        <h:outputText value="#{specialofferController.selected.startDate}" title="#{messages.ViewSpecialofferTitle_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_endDate}"/>
+                        <h:outputText value="#{specialofferController.selected.endDate}" title="#{messages.ViewSpecialofferTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_minQty}"/>
+                        <h:outputText value="#{specialofferController.selected.minQty}" title="#{messages.ViewSpecialofferTitle_minQty}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_maxQty}"/>
+                        <h:outputText value="#{specialofferController.selected.maxQty}" title="#{messages.ViewSpecialofferTitle_maxQty}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_rowguid}"/>
+                        <h:outputText value="#{specialofferController.selected.rowguid}" title="#{messages.ViewSpecialofferTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewSpecialofferLabel_modifiedDate}"/>
+                        <h:outputText value="#{specialofferController.selected.modifiedDate}" title="#{messages.ViewSpecialofferTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SpecialofferViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

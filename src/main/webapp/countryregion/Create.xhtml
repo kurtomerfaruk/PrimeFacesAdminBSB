@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CountryregionCreateDlg" widgetVar="CountryregionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateCountryregionTitle}" closeOnEscape="true">
+
+            <h:form id="CountryregionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{countryregionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateCountryregionLabel_countryRegionCode}" for="countryRegionCode" />
+                        <p:inputText id="countryRegionCode" value="#{countryregionController.selected.countryRegionCode}" title="#{messages.CreateCountryregionTitle_countryRegionCode}" required="true" requiredMessage="#{messages.CreateCountryregionRequiredMessage_countryRegionCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateCountryregionLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{countryregionController.selected.name}" title="#{messages.CreateCountryregionTitle_name}" required="true" requiredMessage="#{messages.CreateCountryregionRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateCountryregionLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{countryregionController.selected.modifiedDate}" title="#{messages.CreateCountryregionTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCountryregionRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{countryregionController.saveNew}" value="#{messages.Save}" update="display,:CountryregionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CountryregionCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CountryregionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

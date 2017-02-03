@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VendorCreateDlg" widgetVar="VendorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateVendorTitle}" closeOnEscape="true">
+
+            <h:form id="VendorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{vendorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_accountNumber}" for="accountNumber" />
+                        <p:inputText id="accountNumber" value="#{vendorController.selected.accountNumber}" title="#{messages.CreateVendorTitle_accountNumber}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_accountNumber}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{vendorController.selected.name}" title="#{messages.CreateVendorTitle_name}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_name}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_creditRating}" for="creditRating" />
+                        <p:inputText id="creditRating" value="#{vendorController.selected.creditRating}" title="#{messages.CreateVendorTitle_creditRating}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_creditRating}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_preferredVendorStatus}" for="preferredVendorStatus" />
+                        <p:selectBooleanCheckbox id="preferredVendorStatus" value="#{vendorController.selected.preferredVendorStatus}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_preferredVendorStatus}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_activeFlag}" for="activeFlag" />
+                        <p:selectBooleanCheckbox id="activeFlag" value="#{vendorController.selected.activeFlag}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_activeFlag}"/>
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_purchasingWebServiceURL}" for="purchasingWebServiceURL" />
+                        <p:inputTextarea rows="4" cols="30" id="purchasingWebServiceURL" value="#{vendorController.selected.purchasingWebServiceURL}" title="#{messages.CreateVendorTitle_purchasingWebServiceURL}" />
+
+                        <p:outputLabel value="#{messages.CreateVendorLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vendorController.selected.modifiedDate}" title="#{messages.CreateVendorTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vendorController.saveNew}" value="#{messages.Save}" update="display,:VendorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VendorCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('VendorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

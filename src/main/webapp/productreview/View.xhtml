@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductreviewViewDlg" widgetVar="ProductreviewViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductreviewTitle}" closeOnEscape="true">
+
+            <h:form id="ProductreviewViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productreviewController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_productReviewID}"/>
+                        <h:outputText value="#{productreviewController.selected.productReviewID}" title="#{messages.ViewProductreviewTitle_productReviewID}"/>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_productID}"/>
+                        <h:outputText value="#{productreviewController.selected.productID}" title="#{messages.ViewProductreviewTitle_productID}"/>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_reviewerName}"/>
+                        <h:outputText value="#{productreviewController.selected.reviewerName}" title="#{messages.ViewProductreviewTitle_reviewerName}"/>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_reviewDate}"/>
+                        <h:outputText value="#{productreviewController.selected.reviewDate}" title="#{messages.ViewProductreviewTitle_reviewDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_emailAddress}"/>
+                        <h:outputText value="#{productreviewController.selected.emailAddress}" title="#{messages.ViewProductreviewTitle_emailAddress}"/>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_rating}"/>
+                        <h:outputText value="#{productreviewController.selected.rating}" title="#{messages.ViewProductreviewTitle_rating}"/>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_comments}"/>
+                        <h:outputText value="#{productreviewController.selected.comments}" title="#{messages.ViewProductreviewTitle_comments}"/>
+
+                        <h:outputText value="#{messages.ViewProductreviewLabel_modifiedDate}"/>
+                        <h:outputText value="#{productreviewController.selected.modifiedDate}" title="#{messages.ViewProductreviewTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductreviewViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

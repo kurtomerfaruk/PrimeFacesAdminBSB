@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VendorcontactViewDlg" widgetVar="VendorcontactViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewVendorcontactTitle}" closeOnEscape="true">
+
+            <h:form id="VendorcontactViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{vendorcontactController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewVendorcontactLabel_vendorcontactPK_vendorID}"/>
+                        <h:outputText value="#{vendorcontactController.selected.vendorcontactPK.vendorID}" title="#{messages.ViewVendorcontactTitle_vendorcontactPK_vendorID}"/>
+
+                        <h:outputText value="#{messages.ViewVendorcontactLabel_vendorcontactPK_contactID}"/>
+                        <h:outputText value="#{vendorcontactController.selected.vendorcontactPK.contactID}" title="#{messages.ViewVendorcontactTitle_vendorcontactPK_contactID}"/>
+
+                        <h:outputText value="#{messages.ViewVendorcontactLabel_contactTypeID}"/>
+                        <h:outputText value="#{vendorcontactController.selected.contactTypeID}" title="#{messages.ViewVendorcontactTitle_contactTypeID}"/>
+
+                        <h:outputText value="#{messages.ViewVendorcontactLabel_modifiedDate}"/>
+                        <h:outputText value="#{vendorcontactController.selected.modifiedDate}" title="#{messages.ViewVendorcontactTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('VendorcontactViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

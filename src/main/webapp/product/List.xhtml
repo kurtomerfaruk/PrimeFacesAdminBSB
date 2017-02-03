@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductListForm">
+
+        <p:panel header="#{messages.ListProductTitle}">
+            <p:contextMenu id="ProductDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductTitle_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductTitle_name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productNumber}" filterBy="#{item.productNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductTitle_productNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.makeFlag}" filterBy="#{item.makeFlag}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductTitle_makeFlag}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="makeFlag" value="#{item.makeFlag}" title="#{messages.EditProductTitle_makeFlag}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_makeFlag}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.finishedGoodsFlag}" filterBy="#{item.finishedGoodsFlag}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductTitle_finishedGoodsFlag}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="finishedGoodsFlag" value="#{item.finishedGoodsFlag}" title="#{messages.EditProductTitle_finishedGoodsFlag}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_finishedGoodsFlag}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.color}" filterBy="#{item.color}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductTitle_color}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.color}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.safetyStockLevel}" filterBy="#{item.safetyStockLevel}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_safetyStockLevel}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.safetyStockLevel}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.reorderPoint}" filterBy="#{item.reorderPoint}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_reorderPoint}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.reorderPoint}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.standardCost}" filterBy="#{item.standardCost}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_standardCost}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.standardCost}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.listPrice}" filterBy="#{item.listPrice}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_listPrice}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.listPrice}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.size}" filterBy="#{item.size}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_size}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.size}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.sizeUnitMeasureCode}" filterBy="#{item.sizeUnitMeasureCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_sizeUnitMeasureCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sizeUnitMeasureCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.weightUnitMeasureCode}" filterBy="#{item.weightUnitMeasureCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_weightUnitMeasureCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.weightUnitMeasureCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.weight}" filterBy="#{item.weight}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_weight}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.weight}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.daysToManufacture}" filterBy="#{item.daysToManufacture}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_daysToManufacture}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.daysToManufacture}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.productLine}" filterBy="#{item.productLine}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_productLine}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.productLine}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.class1}" filterBy="#{item.class1}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_class1}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.class1}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.style}" filterBy="#{item.style}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_style}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.style}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.productSubcategoryID}" filterBy="#{item.productSubcategoryID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_productSubcategoryID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.productSubcategoryID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.productModelID}" filterBy="#{item.productModelID}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_productModelID}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.productModelID}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.sellStartDate}" filterBy="#{item.sellStartDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_sellStartDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sellStartDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.sellEndDate}" filterBy="#{item.sellEndDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_sellEndDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sellEndDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.discontinuedDate}" filterBy="#{item.discontinuedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_discontinuedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.discontinuedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_rowguid}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rowguid}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productController.prepareCreate}" update=":ProductCreateForm" oncomplete="PF('ProductCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductViewForm" oncomplete="PF('ProductViewDialog').show()" disabled="#{empty productController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductEditForm" oncomplete="PF('ProductEditDialog').show()" disabled="#{empty productController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productController.delete}" update=":growl,datalist" disabled="#{empty productController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

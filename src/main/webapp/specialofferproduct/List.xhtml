@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SpecialofferproductListForm">
+
+        <p:panel header="#{messages.ListSpecialofferproductTitle}">
+            <p:contextMenu id="SpecialofferproductDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('SpecialofferproductListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('SpecialofferproductListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SpecialofferproductListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SpecialofferproductListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{specialofferproductController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{specialofferproductController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{specialofferproductController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.specialofferproductPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SpecialofferproductDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SpecialofferproductDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SpecialofferproductListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.specialofferproductPK.specialOfferID}" filterBy="#{item.specialofferproductPK.specialOfferID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSpecialofferproductTitle_specialofferproductPK_specialOfferID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.specialofferproductPK.specialOfferID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.specialofferproductPK.productID}" filterBy="#{item.specialofferproductPK.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSpecialofferproductTitle_specialofferproductPK_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.specialofferproductPK.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSpecialofferproductTitle_rowguid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rowguid}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSpecialofferproductTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{specialofferproductController.prepareCreate}" update=":SpecialofferproductCreateForm" oncomplete="PF('SpecialofferproductCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":SpecialofferproductViewForm" oncomplete="PF('SpecialofferproductViewDialog').show()" disabled="#{empty specialofferproductController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":SpecialofferproductEditForm" oncomplete="PF('SpecialofferproductEditDialog').show()" disabled="#{empty specialofferproductController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{specialofferproductController.delete}" update=":growl,datalist" disabled="#{empty specialofferproductController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

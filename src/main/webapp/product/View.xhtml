@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductViewDlg" widgetVar="ProductViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductTitle}" closeOnEscape="true">
+
+            <h:form id="ProductViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="ProductTabView">
+
+                        <p:tab id="ProductTab1" title="#{messages.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{productController.selected != null}">
+                                <h:outputText value="#{messages.ViewProductLabel_productID}"/>
+                                <h:outputText value="#{productController.selected.productID}" title="#{messages.ViewProductTitle_productID}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_name}"/>
+                                <h:outputText value="#{productController.selected.name}" title="#{messages.ViewProductTitle_name}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_productNumber}"/>
+                                <h:outputText value="#{productController.selected.productNumber}" title="#{messages.ViewProductTitle_productNumber}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_makeFlag}"/>
+                                <h:selectBooleanCheckbox id="makeFlag" value="#{productController.selected.makeFlag}" title="#{messages.EditProductTitle_makeFlag}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_makeFlag}" disabled="true"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_finishedGoodsFlag}"/>
+                                <h:selectBooleanCheckbox id="finishedGoodsFlag" value="#{productController.selected.finishedGoodsFlag}" title="#{messages.EditProductTitle_finishedGoodsFlag}" required="true" requiredMessage="#{messages.EditProductRequiredMessage_finishedGoodsFlag}" disabled="true"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_color}"/>
+                                <h:outputText value="#{productController.selected.color}" title="#{messages.ViewProductTitle_color}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_safetyStockLevel}"/>
+                                <h:outputText value="#{productController.selected.safetyStockLevel}" title="#{messages.ViewProductTitle_safetyStockLevel}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_reorderPoint}"/>
+                                <h:outputText value="#{productController.selected.reorderPoint}" title="#{messages.ViewProductTitle_reorderPoint}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_standardCost}"/>
+                                <h:outputText value="#{productController.selected.standardCost}" title="#{messages.ViewProductTitle_standardCost}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_listPrice}"/>
+                                <h:outputText value="#{productController.selected.listPrice}" title="#{messages.ViewProductTitle_listPrice}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_size}"/>
+                                <h:outputText value="#{productController.selected.size}" title="#{messages.ViewProductTitle_size}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_sizeUnitMeasureCode}"/>
+                                <h:outputText value="#{productController.selected.sizeUnitMeasureCode}" title="#{messages.ViewProductTitle_sizeUnitMeasureCode}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_weightUnitMeasureCode}"/>
+                                <h:outputText value="#{productController.selected.weightUnitMeasureCode}" title="#{messages.ViewProductTitle_weightUnitMeasureCode}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_weight}"/>
+                                <h:outputText value="#{productController.selected.weight}" title="#{messages.ViewProductTitle_weight}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_daysToManufacture}"/>
+                                <h:outputText value="#{productController.selected.daysToManufacture}" title="#{messages.ViewProductTitle_daysToManufacture}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_productLine}"/>
+                                <h:outputText value="#{productController.selected.productLine}" title="#{messages.ViewProductTitle_productLine}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_class1}"/>
+                                <h:outputText value="#{productController.selected.class1}" title="#{messages.ViewProductTitle_class1}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_style}"/>
+                                <h:outputText value="#{productController.selected.style}" title="#{messages.ViewProductTitle_style}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_productSubcategoryID}"/>
+                                <h:outputText value="#{productController.selected.productSubcategoryID}" title="#{messages.ViewProductTitle_productSubcategoryID}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_productModelID}"/>
+                                <h:outputText value="#{productController.selected.productModelID}" title="#{messages.ViewProductTitle_productModelID}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="ProductTab2" title="#{messages.TabHeaderPrefix} 2">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{productController.selected != null}">
+                                <h:outputText value="#{messages.ViewProductLabel_sellStartDate}"/>
+                                <h:outputText value="#{productController.selected.sellStartDate}" title="#{messages.ViewProductTitle_sellStartDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{messages.ViewProductLabel_sellEndDate}"/>
+                                <h:outputText value="#{productController.selected.sellEndDate}" title="#{messages.ViewProductTitle_sellEndDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{messages.ViewProductLabel_discontinuedDate}"/>
+                                <h:outputText value="#{productController.selected.discontinuedDate}" title="#{messages.ViewProductTitle_discontinuedDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{messages.ViewProductLabel_rowguid}"/>
+                                <h:outputText value="#{productController.selected.rowguid}" title="#{messages.ViewProductTitle_rowguid}"/>
+
+                                <h:outputText value="#{messages.ViewProductLabel_modifiedDate}"/>
+                                <h:outputText value="#{productController.selected.modifiedDate}" title="#{messages.ViewProductTitle_modifiedDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

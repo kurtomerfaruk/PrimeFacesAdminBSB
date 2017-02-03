@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DocumentEditDlg" widgetVar="DocumentEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditDocumentTitle}" closeOnEscape="true">
+
+            <h:form id="DocumentEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{documentController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditDocumentLabel_documentID}" for="documentID" />
+                        <h:outputText id="documentID" value="#{documentController.selected.documentID}" />
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_title}" for="title" />
+                        <p:inputText id="title" value="#{documentController.selected.title}" title="#{messages.EditDocumentTitle_title}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_title}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_fileName}" for="fileName" />
+                        <p:inputTextarea rows="4" cols="30" id="fileName" value="#{documentController.selected.fileName}" title="#{messages.EditDocumentTitle_fileName}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_fileName}"/>
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_fileExtension}" for="fileExtension" />
+                        <p:inputText id="fileExtension" value="#{documentController.selected.fileExtension}" title="#{messages.EditDocumentTitle_fileExtension}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_fileExtension}" size="8" maxlength="8"/>
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_revision}" for="revision" />
+                        <p:inputText id="revision" value="#{documentController.selected.revision}" title="#{messages.EditDocumentTitle_revision}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_revision}" size="5" maxlength="5"/>
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_changeNumber}" for="changeNumber" />
+                        <p:inputText id="changeNumber" value="#{documentController.selected.changeNumber}" title="#{messages.EditDocumentTitle_changeNumber}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_changeNumber}"/>
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{documentController.selected.status}" title="#{messages.EditDocumentTitle_status}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_status}"/>
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_documentSummary}" for="documentSummary" />
+                        <p:inputTextarea rows="4" cols="30" id="documentSummary" value="#{documentController.selected.documentSummary}" title="#{messages.EditDocumentTitle_documentSummary}" />
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_document}" for="document" />
+                        <p:inputTextarea rows="4" cols="30" id="document" value="#{documentController.selected.document}" title="#{messages.EditDocumentTitle_document}" />
+
+                        <p:outputLabel value="#{messages.EditDocumentLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{documentController.selected.modifiedDate}" title="#{messages.EditDocumentTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{documentController.save}" value="#{messages.Save}" update="display,:DocumentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DocumentEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('DocumentEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

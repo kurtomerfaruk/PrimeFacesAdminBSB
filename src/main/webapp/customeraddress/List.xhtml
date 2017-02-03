@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CustomeraddressListForm">
+
+        <p:panel header="#{messages.ListCustomeraddressTitle}">
+            <p:contextMenu id="CustomeraddressDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('CustomeraddressListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('CustomeraddressListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('CustomeraddressListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('CustomeraddressListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{customeraddressController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{customeraddressController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{customeraddressController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.customeraddressPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CustomeraddressDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CustomeraddressDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CustomeraddressListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.customeraddressPK.customerID}" filterBy="#{item.customeraddressPK.customerID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCustomeraddressTitle_customeraddressPK_customerID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.customeraddressPK.customerID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.customeraddressPK.addressID}" filterBy="#{item.customeraddressPK.addressID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCustomeraddressTitle_customeraddressPK_addressID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.customeraddressPK.addressID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.addressTypeID}" filterBy="#{item.addressTypeID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCustomeraddressTitle_addressTypeID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.addressTypeID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCustomeraddressTitle_rowguid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rowguid}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListCustomeraddressTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{customeraddressController.prepareCreate}" update=":CustomeraddressCreateForm" oncomplete="PF('CustomeraddressCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":CustomeraddressViewForm" oncomplete="PF('CustomeraddressViewDialog').show()" disabled="#{empty customeraddressController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":CustomeraddressEditForm" oncomplete="PF('CustomeraddressEditDialog').show()" disabled="#{empty customeraddressController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{customeraddressController.delete}" update=":growl,datalist" disabled="#{empty customeraddressController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

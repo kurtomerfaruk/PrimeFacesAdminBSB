@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PurchaseorderdetailViewDlg" widgetVar="PurchaseorderdetailViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewPurchaseorderdetailTitle}" closeOnEscape="true">
+
+            <h:form id="PurchaseorderdetailViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{purchaseorderdetailController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_purchaseorderdetailPK_purchaseOrderID}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.purchaseorderdetailPK.purchaseOrderID}" title="#{messages.ViewPurchaseorderdetailTitle_purchaseorderdetailPK_purchaseOrderID}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_purchaseorderdetailPK_purchaseOrderDetailID}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.purchaseorderdetailPK.purchaseOrderDetailID}" title="#{messages.ViewPurchaseorderdetailTitle_purchaseorderdetailPK_purchaseOrderDetailID}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_dueDate}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.dueDate}" title="#{messages.ViewPurchaseorderdetailTitle_dueDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_orderQty}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.orderQty}" title="#{messages.ViewPurchaseorderdetailTitle_orderQty}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_productID}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.productID}" title="#{messages.ViewPurchaseorderdetailTitle_productID}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_unitPrice}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.unitPrice}" title="#{messages.ViewPurchaseorderdetailTitle_unitPrice}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_lineTotal}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.lineTotal}" title="#{messages.ViewPurchaseorderdetailTitle_lineTotal}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_receivedQty}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.receivedQty}" title="#{messages.ViewPurchaseorderdetailTitle_receivedQty}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_rejectedQty}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.rejectedQty}" title="#{messages.ViewPurchaseorderdetailTitle_rejectedQty}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_stockedQty}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.stockedQty}" title="#{messages.ViewPurchaseorderdetailTitle_stockedQty}"/>
+
+                        <h:outputText value="#{messages.ViewPurchaseorderdetailLabel_modifiedDate}"/>
+                        <h:outputText value="#{purchaseorderdetailController.selected.modifiedDate}" title="#{messages.ViewPurchaseorderdetailTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('PurchaseorderdetailViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

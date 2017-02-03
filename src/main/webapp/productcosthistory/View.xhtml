@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductcosthistoryViewDlg" widgetVar="ProductcosthistoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductcosthistoryTitle}" closeOnEscape="true">
+
+            <h:form id="ProductcosthistoryViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productcosthistoryController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_productcosthistoryPK_productID}"/>
+                        <h:outputText value="#{productcosthistoryController.selected.productcosthistoryPK.productID}" title="#{messages.ViewProductcosthistoryTitle_productcosthistoryPK_productID}"/>
+
+                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_productcosthistoryPK_startDate}"/>
+                        <h:outputText value="#{productcosthistoryController.selected.productcosthistoryPK.startDate}" title="#{messages.ViewProductcosthistoryTitle_productcosthistoryPK_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_endDate}"/>
+                        <h:outputText value="#{productcosthistoryController.selected.endDate}" title="#{messages.ViewProductcosthistoryTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_standardCost}"/>
+                        <h:outputText value="#{productcosthistoryController.selected.standardCost}" title="#{messages.ViewProductcosthistoryTitle_standardCost}"/>
+
+                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_modifiedDate}"/>
+                        <h:outputText value="#{productcosthistoryController.selected.modifiedDate}" title="#{messages.ViewProductcosthistoryTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductcosthistoryViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductvendorListForm">
+
+        <p:panel header="#{messages.ListProductvendorTitle}">
+            <p:contextMenu id="ProductvendorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductvendorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductvendorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductvendorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductvendorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productvendorController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productvendorController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{productvendorController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.productvendorPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductvendorDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductvendorDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductvendorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productvendorPK.productID}" filterBy="#{item.productvendorPK.productID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductvendorTitle_productvendorPK_productID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productvendorPK.productID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productvendorPK.vendorID}" filterBy="#{item.productvendorPK.vendorID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductvendorTitle_productvendorPK_vendorID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productvendorPK.vendorID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.averageLeadTime}" filterBy="#{item.averageLeadTime}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductvendorTitle_averageLeadTime}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.averageLeadTime}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.standardPrice}" filterBy="#{item.standardPrice}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductvendorTitle_standardPrice}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.standardPrice}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.lastReceiptCost}" filterBy="#{item.lastReceiptCost}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductvendorTitle_lastReceiptCost}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.lastReceiptCost}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.lastReceiptDate}" filterBy="#{item.lastReceiptDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListProductvendorTitle_lastReceiptDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.lastReceiptDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.minOrderQty}" filterBy="#{item.minOrderQty}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductvendorTitle_minOrderQty}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.minOrderQty}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.maxOrderQty}" filterBy="#{item.maxOrderQty}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductvendorTitle_maxOrderQty}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.maxOrderQty}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.onOrderQty}" filterBy="#{item.onOrderQty}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductvendorTitle_onOrderQty}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.onOrderQty}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.unitMeasureCode}" filterBy="#{item.unitMeasureCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductvendorTitle_unitMeasureCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.unitMeasureCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListProductvendorTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productvendorController.prepareCreate}" update=":ProductvendorCreateForm" oncomplete="PF('ProductvendorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductvendorViewForm" oncomplete="PF('ProductvendorViewDialog').show()" disabled="#{empty productvendorController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductvendorEditForm" oncomplete="PF('ProductvendorEditDialog').show()" disabled="#{empty productvendorController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productvendorController.delete}" update=":growl,datalist" disabled="#{empty productvendorController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

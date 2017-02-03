@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SalesorderheaderViewDlg" widgetVar="SalesorderheaderViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesorderheaderTitle}" closeOnEscape="true">
+
+            <h:form id="SalesorderheaderViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="SalesorderheaderTabView">
+
+                        <p:tab id="SalesorderheaderTab1" title="#{messages.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{salesorderheaderController.selected != null}">
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_salesOrderID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.salesOrderID}" title="#{messages.ViewSalesorderheaderTitle_salesOrderID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_revisionNumber}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.revisionNumber}" title="#{messages.ViewSalesorderheaderTitle_revisionNumber}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_orderDate}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.orderDate}" title="#{messages.ViewSalesorderheaderTitle_orderDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_dueDate}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.dueDate}" title="#{messages.ViewSalesorderheaderTitle_dueDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_shipDate}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.shipDate}" title="#{messages.ViewSalesorderheaderTitle_shipDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_status}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.status}" title="#{messages.ViewSalesorderheaderTitle_status}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_onlineOrderFlag}"/>
+                                <h:selectBooleanCheckbox id="onlineOrderFlag" value="#{salesorderheaderController.selected.onlineOrderFlag}" title="#{messages.EditSalesorderheaderTitle_onlineOrderFlag}" required="true" requiredMessage="#{messages.EditSalesorderheaderRequiredMessage_onlineOrderFlag}" disabled="true"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_salesOrderNumber}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.salesOrderNumber}" title="#{messages.ViewSalesorderheaderTitle_salesOrderNumber}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_purchaseOrderNumber}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.purchaseOrderNumber}" title="#{messages.ViewSalesorderheaderTitle_purchaseOrderNumber}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_accountNumber}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.accountNumber}" title="#{messages.ViewSalesorderheaderTitle_accountNumber}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_customerID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.customerID}" title="#{messages.ViewSalesorderheaderTitle_customerID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_contactID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.contactID}" title="#{messages.ViewSalesorderheaderTitle_contactID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_salesPersonID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.salesPersonID}" title="#{messages.ViewSalesorderheaderTitle_salesPersonID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_territoryID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.territoryID}" title="#{messages.ViewSalesorderheaderTitle_territoryID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_billToAddressID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.billToAddressID}" title="#{messages.ViewSalesorderheaderTitle_billToAddressID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_shipToAddressID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.shipToAddressID}" title="#{messages.ViewSalesorderheaderTitle_shipToAddressID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_shipMethodID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.shipMethodID}" title="#{messages.ViewSalesorderheaderTitle_shipMethodID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_creditCardID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.creditCardID}" title="#{messages.ViewSalesorderheaderTitle_creditCardID}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_creditCardApprovalCode}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.creditCardApprovalCode}" title="#{messages.ViewSalesorderheaderTitle_creditCardApprovalCode}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_currencyRateID}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.currencyRateID}" title="#{messages.ViewSalesorderheaderTitle_currencyRateID}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="SalesorderheaderTab2" title="#{messages.TabHeaderPrefix} 2">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{salesorderheaderController.selected != null}">
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_subTotal}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.subTotal}" title="#{messages.ViewSalesorderheaderTitle_subTotal}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_taxAmt}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.taxAmt}" title="#{messages.ViewSalesorderheaderTitle_taxAmt}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_freight}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.freight}" title="#{messages.ViewSalesorderheaderTitle_freight}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_totalDue}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.totalDue}" title="#{messages.ViewSalesorderheaderTitle_totalDue}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_comment}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.comment}" title="#{messages.ViewSalesorderheaderTitle_comment}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_rowguid}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.rowguid}" title="#{messages.ViewSalesorderheaderTitle_rowguid}"/>
+
+                                <h:outputText value="#{messages.ViewSalesorderheaderLabel_modifiedDate}"/>
+                                <h:outputText value="#{salesorderheaderController.selected.modifiedDate}" title="#{messages.ViewSalesorderheaderTitle_modifiedDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesorderheaderViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

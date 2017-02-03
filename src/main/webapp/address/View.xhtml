@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AddressViewDlg" widgetVar="AddressViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewAddressTitle}" closeOnEscape="true">
+
+            <h:form id="AddressViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{addressController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewAddressLabel_addressID}"/>
+                        <h:outputText value="#{addressController.selected.addressID}" title="#{messages.ViewAddressTitle_addressID}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_addressLine1}"/>
+                        <h:outputText value="#{addressController.selected.addressLine1}" title="#{messages.ViewAddressTitle_addressLine1}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_addressLine2}"/>
+                        <h:outputText value="#{addressController.selected.addressLine2}" title="#{messages.ViewAddressTitle_addressLine2}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_city}"/>
+                        <h:outputText value="#{addressController.selected.city}" title="#{messages.ViewAddressTitle_city}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_stateProvinceID}"/>
+                        <h:outputText value="#{addressController.selected.stateProvinceID}" title="#{messages.ViewAddressTitle_stateProvinceID}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_postalCode}"/>
+                        <h:outputText value="#{addressController.selected.postalCode}" title="#{messages.ViewAddressTitle_postalCode}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_rowguid}"/>
+                        <h:outputText value="#{addressController.selected.rowguid}" title="#{messages.ViewAddressTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewAddressLabel_modifiedDate}"/>
+                        <h:outputText value="#{addressController.selected.modifiedDate}" title="#{messages.ViewAddressTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        
+                        <f:facet name="footer">
+                            <div class="footer-right">
+                                <p:commandButton value="#{messages.Close}" onclick="PF('AddressViewDialog').hide()"/>
+                            </div>
+                        </f:facet>
+                        
+                    </p:panelGrid>
+                    
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

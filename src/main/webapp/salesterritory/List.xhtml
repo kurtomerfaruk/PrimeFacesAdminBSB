@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SalesterritoryListForm">
+
+        <p:panel header="#{messages.ListSalesterritoryTitle}">
+            <p:contextMenu id="SalesterritoryDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('SalesterritoryListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalesterritoryListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalesterritoryListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalesterritoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{salesterritoryController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{salesterritoryController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{salesterritoryController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.territoryID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalesterritoryDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalesterritoryDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SalesterritoryListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.territoryID}" filterBy="#{item.territoryID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesterritoryTitle_territoryID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.territoryID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesterritoryTitle_name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.countryRegionCode}" filterBy="#{item.countryRegionCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesterritoryTitle_countryRegionCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.countryRegionCode}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.group}" filterBy="#{item.group}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesterritoryTitle_group}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.group}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.salesYTD}" filterBy="#{item.salesYTD}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesterritoryTitle_salesYTD}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salesYTD}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.salesLastYear}" filterBy="#{item.salesLastYear}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListSalesterritoryTitle_salesLastYear}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salesLastYear}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.costYTD}" filterBy="#{item.costYTD}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesterritoryTitle_costYTD}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.costYTD}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.costLastYear}" filterBy="#{item.costLastYear}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesterritoryTitle_costLastYear}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.costLastYear}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesterritoryTitle_rowguid}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rowguid}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListSalesterritoryTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{salesterritoryController.prepareCreate}" update=":SalesterritoryCreateForm" oncomplete="PF('SalesterritoryCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":SalesterritoryViewForm" oncomplete="PF('SalesterritoryViewDialog').show()" disabled="#{empty salesterritoryController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":SalesterritoryEditForm" oncomplete="PF('SalesterritoryEditDialog').show()" disabled="#{empty salesterritoryController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{salesterritoryController.delete}" update=":growl,datalist" disabled="#{empty salesterritoryController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

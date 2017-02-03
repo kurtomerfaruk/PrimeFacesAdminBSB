@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="VendoraddressListForm">
+
+        <p:panel header="#{messages.ListVendoraddressTitle}">
+            <p:contextMenu id="VendoraddressDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('VendoraddressListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('VendoraddressListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('VendoraddressListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('VendoraddressListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{vendoraddressController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{vendoraddressController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{vendoraddressController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.vendoraddressPK}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:VendoraddressDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:VendoraddressDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('VendoraddressListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.vendoraddressPK.vendorID}" filterBy="#{item.vendoraddressPK.vendorID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListVendoraddressTitle_vendoraddressPK_vendorID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.vendoraddressPK.vendorID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.vendoraddressPK.addressID}" filterBy="#{item.vendoraddressPK.addressID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListVendoraddressTitle_vendoraddressPK_addressID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.vendoraddressPK.addressID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.addressTypeID}" filterBy="#{item.addressTypeID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListVendoraddressTitle_addressTypeID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.addressTypeID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListVendoraddressTitle_modifiedDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{vendoraddressController.prepareCreate}" update=":VendoraddressCreateForm" oncomplete="PF('VendoraddressCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":VendoraddressViewForm" oncomplete="PF('VendoraddressViewDialog').show()" disabled="#{empty vendoraddressController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":VendoraddressEditForm" oncomplete="PF('VendoraddressEditDialog').show()" disabled="#{empty vendoraddressController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{vendoraddressController.delete}" update=":growl,datalist" disabled="#{empty vendoraddressController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmployeeListForm">
+
+        <p:panel header="#{messages.ListEmployeeTitle}">
+            <p:contextMenu id="EmployeeDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('EmployeeListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('EmployeeListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('EmployeeListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('EmployeeListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{employeeController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{employeeController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{employeeController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.employeeID}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmployeeDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmployeeDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmployeeListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.employeeID}" filterBy="#{item.employeeID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListEmployeeTitle_employeeID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.employeeID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nationalIDNumber}" filterBy="#{item.nationalIDNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListEmployeeTitle_nationalIDNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nationalIDNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.contactID}" filterBy="#{item.contactID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListEmployeeTitle_contactID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.contactID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.loginID}" filterBy="#{item.loginID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListEmployeeTitle_loginID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.loginID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.managerID}" filterBy="#{item.managerID}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListEmployeeTitle_managerID}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.managerID}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.title}" filterBy="#{item.title}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.ListEmployeeTitle_title}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.title}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.birthDate}" filterBy="#{item.birthDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_birthDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.birthDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.maritalStatus}" filterBy="#{item.maritalStatus}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_maritalStatus}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.maritalStatus}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.gender}" filterBy="#{item.gender}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_gender}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.gender}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.hireDate}" filterBy="#{item.hireDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_hireDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.hireDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.salariedFlag}" filterBy="#{item.salariedFlag}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_salariedFlag}"/>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox id="salariedFlag" value="#{item.salariedFlag}" title="#{messages.EditEmployeeTitle_salariedFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_salariedFlag}" disabled="true"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.vacationHours}" filterBy="#{item.vacationHours}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_vacationHours}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.vacationHours}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.sickLeaveHours}" filterBy="#{item.sickLeaveHours}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_sickLeaveHours}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sickLeaveHours}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.currentFlag}" filterBy="#{item.currentFlag}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_currentFlag}"/>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox id="currentFlag" value="#{item.currentFlag}" title="#{messages.EditEmployeeTitle_currentFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_currentFlag}" disabled="true"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_rowguid}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rowguid}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{messages.ListEmployeeTitle_modifiedDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.modifiedDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{employeeController.prepareCreate}" update=":EmployeeCreateForm" oncomplete="PF('EmployeeCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty employeeController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":EmployeeEditForm" oncomplete="PF('EmployeeEditDialog').show()" disabled="#{empty employeeController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{employeeController.delete}" update=":growl,datalist" disabled="#{empty employeeController.selected}">
+                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

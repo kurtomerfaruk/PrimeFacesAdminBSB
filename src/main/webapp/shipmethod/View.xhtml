@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ShipmethodViewDlg" widgetVar="ShipmethodViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewShipmethodTitle}" closeOnEscape="true">
+
+            <h:form id="ShipmethodViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{shipmethodController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewShipmethodLabel_shipMethodID}"/>
+                        <h:outputText value="#{shipmethodController.selected.shipMethodID}" title="#{messages.ViewShipmethodTitle_shipMethodID}"/>
+
+                        <h:outputText value="#{messages.ViewShipmethodLabel_name}"/>
+                        <h:outputText value="#{shipmethodController.selected.name}" title="#{messages.ViewShipmethodTitle_name}"/>
+
+                        <h:outputText value="#{messages.ViewShipmethodLabel_shipBase}"/>
+                        <h:outputText value="#{shipmethodController.selected.shipBase}" title="#{messages.ViewShipmethodTitle_shipBase}"/>
+
+                        <h:outputText value="#{messages.ViewShipmethodLabel_shipRate}"/>
+                        <h:outputText value="#{shipmethodController.selected.shipRate}" title="#{messages.ViewShipmethodTitle_shipRate}"/>
+
+                        <h:outputText value="#{messages.ViewShipmethodLabel_rowguid}"/>
+                        <h:outputText value="#{shipmethodController.selected.rowguid}" title="#{messages.ViewShipmethodTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewShipmethodLabel_modifiedDate}"/>
+                        <h:outputText value="#{shipmethodController.selected.modifiedDate}" title="#{messages.ViewShipmethodTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('ShipmethodViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TransactionhistoryarchiveCreateDlg" widgetVar="TransactionhistoryarchiveCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateTransactionhistoryarchiveTitle}" closeOnEscape="true">
+
+            <h:form id="TransactionhistoryarchiveCreateForm">
+
+                <h:panelGroup id="display" rendered="#{transactionhistoryarchiveController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_transactionID}" for="transactionID" />
+                        <p:inputText id="transactionID" value="#{transactionhistoryarchiveController.selected.transactionID}" title="#{messages.CreateTransactionhistoryarchiveTitle_transactionID}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_transactionID}"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_productID}" for="productID" />
+                        <p:inputText id="productID" value="#{transactionhistoryarchiveController.selected.productID}" title="#{messages.CreateTransactionhistoryarchiveTitle_productID}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_productID}"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_referenceOrderID}" for="referenceOrderID" />
+                        <p:inputText id="referenceOrderID" value="#{transactionhistoryarchiveController.selected.referenceOrderID}" title="#{messages.CreateTransactionhistoryarchiveTitle_referenceOrderID}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_referenceOrderID}"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_referenceOrderLineID}" for="referenceOrderLineID" />
+                        <p:inputText id="referenceOrderLineID" value="#{transactionhistoryarchiveController.selected.referenceOrderLineID}" title="#{messages.CreateTransactionhistoryarchiveTitle_referenceOrderLineID}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_referenceOrderLineID}"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_transactionDate}" for="transactionDate" />
+                        <p:calendar id="transactionDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{transactionhistoryarchiveController.selected.transactionDate}" title="#{messages.CreateTransactionhistoryarchiveTitle_transactionDate}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_transactionDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_transactionType}" for="transactionType" />
+                        <p:inputText id="transactionType" value="#{transactionhistoryarchiveController.selected.transactionType}" title="#{messages.CreateTransactionhistoryarchiveTitle_transactionType}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_transactionType}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_quantity}" for="quantity" />
+                        <p:inputText id="quantity" value="#{transactionhistoryarchiveController.selected.quantity}" title="#{messages.CreateTransactionhistoryarchiveTitle_quantity}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_quantity}"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_actualCost}" for="actualCost" />
+                        <p:inputText id="actualCost" value="#{transactionhistoryarchiveController.selected.actualCost}" title="#{messages.CreateTransactionhistoryarchiveTitle_actualCost}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_actualCost}"/>
+
+                        <p:outputLabel value="#{messages.CreateTransactionhistoryarchiveLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{transactionhistoryarchiveController.selected.modifiedDate}" title="#{messages.CreateTransactionhistoryarchiveTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateTransactionhistoryarchiveRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{transactionhistoryarchiveController.saveNew}" value="#{messages.Save}" update="display,:TransactionhistoryarchiveListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TransactionhistoryarchiveCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('TransactionhistoryarchiveCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

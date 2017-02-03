@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CountryregioncurrencyCreateDlg" widgetVar="CountryregioncurrencyCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateCountryregioncurrencyTitle}" closeOnEscape="true">
+
+            <h:form id="CountryregioncurrencyCreateForm">
+
+                <h:panelGroup id="display" rendered="#{countryregioncurrencyController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_countryregioncurrencyPK_countryRegionCode}" for="countryregioncurrencyPK_countryRegionCode" />
+                        <p:inputText id="countryregioncurrencyPK_countryRegionCode" value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.countryRegionCode}" title="#{messages.CreateCountryregioncurrencyTitle_countryregioncurrencyPK_countryRegionCode}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_countryregioncurrencyPK_countryRegionCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_countryregioncurrencyPK_currencyCode}" for="countryregioncurrencyPK_currencyCode" />
+                        <p:inputText id="countryregioncurrencyPK_currencyCode" value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.currencyCode}" title="#{messages.CreateCountryregioncurrencyTitle_countryregioncurrencyPK_currencyCode}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_countryregioncurrencyPK_currencyCode}" size="3" maxlength="3"/>
+
+                        <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{countryregioncurrencyController.selected.modifiedDate}" title="#{messages.CreateCountryregioncurrencyTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{countryregioncurrencyController.saveNew}" value="#{messages.Save}" update="display,:CountryregioncurrencyListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CountryregioncurrencyCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CountryregioncurrencyCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DocumentCreateDlg" widgetVar="DocumentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateDocumentTitle}" closeOnEscape="true">
+
+            <h:form id="DocumentCreateForm">
+
+                <h:panelGroup id="display" rendered="#{documentController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_title}" for="title" />
+                        <p:inputText id="title" value="#{documentController.selected.title}" title="#{messages.CreateDocumentTitle_title}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_title}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_fileName}" for="fileName" />
+                        <p:inputTextarea rows="4" cols="30" id="fileName" value="#{documentController.selected.fileName}" title="#{messages.CreateDocumentTitle_fileName}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_fileName}"/>
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_fileExtension}" for="fileExtension" />
+                        <p:inputText id="fileExtension" value="#{documentController.selected.fileExtension}" title="#{messages.CreateDocumentTitle_fileExtension}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_fileExtension}" size="8" maxlength="8"/>
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_revision}" for="revision" />
+                        <p:inputText id="revision" value="#{documentController.selected.revision}" title="#{messages.CreateDocumentTitle_revision}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_revision}" size="5" maxlength="5"/>
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_changeNumber}" for="changeNumber" />
+                        <p:inputText id="changeNumber" value="#{documentController.selected.changeNumber}" title="#{messages.CreateDocumentTitle_changeNumber}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_changeNumber}"/>
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{documentController.selected.status}" title="#{messages.CreateDocumentTitle_status}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_status}"/>
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_documentSummary}" for="documentSummary" />
+                        <p:inputTextarea rows="4" cols="30" id="documentSummary" value="#{documentController.selected.documentSummary}" title="#{messages.CreateDocumentTitle_documentSummary}" />
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_document}" for="document" />
+                        <p:inputTextarea rows="4" cols="30" id="document" value="#{documentController.selected.document}" title="#{messages.CreateDocumentTitle_document}" />
+
+                        <p:outputLabel value="#{messages.CreateDocumentLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{documentController.selected.modifiedDate}" title="#{messages.CreateDocumentTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateDocumentRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{documentController.saveNew}" value="#{messages.Save}" update="display,:DocumentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DocumentCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('DocumentCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JobcandidateCreateDlg" widgetVar="JobcandidateCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateJobcandidateTitle}" closeOnEscape="true">
+
+            <h:form id="JobcandidateCreateForm">
+
+                <h:panelGroup id="display" rendered="#{jobcandidateController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateJobcandidateLabel_employeeID}" for="employeeID" />
+                        <p:inputText id="employeeID" value="#{jobcandidateController.selected.employeeID}" title="#{messages.CreateJobcandidateTitle_employeeID}"/>
+
+                        <p:outputLabel value="#{messages.CreateJobcandidateLabel_resume}" for="resume" />
+                        <p:inputTextarea rows="4" cols="30" id="resume" value="#{jobcandidateController.selected.resume}" title="#{messages.CreateJobcandidateTitle_resume}" />
+
+                        <p:outputLabel value="#{messages.CreateJobcandidateLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{jobcandidateController.selected.modifiedDate}" title="#{messages.CreateJobcandidateTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateJobcandidateRequiredMessage_modifiedDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{jobcandidateController.saveNew}" value="#{messages.Save}" update="display,:JobcandidateListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JobcandidateCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('JobcandidateCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
