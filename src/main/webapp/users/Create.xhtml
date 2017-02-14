@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="UsersCreateDlg" widgetVar="UsersCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateUsersTitle}" closeOnEscape="true">
+
+            <h:form id="UsersCreateForm">
+
+                <h:panelGroup id="display" rendered="#{usersController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateUsersLabel_userName}" for="userName" />
+                        <p:inputText id="userName" value="#{usersController.selected.userName}" title="#{messages.CreateUsersTitle_userName}" required="true" requiredMessage="#{messages.CreateUsersRequiredMessage_userName}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateUsersLabel_password}" for="password" />
+                        <p:password id="password" value="#{usersController.selected.password}" title="#{messages.CreateUsersTitle_password}" required="true" requiredMessage="#{messages.CreateUsersRequiredMessage_password}" size="45" maxlength="100" feedback="true"/>
+
+                        <p:outputLabel value="#{messages.CreateUsersLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{usersController.selected.name}" title="#{messages.CreateUsersTitle_name}" required="true" requiredMessage="#{messages.CreateUsersRequiredMessage_name}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateUsersLabel_surname}" for="surname" />
+                        <p:inputText id="surname" value="#{usersController.selected.surname}" title="#{messages.CreateUsersTitle_surname}" required="true" requiredMessage="#{messages.CreateUsersRequiredMessage_surname}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateUsersLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{usersController.selected.email}" title="#{messages.CreateUsersTitle_email}" required="true" requiredMessage="#{messages.CreateUsersRequiredMessage_email}" size="45" maxlength="45"/>
+
+                        <f:facet name="footer">
+                            <div class="footer-right">
+                                <p:commandButton actionListener="#{usersController.saveNewPassword}" value="#{messages.Save}" update="display,:UsersListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsersCreateDialog'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton value="#{messages.Cancel}" oncomplete="PF('UsersCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            </div>
+                        </f:facet>
+
+                    </p:panelGrid>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

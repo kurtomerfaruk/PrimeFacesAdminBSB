@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="UsersListForm" class="form-width">
+
+
+        <p:contextMenu id="UsersDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('UsersListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('UsersListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('UsersListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('UsersListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{usersController.lazyItems}"
+                        rowKey="#{item.userId}"
+                        selection="#{usersController.selected}"
+                        filtered="#{usersController.filtered}"
+                        rowselect=":UsersListForm:datalist:datalist:createButton,:UsersListForm:datalist:datalist:viewButton,:UsersListForm:datalist:datalist:editButton,:UsersListForm:datalist:datalist:deleteButton,:UsersListForm:datalist:datalist:resetButton,:UsersListForm:UsersDataTableContextMenu"
+                        rowDblselect="document.getElementById('UsersListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":UsersListForm:datalist:datalist:createButton :UsersListForm:datalist:datalist:viewButton :UsersListForm:datalist:datalist:editButton :UsersListForm:datalist:datalist:deleteButton :UsersListForm:datalist:datalist:resetButton"
+                        selectListener="#{usersController.resetParents()}">
+
+            <f:facet name="header">
+                <h:outputText value="#{messages.ListUsersTitle}"/>   
+            </f:facet>
+
+            <p:column sortBy="#{item.userId}" filterBy="#{item.userId}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_userId}"/>
+                </f:facet>
+                <h:outputText value="#{item.userId}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.userName}" filterBy="#{item.userName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_userName}"/>
+                </f:facet>
+                <h:outputText value="#{item.userName}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_name}"/>
+                </f:facet>
+                <h:outputText value="#{item.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.surname}" filterBy="#{item.surname}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_surname}"/>
+                </f:facet>
+                <h:outputText value="#{item.surname}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_email}"/>
+                </f:facet>
+                <h:outputText value="#{item.email}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListUsersTitle_modifiedDate}"/>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                </h:outputText>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{usersController.prepareCreate}" update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()"/>
+                    <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":UsersViewForm" oncomplete="PF('UsersViewDialog').show()" disabled="#{empty usersController.selected}"/>
+                    <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":UsersEditForm" oncomplete="PF('UsersEditDialog').show()" disabled="#{empty usersController.selected}"/>
+                    <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{usersController.delete}" update=":growl,datalist" disabled="#{empty usersController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton id="resetButton" class="bg-amber" icon="fa fa-key" value="#{messages.Reset}" update=":UsersPassResetForm" oncomplete="PF('UsersPassResetDialog').show()" disabled="#{empty usersController.selected}"/>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+        
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

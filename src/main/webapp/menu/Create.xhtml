@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MenuCreateDlg" widgetVar="MenuCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateMenuTitle}" closeOnEscape="true">
+
+            <h:form id="MenuCreateForm">
+
+                <h:panelGroup id="display" rendered="#{menuController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_menuName}" for="menuName" />
+                        <p:inputText id="menuName" value="#{menuController.selected.menuName}" title="#{messages.CreateMenuTitle_menuName}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_topMenuId}" for="topMenuId" />
+                        <p:inputText id="topMenuId" value="#{menuController.selected.topMenuId}" title="#{messages.CreateMenuTitle_topMenuId}"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_menuType}" for="menuType" />
+                        <p:inputText id="menuType" value="#{menuController.selected.menuType}" title="#{messages.CreateMenuTitle_menuType}"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_link}" for="link" />
+                        <p:inputText id="link" value="#{menuController.selected.link}" title="#{messages.CreateMenuTitle_link}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_icon}" for="icon" />
+                        <p:inputText id="icon" value="#{menuController.selected.icon}" title="#{messages.CreateMenuTitle_icon}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_iconColour}" for="iconColour" />
+                        <p:inputText id="iconColour" value="#{menuController.selected.iconColour}" title="#{messages.CreateMenuTitle_iconColour}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_orderNum}" for="orderNum" />
+                        <p:inputText id="orderNum" value="#{menuController.selected.orderNum}" title="#{messages.CreateMenuTitle_orderNum}"/>
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{menuController.selected.rowguid}" title="#{messages.CreateMenuTitle_rowguid}" />
+
+                        <p:outputLabel value="#{messages.CreateMenuLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{menuController.selected.modifiedDate}" title="#{messages.CreateMenuTitle_modifiedDate}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{menuController.saveNew}" value="#{messages.Save}" update="display,:MenuListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MenuCreateDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('MenuCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

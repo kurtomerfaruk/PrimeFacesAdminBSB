@@ -32,22 +32,23 @@
     </h:head>
 
     <h:body class="login-page">
+        <h:form>
+            <p:growl id="growlLogin" life="3000"/>
 
-        <div class="login-box">
-            <div class="logo">
-                <a href="javascript:void(0);">Admin<b>BSB</b></a>
-                <small>Admin BootStrap Based - Material Design</small>
-            </div>
-            <div class="card">
-                <div class="body">
-                    <form id="sign_in" method="POST">
+            <div class="login-box">
+                <div class="logo">
+                    <a href="javascript:void(0);">Admin<b>BSB</b></a>
+                    <small>Admin BootStrap Based - Material Design</small>
+                </div>
+                <div class="card">
+                    <div class="body">
                         <div class="msg">Sign in to start your session</div>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="material-icons">person</i>
                             </span>
                             <div class="form-line">
-                                <p:inputText class="form-control" pt:placeholder="Username"/>
+                                <p:inputText class="form-control" value="#{loginController.username}" required="true" label="Username" pt:placeholder="Username"/>
                             </div>
                         </div>
                         <div class="input-group">
@@ -55,17 +56,20 @@
                                 <i class="material-icons">lock</i>
                             </span>
                             <div class="form-line">
-                                <p:inputText class="form-control" pt:placeholder="Password"/>
+                                <p:password class="form-control" value="#{loginController.password}" required="true" label="Password" pt:placeholder="Password"/>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-8 p-t-5">
-<!--                                <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                                    <label for="rememberme">Remember Me</label>
-                                </input>-->
+                                <!--                                <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
+                                                                    <label for="rememberme">Remember Me</label>
+                                                                </input>-->
                             </div>
-                            <div class="col-xs-4">
-                                <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
+                            <div class="col-xs-6 pull-right">
+                                <p:commandLink class="btn btn-block bg-pink waves-effect" action="#{loginController.login}" update="growlLogin">
+                                    <i class="material-icons">lock_open</i>
+                                    <h:outputText style="margin-left: 20px" value="SIGN IN"/>
+                                </p:commandLink>
                             </div>
                         </div>
                         <div class="row m-t-15 m-b--20">
@@ -76,27 +80,26 @@
                                 <a href="forgot-password.html">Forgot Password?</a>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+            <h:outputScript library="primefaces" name="jquery/jquery.js"/>
 
-        <!-- Bootstrap Core Js -->
-        <h:outputScript library="scripts" name="bootstrap.js"/>
+            <!-- Bootstrap Core Js -->
+            <h:outputScript library="scripts" name="bootstrap.js"/>
 
-        <!-- Waves Effect Plugin Js -->
-        <h:outputScript library="scripts" name="waves.js"/>
+            <!-- Waves Effect Plugin Js -->
+            <h:outputScript library="scripts" name="waves.js"/>
 
-        <!-- Validation Plugin Js -->
-        <!--<script src="../../plugins/jquery-validation/jquery.validate.js"></script>-->
-        <h:outputScript library="scripts" name="jquery.validate.js"/>
+            <!-- Validation Plugin Js -->
+            <!--<script src="../../plugins/jquery-validation/jquery.validate.js"></script>-->
+            <h:outputScript library="scripts" name="jquery.validate.js"/>
 
-        <!-- Custom Js -->
-        <h:outputScript library="scripts" name="admin.js"/>
-        <h:outputScript library="scripts" name="pages/examples/sign-in.js"/>
-
+            <!-- Custom Js -->
+            <h:outputScript library="scripts" name="admin.js"/>
+            <h:outputScript library="scripts" name="pages/examples/sign-in.js"/>
+        </h:form>
     </h:body>
 
 </html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UserMenuEditDlg" widgetVar="UserMenuEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditUserMenuTitle}" closeOnEscape="true">
+
+            <h:form id="UserMenuEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{userMenuController.selected != null}">
+
+
+                        <h:outputLabel value="#{messages.EditUserMenuLabel_userMenuId}" for="userMenuId" />
+                        <h:outputText id="userMenuId" value="#{userMenuController.selected.userMenuId}" />
+
+                        <p:outputLabel value="#{messages.EditUserMenuLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{userMenuController.selected.userId}" title="#{messages.EditUserMenuTitle_userId}"/>
+
+                        <p:outputLabel value="#{messages.EditUserMenuLabel_menuId}" for="menuId" />
+                        <p:inputText id="menuId" value="#{userMenuController.selected.menuId}" title="#{messages.EditUserMenuTitle_menuId}"/>
+
+                        <p:outputLabel value="#{messages.EditUserMenuLabel_visible}" for="visible" />
+                        <p:selectBooleanCheckbox id="visible" value="#{userMenuController.selected.visible}" />
+
+                        <p:outputLabel value="#{messages.EditUserMenuLabel_rowguid}" for="rowguid" />
+                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{userMenuController.selected.rowguid}" title="#{messages.EditUserMenuTitle_rowguid}" />
+
+                        <p:outputLabel value="#{messages.EditUserMenuLabel_modifiedDate}" for="modifiedDate" />
+                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{userMenuController.selected.modifiedDate}" title="#{messages.EditUserMenuTitle_modifiedDate}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userMenuController.save}" value="#{messages.Save}" update="display,:UserMenuListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UserMenuEditDialog'));">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('UserMenuEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

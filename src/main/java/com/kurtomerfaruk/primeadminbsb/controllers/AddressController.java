@@ -7,7 +7,8 @@ import javax.faces.view.ViewScoped;
 /**
  *
  * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com Created on date 27.01.2017 23:11:05
+ * @blog : http://kurtomerfaruk.com 
+ * Created on date 27.01.2017 23:11:05
  */
 @Named(value = "addressController")
 @ViewScoped

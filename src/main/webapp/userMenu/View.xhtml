@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserMenuViewDlg" widgetVar="UserMenuViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewUserMenuTitle}" closeOnEscape="true">
+
+            <h:form id="UserMenuViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{userMenuController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewUserMenuLabel_userMenuId}"/>
+                        <h:outputText value="#{userMenuController.selected.userMenuId}" title="#{messages.ViewUserMenuTitle_userMenuId}"/>
+
+                        <h:outputText value="#{messages.ViewUserMenuLabel_userId}"/>
+                        <h:outputText value="#{userMenuController.selected.userId}" title="#{messages.ViewUserMenuTitle_userId}"/>
+
+                        <h:outputText value="#{messages.ViewUserMenuLabel_menuId}"/>
+                        <h:outputText value="#{userMenuController.selected.menuId}" title="#{messages.ViewUserMenuTitle_menuId}"/>
+
+                        <h:outputText value="#{messages.ViewUserMenuLabel_visible}"/>
+                        <h:selectBooleanCheckbox id="visible" value="#{userMenuController.selected.visible}" title="#{messages.EditUserMenuTitle_visible}"  disabled="true"/>
+
+                        <h:outputText value="#{messages.ViewUserMenuLabel_rowguid}"/>
+                        <h:outputText value="#{userMenuController.selected.rowguid}" title="#{messages.ViewUserMenuTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewUserMenuLabel_modifiedDate}"/>
+                        <h:outputText value="#{userMenuController.selected.modifiedDate}" title="#{messages.ViewUserMenuTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('UserMenuViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

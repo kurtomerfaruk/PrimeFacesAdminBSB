@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MenuViewDlg" widgetVar="MenuViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewMenuTitle}" closeOnEscape="true">
+
+            <h:form id="MenuViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{menuController.selected != null}">
+
+                        <h:outputText value="#{messages.ViewMenuLabel_menuId}"/>
+                        <h:outputText value="#{menuController.selected.menuId}" title="#{messages.ViewMenuTitle_menuId}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_menuName}"/>
+                        <h:outputText value="#{menuController.selected.menuName}" title="#{messages.ViewMenuTitle_menuName}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_topMenuId}"/>
+                        <h:outputText value="#{menuController.selected.topMenuId}" title="#{messages.ViewMenuTitle_topMenuId}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_menuType}"/>
+                        <h:outputText value="#{menuController.selected.menuType}" title="#{messages.ViewMenuTitle_menuType}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_link}"/>
+                        <h:outputText value="#{menuController.selected.link}" title="#{messages.ViewMenuTitle_link}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_icon}"/>
+                        <h:outputText value="#{menuController.selected.icon}" title="#{messages.ViewMenuTitle_icon}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_iconColour}"/>
+                        <h:outputText value="#{menuController.selected.iconColour}" title="#{messages.ViewMenuTitle_iconColour}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_orderNum}"/>
+                        <h:outputText value="#{menuController.selected.orderNum}" title="#{messages.ViewMenuTitle_orderNum}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_rowguid}"/>
+                        <h:outputText value="#{menuController.selected.rowguid}" title="#{messages.ViewMenuTitle_rowguid}"/>
+
+                        <h:outputText value="#{messages.ViewMenuLabel_modifiedDate}"/>
+                        <h:outputText value="#{menuController.selected.modifiedDate}" title="#{messages.ViewMenuTitle_modifiedDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="PF('MenuViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

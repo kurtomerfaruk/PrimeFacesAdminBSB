@@ -82,5 +82,11 @@ public class JsfUtil {
         }
         return "";
     }
+    
+    public static void addExclamationMessage(String msg) {
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg, msg);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        FacesContext.getCurrentInstance().validationFailed();
+    }
 
 }

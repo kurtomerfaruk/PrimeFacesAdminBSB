@@ -39,6 +39,15 @@
 
         <p:growl id="growl" life="3000"/>
 
+        <p:dialog appendTo="@(body)" modal="true" resizable="false" closable="false" header="Please Wait" widgetVar="Loading">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </p:dialog>
         <!-- Page Loader -->
         <div class="page-loader-wrapper">
             <div class="loader">
@@ -284,9 +293,10 @@
                     <div class="image">
                         <h:graphicImage library="images" name="user.png" width="48" height="48" alt="User"/>
                     </div>
+                    <h:form>
                     <div class="info-container">
-                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                        <div class="email">john.doe@example.com</div>
+                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#{loginController.users.fullName}</div>
+                        <div class="email">#{loginController.users.email}</div>
                         <div class="btn-group user-helper-dropdown">
                             <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                             <ul class="dropdown-menu pull-right">
@@ -296,10 +306,16 @@
                                 <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                                 <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                                 <li role="seperator" class="divider"></li>
-                                <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                                <li>
+                                    <h:commandLink actionListener="#{loginController.logout()}">
+                                        <i class="material-icons">input</i>
+                                        Sign Out
+                                    </h:commandLink>
+                                </li>
                             </ul>
                         </div>
                     </div>
+                    </h:form>
                 </div>
                 <!-- #User Info -->
                 <!-- Menu -->
@@ -311,10 +327,10 @@
                 <!-- Footer -->
                 <div class="legal">
                     <div class="copyright">
-                        &copy; 2016 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                        &copy; 2017 <a href="javascript:void(0);">PrimeFaces AdminBSB</a>.
                     </div>
                     <div class="version">
-                        <b>Version: </b> 1.0.4
+                        <b>Version: </b> 1.0.0
                     </div>
                 </div>
                 <!-- #Footer -->

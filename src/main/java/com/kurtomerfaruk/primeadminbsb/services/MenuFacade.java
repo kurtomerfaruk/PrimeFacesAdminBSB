@@ -1,6 +1,6 @@
 package com.kurtomerfaruk.primeadminbsb.services;
 
-import com.kurtomerfaruk.primeadminbsb.models.Product;
+import com.kurtomerfaruk.primeadminbsb.models.Menu;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,10 +9,10 @@ import javax.persistence.PersistenceContext;
  *
  * @author Omer Faruk KURT kurtomerfaruk@gmail.com
  * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:13:09
+ * @Created on date 27.01.2017 23:11:05
  */
 @Stateless
-public class ProductFacade extends AbstractFacade<Product> {
+public class MenuFacade extends AbstractFacade<Menu> {
 
     @PersistenceContext(unitName = "ADMINBSB_PU")
     private EntityManager em;
@@ -22,8 +22,8 @@ public class ProductFacade extends AbstractFacade<Product> {
         return em;
     }
 
-    public ProductFacade() {
-        super(Product.class);
+    public MenuFacade() {
+        super(Menu.class);
     }
 
 }
