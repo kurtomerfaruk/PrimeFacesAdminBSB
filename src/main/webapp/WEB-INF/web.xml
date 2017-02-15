@@ -112,15 +112,6 @@
     </error-page>
     <!-- 500 error page -->
     
-<!--     View Expired 
-    
-    <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/expired.xhtml</location>
-    </error-page>
-    
-     View Expired -->
-    
     <!-- Session Listeners -->
     
     <listener>

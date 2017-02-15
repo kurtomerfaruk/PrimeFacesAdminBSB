@@ -4,7 +4,6 @@ import com.kurtomerfaruk.primeadminbsb.controllers.util.Functions;
 import com.kurtomerfaruk.primeadminbsb.controllers.util.JsfUtil;
 import com.kurtomerfaruk.primeadminbsb.models.Users;
 import com.kurtomerfaruk.primeadminbsb.services.UsersFacade;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;

@@ -8,6 +8,12 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @blog : http://kurtomerfaruk.com
+ * @Created on date 14/02/2017 08:51:25
+ */
 public class JsfUtil {
 
     public static void addErrorMessage(Exception ex, String defaultMsg) {

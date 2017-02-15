@@ -11,11 +11,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-
 /**
  *
- * @author Omer Faruk KURT
- * @Created on date 13/02/2017 09:19:27
+ * @author Omer Faruk KURT kurtomerfaruk@gmail.com
+ * @blog : http://kurtomerfaruk.com 
+ * Created on date 13.02.2017 09:19:20
  */
 @FacesConverter(value = "menuConverter")
 public class MenuConverter implements Converter {
