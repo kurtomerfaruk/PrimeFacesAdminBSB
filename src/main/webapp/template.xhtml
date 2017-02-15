@@ -3,12 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <f:facet name="first">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" 
+                  content="user-scalable=no, 
+                  width=device-width, 
+                  initial-scale=1.0, 
+                  maximum-scale=1.0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+
         <title>Welcome To | Bootstrap Based Admin Template - Material Design</title>
 
 
@@ -38,6 +49,31 @@
     <h:body class="theme-red">
 
         <p:growl id="growl" life="3000"/>
+
+        <p:idleMonitor timeout="#{session.maxInactiveInterval*1000}"
+                       onidle="PF('expire').show();">
+        </p:idleMonitor>
+
+        <p:dialog header="Session Expired" 
+                  widgetVar="expire" 
+                  onShow="startIdleMonitor()"
+                  modal="true"
+                  appendTo="@(body)"
+                  draggable="false"
+                  resizable="false"
+                  closable="false">
+            <h:outputText value="Your browser session is expired " />
+            <br/>
+            <h:outputText value="Do you want to continue your session?" />
+            <h:form>
+                <p:commandButton value="Ok" 
+                                 process="@this" 
+                                 update="@all"
+                                 action="#{loginController.logout}"/>
+                <p:remoteCommand name="logout" action="#{loginController.logout}" />
+            </h:form>
+            
+        </p:dialog>
 
         <p:dialog appendTo="@(body)" modal="true" resizable="false" closable="false" header="Please Wait" widgetVar="Loading">
             <div class="spinner">
@@ -294,27 +330,27 @@
                         <h:graphicImage library="images" name="user.png" width="48" height="48" alt="User"/>
                     </div>
                     <h:form>
-                    <div class="info-container">
-                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#{loginController.users.fullName}</div>
-                        <div class="email">#{loginController.users.email}</div>
-                        <div class="btn-group user-helper-dropdown">
-                            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                                <li role="seperator" class="divider"></li>
-                                <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                                <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                                <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                                <li role="seperator" class="divider"></li>
-                                <li>
-                                    <h:commandLink actionListener="#{loginController.logout()}">
-                                        <i class="material-icons">input</i>
-                                        Sign Out
-                                    </h:commandLink>
-                                </li>
-                            </ul>
+                        <div class="info-container">
+                            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#{loginController.users.fullName}</div>
+                            <div class="email">#{loginController.users.email}</div>
+                            <div class="btn-group user-helper-dropdown">
+                                <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                                    <li role="seperator" class="divider"></li>
+                                    <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
+                                    <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
+                                    <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                                    <li role="seperator" class="divider"></li>
+                                    <li>
+                                        <h:commandLink actionListener="#{loginController.logout()}">
+                                            <i class="material-icons">input</i>
+                                            Sign Out
+                                        </h:commandLink>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
                     </h:form>
                 </div>
                 <!-- #User Info -->
