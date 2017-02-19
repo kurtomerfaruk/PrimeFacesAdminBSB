@@ -56,7 +56,6 @@
 
         <p:dialog header="Session Expired" 
                   widgetVar="expire" 
-                  onShow="startIdleMonitor()"
                   modal="true"
                   appendTo="@(body)"
                   draggable="false"
@@ -70,7 +69,6 @@
                                  process="@this" 
                                  update="@all"
                                  action="#{loginController.logout}"/>
-                <p:remoteCommand name="logout" action="#{loginController.logout}" />
             </h:form>
             
         </p:dialog>
@@ -366,7 +364,7 @@
                         &copy; 2017 <a href="javascript:void(0);">PrimeFaces AdminBSB</a>.
                     </div>
                     <div class="version">
-                        <b>Version: </b> 1.0.0
+                        <b>Version: </b> 1.0.2
                     </div>
                 </div>
                 <!-- #Footer -->
