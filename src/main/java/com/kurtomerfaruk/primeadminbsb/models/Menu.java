@@ -1,19 +1,19 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
+import com.kurtomerfaruk.primeadminbsb.enums.MenuType;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,13 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Menu.findByMenuId", query = "SELECT m FROM Menu m WHERE m.menuId = :menuId"),
     @NamedQuery(name = "Menu.findByMenuName", query = "SELECT m FROM Menu m WHERE m.menuName = :menuName"),
     @NamedQuery(name = "Menu.findByTopMenuId", query = "SELECT m FROM Menu m WHERE m.topMenuId = :topMenuId"),
-    @NamedQuery(name = "Menu.findByMenuType", query = "SELECT m FROM Menu m WHERE m.menuType = :menuType"),
+    @NamedQuery(name = "Menu.findByMenuType", query = "SELECT m FROM Menu m WHERE m.menuType = com.kurtomerfaruk.primeadminbsb.enums.MenuType.M ORDER BY m.menuName"),
     @NamedQuery(name = "Menu.findByLink", query = "SELECT m FROM Menu m WHERE m.link = :link"),
     @NamedQuery(name = "Menu.findByIcon", query = "SELECT m FROM Menu m WHERE m.icon = :icon"),
-    @NamedQuery(name = "Menu.findByIconColour", query = "SELECT m FROM Menu m WHERE m.iconColour = :iconColour"),
+    @NamedQuery(name = "Menu.findByIconColor", query = "SELECT m FROM Menu m WHERE m.iconColor = :iconColor"),
     @NamedQuery(name = "Menu.findByOrderNum", query = "SELECT m FROM Menu m WHERE m.orderNum = :orderNum"),
     @NamedQuery(name = "Menu.findByModifiedDate", query = "SELECT m FROM Menu m WHERE m.modifiedDate = :modifiedDate")})
-public class Menu implements Serializable {
+public class Menu extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,11 +46,14 @@ public class Menu implements Serializable {
     private Integer menuId;
     @Size(max = 45)
     @Column(name = "MenuName")
+    @NotNull
     private String menuName;
     @Column(name = "TopMenuId")
     private Integer topMenuId;
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "MenuType")
-    private Short menuType;
+    private MenuType menuType;
     @Size(max = 45)
     @Column(name = "Link")
     private String link;
@@ -58,16 +61,10 @@ public class Menu implements Serializable {
     @Column(name = "Icon")
     private String icon;
     @Size(max = 45)
-    @Column(name = "IconColour")
-    private String iconColour;
+    @Column(name = "IconColor")
+    private String iconColor;
     @Column(name = "OrderNum")
     private Integer orderNum;
-    @Lob
-    @Column(name = "rowguid")
-    private byte[] rowguid;
-    @Column(name = "ModifiedDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
 
     public Menu() {
     }
@@ -100,11 +97,11 @@ public class Menu implements Serializable {
         this.topMenuId = topMenuId;
     }
 
-    public Short getMenuType() {
+    public MenuType getMenuType() {
         return menuType;
     }
 
-    public void setMenuType(Short menuType) {
+    public void setMenuType(MenuType menuType) {
         this.menuType = menuType;
     }
 
@@ -124,12 +121,12 @@ public class Menu implements Serializable {
         this.icon = icon;
     }
 
-    public String getIconColour() {
-        return iconColour;
+    public String getIconColor() {
+        return iconColor;
     }
 
-    public void setIconColour(String iconColour) {
-        this.iconColour = iconColour;
+    public void setIconColor(String iconColor) {
+        this.iconColor = iconColor;
     }
 
     public Integer getOrderNum() {
@@ -138,22 +135,6 @@ public class Menu implements Serializable {
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
-    }
-
-    public byte[] getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(byte[] rowguid) {
-        this.rowguid = rowguid;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 
     @Override

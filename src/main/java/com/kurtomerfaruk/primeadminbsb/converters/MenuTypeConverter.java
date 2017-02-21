@@ -1,0 +1,21 @@
+package com.kurtomerfaruk.primeadminbsb.converters;
+
+import com.kurtomerfaruk.primeadminbsb.enums.MenuType;
+import javax.faces.convert.EnumConverter;
+import javax.faces.convert.FacesConverter;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @blog : http://kurtomerfaruk.com
+ * @Created on date 20/02/2017 13:10:04 
+ */
+@FacesConverter(value = "menuTypeConverter")
+public class MenuTypeConverter extends EnumConverter{
+
+    public MenuTypeConverter() {
+        super(MenuType.class);
+    }
+
+    
+}

@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions">
 
     <ui:composition>
         <p:dialog id="MenuEditDlg" widgetVar="MenuEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditMenuTitle}" closeOnEscape="true">
@@ -18,37 +19,67 @@
                         <h:outputLabel value="#{messages.EditMenuLabel_menuId}" for="menuId" />
                         <h:outputText id="menuId" value="#{menuController.selected.menuId}" />
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_menuName}" for="menuName" />
-                        <p:inputText id="menuName" value="#{menuController.selected.menuName}" title="#{messages.EditMenuTitle_menuName}" size="45" maxlength="45"/>
+                        <p:outputLabel value="#{messages.CreateMenuLabel_menuName}" for="menuName" />
+                        <p:inputText id="menuName" value="#{menuController.selected.menuName}" required="true" title="#{messages.CreateMenuTitle_menuName}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_topMenuId}" for="topMenuId" />
-                        <p:inputText id="topMenuId" value="#{menuController.selected.topMenuId}" title="#{messages.EditMenuTitle_topMenuId}"/>
+                        <p:outputLabel value="#{messages.CreateMenuLabel_menuType}" for="menuType" />
+                        <h:selectOneMenu id="menuType" value="#{menuController.selected.menuType}" required="true" styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all" converter="menuTypeConverter">
+                            <f:selectItem itemValue="#{null}" itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{menuController.menuTypes}"
+                                           var="menus"
+                                           itemValue="#{menus}"
+                                           itemLabel="#{messages['menuType'+=menus]}"/>
+                            <p:ajax event="change" update="topMenuId"/>
+                        </h:selectOneMenu>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_menuType}" for="menuType" />
-                        <p:inputText id="menuType" value="#{menuController.selected.menuType}" title="#{messages.EditMenuTitle_menuType}"/>
+                        <p:outputLabel value="#{messages.CreateMenuLabel_topMenuId}" for="topMenuId" />
+                        <!--<p:inputText id="topMenuId" value="#{menuController.selected.topMenuId}" title="#{messages.CreateMenuTitle_topMenuId}"/>-->
+                        <p:selectOneMenu id="topMenuId" value="#{menuController.selected.topMenuId}" filter="true" disabled="#{menuController.selected.menuType.label eq 0}">
+                            <f:selectItem itemValue="#{null}" itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{menuController.topMenuList()}"
+                                           var="topMenu"
+                                           itemLabel="#{topMenu.menuName}"
+                                           itemValue="#{topMenu.menuId}"/>
+                        </p:selectOneMenu>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_link}" for="link" />
-                        <p:inputText id="link" value="#{menuController.selected.link}" title="#{messages.EditMenuTitle_link}" size="45" maxlength="45"/>
+                        <p:outputLabel value="#{messages.CreateMenuLabel_link}" for="link" />
+                        <p:inputText id="link" value="#{menuController.selected.link}" title="#{messages.CreateMenuTitle_link}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_icon}" for="icon" />
-                        <p:inputText id="icon" value="#{menuController.selected.icon}" title="#{messages.EditMenuTitle_icon}" size="45" maxlength="45"/>
+                        <p:outputLabel value="#{messages.CreateMenuLabel_icon}" for="icon" />
+                        <!--<p:inputText id="icon" value="#{menuController.selected.icon}" title="#{messages.CreateMenuTitle_icon}" size="45" maxlength="45"/>-->
+                        <p:autoComplete id="icon" 
+                                        value="#{menuController.selected.icon}" 
+                                        completeMethod="#{menuController.completeIcon}"
+                                        var="iconItem" 
+                                        itemLabel="#{iconItem}" 
+                                        itemValue="#{iconItem}"
+                                        forceSelection="true"
+                                        inputStyleClass="full-width"
+                                        styleClass="full-width"
+                                        dropdown="true">
+                            <p:column>
+                                <i class="material-icons">#{iconItem}</i>
+                            </p:column>
+                            <p:column>
+                                #{of:capitalize(of:replaceAll(iconItem, '\\_', ' '))}
+                            </p:column>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_iconColour}" for="iconColour" />
-                        <p:inputText id="iconColour" value="#{menuController.selected.iconColour}" title="#{messages.EditMenuTitle_iconColour}" size="45" maxlength="45"/>
+                        </p:autoComplete>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_orderNum}" for="orderNum" />
-                        <p:inputText id="orderNum" value="#{menuController.selected.orderNum}" title="#{messages.EditMenuTitle_orderNum}"/>
+                        <p:outputLabel value="#{messages.CreateMenuLabel_iconColor}" for="iconColor" />
+                        <p:colorPicker id="iconColor" value="#{menuController.selected.iconColor}"/>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{menuController.selected.rowguid}" title="#{messages.EditMenuTitle_rowguid}" />
+                        <p:outputLabel value="#{messages.CreateMenuLabel_orderNum}" for="orderNum" />
+                        <p:inputText id="orderNum" value="#{menuController.selected.orderNum}" required="true" title="#{messages.CreateMenuTitle_orderNum}"/>
 
-                        <p:outputLabel value="#{messages.EditMenuLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{menuController.selected.modifiedDate}" title="#{messages.EditMenuTitle_modifiedDate}"  showOn="button"/>
+                        <f:facet name="footer">
+                            <div class="footer-right">
+                                <p:commandButton class="bg-green" icon="fa fa-check" actionListener="#{menuController.save}" value="#{messages.Save}" update="display,:MenuListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MenuEditDialog'));"/>
+                                <p:commandButton class="bg-red"   icon="fa fa-close" value="#{messages.Cancel}" oncomplete="PF('MenuEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>              
+                            </div>
+                        </f:facet>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{menuController.save}" value="#{messages.Save}" update="display,:MenuListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MenuEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('MenuEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+
                 </h:panelGroup>
 
             </h:form>

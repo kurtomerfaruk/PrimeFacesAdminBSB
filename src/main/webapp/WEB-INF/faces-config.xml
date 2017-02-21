@@ -9,5 +9,11 @@
             <var>messages</var>
         </resource-bundle>
         <navigation-handler>org.primefaces.mobile.application.MobileNavigationHandler</navigation-handler>
+        <!-- Enum Converter -->
+        <converter>
+            <converter-for-class>java.lang.Enum</converter-for-class>
+            <converter-class>javax.faces.convert.EnumConverter</converter-class>
+        </converter>
+        <!-- Enum Converter -->
     </application>
 </faces-config>

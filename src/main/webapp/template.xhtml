@@ -42,6 +42,8 @@
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <h:outputStylesheet library="css" name="themes/all-themes.css"/>
 
+        <h:outputStylesheet library="css" name="materialize.css"/>
+
         <h:outputStylesheet library="css" name="pfcrud.css"/>
         <h:outputScript library="scripts" name="pfcrud.js"/>
     </h:head>
@@ -70,7 +72,7 @@
                                  update="@all"
                                  action="#{loginController.logout}"/>
             </h:form>
-            
+
         </p:dialog>
 
         <p:dialog appendTo="@(body)" modal="true" resizable="false" closable="false" header="Please Wait" widgetVar="Loading">
@@ -352,10 +354,50 @@
                     </h:form>
                 </div>
                 <!-- #User Info -->
+                <!--                 Menu 
+                                <div class="menu">
+                
+                                    <ui:include src="appmenu.xhtml"/>
+                                </div>
+                                 #Menu -->
                 <!-- Menu -->
                 <div class="menu">
+                    <ul class="list">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <li class="active">
+                            <a href="#{request.contextPath}/index.xhtml">
+                                <i class="material-icons">home</i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        
+                        <h:panelGroup id="menuListGroup" class="sidebar-menu">
+                            <ui:repeat value="#{menuController.menuList}" var="menu">
+                                <ui:fragment rendered="#{menu.topMenuId==null}">
+                                    <li id="mainTree">
+                                        <ui:fragment rendered="#{menu.link eq null or menu.link ==''}">
+                                            <a href="javascript:void(0);" class="menu-toggle">
+                                                <i class="material-icons" style="color:##{menu.iconColor}">#{menu.icon}</i>
+                                                <span>#{menu.menuName}</span>
+                                            </a>
+                                        </ui:fragment>
+                                        <ul class="ml-menu">
+                                            <ui:repeat value="#{menuController.menuList}" var="subMenu">
 
-                    <ui:include src="appmenu.xhtml"/>
+                                                <ui:fragment rendered="#{menu.menuId == subMenu.topMenuId}">
+                                                    <li>
+                                                        <a href="#{request.contextPath}#{subMenu.link}.xhtml">#{subMenu.menuName}</a>
+                                                    </li>
+
+                                                </ui:fragment>
+
+                                            </ui:repeat>
+                                        </ul>
+                                    </li>
+                                </ui:fragment>
+                            </ui:repeat>
+                        </h:panelGroup>
+                    </ul>
                 </div>
                 <!-- #Menu -->
                 <!-- Footer -->

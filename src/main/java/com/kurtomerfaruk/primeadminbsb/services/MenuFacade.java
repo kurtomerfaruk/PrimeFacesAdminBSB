@@ -1,6 +1,7 @@
 package com.kurtomerfaruk.primeadminbsb.services;
 
 import com.kurtomerfaruk.primeadminbsb.models.Menu;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +25,10 @@ public class MenuFacade extends AbstractFacade<Menu> {
 
     public MenuFacade() {
         super(Menu.class);
+    }
+
+    public List<Menu> getTopMenuList() {
+        return getEntityManager().createNamedQuery("Menu.findByMenuType").getResultList();
     }
 
 }

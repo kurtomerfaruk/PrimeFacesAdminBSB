@@ -4,133 +4,106 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="MenuListForm">
+    <h:form id="MenuListForm" class="form-width">
 
-        <p:panel header="#{messages.ListMenuTitle}">
-            <p:contextMenu id="MenuDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('MenuListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('MenuListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('MenuListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('MenuListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{menuController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{menuController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{menuController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.menuId}"
-                -->
+        <p:contextMenu id="MenuDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('MenuListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('MenuListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('MenuListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('MenuListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+        </p:contextMenu>
 
+        <coco:datatable id="datalist"
+                        value="#{menuController.lazyItems}"
+                        rowKey="#{item.menuId}"
+                        selection="#{menuController.selected}"
+                        filtered="#{menuController.filtered}"
+                        rowselect=":MenuListForm:datalist:datalist:createButton,:MenuListForm:datalist:datalist:viewButton,:MenuListForm:datalist:datalist:editButton,:MenuListForm:datalist:datalist:deleteButton,:MenuListForm:MenuDataTableContextMenu"
+                        rowDblselect="document.getElementById('MenuListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":MenuListForm:datalist:datalist:createButton :MenuListForm:datalist:datalist:viewButton :MenuListForm:datalist:datalist:editButton :MenuListForm:datalist:datalist:deleteButton"
+                        selectListener="#{menuController.resetParents()}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:MenuDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:MenuDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('MenuListForm:viewButton').click();"/>
+            <f:facet name="header">
+                <h:outputText value="#{messages.ListMenuTitle}"/>   
+            </f:facet>
 
-                <p:column sortBy="#{item.menuId}" filterBy="#{item.menuId}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListMenuTitle_menuId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.menuId}"/>
-                </p:column>
+            <p:column sortBy="#{item.menuId}" filterBy="#{item.menuId}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_menuId}"/>
+                </f:facet>
+                <h:outputText value="#{item.menuId}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.menuName}" filterBy="#{item.menuName}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListMenuTitle_menuName}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.menuName}"/>
-                </p:column>
+            <p:column sortBy="#{item.menuName}" filterBy="#{item.menuName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_menuName}"/>
+                </f:facet>
+                <h:outputText value="#{item.menuName}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.topMenuId}" filterBy="#{item.topMenuId}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListMenuTitle_topMenuId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.topMenuId}"/>
-                </p:column>
+            <p:column sortBy="#{item.topMenuId}" filterBy="#{item.topMenuId}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_topMenuId}"/>
+                </f:facet>
+                <h:outputText value="#{item.topMenuId}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.menuType}" filterBy="#{item.menuType}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListMenuTitle_menuType}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.menuType}"/>
-                </p:column>
+            <p:column sortBy="#{item.menuType}" filterBy="#{item.menuType}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_menuType}"/>
+                </f:facet>
+                <h:outputText value="#{messages['menuType'+=item.menuType]}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.link}" filterBy="#{item.link}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListMenuTitle_link}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.link}"/>
-                </p:column>
+            <p:column sortBy="#{item.link}" filterBy="#{item.link}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_link}"/>
+                </f:facet>
+                <h:outputText value="#{item.link}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.icon}" filterBy="#{item.icon}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListMenuTitle_icon}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.icon}"/>
-                </p:column>
+            <p:column sortBy="#{item.icon}" filterBy="#{item.icon}" class="text-center">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_icon}"/>
+                </f:facet>
+                <i class="material-icons">#{item.icon}</i>
+            </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.iconColour}" filterBy="#{item.iconColour}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListMenuTitle_iconColour}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.iconColour}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.orderNum}" filterBy="#{item.orderNum}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListMenuTitle_orderNum}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.orderNum}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListMenuTitle_rowguid}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.rowguid}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListMenuTitle_modifiedDate}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.modifiedDate}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                        </h:outputText>
-                                    </p:column>
-                -->
+            <p:column sortBy="#{item.iconColor}" filterBy="#{item.iconColor}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_iconColor}"/>
+                </f:facet>
+                <h:outputText value="#{item.iconColor}" style="color:##{item.iconColor}"/>
+            </p:column>
 
-            </p:dataTable>
+            <p:column sortBy="#{item.orderNum}" filterBy="#{item.orderNum}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_orderNum}"/>
+                </f:facet>
+                <h:outputText value="#{item.orderNum}"/>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{menuController.prepareCreate}" update=":MenuCreateForm" oncomplete="PF('MenuCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":MenuViewForm" oncomplete="PF('MenuViewDialog').show()" disabled="#{empty menuController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":MenuEditForm" oncomplete="PF('MenuEditDialog').show()" disabled="#{empty menuController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{menuController.delete}" update=":growl,datalist" disabled="#{empty menuController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{menuController.prepareCreate}" update=":MenuCreateForm" oncomplete="PF('MenuCreateDialog').show()"/>
+                    <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":MenuViewForm" oncomplete="PF('MenuViewDialog').show()" disabled="#{empty menuController.selected}"/>
+                    <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":MenuEditForm" oncomplete="PF('MenuEditDialog').show()" disabled="#{empty menuController.selected}"/>
+                    <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{menuController.delete}" update=":growl,datalist" disabled="#{empty menuController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
 
-        </p:panel>
+        </coco:datatable>
+
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
 
