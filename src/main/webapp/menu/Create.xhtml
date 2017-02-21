@@ -69,8 +69,8 @@
 
                         <f:facet name="footer">
                             <div class="footer-right">
-                                <p:commandButton class="bg-green" actionListener="#{menuController.saveNew}" value="#{messages.Save}" update="display,:MenuListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MenuCreateDialog'));"/>
-                                <p:commandButton class="bg-red"   value="#{messages.Cancel}" oncomplete="PF('MenuCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                                <p:commandButton class="bg-green" icon="fa fa-check" actionListener="#{menuController.saveNew}" value="#{messages.Save}" update="display,:MenuListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MenuCreateDialog'));"/>
+                                <p:commandButton class="bg-red"   icon="fa fa-close" value="#{messages.Cancel}" oncomplete="PF('MenuCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </f:facet>
 
