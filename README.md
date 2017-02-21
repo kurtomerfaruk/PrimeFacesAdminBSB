@@ -16,3 +16,7 @@ alt="PrimeFaces AdminBSB" width="650" height="400" border="10" /></a>
 <a href="https://www.youtube.com/watch?v=93Hp23Js-iU
 " target="_blank"><img src="http://img.youtube.com/vi/93Hp23Js-iU/0.jpg" 
 alt="PrimeFaces AdminBSB Login" width="650" height="400" border="10" /></a>
+
+<a href="https://www.youtube.com/watch?v=stMotCYaDMg
+" target="_blank"><img src="http://img.youtube.com/vi/stMotCYaDMg/0.jpg" 
+alt="PrimeFaces AdminBSB Session Redirect" width="650" height="400" border="10" /></a>
