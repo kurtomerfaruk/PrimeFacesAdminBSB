@@ -19,14 +19,11 @@ import javax.faces.context.FacesContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-
 /**
  *
  * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @blog : http://kurtomerfaruk.com Created on date 27.01.2017 23:11:05
  */
-
 /**
  * Represents an abstract shell of to be used as JSF Controller to be used in
  * AJAX-enabled applications. No outcomes will be generated from its methods
@@ -35,9 +32,9 @@ import javax.validation.ConstraintViolationException;
  * @param <T> the concrete Entity type of the Controller bean to be created
  */
 public abstract class AbstractController<T> implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     @Inject
     private AbstractFacade<T> ejbFacade;
     private Class<T> itemClass;
@@ -45,16 +42,17 @@ public abstract class AbstractController<T> implements Serializable {
     private Collection<T> items;
     private LazyEntityDataModel<T> lazyItems;
     private List<T> filtered;
-
+    
     private enum PersistAction {
+
         CREATE,
         DELETE,
         UPDATE
     }
-
+    
     public AbstractController() {
     }
-
+    
     public AbstractController(Class<T> itemClass) {
         this.itemClass = itemClass;
     }
@@ -85,7 +83,7 @@ public abstract class AbstractController<T> implements Serializable {
     protected void setEmbeddableKeys() {
         // Nothing to do if entity does not have any embeddable key.
     }
-
+    
     ;
 
     /**
@@ -128,11 +126,11 @@ public abstract class AbstractController<T> implements Serializable {
         }
         return lazyItems;
     }
-
+    
     public void setLazyItems(LazyEntityDataModel<T> lazyItems) {
         this.lazyItems = lazyItems;
     }
-
+    
     public void setLazyItems(Collection<T> items) {
         if (items instanceof List) {
             lazyItems = new LazyEntityDataModel<>((List<T>) items);
@@ -140,11 +138,11 @@ public abstract class AbstractController<T> implements Serializable {
             lazyItems = new LazyEntityDataModel<>(new ArrayList<>(items));
         }
     }
-
+    
     public List<T> getFiltered() {
         return filtered;
     }
-
+    
     public void setFiltered(List<T> filtered) {
         this.filtered = filtered;
     }
@@ -205,10 +203,12 @@ public abstract class AbstractController<T> implements Serializable {
         if (selected != null) {
             this.setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    this.ejbFacade.edit(selected);
-                } else {
+                if (persistAction == PersistAction.DELETE) {
                     this.ejbFacade.remove(selected);
+                } else if (persistAction == PersistAction.CREATE) {
+                    this.ejbFacade.create(selected);
+                } else {
+                    this.ejbFacade.edit(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -290,7 +290,7 @@ public abstract class AbstractController<T> implements Serializable {
     }
     
     public void resetParents() {
-
+        
     }
-
+    
 }
