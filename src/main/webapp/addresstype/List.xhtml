@@ -4,40 +4,32 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="AddresstypeListForm">
+    <h:form id="AddresstypeListForm" class="form-width">
 
-        <p:panel header="#{messages.ListAddresstypeTitle}">
-            <p:contextMenu id="AddresstypeDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('AddresstypeListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('AddresstypeListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('AddresstypeListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('AddresstypeListForm:deleteButton').click();" icon="ui-icon-trash"/>
+        
+            <p:contextMenu id="AddresstypeDataTableContextMenu" for="datalist:datalist">  
+                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('AddresstypeListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{messages.View}" onclick="document.getElementById('AddresstypeListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('AddresstypeListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('AddresstypeListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{addresstypeController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{addresstypeController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
+
+            <coco:datatable id="datalist"
+                            value="#{addresstypeController.lazyItems}"
+                            rowKey="#{item.addressTypeID}"
+                            selection="#{addresstypeController.selected}"
+                            filtered="#{addresstypeController.filtered}"
+                            rowselect=":AddresstypeListForm:datalist:datalist:createButton,:AddresstypeListForm:datalist:datalist:viewButton,:AddresstypeListForm:datalist:datalist:editButton,:AddresstypeListForm:datalist:datalist:deleteButton,:AddresstypeListForm:AddresstypeDataTableContextMenu"
+                            rowDblselect="document.getElementById('AddresstypeListForm:datalist:datalist:editButton').click()"
+                            contextMenu=":AddresstypeListForm:datalist:datalist:createButton :AddresstypeListForm:datalist:datalist:viewButton :AddresstypeListForm:datalist:datalist:editButton :AddresstypeListForm:datalist:datalist:deleteButton"
+                            selectListener="#{addresstypeController.resetParents()}">
                 
-                         value="HASH{addresstypeController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.addressTypeID}"
-                -->
-
-
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AddresstypeDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AddresstypeDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AddresstypeListForm:viewButton').click();"/>
+                <f:facet name="header">
+                <h:outputText value="#{messages.ListAddresstypeTitle}"/>   
+            </f:facet>
 
                 <p:column sortBy="#{item.addressTypeID}" filterBy="#{item.addressTypeID}">
                     <f:facet name="header">
@@ -72,17 +64,19 @@
                     </h:outputText>
                 </p:column>
 
+                <f:facet name="{buttons}">
+                    <div class="footer-left">
+                        <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{addresstypeController.prepareCreate}" update=":AddresstypeCreateForm" oncomplete="PF('AddresstypeCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":AddresstypeViewForm" oncomplete="PF('AddresstypeViewDialog').show()" disabled="#{empty addresstypeController.selected}"/>
+                        <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":AddresstypeEditForm" oncomplete="PF('AddresstypeEditDialog').show()" disabled="#{empty addresstypeController.selected}"/>
+                        <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{addresstypeController.delete}" update=":growl,datalist" disabled="#{empty addresstypeController.selected}">
+                            <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </div>
+                </f:facet>
 
-            </p:dataTable>
+            </coco:datatable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{addresstypeController.prepareCreate}" update=":AddresstypeCreateForm" oncomplete="PF('AddresstypeCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":AddresstypeViewForm" oncomplete="PF('AddresstypeViewDialog').show()" disabled="#{empty addresstypeController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":AddresstypeEditForm" oncomplete="PF('AddresstypeEditDialog').show()" disabled="#{empty addresstypeController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{addresstypeController.delete}" update=":growl,datalist" disabled="#{empty addresstypeController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
-
-        </p:panel>
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
 
