@@ -7,7 +7,8 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
+ * @author Omer Faruk KURT 
+ * @mail kurtomerfaruk@gmail.com
  * @blog : http://kurtomerfaruk.com
  * Created on date 27.01.2017 23:13:01
  */

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.kurtomerfaruk.primeadminbsb.services;
 
 import com.kurtomerfaruk.primeadminbsb.models.Contact;
@@ -13,7 +7,8 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
+ * @author Omer Faruk KURT 
+ * @mail kurtomerfaruk@gmail.com
  * @blog : http://kurtomerfaruk.com
  * Created on date 27.01.2017 23:13:02
  */
