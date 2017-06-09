@@ -36,7 +36,8 @@ public class MenuController extends AbstractController<Menu> {
         // Inform the Abstract parent controller of the concrete Menu Entity
         super(Menu.class);
         iconList = new ArrayList<>();
-        String str = "data_usage,search,person_pin,directions_car,art_track";
+        String str = "data_usage,search,person_pin,directions_car,art_track,apps,poll,menu,"
+                + "credit_card,attach_money,insert_drive_file,public,insert_photo,contacts";
         iconList.addAll(Arrays.asList(str.split("\\s*,\\s*")));
         Collections.sort(iconList);
     }
