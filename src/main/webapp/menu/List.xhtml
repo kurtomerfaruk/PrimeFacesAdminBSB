@@ -74,7 +74,7 @@
                 <f:facet name="header">
                     <h:outputText value="#{messages.ListMenuTitle_icon}"/>
                 </f:facet>
-                <i class="material-icons">#{item.icon}</i>
+                <i class="material-icons" style="color:##{item.iconColor}">#{item.icon}</i>
             </p:column>
 
             <p:column sortBy="#{item.iconColor}" filterBy="#{item.iconColor}">
