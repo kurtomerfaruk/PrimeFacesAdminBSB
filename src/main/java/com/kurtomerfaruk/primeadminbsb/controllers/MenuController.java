@@ -7,14 +7,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
+ * @author Omer Faruk KURT
+ * @mail kurtomerfaruk@gmail.com
  * @blog : http://kurtomerfaruk.com
  * @Created on date 27.01.2017 23:11:05
  */
@@ -32,6 +36,11 @@ public class MenuController extends AbstractController<Menu> {
     private List<String> iconList;
     private List<Menu> menuList;
 
+    private String pageLink;
+    private String pageName;
+
+    private String searhText;
+
     public MenuController() {
         // Inform the Abstract parent controller of the concrete Menu Entity
         super(Menu.class);
@@ -40,6 +49,8 @@ public class MenuController extends AbstractController<Menu> {
                 + "credit_card,attach_money,insert_drive_file,public,insert_photo,contacts";
         iconList.addAll(Arrays.asList(str.split("\\s*,\\s*")));
         Collections.sort(iconList);
+        pageLink = "blankPage";
+        pageName = "Main Page";
     }
 
     public MenuType[] getMenuTypes() {
@@ -59,11 +70,38 @@ public class MenuController extends AbstractController<Menu> {
     }
 
     public List<Menu> getMenuList() {
+         if (menuList == null) {
+            menuList = menuService.findAll();
+        }
         return menuList;
     }
 
     public void setMenuList(List<Menu> menuList) {
         this.menuList = menuList;
+    }
+
+    public String getPageLink() {
+        return pageLink;
+    }
+
+    public void setPageLink(String pageLink) {
+        this.pageLink = pageLink;
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(String pageName) {
+        this.pageName = pageName;
+    }
+
+    public String getSearhText() {
+        return searhText;
+    }
+
+    public void setSearhText(String searhText) {
+        this.searhText = searhText;
     }
 
     public List<Menu> topMenuList() {
@@ -87,7 +125,46 @@ public class MenuController extends AbstractController<Menu> {
         if (menuList == null) {
             menuList = new ArrayList<>();
         }
-        menuList=menuService.findAll();
+        menuList = menuService.findAll();
+    }
+
+    public void setPage(String link, String name) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, Object> map = context.getViewRoot().getViewMap();
+        List<String> list = new ArrayList<>();
+
+        for (String key : map.keySet()) {
+            if (!key.equals("menuController")) {
+                list.add(key);
+            }
+        }
+
+        if (list != null && !list.isEmpty()) {
+            for (String get : list) {
+                map.remove(get);
+            }
+        }
+        setPageLink(link);
+        setPageName(name);
+    }
+
+    public void menuSearchValueChange(ValueChangeEvent event) {
+        if (event.getOldValue() == null || !event.getOldValue().equals(event.getNewValue())) {
+            menuList = menuService.searchMenuList(event.getNewValue().toString());
+        }
+
+        for (int i = 0; i < menuList.size(); i++) {
+            Menu get = menuList.get(i);
+            if (get.getTopMenuId() != null) {
+                Menu topMenu = menuService.getTopMenu(get.getTopMenuId());
+
+                if (topMenu != null) {
+                    if (!menuList.contains(topMenu)) {
+                        menuList.add(topMenu);
+                    }
+                }
+            }
+        }
     }
 
 }

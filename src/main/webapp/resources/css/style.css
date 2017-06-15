@@ -7623,7 +7623,7 @@ fieldset[disabled] .form-control {
     font-size: 14px;
     margin: 3px 0 1px 6px; }
 .sidebar .menu .list .ml-menu li a {
-    padding-left: 55px;
+    padding-left: 25px;
     padding-top: 7px;
     padding-bottom: 7px; }
 .sidebar .menu .list .ml-menu li.active a.toggled:not(.menu-toggle) {

@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <meta charset="UTF-8"/>
@@ -20,7 +21,7 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
 
-        <title>Welcome To | Bootstrap Based Admin Template - Material Design</title>
+        <title>http://kurtomerfaruk.com</title>
 
 
         <!-- Google Fonts -->
@@ -362,41 +363,65 @@
                                  #Menu -->
                 <!-- Menu -->
                 <div class="menu">
+
                     <ul class="list">
-                        <li class="header">MAIN NAVIGATION</li>
-                        <li class="active">
-                            <a href="#{request.contextPath}/index.xhtml">
-                                <i class="material-icons">home</i>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        
-                        <h:panelGroup id="menuListGroup" class="sidebar-menu">
-                            <ui:repeat value="#{menuController.menuList}" var="menu">
-                                <ui:fragment rendered="#{menu.topMenuId==null}">
-                                    <li id="mainTree">
-                                        <ui:fragment rendered="#{menu.link eq null or menu.link ==''}">
-                                            <a href="javascript:void(0);" class="menu-toggle">
-                                                <i class="material-icons" style="color:##{menu.iconColor}">#{menu.icon}</i>
-                                                <span>#{menu.menuName}</span>
-                                            </a>
-                                        </ui:fragment>
-                                        <ul class="ml-menu">
-                                            <ui:repeat value="#{menuController.menuList}" var="subMenu">
+                        <h:form>
+                            <li class="header">MAIN NAVIGATION</li>
+                            <li>
+                                <div class="body">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <!--<input type="text" class="form-control" placeholder="Search..." />-->
+                                                <p:inputText pt:placeholder="Search..." class="form-control" value="#{menuController.searhText}" valueChangeListener="#{menuController.menuSearchValueChange}">
+                                                    <p:ajax event="keyup" update="menuListGroup" oncomplete="$.AdminBSB.leftSideBar.searchMenu();"/>
+                                                </p:inputText>
+                                            </div>
+                                        </div>
 
-                                                <ui:fragment rendered="#{menu.menuId == subMenu.topMenuId}">
-                                                    <li>
-                                                        <a href="#{request.contextPath}#{subMenu.link}.xhtml">#{subMenu.menuName}</a>
-                                                    </li>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="active">
+                                <a href="#{request.contextPath}/index.xhtml">
+                                    <i class="material-icons">home</i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
 
-                                                </ui:fragment>
 
-                                            </ui:repeat>
-                                        </ul>
-                                    </li>
-                                </ui:fragment>
-                            </ui:repeat>
-                        </h:panelGroup>
+                            <h:panelGroup id="menuListGroup" class="sidebar-menu">
+                                <ui:repeat value="#{menuController.menuList}" var="menu">
+                                    <ui:fragment rendered="#{menu.topMenuId==null}">
+                                        <li id="mainTree">
+                                            <ui:fragment rendered="#{menu.link eq null or menu.link ==''}">
+                                                <a href="javascript:void(0);" class="menu-toggle ">
+                                                    <i class="material-icons" style="color:##{menu.iconColor}">#{menu.icon}</i>
+                                                    <span>#{menu.menuName}</span>
+                                                </a>
+                                            </ui:fragment>
+                                            <ul class="ml-menu">
+                                                <ui:repeat value="#{menuController.menuList}" var="subMenu">
+
+                                                    <ui:fragment rendered="#{menu.menuId == subMenu.topMenuId}">
+                                                        <li id="li#{subMenu.menuId}">
+                                                            <!--<a href="#{request.contextPath}#{subMenu.link}.xhtml">#{subMenu.menuName}</a>-->
+                                                            <p:commandLink action="#{menuController.setPage(subMenu.link,subMenu.menuName)}" update="myPanel" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                                                <i class="material-icons" style="color:##{subMenu.iconColor};margin-top: -5px !important;padding-right: 10px !important">#{subMenu.icon}</i>
+                                                                #{subMenu.menuName}
+
+                                                            </p:commandLink>
+                                                        </li>
+
+                                                    </ui:fragment>
+
+                                                </ui:repeat>
+                                            </ul>
+                                        </li>
+                                    </ui:fragment>
+                                </ui:repeat>
+                            </h:panelGroup>
+                        </h:form>
                     </ul>
                 </div>
                 <!-- #Menu -->
@@ -406,7 +431,7 @@
                         &copy; 2017 <a href="javascript:void(0);">PrimeFaces AdminBSB</a>.
                     </div>
                     <div class="version">
-                        <b>Version: </b> 1.0.2
+                        <b>Version: </b> 1.0.3
                     </div>
                 </div>
                 <!-- #Footer -->
@@ -559,7 +584,10 @@
 
         <section class="content">
 
-            <ui:insert name="body"/>
+            <!--            <ui:insert name="body"/>-->
+            <h:panelGroup id="myPanel" layout="block">
+                <ui:include src="#{menuController.pageLink}.xhtml"/>
+            </h:panelGroup>
 
         </section>
 

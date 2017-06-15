@@ -28,3 +28,7 @@ alt="PrimeFaces AdminBSB Dynamic Menu" width="650" height="400" border="10" /></
 <a href="https://www.youtube.com/watch?v=TyMLkPGa38U" 
 target="_blank"><img src="http://img.youtube.com/vi/TyMLkPGa38U/0.jpg" 
 alt="PrimeFaces AdminBSB Audit Log" width="650" height="400" border="10" /></a>
+
+<a href="https://www.youtube.com/watch?v=FeuhJWjjG2I" 
+target="_blank"><img src="http://img.youtube.com/vi/FeuhJWjjG2I/0.jpg" 
+alt="PrimeFaces AdminBSB Menu Searching" width="650" height="400" border="10" /></a>

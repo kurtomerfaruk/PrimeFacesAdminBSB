@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
@@ -46,6 +45,8 @@
     <h:body class="login-page">
         <h:form>
             <p:growl id="growlLogin" life="3000"/>
+            
+            <p:focus for="userName"/>
 
             <div class="login-box">
                 <div class="logo">
@@ -60,7 +61,7 @@
                                 <i class="material-icons">person</i>
                             </span>
                             <div class="form-line">
-                                <p:inputText class="form-control" value="#{loginController.username}" required="true" label="Username" pt:placeholder="Username"/>
+                                <p:inputText id="userName" class="form-control" value="#{loginController.username}" required="true" label="Username" pt:placeholder="Username"/>
                             </div>
                         </div>
                         <div class="input-group">
@@ -78,7 +79,8 @@
                                                                 </input>-->
                             </div>
                             <div class="col-xs-6 pull-right">
-                                <p:commandLink class="btn btn-block bg-pink waves-effect" action="#{loginController.login}" update="growlLogin">
+                                <p:defaultCommand target="loginButton" />
+                                <p:commandLink id="loginButton" class="btn btn-block bg-pink waves-effect" action="#{loginController.login}" update="growlLogin">
                                     <i class="material-icons">lock_open</i>
                                     <h:outputText style="margin-left: 20px" value="SIGN IN"/>
                                 </p:commandLink>

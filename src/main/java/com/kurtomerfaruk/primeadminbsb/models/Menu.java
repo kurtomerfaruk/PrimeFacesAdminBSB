@@ -31,7 +31,7 @@ import org.hibernate.envers.Audited;
 @NamedQueries({
     @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m"),
     @NamedQuery(name = "Menu.findByMenuId", query = "SELECT m FROM Menu m WHERE m.menuId = :menuId"),
-    @NamedQuery(name = "Menu.findByMenuName", query = "SELECT m FROM Menu m WHERE m.menuName = :menuName"),
+    @NamedQuery(name = "Menu.findByMenuName", query = "SELECT m FROM Menu m WHERE m.menuName LIKE :menuName"),
     @NamedQuery(name = "Menu.findByTopMenuId", query = "SELECT m FROM Menu m WHERE m.topMenuId = :topMenuId"),
     @NamedQuery(name = "Menu.findByMenuType", query = "SELECT m FROM Menu m WHERE m.menuType = com.kurtomerfaruk.primeadminbsb.enums.MenuType.M ORDER BY m.menuName"),
     @NamedQuery(name = "Menu.findByLink", query = "SELECT m FROM Menu m WHERE m.link = :link"),
