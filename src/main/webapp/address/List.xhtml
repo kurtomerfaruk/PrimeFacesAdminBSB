@@ -97,9 +97,9 @@
 
             <f:facet name="{buttons}">
                 <div class="footer-left">
-                    <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{addressController.prepareCreate}" update=":AddressCreateForm" oncomplete="PF('AddressCreateDialog').show()"/>
+                    <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{addressController.prepareCreate}" update=":AddressCreateForm:AddressCreateForm" oncomplete="PF('AddressCreateDialog').show()"/>
                     <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":AddressViewForm" oncomplete="PF('AddressViewDialog').show()" disabled="#{empty addressController.selected}"/>
-                    <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":AddressEditForm" oncomplete="PF('AddressEditDialog').show()" disabled="#{empty addressController.selected}"/>
+                    <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":AddressEditForm:AddressEditForm" oncomplete="PF('AddressEditDialog').show()" disabled="#{empty addressController.selected}"/>
                     <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{addressController.delete}" update=":growl,datalist" disabled="#{empty addressController.selected}">
                         <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>

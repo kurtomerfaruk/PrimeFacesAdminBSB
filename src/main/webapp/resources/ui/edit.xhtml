@@ -25,6 +25,7 @@
 
             <h:form id="#{cc.id}">
                 <h:panelGroup id="display">
+                    <p:focus context="display"/>
                     <p:panelGrid columns="#{cc.attrs.columns}" columnClasses="column" rendered="#{cc.attrs.renderedListener}">
                         <composite:insertChildren/>
                         <f:facet name="footer">

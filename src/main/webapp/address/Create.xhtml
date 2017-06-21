@@ -4,26 +4,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-
-        <p:dialog id="AddressCreateDlg" 
-                  widgetVar="AddressCreateDialog" 
-                  modal="true" 
-                  resizable="false" 
-                  appendTo="@(body)" 
-                  header="#{messages.CreateAddressTitle}" 
-                  closeOnEscape="true"
-                  responsive="true">
-
-            <h:form id="AddressCreateForm">
-
-                <h:panelGroup id="display" rendered="#{addressController.selected != null}">
-                    <p:focus context="display"/>
-                    <p:panelGrid columns="2" columnClasses="column">
-
-                        <p:outputLabel value="#{messages.CreateAddressLabel_addressLine1}" for="addressLine1" />
+        
+         <coco:create id="AddressCreateForm"
+                     renderedListener="#{addressController.selected != null}"
+                     widgetVar="AddressCreateDialog"
+                     actionListener="#{addressController.saveNew}"
+                     listForm="AddressListForm">
+             
+             <p:outputLabel value="#{messages.CreateAddressLabel_addressLine1}" for="addressLine1" />
                         <p:inputText id="addressLine1" value="#{addressController.selected.addressLine1}" title="#{messages.CreateAddressTitle_addressLine1}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_addressLine1}" size="60" maxlength="60"/>
 
                         <p:outputLabel value="#{messages.CreateAddressLabel_addressLine2}" for="addressLine2" />
@@ -43,21 +35,8 @@
 
                         <p:outputLabel value="#{messages.CreateAddressLabel_modifiedDate}" for="modifiedDate" />
                         <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{addressController.selected.modifiedDate}" title="#{messages.CreateAddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_modifiedDate}" showOn="button"/>
-
-                        <f:facet name="footer">
-                            <div class="footer-right">
-                                <p:commandButton actionListener="#{addressController.saveNew}" value="#{messages.Save}" update="display,:AddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AddressCreateDialog'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                                <p:commandButton value="#{messages.Cancel}" oncomplete="PF('AddressCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                            </div>
-                        </f:facet>
-
-                    </p:panelGrid>
-
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+         
+         </coco:create>
 
     </ui:composition>
 

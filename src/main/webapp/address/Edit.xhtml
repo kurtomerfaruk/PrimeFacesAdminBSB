@@ -4,28 +4,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="AddressEditDlg" 
-                  widgetVar="AddressEditDialog" 
-                  modal="true" 
-                  resizable="false"  
-                  appendTo="@(body)"
-                  header="#{messages.EditAddressTitle}" 
-                  closeOnEscape="true"
-                  responsive="true">
-
-            <h:form id="AddressEditForm">
-
-                <h:panelGroup id="display">
-
-                    <p:focus context="display"/>
-
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{addressController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditAddressLabel_addressID}" for="addressID" />
+        
+        <coco:edit id="AddressEditForm"
+                   renderedListener="#{addressController.selected != null}"
+                   widgetVar="AddressEditDialog"
+                   actionListener="#{addressController.save}"
+                   listForm="AddressListForm">
+            
+            <h:outputLabel value="#{messages.EditAddressLabel_addressID}" for="addressID" />
                         <h:outputText id="addressID" value="#{addressController.selected.addressID}" />
 
                         <p:outputLabel value="#{messages.EditAddressLabel_addressLine1}" for="addressLine1" />
@@ -48,22 +38,9 @@
 
                         <p:outputLabel value="#{messages.EditAddressLabel_modifiedDate}" for="modifiedDate" />
                         <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{addressController.selected.modifiedDate}" title="#{messages.EditAddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditAddressRequiredMessage_modifiedDate}" showOn="button"/>
-
-                        <f:facet name="footer">
-                            <div class="footer-right">
-                                <p:commandButton actionListener="#{addressController.save}" value="#{messages.Save}" update="display,:AddressListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AddressEditDialog'));"/>
-                                <p:commandButton value="#{messages.Cancel}" oncomplete="PF('AddressEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                            </div>
-                        </f:facet>
-
-                    </p:panelGrid>
-
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
-
+            
+        </coco:edit>
+        
     </ui:composition>
 
 </html>

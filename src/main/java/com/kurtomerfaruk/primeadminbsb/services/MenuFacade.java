@@ -55,5 +55,10 @@ public class MenuFacade extends AbstractFacade<Menu> {
             return null;
         }
     }
+    
+    @Override
+    public List<Menu> findAll() {
+        return getEntityManager().createNamedQuery("Menu.findAll").getResultList();
+    }
 
 }
