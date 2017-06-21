@@ -4,18 +4,16 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-
-        <p:dialog id="AddressViewDlg" widgetVar="AddressViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewAddressTitle}" closeOnEscape="true">
-
-            <h:form id="AddressViewForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{addressController.selected != null}">
-
-                        <h:outputText value="#{messages.ViewAddressLabel_addressID}"/>
+        
+        <coco:view id="AddressViewForm"
+                   widgetVar="AddressViewDialog"
+                   renderedListener="#{addressController.selected != null}">
+        
+            <h:outputText value="#{messages.ViewAddressLabel_addressID}"/>
                         <h:outputText value="#{addressController.selected.addressID}" title="#{messages.ViewAddressTitle_addressID}"/>
 
                         <h:outputText value="#{messages.ViewAddressLabel_addressLine1}"/>
@@ -40,20 +38,8 @@
                         <h:outputText value="#{addressController.selected.modifiedDate}" title="#{messages.ViewAddressTitle_modifiedDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
-                        
-                        <f:facet name="footer">
-                            <div class="footer-right">
-                                <p:commandButton value="#{messages.Close}" onclick="PF('AddressViewDialog').hide()"/>
-                            </div>
-                        </f:facet>
-                        
-                    </p:panelGrid>
-                    
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        
+        </coco:view>
 
     </ui:composition>
 
