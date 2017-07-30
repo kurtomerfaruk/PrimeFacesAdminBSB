@@ -264,3 +264,32 @@ div.ui-selectonemenu-filter-container{
     margin-top: -2px !important;
     margin-left: -1px !important;
 }
+
+.box{
+    position:relative;
+    border-radius:3px;
+    background:#ffffff;
+    border-top:3px solid #d2d6de;
+    margin-bottom:20px;
+    width:100%;
+    box-shadow:0 1px 1px rgba(0,0,0,0.1);
+    border-top-width:15px
+}
+
+.box.box-red{
+    border-top-color:#F44336;
+    border-width:15px 0px;
+}
+.box.box-blue{
+    border-top-color:#2196F3;
+    border-width:15px 0px;
+}
+.box.box-green{
+    border-top-color:#4CAF50;
+    border-width:15px 0px;
+}
+.box.box-pink{
+    border-top-color:#E91E63;
+    border-width:15px 0px;
+}
+
