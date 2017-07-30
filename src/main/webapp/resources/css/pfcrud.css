@@ -260,3 +260,7 @@ div.ui-selectonemenu-filter-container{
     color:#5d5d5d !important;
 }
 
+.ui-chkbox-box.ui-state-active .ui-icon, .ui-radiobutton-box.ui-state-active .ui-icon{
+    margin-top: -2px !important;
+    margin-left: -1px !important;
+}
