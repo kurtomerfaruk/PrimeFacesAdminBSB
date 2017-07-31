@@ -9,7 +9,7 @@
 
     <h:form id="ContactListForm" class="form-width">
 
-        <p:contextMenu id="ContactDataTableContextMenu" for="datalist">  
+        <p:contextMenu id="ContactDataTableContextMenu" for="datalist:datalist">  
             <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ContactListForm:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{messages.View}" onclick="document.getElementById('ContactListForm:viewButton').click();" icon="ui-icon-search"/>
             <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ContactListForm:editButton').click();" icon="ui-icon-pencil"/>

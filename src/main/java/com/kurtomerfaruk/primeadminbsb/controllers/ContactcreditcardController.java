@@ -16,7 +16,6 @@ public class ContactcreditcardController extends AbstractController<Contactcredi
     private static final long serialVersionUID = 16146463433067863L;
 
     public ContactcreditcardController() {
-        // Inform the Abstract parent controller of the concrete Contactcreditcard Entity
         super(Contactcreditcard.class);
     }
 
