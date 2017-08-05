@@ -4,40 +4,31 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="LocationListForm">
+    <h:form id="LocationListForm" class="form-width">
 
-        <p:panel header="#{messages.ListLocationTitle}">
-            <p:contextMenu id="LocationDataTableContextMenu" for="datalist">  
+            <p:contextMenu id="LocationDataTableContextMenu" for="datalist:datalist">  
                 <p:menuitem value="#{messages.Create}" onclick="document.getElementById('LocationListForm:createButton').click();" icon="ui-icon-plus"/>
                 <p:menuitem value="#{messages.View}" onclick="document.getElementById('LocationListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('LocationListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('LocationListForm:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{locationController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{locationController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{locationController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.locationID}"
-                -->
 
+            <coco:datatable id="datalist"
+                            value="#{locationController.lazyItems}"
+                            rowKey="#{item.locationID}"
+                            selection="#{locationController.selected}"
+                            filtered="#{locationController.filtered}"
+                            rowselect=":LocationListForm:datalist:datalist:createButton,:LocationListForm:datalist:datalist:viewButton,:LocationListForm:datalist:datalist:editButton,:LocationListForm:datalist:datalist:deleteButton,:LocationListForm:LocationDataTableContextMenu"
+                            rowDblselect="document.getElementById('LocationListForm:datalist:datalist:editButton').click()"
+                            contextMenu=":LocationListForm:datalist:datalist:createButton :LocationListForm:datalist:datalist:viewButton :LocationListForm:datalist:datalist:editButton :LocationListForm:datalist:datalist:deleteButton"
+                            selectListener="#{locationController.resetParents()}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:LocationDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:LocationDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('LocationListForm:viewButton').click();"/>
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListLocationTitle}"/>   
+                </f:facet>
 
                 <p:column sortBy="#{item.locationID}" filterBy="#{item.locationID}">
                     <f:facet name="header">
@@ -81,16 +72,20 @@
                 </p:column>
 
 
-            </p:dataTable>
+                <f:facet name="{buttons}">
+                    <div class="footer-left">
+                        <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{locationController.prepareCreate}" update=":LocationCreateForm:LocationCreateForm" oncomplete="PF('LocationCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":LocationViewForm:LocationViewForm" oncomplete="PF('LocationViewDialog').show()" disabled="#{empty locationController.selected}"/>
+                        <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":LocationEditForm:LocationEditForm" oncomplete="PF('LocationEditDialog').show()" disabled="#{empty locationController.selected}"/>
+                        <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{locationController.delete}" update=":growl,datalist" disabled="#{empty locationController.selected}">
+                            <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </div>
+                </f:facet>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{locationController.prepareCreate}" update=":LocationCreateForm" oncomplete="PF('LocationCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":LocationViewForm" oncomplete="PF('LocationViewDialog').show()" disabled="#{empty locationController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":LocationEditForm" oncomplete="PF('LocationEditDialog').show()" disabled="#{empty locationController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{locationController.delete}" update=":growl,datalist" disabled="#{empty locationController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            </coco:datatable>
+
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
 

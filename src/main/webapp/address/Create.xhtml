@@ -6,35 +6,35 @@
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        
-         <coco:create id="AddressCreateForm"
+
+        <coco:create id="AddressCreateForm"
                      renderedListener="#{addressController.selected != null}"
                      widgetVar="AddressCreateDialog"
                      actionListener="#{addressController.saveNew}"
                      listForm="AddressListForm">
-             
-             <p:outputLabel value="#{messages.CreateAddressLabel_addressLine1}" for="addressLine1" />
-                        <p:inputText id="addressLine1" value="#{addressController.selected.addressLine1}" title="#{messages.CreateAddressTitle_addressLine1}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_addressLine1}" size="60" maxlength="60"/>
 
-                        <p:outputLabel value="#{messages.CreateAddressLabel_addressLine2}" for="addressLine2" />
-                        <p:inputText id="addressLine2" value="#{addressController.selected.addressLine2}" title="#{messages.CreateAddressTitle_addressLine2}" size="60" maxlength="60"/>
+            <p:outputLabel value="#{messages.CreateAddressLabel_addressLine1}" for="addressLine1" />
+            <p:inputText id="addressLine1" value="#{addressController.selected.addressLine1}" title="#{messages.CreateAddressTitle_addressLine1}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_addressLine1}" size="60" maxlength="60"/>
 
-                        <p:outputLabel value="#{messages.CreateAddressLabel_city}" for="city" />
-                        <p:inputText id="city" value="#{addressController.selected.city}" title="#{messages.CreateAddressTitle_city}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_city}" size="30" maxlength="30"/>
+            <p:outputLabel value="#{messages.CreateAddressLabel_addressLine2}" for="addressLine2" />
+            <p:inputText id="addressLine2" value="#{addressController.selected.addressLine2}" title="#{messages.CreateAddressTitle_addressLine2}" size="60" maxlength="60"/>
 
-                        <p:outputLabel value="#{messages.CreateAddressLabel_stateProvinceID}" for="stateProvinceID" />
-                        <p:inputText id="stateProvinceID" value="#{addressController.selected.stateProvinceID}" title="#{messages.CreateAddressTitle_stateProvinceID}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_stateProvinceID}"/>
+            <p:outputLabel value="#{messages.CreateAddressLabel_city}" for="city" />
+            <p:inputText id="city" value="#{addressController.selected.city}" title="#{messages.CreateAddressTitle_city}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_city}" size="30" maxlength="30"/>
 
-                        <p:outputLabel value="#{messages.CreateAddressLabel_postalCode}" for="postalCode" />
-                        <p:inputText id="postalCode" value="#{addressController.selected.postalCode}" title="#{messages.CreateAddressTitle_postalCode}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_postalCode}" size="15" maxlength="15"/>
+            <p:outputLabel value="#{messages.CreateAddressLabel_stateProvinceID}" for="stateProvinceID" />
+            <p:inputText id="stateProvinceID" value="#{addressController.selected.stateProvinceID}" title="#{messages.CreateAddressTitle_stateProvinceID}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_stateProvinceID}"/>
 
-                        <p:outputLabel value="#{messages.CreateAddressLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{addressController.selected.rowguid}" title="#{messages.CreateAddressTitle_rowguid}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateAddressLabel_postalCode}" for="postalCode" />
+            <p:inputText id="postalCode" value="#{addressController.selected.postalCode}" title="#{messages.CreateAddressTitle_postalCode}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_postalCode}" size="15" maxlength="15"/>
 
-                        <p:outputLabel value="#{messages.CreateAddressLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{addressController.selected.modifiedDate}" title="#{messages.CreateAddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_modifiedDate}" showOn="button"/>
-         
-         </coco:create>
+            <p:outputLabel value="#{messages.CreateAddressLabel_rowguid}" for="rowguid" />
+            <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{addressController.selected.rowguid}" title="#{messages.CreateAddressTitle_rowguid}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_rowguid}"/>
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{addressController.selected.modifiedDate}" title="#{messages.CreateAddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_modifiedDate}" showOn="button"/>
+
+        </coco:create>
 
     </ui:composition>
 
