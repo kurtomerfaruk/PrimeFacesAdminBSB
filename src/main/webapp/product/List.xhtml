@@ -4,41 +4,32 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="ProductListForm">
+    <h:form id="ProductListForm" class="form-width">
 
-        <p:panel header="#{messages.ListProductTitle}">
-            <p:contextMenu id="ProductDataTableContextMenu" for="datalist">  
+            <p:contextMenu id="ProductDataTableContextMenu" for="datalist:datalist">  
                 <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductListForm:createButton').click();" icon="ui-icon-plus"/>
                 <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductListForm:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{productController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{productController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
+            
+            <coco:datatable id="datalist"
+                            value="#{productController.lazyItems}"
+                            rowKey="#{item.productID}"
+                            selection="#{productController.selected}"
+                            filtered="#{productController.filtered}"
+                            rowselect=":ProductListForm:datalist:datalist:createButton,:ProductListForm:datalist:datalist:viewButton,:ProductListForm:datalist:datalist:editButton,:ProductListForm:datalist:datalist:deleteButton,:ProductListForm:ProductDataTableContextMenu"
+                            rowDblselect="document.getElementById('ProductListForm:datalist:datalist:editButton').click()"
+                            contextMenu=":ProductListForm:datalist:datalist:createButton :ProductListForm:datalist:datalist:viewButton :ProductListForm:datalist:datalist:editButton :ProductListForm:datalist:datalist:deleteButton"
+                            selectListener="#{productController.resetParents()}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductTitle}"/>   
+                </f:facet>
                 
-                         value="HASH{productController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.productID}"
-                -->
-
-
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductListForm:viewButton').click();"/>
-
                 <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
                     <f:facet name="header">
                         <h:outputText value="#{messages.ListProductTitle_productID}"/>
@@ -246,17 +237,19 @@
                                         </h:outputText>
                                     </p:column>
                 -->
-
-            </p:dataTable>
-
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productController.prepareCreate}" update=":ProductCreateForm" oncomplete="PF('ProductCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductViewForm" oncomplete="PF('ProductViewDialog').show()" disabled="#{empty productController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductEditForm" oncomplete="PF('ProductEditDialog').show()" disabled="#{empty productController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productController.delete}" update=":growl,datalist" disabled="#{empty productController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
-
-        </p:panel>
+                
+                <f:facet name="{buttons}">
+                    <div class="footer-left">
+                        <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productController.prepareCreate}" update=":ProductCreateForm:ProductCreateForm" oncomplete="PF('ProductCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":ProductViewForm:ProductViewForm" oncomplete="PF('ProductViewDialog').show()" disabled="#{empty productController.selected}"/>
+                        <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductEditForm:ProductEditForm" oncomplete="PF('ProductEditDialog').show()" disabled="#{empty productController.selected}"/>
+                        <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productController.delete}" update=":growl,datalist" disabled="#{empty productController.selected}">
+                            <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </div>
+                </f:facet>
+                
+            </coco:datatable>
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
 
