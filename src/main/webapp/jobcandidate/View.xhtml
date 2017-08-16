@@ -4,38 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="JobcandidateViewDlg" widgetVar="JobcandidateViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewJobcandidateTitle}" closeOnEscape="true">
+        <coco:viewpage id="JobcandidateViewForm"
+                       renderedListener="#{jobcandidateController.selected != null}"
+                       widgetVar="JobcandidateViewDialog">
 
-            <h:form id="JobcandidateViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{jobcandidateController.selected != null}">
+            <h:outputText value="#{messages.CreateJobcandidateLabel_jobCandidateID}"/>
+            <h:outputText value="#{jobcandidateController.selected.jobCandidateID}"/>
 
-                        <h:outputText value="#{messages.ViewJobcandidateLabel_jobCandidateID}"/>
-                        <h:outputText value="#{jobcandidateController.selected.jobCandidateID}" title="#{messages.ViewJobcandidateTitle_jobCandidateID}"/>
+            <h:outputText value="#{messages.CreateJobcandidateLabel_resume}"/>
+            <h:outputText value="#{jobcandidateController.selected.resume}"/>
 
-                        <h:outputText value="#{messages.ViewJobcandidateLabel_employeeID}"/>
-                        <h:outputText value="#{jobcandidateController.selected.employeeID}" title="#{messages.ViewJobcandidateTitle_employeeID}"/>
+            <h:outputText value="#{messages.CreateJobcandidateLabel_modifiedDate}"/>
+            <h:outputText value="#{jobcandidateController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewJobcandidateLabel_resume}"/>
-                        <h:outputText value="#{jobcandidateController.selected.resume}" title="#{messages.ViewJobcandidateTitle_resume}"/>
+            <h:outputText value="#{messages.CreateJobcandidateLabel_businessEntityID}"/>
+            <h:outputText value="#{jobcandidateController.selected.businessEntityID.businessEntityID}"/>
 
-                        <h:outputText value="#{messages.ViewJobcandidateLabel_modifiedDate}"/>
-                        <h:outputText value="#{jobcandidateController.selected.modifiedDate}" title="#{messages.ViewJobcandidateTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('JobcandidateViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

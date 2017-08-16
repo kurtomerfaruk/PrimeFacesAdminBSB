@@ -3,21 +3,37 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Jobcandidate;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "jobcandidateController")
 @ViewScoped
 public class JobcandidateController extends AbstractController<Jobcandidate> {
-    private static final long serialVersionUID = 2897997528807589969L;
+
+    @Inject
+    private EmployeeController businessEntityIDController;
 
     public JobcandidateController() {
         // Inform the Abstract parent controller of the concrete Jobcandidate Entity
         super(Jobcandidate.class);
     }
 
+    /**
+     * Resets the "selected" attribute of any parent Entity controllers.
+     */
+    public void resetParents() {
+        businessEntityIDController.setSelected(null);
+    }
+
+    /**
+     * Sets the "selected" attribute of the Employee controller in order to
+     * display its data in its View dialog.
+     *
+     * @param event Event object for the widget that triggered an action
+     */
+    public void prepareBusinessEntityID(ActionEvent event) {
+        if (this.getSelected() != null && businessEntityIDController.getSelected() == null) {
+            businessEntityIDController.setSelected(this.getSelected().getBusinessEntityID());
+        }
+    }
 }

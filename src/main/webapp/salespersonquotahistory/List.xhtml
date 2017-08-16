@@ -4,96 +4,114 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="SalespersonquotahistoryListForm">
+    <h:form id="SalespersonquotahistoryListForm" class="form-height">
 
-        <p:panel header="#{messages.ListSalespersonquotahistoryTitle}">
-            <p:contextMenu id="SalespersonquotahistoryDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('SalespersonquotahistoryListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalespersonquotahistoryListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalespersonquotahistoryListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalespersonquotahistoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{salespersonquotahistoryController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{salespersonquotahistoryController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{salespersonquotahistoryController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.salespersonquotahistoryPK}"
-                -->
+        <p:contextMenu id="SalespersonquotahistoryDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('SalespersonquotahistoryListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalespersonquotahistoryListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalespersonquotahistoryListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalespersonquotahistoryListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Salesperson #{messages.View}" icon="fa fa-search"  actionListener="#{salespersonquotahistoryController.prepareSalesperson}" update=":SalespersonViewForm" oncomplete="PF('SalespersonViewDialog').show()" disabled="#{empty salespersonquotahistoryController.selected.salesperson}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{salespersonquotahistoryController.lazyItems}"
+                        rowKey="#{item.salespersonquotahistoryPK}"
+                        selection="#{salespersonquotahistoryController.selected}"
+                        filtered="#{salespersonquotahistoryController.filtered}"
+                        rowselect=":SalespersonquotahistoryListForm:datalist:datalist:createButton,:SalespersonquotahistoryListForm:datalist:datalist:viewButton,:SalespersonquotahistoryListForm:datalist:datalist:editButton,:SalespersonquotahistoryListForm:datalist:datalist:deleteButton,:SalespersonquotahistoryListForm:SalespersonquotahistoryDataTableContextMenu"
+                        rowDblselect="document.getElementById('SalespersonquotahistoryListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":SalespersonquotahistoryListForm:datalist:datalist:createButton :SalespersonquotahistoryListForm:datalist:datalist:viewButton :SalespersonquotahistoryListForm:datalist:datalist:editButton :SalespersonquotahistoryListForm:datalist:datalist:deleteButton"
+                        selectListener="#{salespersonquotahistoryController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalespersonquotahistoryDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalespersonquotahistoryDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SalespersonquotahistoryListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.salespersonquotahistoryPK.salesPersonID}" filterBy="#{item.salespersonquotahistoryPK.salesPersonID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salespersonquotahistoryPK_salesPersonID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salespersonquotahistoryPK.salesPersonID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.salespersonquotahistoryPK.quotaDate}" filterBy="#{item.salespersonquotahistoryPK.quotaDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salespersonquotahistoryPK_quotaDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salespersonquotahistoryPK.quotaDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListSalespersonquotahistoryTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.salespersonquotahistoryPK.businessEntityID}" filterBy="#{item.salespersonquotahistoryPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salespersonquotahistoryPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.salespersonquotahistoryPK.businessEntityID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.salesQuota}" filterBy="#{item.salesQuota}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salesQuota}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesQuota}"/>
-                </p:column>
+            <p:column sortBy="#{item.salespersonquotahistoryPK.quotaDate}" filterBy="#{item.salespersonquotahistoryPK.quotaDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salespersonquotahistoryPK_quotaDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.salespersonquotahistoryPK.quotaDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_rowguid}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.rowguid}"/>
-                </p:column>
+            <p:column sortBy="#{item.salesQuota}" filterBy="#{item.salesQuota}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salesQuota}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesQuota}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{salespersonquotahistoryController.prepareCreate}" update=":SalespersonquotahistoryCreateForm" oncomplete="PF('SalespersonquotahistoryCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":SalespersonquotahistoryViewForm" oncomplete="PF('SalespersonquotahistoryViewDialog').show()" disabled="#{empty salespersonquotahistoryController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":SalespersonquotahistoryEditForm" oncomplete="PF('SalespersonquotahistoryEditDialog').show()" disabled="#{empty salespersonquotahistoryController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{salespersonquotahistoryController.delete}" update=":growl,datalist" disabled="#{empty salespersonquotahistoryController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.salesperson.businessEntityID}" filterBy="#{item.salesperson.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonquotahistoryTitle_salesperson}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesperson.businessEntityID}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{salespersonquotahistoryController.prepareCreate}" update=":SalespersonquotahistoryCreateForm:SalespersonquotahistoryCreateForm" oncomplete="PF('SalespersonquotahistoryCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":SalespersonquotahistoryViewForm:SalespersonquotahistoryViewForm" oncomplete="PF('SalespersonquotahistoryViewDialog').show()" disabled="#{empty salespersonquotahistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":SalespersonquotahistoryEditForm:SalespersonquotahistoryEditForm" oncomplete="PF('SalespersonquotahistoryEditDialog').show()" disabled="#{empty salespersonquotahistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{salespersonquotahistoryController.delete}" update=":growl,datalist" disabled="#{empty salespersonquotahistoryController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

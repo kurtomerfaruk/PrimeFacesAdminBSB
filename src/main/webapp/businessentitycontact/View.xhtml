@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="BusinessentitycontactViewForm"
+                       renderedListener="#{businessentitycontactController.selected != null}"
+                       widgetVar="BusinessentitycontactViewDialog">
+
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_businessentitycontactPK_businessEntityID}"/>
+            <h:outputText value="#{businessentitycontactController.selected.businessentitycontactPK.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_businessentitycontactPK_personID}"/>
+            <h:outputText value="#{businessentitycontactController.selected.businessentitycontactPK.personID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_businessentitycontactPK_contactTypeID}"/>
+            <h:outputText value="#{businessentitycontactController.selected.businessentitycontactPK.contactTypeID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_rowguid}"/>
+            <h:outputText value="#{businessentitycontactController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_modifiedDate}"/>
+            <h:outputText value="#{businessentitycontactController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_person}"/>
+            <h:outputText value="#{businessentitycontactController.selected.person.nameStyle}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_contacttype}"/>
+            <h:outputText value="#{businessentitycontactController.selected.contacttype.name}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentitycontactLabel_businessentity}"/>
+            <h:outputText value="#{businessentitycontactController.selected.businessentity.businessEntityID}"/>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

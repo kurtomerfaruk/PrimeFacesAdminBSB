@@ -4,126 +4,146 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="SalespersonListForm">
+    <h:form id="SalespersonListForm" class="form-height">
 
-        <p:panel header="#{messages.ListSalespersonTitle}">
-            <p:contextMenu id="SalespersonDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('SalespersonListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalespersonListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalespersonListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalespersonListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{salespersonController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{salespersonController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{salespersonController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.salesPersonID}"
-                -->
-
-
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalespersonDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalespersonDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SalespersonListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.salesPersonID}" filterBy="#{item.salesPersonID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonTitle_salesPersonID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesPersonID}"/>
-                </p:column>
+        <p:contextMenu id="SalespersonDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('SalespersonListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalespersonListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalespersonListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalespersonListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.SalespersonMenuItem_storeList}" icon="fa fa-search"  action="#{salespersonController.navigateStoreList}" disabled="#{empty salespersonController.selected.storeList}" ajax="false"/>  
+            <p:menuitem value="TerritoryID #{messages.View}" icon="fa fa-search"  actionListener="#{salespersonController.prepareTerritoryID}" update=":SalesterritoryViewForm" oncomplete="PF('SalesterritoryViewDialog').show()" disabled="#{empty salespersonController.selected.territoryID}"/>  
+            <p:menuitem value="Employee #{messages.View}" icon="fa fa-search"  actionListener="#{salespersonController.prepareEmployee}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty salespersonController.selected.employee}"/>  
+            <p:menuitem value="#{messages.SalespersonMenuItem_salespersonquotahistoryList}" icon="fa fa-search"  action="#{salespersonController.navigateSalespersonquotahistoryList}" disabled="#{empty salespersonController.selected.salespersonquotahistoryList}" ajax="false"/>  
+            <p:menuitem value="#{messages.SalespersonMenuItem_salesterritoryhistoryList}" icon="fa fa-search"  action="#{salespersonController.navigateSalesterritoryhistoryList}" disabled="#{empty salespersonController.selected.salesterritoryhistoryList}" ajax="false"/>  
+            <p:menuitem value="#{messages.SalespersonMenuItem_salesorderheaderList}" icon="fa fa-search"  action="#{salespersonController.navigateSalesorderheaderList}" disabled="#{empty salespersonController.selected.salesorderheaderList}" ajax="false"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{salespersonController.lazyItems}"
+                        rowKey="#{item.businessEntityID}"
+                        selection="#{salespersonController.selected}"
+                        filtered="#{salespersonController.filtered}"
+                        rowselect=":SalespersonListForm:datalist:datalist:createButton,:SalespersonListForm:datalist:datalist:viewButton,:SalespersonListForm:datalist:datalist:editButton,:SalespersonListForm:datalist:datalist:deleteButton,:SalespersonListForm:SalespersonDataTableContextMenu"
+                        rowDblselect="document.getElementById('SalespersonListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":SalespersonListForm:datalist:datalist:createButton :SalespersonListForm:datalist:datalist:viewButton :SalespersonListForm:datalist:datalist:editButton :SalespersonListForm:datalist:datalist:deleteButton"
+                        selectListener="#{salespersonController.resetParents}">
 
 
-                <p:column sortBy="#{item.territoryID}" filterBy="#{item.territoryID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonTitle_territoryID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.territoryID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.salesQuota}" filterBy="#{item.salesQuota}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonTitle_salesQuota}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesQuota}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListSalespersonTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.businessEntityID}" filterBy="#{item.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessEntityID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.bonus}" filterBy="#{item.bonus}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonTitle_bonus}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.bonus}"/>
-                </p:column>
+            <p:column sortBy="#{item.salesQuota}" filterBy="#{item.salesQuota}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_salesQuota}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesQuota}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.commissionPct}" filterBy="#{item.commissionPct}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonTitle_commissionPct}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.commissionPct}"/>
-                </p:column>
+            <p:column sortBy="#{item.bonus}" filterBy="#{item.bonus}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_bonus}"/>
+                </f:facet>
+                <h:outputText value="#{item.bonus}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.salesYTD}" filterBy="#{item.salesYTD}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalespersonTitle_salesYTD}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesYTD}"/>
-                </p:column>
+            <p:column sortBy="#{item.commissionPct}" filterBy="#{item.commissionPct}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_commissionPct}"/>
+                </f:facet>
+                <h:outputText value="#{item.commissionPct}"/>
+            </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.salesLastYear}" filterBy="#{item.salesLastYear}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListSalespersonTitle_salesLastYear}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.salesLastYear}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListSalespersonTitle_rowguid}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.rowguid}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListSalespersonTitle_modifiedDate}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.modifiedDate}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                        </h:outputText>
-                                    </p:column>
-                -->
 
-            </p:dataTable>
+            <p:column sortBy="#{item.salesYTD}" filterBy="#{item.salesYTD}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_salesYTD}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesYTD}"/>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{salespersonController.prepareCreate}" update=":SalespersonCreateForm" oncomplete="PF('SalespersonCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":SalespersonViewForm" oncomplete="PF('SalespersonViewDialog').show()" disabled="#{empty salespersonController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":SalespersonEditForm" oncomplete="PF('SalespersonEditDialog').show()" disabled="#{empty salespersonController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{salespersonController.delete}" update=":growl,datalist" disabled="#{empty salespersonController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.salesLastYear}" filterBy="#{item.salesLastYear}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_salesLastYear}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesLastYear}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.territoryID.name}" filterBy="#{item.territoryID.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_territoryID}"/>
+                </f:facet>
+                <h:outputText value="#{item.territoryID.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.employee.businessEntityID}" filterBy="#{item.employee.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalespersonTitle_employee}"/>
+                </f:facet>
+                <h:outputText value="#{item.employee.businessEntityID}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{salespersonController.prepareCreate}" update=":SalespersonCreateForm:SalespersonCreateForm" oncomplete="PF('SalespersonCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":SalespersonViewForm:SalespersonViewForm" oncomplete="PF('SalespersonViewDialog').show()" disabled="#{empty salespersonController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":SalespersonEditForm:SalespersonEditForm" oncomplete="PF('SalespersonEditDialog').show()" disabled="#{empty salespersonController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{salespersonController.delete}" update=":growl,datalist" disabled="#{empty salespersonController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

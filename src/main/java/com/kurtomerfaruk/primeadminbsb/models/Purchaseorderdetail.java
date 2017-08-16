@@ -13,6 +13,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,9 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "purchaseorderdetail")
@@ -36,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Purchaseorderdetail.findByPurchaseOrderDetailID", query = "SELECT p FROM Purchaseorderdetail p WHERE p.purchaseorderdetailPK.purchaseOrderDetailID = :purchaseOrderDetailID"),
     @NamedQuery(name = "Purchaseorderdetail.findByDueDate", query = "SELECT p FROM Purchaseorderdetail p WHERE p.dueDate = :dueDate"),
     @NamedQuery(name = "Purchaseorderdetail.findByOrderQty", query = "SELECT p FROM Purchaseorderdetail p WHERE p.orderQty = :orderQty"),
-    @NamedQuery(name = "Purchaseorderdetail.findByProductID", query = "SELECT p FROM Purchaseorderdetail p WHERE p.productID = :productID"),
     @NamedQuery(name = "Purchaseorderdetail.findByUnitPrice", query = "SELECT p FROM Purchaseorderdetail p WHERE p.unitPrice = :unitPrice"),
     @NamedQuery(name = "Purchaseorderdetail.findByLineTotal", query = "SELECT p FROM Purchaseorderdetail p WHERE p.lineTotal = :lineTotal"),
     @NamedQuery(name = "Purchaseorderdetail.findByReceivedQty", query = "SELECT p FROM Purchaseorderdetail p WHERE p.receivedQty = :receivedQty"),
@@ -44,7 +47,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Purchaseorderdetail.findByStockedQty", query = "SELECT p FROM Purchaseorderdetail p WHERE p.stockedQty = :stockedQty"),
     @NamedQuery(name = "Purchaseorderdetail.findByModifiedDate", query = "SELECT p FROM Purchaseorderdetail p WHERE p.modifiedDate = :modifiedDate")})
 public class Purchaseorderdetail implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PurchaseorderdetailPK purchaseorderdetailPK;
@@ -57,19 +59,15 @@ public class Purchaseorderdetail implements Serializable {
     @NotNull
     @Column(name = "OrderQty")
     private short orderQty;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ProductID")
-    private int productID;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "UnitPrice")
-    private double unitPrice;
+    private BigDecimal unitPrice;
     @Basic(optional = false)
     @NotNull
     @Column(name = "LineTotal")
-    private double lineTotal;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    private BigDecimal lineTotal;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ReceivedQty")
@@ -87,6 +85,12 @@ public class Purchaseorderdetail implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "PurchaseOrderID", referencedColumnName = "PurchaseOrderID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Purchaseorderheader purchaseorderheader;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
+    @ManyToOne(optional = false)
+    private Product productID;
 
     public Purchaseorderdetail() {
     }
@@ -95,11 +99,10 @@ public class Purchaseorderdetail implements Serializable {
         this.purchaseorderdetailPK = purchaseorderdetailPK;
     }
 
-    public Purchaseorderdetail(PurchaseorderdetailPK purchaseorderdetailPK, Date dueDate, short orderQty, int productID, double unitPrice, double lineTotal, BigDecimal receivedQty, BigDecimal rejectedQty, BigDecimal stockedQty, Date modifiedDate) {
+    public Purchaseorderdetail(PurchaseorderdetailPK purchaseorderdetailPK, Date dueDate, short orderQty, BigDecimal unitPrice, BigDecimal lineTotal, BigDecimal receivedQty, BigDecimal rejectedQty, BigDecimal stockedQty, Date modifiedDate) {
         this.purchaseorderdetailPK = purchaseorderdetailPK;
         this.dueDate = dueDate;
         this.orderQty = orderQty;
-        this.productID = productID;
         this.unitPrice = unitPrice;
         this.lineTotal = lineTotal;
         this.receivedQty = receivedQty;
@@ -136,27 +139,19 @@ public class Purchaseorderdetail implements Serializable {
         this.orderQty = orderQty;
     }
 
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getLineTotal() {
+    public BigDecimal getLineTotal() {
         return lineTotal;
     }
 
-    public void setLineTotal(double lineTotal) {
+    public void setLineTotal(BigDecimal lineTotal) {
         this.lineTotal = lineTotal;
     }
 
@@ -190,6 +185,22 @@ public class Purchaseorderdetail implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Purchaseorderheader getPurchaseorderheader() {
+        return purchaseorderheader;
+    }
+
+    public void setPurchaseorderheader(Purchaseorderheader purchaseorderheader) {
+        this.purchaseorderheader = purchaseorderheader;
+    }
+
+    public Product getProductID() {
+        return productID;
+    }
+
+    public void setProductID(Product productID) {
+        this.productID = productID;
     }
 
     @Override

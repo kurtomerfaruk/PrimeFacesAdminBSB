@@ -8,25 +8,33 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "workorder")
@@ -34,27 +42,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Workorder.findAll", query = "SELECT w FROM Workorder w"),
     @NamedQuery(name = "Workorder.findByWorkOrderID", query = "SELECT w FROM Workorder w WHERE w.workOrderID = :workOrderID"),
-    @NamedQuery(name = "Workorder.findByProductID", query = "SELECT w FROM Workorder w WHERE w.productID = :productID"),
     @NamedQuery(name = "Workorder.findByOrderQty", query = "SELECT w FROM Workorder w WHERE w.orderQty = :orderQty"),
     @NamedQuery(name = "Workorder.findByStockedQty", query = "SELECT w FROM Workorder w WHERE w.stockedQty = :stockedQty"),
     @NamedQuery(name = "Workorder.findByScrappedQty", query = "SELECT w FROM Workorder w WHERE w.scrappedQty = :scrappedQty"),
     @NamedQuery(name = "Workorder.findByStartDate", query = "SELECT w FROM Workorder w WHERE w.startDate = :startDate"),
     @NamedQuery(name = "Workorder.findByEndDate", query = "SELECT w FROM Workorder w WHERE w.endDate = :endDate"),
     @NamedQuery(name = "Workorder.findByDueDate", query = "SELECT w FROM Workorder w WHERE w.dueDate = :dueDate"),
-    @NamedQuery(name = "Workorder.findByScrapReasonID", query = "SELECT w FROM Workorder w WHERE w.scrapReasonID = :scrapReasonID"),
     @NamedQuery(name = "Workorder.findByModifiedDate", query = "SELECT w FROM Workorder w WHERE w.modifiedDate = :modifiedDate")})
 public class Workorder implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "WorkOrderID")
     private Integer workOrderID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ProductID")
-    private int productID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "OrderQty")
@@ -80,13 +81,19 @@ public class Workorder implements Serializable {
     @Column(name = "DueDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
-    @Column(name = "ScrapReasonID")
-    private Short scrapReasonID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workorder")
+    private List<Workorderrouting> workorderroutingList;
+    @JoinColumn(name = "ScrapReasonID", referencedColumnName = "ScrapReasonID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Scrapreason scrapReasonID;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
+    @ManyToOne(optional = false)
+    private Product productID;
 
     public Workorder() {
     }
@@ -95,9 +102,8 @@ public class Workorder implements Serializable {
         this.workOrderID = workOrderID;
     }
 
-    public Workorder(Integer workOrderID, int productID, int orderQty, int stockedQty, short scrappedQty, Date startDate, Date dueDate, Date modifiedDate) {
+    public Workorder(Integer workOrderID, int orderQty, int stockedQty, short scrappedQty, Date startDate, Date dueDate, Date modifiedDate) {
         this.workOrderID = workOrderID;
-        this.productID = productID;
         this.orderQty = orderQty;
         this.stockedQty = stockedQty;
         this.scrappedQty = scrappedQty;
@@ -112,14 +118,6 @@ public class Workorder implements Serializable {
 
     public void setWorkOrderID(Integer workOrderID) {
         this.workOrderID = workOrderID;
-    }
-
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
     }
 
     public int getOrderQty() {
@@ -170,20 +168,37 @@ public class Workorder implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public Short getScrapReasonID() {
-        return scrapReasonID;
-    }
-
-    public void setScrapReasonID(Short scrapReasonID) {
-        this.scrapReasonID = scrapReasonID;
-    }
-
     public Date getModifiedDate() {
         return modifiedDate;
     }
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Workorderrouting> getWorkorderroutingList() {
+        return workorderroutingList;
+    }
+
+    public void setWorkorderroutingList(List<Workorderrouting> workorderroutingList) {
+        this.workorderroutingList = workorderroutingList;
+    }
+
+    public Scrapreason getScrapReasonID() {
+        return scrapReasonID;
+    }
+
+    public void setScrapReasonID(Scrapreason scrapReasonID) {
+        this.scrapReasonID = scrapReasonID;
+    }
+
+    public Product getProductID() {
+        return productID;
+    }
+
+    public void setProductID(Product productID) {
+        this.productID = productID;
     }
 
     @Override

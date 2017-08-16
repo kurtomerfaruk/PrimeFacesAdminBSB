@@ -8,37 +8,44 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "employee")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
-    @NamedQuery(name = "Employee.findByEmployeeID", query = "SELECT e FROM Employee e WHERE e.employeeID = :employeeID"),
+    @NamedQuery(name = "Employee.findByBusinessEntityID", query = "SELECT e FROM Employee e WHERE e.businessEntityID = :businessEntityID"),
     @NamedQuery(name = "Employee.findByNationalIDNumber", query = "SELECT e FROM Employee e WHERE e.nationalIDNumber = :nationalIDNumber"),
-    @NamedQuery(name = "Employee.findByContactID", query = "SELECT e FROM Employee e WHERE e.contactID = :contactID"),
     @NamedQuery(name = "Employee.findByLoginID", query = "SELECT e FROM Employee e WHERE e.loginID = :loginID"),
-    @NamedQuery(name = "Employee.findByManagerID", query = "SELECT e FROM Employee e WHERE e.managerID = :managerID"),
-    @NamedQuery(name = "Employee.findByTitle", query = "SELECT e FROM Employee e WHERE e.title = :title"),
+    @NamedQuery(name = "Employee.findByOrganizationNode", query = "SELECT e FROM Employee e WHERE e.organizationNode = :organizationNode"),
+    @NamedQuery(name = "Employee.findByOrganizationLevel", query = "SELECT e FROM Employee e WHERE e.organizationLevel = :organizationLevel"),
+    @NamedQuery(name = "Employee.findByJobTitle", query = "SELECT e FROM Employee e WHERE e.jobTitle = :jobTitle"),
     @NamedQuery(name = "Employee.findByBirthDate", query = "SELECT e FROM Employee e WHERE e.birthDate = :birthDate"),
     @NamedQuery(name = "Employee.findByMaritalStatus", query = "SELECT e FROM Employee e WHERE e.maritalStatus = :maritalStatus"),
     @NamedQuery(name = "Employee.findByGender", query = "SELECT e FROM Employee e WHERE e.gender = :gender"),
@@ -47,15 +54,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Employee.findByVacationHours", query = "SELECT e FROM Employee e WHERE e.vacationHours = :vacationHours"),
     @NamedQuery(name = "Employee.findBySickLeaveHours", query = "SELECT e FROM Employee e WHERE e.sickLeaveHours = :sickLeaveHours"),
     @NamedQuery(name = "Employee.findByCurrentFlag", query = "SELECT e FROM Employee e WHERE e.currentFlag = :currentFlag"),
+    @NamedQuery(name = "Employee.findByRowguid", query = "SELECT e FROM Employee e WHERE e.rowguid = :rowguid"),
     @NamedQuery(name = "Employee.findByModifiedDate", query = "SELECT e FROM Employee e WHERE e.modifiedDate = :modifiedDate")})
 public class Employee implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EmployeeID")
-    private Integer employeeID;
+    @Column(name = "BusinessEntityID")
+    private Integer businessEntityID;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -63,39 +70,36 @@ public class Employee implements Serializable {
     private String nationalIDNumber;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ContactID")
-    private int contactID;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 256)
     @Column(name = "LoginID")
     private String loginID;
-    @Column(name = "ManagerID")
-    private Integer managerID;
+    @Size(max = 255)
+    @Column(name = "OrganizationNode")
+    private String organizationNode;
+    @Column(name = "OrganizationLevel")
+    private Short organizationLevel;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "Title")
-    private String title;
+    @Column(name = "JobTitle")
+    private String jobTitle;
     @Basic(optional = false)
     @NotNull
     @Column(name = "BirthDate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1)
     @Column(name = "MaritalStatus")
-    private String maritalStatus;
+    private Character maritalStatus;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1)
     @Column(name = "Gender")
-    private String gender;
+    private Character gender;
     @Basic(optional = false)
     @NotNull
     @Column(name = "HireDate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date hireDate;
     @Basic(optional = false)
     @NotNull
@@ -115,28 +119,42 @@ public class Employee implements Serializable {
     private boolean currentFlag;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeID")
+    private List<Purchaseorderheader> purchaseorderheaderList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employee")
+    private Salesperson salesperson;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Employeedepartmenthistory> employeedepartmenthistoryList;
+    @OneToMany(mappedBy = "businessEntityID")
+    private List<Jobcandidate> jobcandidateList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<Document> documentList;
+    @JoinColumn(name = "BusinessEntityID", referencedColumnName = "BusinessEntityID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Person person;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Employeepayhistory> employeepayhistoryList;
 
     public Employee() {
     }
 
-    public Employee(Integer employeeID) {
-        this.employeeID = employeeID;
+    public Employee(Integer businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
-    public Employee(Integer employeeID, String nationalIDNumber, int contactID, String loginID, String title, Date birthDate, String maritalStatus, String gender, Date hireDate, boolean salariedFlag, short vacationHours, short sickLeaveHours, boolean currentFlag, byte[] rowguid, Date modifiedDate) {
-        this.employeeID = employeeID;
+    public Employee(Integer businessEntityID, String nationalIDNumber, String loginID, String jobTitle, Date birthDate, Character maritalStatus, Character gender, Date hireDate, boolean salariedFlag, short vacationHours, short sickLeaveHours, boolean currentFlag, String rowguid, Date modifiedDate) {
+        this.businessEntityID = businessEntityID;
         this.nationalIDNumber = nationalIDNumber;
-        this.contactID = contactID;
         this.loginID = loginID;
-        this.title = title;
+        this.jobTitle = jobTitle;
         this.birthDate = birthDate;
         this.maritalStatus = maritalStatus;
         this.gender = gender;
@@ -149,12 +167,12 @@ public class Employee implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    public Integer getEmployeeID() {
-        return employeeID;
+    public Integer getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setEmployeeID(Integer employeeID) {
-        this.employeeID = employeeID;
+    public void setBusinessEntityID(Integer businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public String getNationalIDNumber() {
@@ -165,14 +183,6 @@ public class Employee implements Serializable {
         this.nationalIDNumber = nationalIDNumber;
     }
 
-    public int getContactID() {
-        return contactID;
-    }
-
-    public void setContactID(int contactID) {
-        this.contactID = contactID;
-    }
-
     public String getLoginID() {
         return loginID;
     }
@@ -181,20 +191,28 @@ public class Employee implements Serializable {
         this.loginID = loginID;
     }
 
-    public Integer getManagerID() {
-        return managerID;
+    public String getOrganizationNode() {
+        return organizationNode;
     }
 
-    public void setManagerID(Integer managerID) {
-        this.managerID = managerID;
+    public void setOrganizationNode(String organizationNode) {
+        this.organizationNode = organizationNode;
     }
 
-    public String getTitle() {
-        return title;
+    public Short getOrganizationLevel() {
+        return organizationLevel;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setOrganizationLevel(Short organizationLevel) {
+        this.organizationLevel = organizationLevel;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     public Date getBirthDate() {
@@ -205,19 +223,19 @@ public class Employee implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public String getMaritalStatus() {
+    public Character getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(String maritalStatus) {
+    public void setMaritalStatus(Character maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
-    public String getGender() {
+    public Character getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Character gender) {
         this.gender = gender;
     }
 
@@ -261,11 +279,11 @@ public class Employee implements Serializable {
         this.currentFlag = currentFlag;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -277,10 +295,71 @@ public class Employee implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    @XmlTransient
+    public List<Purchaseorderheader> getPurchaseorderheaderList() {
+        return purchaseorderheaderList;
+    }
+
+    public void setPurchaseorderheaderList(List<Purchaseorderheader> purchaseorderheaderList) {
+        this.purchaseorderheaderList = purchaseorderheaderList;
+    }
+
+    public Salesperson getSalesperson() {
+        return salesperson;
+    }
+
+    public void setSalesperson(Salesperson salesperson) {
+        this.salesperson = salesperson;
+    }
+
+    @XmlTransient
+    public List<Employeedepartmenthistory> getEmployeedepartmenthistoryList() {
+        return employeedepartmenthistoryList;
+    }
+
+    public void setEmployeedepartmenthistoryList(List<Employeedepartmenthistory> employeedepartmenthistoryList) {
+        this.employeedepartmenthistoryList = employeedepartmenthistoryList;
+    }
+
+    @XmlTransient
+    public List<Jobcandidate> getJobcandidateList() {
+        return jobcandidateList;
+    }
+
+    public void setJobcandidateList(List<Jobcandidate> jobcandidateList) {
+        this.jobcandidateList = jobcandidateList;
+    }
+
+    @XmlTransient
+    public List<Document> getDocumentList() {
+        return documentList;
+    }
+
+    public void setDocumentList(List<Document> documentList) {
+        this.documentList = documentList;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @XmlTransient
+    public List<Employeepayhistory> getEmployeepayhistoryList() {
+        return employeepayhistoryList;
+    }
+
+    public void setEmployeepayhistoryList(List<Employeepayhistory> employeepayhistoryList) {
+        this.employeepayhistoryList = employeepayhistoryList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (employeeID != null ? employeeID.hashCode() : 0);
+        hash += (businessEntityID != null ? businessEntityID.hashCode() : 0);
         return hash;
     }
 
@@ -291,7 +370,7 @@ public class Employee implements Serializable {
             return false;
         }
         Employee other = (Employee) object;
-        if ((this.employeeID == null && other.employeeID != null) || (this.employeeID != null && !this.employeeID.equals(other.employeeID))) {
+        if ((this.businessEntityID == null && other.businessEntityID != null) || (this.businessEntityID != null && !this.businessEntityID.equals(other.businessEntityID))) {
             return false;
         }
         return true;
@@ -299,7 +378,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.Employee[ employeeID=" + employeeID + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.Employee[ businessEntityID=" + businessEntityID + " ]";
     }
 
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="BusinessentityaddressViewForm"
+                       renderedListener="#{businessentityaddressController.selected != null}"
+                       widgetVar="BusinessentityaddressViewDialog">
+
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_businessentityaddressPK_businessEntityID}"/>
+            <h:outputText value="#{businessentityaddressController.selected.businessentityaddressPK.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_businessentityaddressPK_addressID}"/>
+            <h:outputText value="#{businessentityaddressController.selected.businessentityaddressPK.addressID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_businessentityaddressPK_addressTypeID}"/>
+            <h:outputText value="#{businessentityaddressController.selected.businessentityaddressPK.addressTypeID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_rowguid}"/>
+            <h:outputText value="#{businessentityaddressController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_modifiedDate}"/>
+            <h:outputText value="#{businessentityaddressController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_businessentity}"/>
+            <h:outputText value="#{businessentityaddressController.selected.businessentity.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_address}"/>
+            <h:outputText value="#{businessentityaddressController.selected.address.addressID}"/>
+
+            <h:outputText value="#{messages.CreateBusinessentityaddressLabel_addresstype}"/>
+            <h:outputText value="#{businessentityaddressController.selected.addresstype.name}"/>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

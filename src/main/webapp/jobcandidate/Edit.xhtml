@@ -4,38 +4,36 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="JobcandidateEditDlg" widgetVar="JobcandidateEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditJobcandidateTitle}" closeOnEscape="true">
 
-            <h:form id="JobcandidateEditForm">
+        <coco:editpage id="JobcandidateEditForm"
+                       renderedListener="#{jobcandidateController.selected != null}"
+                       widgetVar="JobcandidateEditDialog"
+                       actionListener="#{jobcandidateController.save}"
+                       listForm="JobcandidateListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{jobcandidateController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateJobcandidateLabel_resume}" for="resume" />
+            <p:inputTextarea rows="4" id="resume" value="#{jobcandidateController.selected.resume}" title="#{messages.CreateJobcandidateTitle_resume}"  styleClass="full-width"/>
 
-                        <h:outputLabel value="#{messages.EditJobcandidateLabel_jobCandidateID}" for="jobCandidateID" />
-                        <h:outputText id="jobCandidateID" value="#{jobcandidateController.selected.jobCandidateID}" />
+            <p:outputLabel value="#{messages.CreateJobcandidateLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{jobcandidateController.selected.modifiedDate}" title="#{messages.CreateJobcandidateTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateJobcandidateRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditJobcandidateLabel_employeeID}" for="employeeID" />
-                        <p:inputText id="employeeID" value="#{jobcandidateController.selected.employeeID}" title="#{messages.EditJobcandidateTitle_employeeID}"/>
+            <p:outputLabel value="#{messages.CreateJobcandidateLabel_businessEntityID}" for="businessEntityID" />
+            <p:selectOneMenu id="businessEntityID" value="#{jobcandidateController.selected.businessEntityID}"  converter="employeeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{employeeController.items}"
+                               var="businessEntityIDItem"
+                               itemValue="#{businessEntityIDItem}"
+                               itemLabel="#{businessEntityIDItem.businessEntityID.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.EditJobcandidateLabel_resume}" for="resume" />
-                        <p:inputTextarea rows="4" cols="30" id="resume" value="#{jobcandidateController.selected.resume}" title="#{messages.EditJobcandidateTitle_resume}" />
+            </p:selectOneMenu>
 
-                        <p:outputLabel value="#{messages.EditJobcandidateLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{jobcandidateController.selected.modifiedDate}" title="#{messages.EditJobcandidateTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditJobcandidateRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{jobcandidateController.save}" value="#{messages.Save}" update="display,:JobcandidateListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JobcandidateEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('JobcandidateEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

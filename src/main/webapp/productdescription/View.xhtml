@@ -4,38 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductdescriptionViewDlg" widgetVar="ProductdescriptionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductdescriptionTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductdescriptionViewForm"
+                       renderedListener="#{productdescriptionController.selected != null}"
+                       widgetVar="ProductdescriptionViewDialog">
 
-            <h:form id="ProductdescriptionViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productdescriptionController.selected != null}">
+            <h:outputText value="#{messages.CreateProductdescriptionLabel_productDescriptionID}"/>
+            <h:outputText value="#{productdescriptionController.selected.productDescriptionID}"/>
 
-                        <h:outputText value="#{messages.ViewProductdescriptionLabel_productDescriptionID}"/>
-                        <h:outputText value="#{productdescriptionController.selected.productDescriptionID}" title="#{messages.ViewProductdescriptionTitle_productDescriptionID}"/>
+            <h:outputText value="#{messages.CreateProductdescriptionLabel_description}"/>
+            <h:outputText value="#{productdescriptionController.selected.description}"/>
 
-                        <h:outputText value="#{messages.ViewProductdescriptionLabel_description}"/>
-                        <h:outputText value="#{productdescriptionController.selected.description}" title="#{messages.ViewProductdescriptionTitle_description}"/>
+            <h:outputText value="#{messages.CreateProductdescriptionLabel_rowguid}"/>
+            <h:outputText value="#{productdescriptionController.selected.rowguid}"/>
 
-                        <h:outputText value="#{messages.ViewProductdescriptionLabel_rowguid}"/>
-                        <h:outputText value="#{productdescriptionController.selected.rowguid}" title="#{messages.ViewProductdescriptionTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateProductdescriptionLabel_modifiedDate}"/>
+            <h:outputText value="#{productdescriptionController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductdescriptionLabel_modifiedDate}"/>
-                        <h:outputText value="#{productdescriptionController.selected.modifiedDate}" title="#{messages.ViewProductdescriptionTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductdescriptionViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

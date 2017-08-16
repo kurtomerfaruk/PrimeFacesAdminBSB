@@ -4,36 +4,50 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="SalesorderheadersalesreasonCreateDlg" widgetVar="SalesorderheadersalesreasonCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSalesorderheadersalesreasonTitle}" closeOnEscape="true">
+        <coco:createpage id="SalesorderheadersalesreasonCreateForm"
+                         renderedListener="#{salesorderheadersalesreasonController.selected != null}"
+                         widgetVar="SalesorderheadersalesreasonCreateDialog"
+                         actionListener="#{salesorderheadersalesreasonController.saveNew}"
+                         listForm="SalesorderheadersalesreasonListForm">
 
-            <h:form id="SalesorderheadersalesreasonCreateForm">
 
-                <h:panelGroup id="display" rendered="#{salesorderheadersalesreasonController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesOrderID}" for="salesorderheadersalesreasonPK_salesOrderID" />
+            <p:inputText id="salesorderheadersalesreasonPK_salesOrderID" value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesOrderID}" title="#{messages.CreateSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesOrderID}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheadersalesreasonPK_salesOrderID}"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesOrderID}" for="salesorderheadersalesreasonPK_salesOrderID" />
-                        <p:inputText id="salesorderheadersalesreasonPK_salesOrderID" value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesOrderID}" title="#{messages.CreateSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesOrderID}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheadersalesreasonPK_salesOrderID}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesReasonID}" for="salesorderheadersalesreasonPK_salesReasonID" />
+            <p:inputText id="salesorderheadersalesreasonPK_salesReasonID" value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesReasonID}" title="#{messages.CreateSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesReasonID}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheadersalesreasonPK_salesReasonID}"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesReasonID}" for="salesorderheadersalesreasonPK_salesReasonID" />
-                        <p:inputText id="salesorderheadersalesreasonPK_salesReasonID" value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesReasonID}" title="#{messages.CreateSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesReasonID}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheadersalesreasonPK_salesReasonID}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salesorderheadersalesreasonController.selected.modifiedDate}" title="#{messages.CreateSalesorderheadersalesreasonTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderheadersalesreasonController.selected.modifiedDate}" title="#{messages.CreateSalesorderheadersalesreasonTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{salesorderheadersalesreasonController.saveNew}" value="#{messages.Save}" update="display,:SalesorderheadersalesreasonListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesorderheadersalesreasonCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesreason}" for="salesreason" />
+            <p:selectOneMenu id="salesreason" value="#{salesorderheadersalesreasonController.selected.salesreason}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesreason}" converter="salesreasonConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salesreasonController.items}"
+                               var="salesreasonItem"
+                               itemValue="#{salesreasonItem}"
+                               itemLabel="#{salesreasonItem.name.toString()}"
+                               />
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesorderheadersalesreasonCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheader}" for="salesorderheader" />
+            <p:selectOneMenu id="salesorderheader" value="#{salesorderheadersalesreasonController.selected.salesorderheader}" required="true" requiredMessage="#{messages.CreateSalesorderheadersalesreasonRequiredMessage_salesorderheader}" converter="salesorderheaderConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salesorderheaderController.items}"
+                               var="salesorderheaderItem"
+                               itemValue="#{salesorderheaderItem}"
+                               itemLabel="#{salesorderheaderItem.salesOrderID.toString()}"
+                               />
 
-        </p:dialog>
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

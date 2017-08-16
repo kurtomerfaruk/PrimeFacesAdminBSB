@@ -11,12 +11,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @FacesConverter(value = "employeedepartmenthistoryConverter")
 public class EmployeedepartmenthistoryConverter implements Converter {
 
@@ -38,7 +32,7 @@ public class EmployeedepartmenthistoryConverter implements Converter {
         com.kurtomerfaruk.primeadminbsb.models.EmployeedepartmenthistoryPK key;
         String values[] = value.split(SEPARATOR_ESCAPED);
         key = new com.kurtomerfaruk.primeadminbsb.models.EmployeedepartmenthistoryPK();
-        key.setEmployeeID(Integer.parseInt(values[0]));
+        key.setBusinessEntityID(Integer.parseInt(values[0]));
         key.setDepartmentID(Short.parseShort(values[1]));
         key.setShiftID(Short.parseShort(values[2]));
         key.setStartDate(java.sql.Date.valueOf(values[3]));
@@ -47,7 +41,7 @@ public class EmployeedepartmenthistoryConverter implements Converter {
 
     String getStringKey(com.kurtomerfaruk.primeadminbsb.models.EmployeedepartmenthistoryPK value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value.getEmployeeID());
+        sb.append(value.getBusinessEntityID());
         sb.append(SEPARATOR);
         sb.append(value.getDepartmentID());
         sb.append(SEPARATOR);

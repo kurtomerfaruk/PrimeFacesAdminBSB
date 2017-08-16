@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="TransactionhistoryarchiveListForm" class="form-height">
+
+        <p:contextMenu id="TransactionhistoryarchiveDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('TransactionhistoryarchiveListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('TransactionhistoryarchiveListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('TransactionhistoryarchiveListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('TransactionhistoryarchiveListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{transactionhistoryarchiveController.lazyItems}"
+                        rowKey="#{item.transactionID}"
+                        selection="#{transactionhistoryarchiveController.selected}"
+                        filtered="#{transactionhistoryarchiveController.filtered}"
+                        rowselect=":TransactionhistoryarchiveListForm:datalist:datalist:createButton,:TransactionhistoryarchiveListForm:datalist:datalist:viewButton,:TransactionhistoryarchiveListForm:datalist:datalist:editButton,:TransactionhistoryarchiveListForm:datalist:datalist:deleteButton,:TransactionhistoryarchiveListForm:TransactionhistoryarchiveDataTableContextMenu"
+                        rowDblselect="document.getElementById('TransactionhistoryarchiveListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":TransactionhistoryarchiveListForm:datalist:datalist:createButton :TransactionhistoryarchiveListForm:datalist:datalist:viewButton :TransactionhistoryarchiveListForm:datalist:datalist:editButton :TransactionhistoryarchiveListForm:datalist:datalist:deleteButton"
+                        selectListener="#{transactionhistoryarchiveController.resetParents}">
+
+
+
+
+            <f:facet name="header">
+                #{messages.ListTransactionhistoryarchiveTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.transactionID}" filterBy="#{item.transactionID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_transactionID}"/>
+                </f:facet>
+                <h:outputText value="#{item.transactionID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.productID}" filterBy="#{item.productID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_productID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.referenceOrderID}" filterBy="#{item.referenceOrderID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_referenceOrderID}"/>
+                </f:facet>
+                <h:outputText value="#{item.referenceOrderID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.referenceOrderLineID}" filterBy="#{item.referenceOrderLineID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_referenceOrderLineID}"/>
+                </f:facet>
+                <h:outputText value="#{item.referenceOrderLineID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.transactionDate}" filterBy="#{item.transactionDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_transactionDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.transactionDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.transactionType}" filterBy="#{item.transactionType}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_transactionType}"/>
+                </f:facet>
+                <h:outputText value="#{item.transactionType}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.quantity}" filterBy="#{item.quantity}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_quantity}"/>
+                </f:facet>
+                <h:outputText value="#{item.quantity}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.actualCost}" filterBy="#{item.actualCost}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_actualCost}"/>
+                </f:facet>
+                <h:outputText value="#{item.actualCost}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListTransactionhistoryarchiveTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{transactionhistoryarchiveController.prepareCreate}" update=":TransactionhistoryarchiveCreateForm:TransactionhistoryarchiveCreateForm" oncomplete="PF('TransactionhistoryarchiveCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":TransactionhistoryarchiveViewForm:TransactionhistoryarchiveViewForm" oncomplete="PF('TransactionhistoryarchiveViewDialog').show()" disabled="#{empty transactionhistoryarchiveController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":TransactionhistoryarchiveEditForm:TransactionhistoryarchiveEditForm" oncomplete="PF('TransactionhistoryarchiveEditDialog').show()" disabled="#{empty transactionhistoryarchiveController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{transactionhistoryarchiveController.delete}" update=":growl,datalist" disabled="#{empty transactionhistoryarchiveController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

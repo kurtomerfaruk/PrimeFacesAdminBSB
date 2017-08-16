@@ -4,45 +4,59 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="SalesterritoryhistoryCreateDlg" widgetVar="SalesterritoryhistoryCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateSalesterritoryhistoryTitle}" closeOnEscape="true">
+        <coco:createpage id="SalesterritoryhistoryCreateForm"
+                         renderedListener="#{salesterritoryhistoryController.selected != null}"
+                         widgetVar="SalesterritoryhistoryCreateDialog"
+                         actionListener="#{salesterritoryhistoryController.saveNew}"
+                         listForm="SalesterritoryhistoryListForm">
 
-            <h:form id="SalesterritoryhistoryCreateForm">
 
-                <h:panelGroup id="display" rendered="#{salesterritoryhistoryController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritoryhistoryPK_businessEntityID}" for="salesterritoryhistoryPK_businessEntityID" />
+            <p:inputText id="salesterritoryhistoryPK_businessEntityID" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.businessEntityID}" title="#{messages.CreateSalesterritoryhistoryTitle_salesterritoryhistoryPK_businessEntityID}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritoryhistoryPK_businessEntityID}"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritoryhistoryPK_salesPersonID}" for="salesterritoryhistoryPK_salesPersonID" />
-                        <p:inputText id="salesterritoryhistoryPK_salesPersonID" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.salesPersonID}" title="#{messages.CreateSalesterritoryhistoryTitle_salesterritoryhistoryPK_salesPersonID}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritoryhistoryPK_salesPersonID}"/>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritoryhistoryPK_territoryID}" for="salesterritoryhistoryPK_territoryID" />
+            <p:inputText id="salesterritoryhistoryPK_territoryID" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.territoryID}" title="#{messages.CreateSalesterritoryhistoryTitle_salesterritoryhistoryPK_territoryID}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritoryhistoryPK_territoryID}"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritoryhistoryPK_territoryID}" for="salesterritoryhistoryPK_territoryID" />
-                        <p:inputText id="salesterritoryhistoryPK_territoryID" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.territoryID}" title="#{messages.CreateSalesterritoryhistoryTitle_salesterritoryhistoryPK_territoryID}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritoryhistoryPK_territoryID}"/>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritoryhistoryPK_startDate}" for="salesterritoryhistoryPK_startDate" />
+            <p:calendar id="salesterritoryhistoryPK_startDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.startDate}" title="#{messages.CreateSalesterritoryhistoryTitle_salesterritoryhistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritoryhistoryPK_startDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritoryhistoryPK_startDate}" for="salesterritoryhistoryPK_startDate" />
-                        <p:calendar id="salesterritoryhistoryPK_startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesterritoryhistoryController.selected.salesterritoryhistoryPK.startDate}" title="#{messages.CreateSalesterritoryhistoryTitle_salesterritoryhistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritoryhistoryPK_startDate}" showOn="button"/>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_endDate}" for="endDate" />
+            <p:calendar id="endDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salesterritoryhistoryController.selected.endDate}" title="#{messages.CreateSalesterritoryhistoryTitle_endDate}"  mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_endDate}" for="endDate" />
-                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesterritoryhistoryController.selected.endDate}" title="#{messages.CreateSalesterritoryhistoryTitle_endDate}"  showOn="button"/>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{salesterritoryhistoryController.selected.rowguid}" title="#{messages.CreateSalesterritoryhistoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesterritoryhistoryController.selected.rowguid}" title="#{messages.CreateSalesterritoryhistoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salesterritoryhistoryController.selected.modifiedDate}" title="#{messages.CreateSalesterritoryhistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesterritoryhistoryController.selected.modifiedDate}" title="#{messages.CreateSalesterritoryhistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{salesterritoryhistoryController.saveNew}" value="#{messages.Save}" update="display,:SalesterritoryhistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalesterritoryhistoryCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesterritory}" for="salesterritory" />
+            <p:selectOneMenu id="salesterritory" value="#{salesterritoryhistoryController.selected.salesterritory}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesterritory}" converter="salesterritoryConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salesterritoryController.items}"
+                               var="salesterritoryItem"
+                               itemValue="#{salesterritoryItem}"
+                               itemLabel="#{salesterritoryItem.name.toString()}"
+                               />
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalesterritoryhistoryCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateSalesterritoryhistoryLabel_salesperson}" for="salesperson" />
+            <p:selectOneMenu id="salesperson" value="#{salesterritoryhistoryController.selected.salesperson}" required="true" requiredMessage="#{messages.CreateSalesterritoryhistoryRequiredMessage_salesperson}" converter="salespersonConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salespersonController.items}"
+                               var="salespersonItem"
+                               itemValue="#{salespersonItem}"
+                               itemLabel="#{salespersonItem.businessEntityID.toString()}"
+                               />
 
-        </p:dialog>
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

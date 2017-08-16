@@ -7,15 +7,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="ContactListForm" class="form-width">
+    <h:form id="ContactListForm" class="form-height">
 
         <p:contextMenu id="ContactDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ContactListForm:createButton').click();" icon="ui-icon-plus"/>
-            <p:menuitem value="#{messages.View}" onclick="document.getElementById('ContactListForm:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ContactListForm:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ContactListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('ContactListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('ContactListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ContactListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ContactListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
         </p:contextMenu>
-
         <coco:datatable id="datalist"
                         value="#{contactController.lazyItems}"
                         rowKey="#{item.contactID}"
@@ -24,17 +23,22 @@
                         rowselect=":ContactListForm:datalist:datalist:createButton,:ContactListForm:datalist:datalist:viewButton,:ContactListForm:datalist:datalist:editButton,:ContactListForm:datalist:datalist:deleteButton,:ContactListForm:ContactDataTableContextMenu"
                         rowDblselect="document.getElementById('ContactListForm:datalist:datalist:editButton').click()"
                         contextMenu=":ContactListForm:datalist:datalist:createButton :ContactListForm:datalist:datalist:viewButton :ContactListForm:datalist:datalist:editButton :ContactListForm:datalist:datalist:deleteButton"
-                        selectListener="#{contactController.resetParents()}">
+                        selectListener="#{contactController.resetParents}">
+
+
+
 
             <f:facet name="header">
-                <h:outputText value="#{messages.ListContactTitle}"/>   
+                #{messages.ListContactTitle}
             </f:facet>
 
             <p:column sortBy="#{item.contactID}" filterBy="#{item.contactID}">
                 <f:facet name="header">
                     <h:outputText value="#{messages.ListContactTitle_contactID}"/>
                 </f:facet>
-                <h:outputText value="#{item.contactID}"/>
+                <h:outputText value="#{item.contactID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
             </p:column>
 
 
@@ -77,38 +81,38 @@
                 <h:outputText value="#{item.lastName}"/>
             </p:column>
 
-            <!--
-                                <p:column sortBy="#{item.suffix}" filterBy="#{item.suffix}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{messages.ListContactTitle_suffix}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.suffix}"/>
-                                </p:column>
-            -->
-            <!--
-                                <p:column sortBy="#{item.emailAddress}" filterBy="#{item.emailAddress}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{messages.ListContactTitle_emailAddress}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.emailAddress}"/>
-                                </p:column>
-            -->
-            <!--
-                                <p:column sortBy="#{item.emailPromotion}" filterBy="#{item.emailPromotion}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{messages.ListContactTitle_emailPromotion}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.emailPromotion}"/>
-                                </p:column>
-            -->
-            <!--
-                                <p:column sortBy="#{item.phone}" filterBy="#{item.phone}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{messages.ListContactTitle_phone}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.phone}"/>
-                                </p:column>
-            -->
+
+            <p:column sortBy="#{item.suffix}" filterBy="#{item.suffix}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListContactTitle_suffix}"/>
+                </f:facet>
+                <h:outputText value="#{item.suffix}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.emailAddress}" filterBy="#{item.emailAddress}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListContactTitle_emailAddress}"/>
+                </f:facet>
+                <h:outputText value="#{item.emailAddress}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.emailPromotion}" filterBy="#{item.emailPromotion}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListContactTitle_emailPromotion}"/>
+                </f:facet>
+                <h:outputText value="#{item.emailPromotion}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.phone}" filterBy="#{item.phone}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListContactTitle_phone}"/>
+                </f:facet>
+                <h:outputText value="#{item.phone}"/>
+            </p:column>
+
             <!--
                                 <p:column sortBy="#{item.passwordHash}" filterBy="#{item.passwordHash}">
                                     <f:facet name="header">
@@ -146,19 +150,23 @@
                                     <f:facet name="header">
                                         <h:outputText value="#{messages.ListContactTitle_modifiedDate}"/>
                                     </f:facet>
+                                    <f:facet name="filter">
+                                        <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                                            <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                                        </p:calendar>
+                                    </f:facet>
                                     <h:outputText value="#{item.modifiedDate}">
-                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        <f:convertDateTime pattern="#{messages.dateFormat}" />
                                     </h:outputText>
                                 </p:column>
             -->
-
             <f:facet name="{buttons}">
                 <div class="footer-left">
-                    <p:commandButton id="createButton" class="bg-blue" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{contactController.prepareCreate}" update=":ContactCreateForm:ContactCreateForm" oncomplete="PF('ContactCreateDialog').show()"/>
-                    <p:commandButton id="viewButton"   class="bg-teal" icon="ui-icon-search" value="#{messages.View}" update=":ContactViewForm:ContactViewForm" oncomplete="PF('ContactViewDialog').show()" disabled="#{empty contactController.selected}"/>
-                    <p:commandButton id="editButton"   class="bg-green" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ContactEditForm:ContactEditForm" oncomplete="PF('ContactEditDialog').show()" disabled="#{empty contactController.selected}"/>
-                    <p:commandButton id="deleteButton" class="bg-red" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{contactController.delete}" update=":growl,datalist" disabled="#{empty contactController.selected}">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{contactController.prepareCreate}" update=":ContactCreateForm:ContactCreateForm" oncomplete="PF('ContactCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":ContactViewForm:ContactViewForm" oncomplete="PF('ContactViewDialog').show()" disabled="#{empty contactController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":ContactEditForm:ContactEditForm" oncomplete="PF('ContactEditDialog').show()" disabled="#{empty contactController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{contactController.delete}" update=":growl,datalist" disabled="#{empty contactController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
                     </p:commandButton>
                 </div>
             </f:facet>
@@ -166,7 +174,9 @@
         </coco:datatable>
 
 
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

@@ -4,35 +4,36 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="CountryregioncurrencyViewDlg" widgetVar="CountryregioncurrencyViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewCountryregioncurrencyTitle}" closeOnEscape="true">
+        <coco:viewpage id="CountryregioncurrencyViewForm"
+                       renderedListener="#{countryregioncurrencyController.selected != null}"
+                       widgetVar="CountryregioncurrencyViewDialog">
 
-            <h:form id="CountryregioncurrencyViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{countryregioncurrencyController.selected != null}">
+            <h:outputText value="#{messages.CreateCountryregioncurrencyLabel_countryregioncurrencyPK_countryRegionCode}"/>
+            <h:outputText value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.countryRegionCode}"/>
 
-                        <h:outputText value="#{messages.ViewCountryregioncurrencyLabel_countryregioncurrencyPK_countryRegionCode}"/>
-                        <h:outputText value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.countryRegionCode}" title="#{messages.ViewCountryregioncurrencyTitle_countryregioncurrencyPK_countryRegionCode}"/>
+            <h:outputText value="#{messages.CreateCountryregioncurrencyLabel_countryregioncurrencyPK_currencyCode}"/>
+            <h:outputText value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.currencyCode}"/>
 
-                        <h:outputText value="#{messages.ViewCountryregioncurrencyLabel_countryregioncurrencyPK_currencyCode}"/>
-                        <h:outputText value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.currencyCode}" title="#{messages.ViewCountryregioncurrencyTitle_countryregioncurrencyPK_currencyCode}"/>
+            <h:outputText value="#{messages.CreateCountryregioncurrencyLabel_modifiedDate}"/>
+            <h:outputText value="#{countryregioncurrencyController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewCountryregioncurrencyLabel_modifiedDate}"/>
-                        <h:outputText value="#{countryregioncurrencyController.selected.modifiedDate}" title="#{messages.ViewCountryregioncurrencyTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('CountryregioncurrencyViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateCountryregioncurrencyLabel_currency}"/>
+            <h:outputText value="#{countryregioncurrencyController.selected.currency.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateCountryregioncurrencyLabel_countryregion}"/>
+            <h:outputText value="#{countryregioncurrencyController.selected.countryregion.name}"/>
 
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

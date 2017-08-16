@@ -4,39 +4,64 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductmodelproductdescriptioncultureCreateDlg" widgetVar="ProductmodelproductdescriptioncultureCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductmodelproductdescriptioncultureTitle}" closeOnEscape="true">
+        <coco:createpage id="ProductmodelproductdescriptioncultureCreateForm"
+                         renderedListener="#{productmodelproductdescriptioncultureController.selected != null}"
+                         widgetVar="ProductmodelproductdescriptioncultureCreateDialog"
+                         actionListener="#{productmodelproductdescriptioncultureController.saveNew}"
+                         listForm="ProductmodelproductdescriptioncultureListForm">
 
-            <h:form id="ProductmodelproductdescriptioncultureCreateForm">
 
-                <h:panelGroup id="display" rendered="#{productmodelproductdescriptioncultureController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productModelID}" for="productmodelproductdescriptionculturePK_productModelID" />
+            <p:inputText id="productmodelproductdescriptionculturePK_productModelID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productModelID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productModelID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_productModelID}"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productModelID}" for="productmodelproductdescriptionculturePK_productModelID" />
-                        <p:inputText id="productmodelproductdescriptionculturePK_productModelID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productModelID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productModelID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_productModelID}"/>
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productDescriptionID}" for="productmodelproductdescriptionculturePK_productDescriptionID" />
+            <p:inputText id="productmodelproductdescriptionculturePK_productDescriptionID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productDescriptionID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productDescriptionID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_productDescriptionID}"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productDescriptionID}" for="productmodelproductdescriptionculturePK_productDescriptionID" />
-                        <p:inputText id="productmodelproductdescriptionculturePK_productDescriptionID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productDescriptionID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productDescriptionID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_cultureID}" for="productmodelproductdescriptionculturePK_cultureID" />
+            <p:inputText id="productmodelproductdescriptionculturePK_cultureID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.cultureID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_cultureID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_cultureID}" size="6" maxlength="6"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_cultureID}" for="productmodelproductdescriptionculturePK_cultureID" />
-                        <p:inputText id="productmodelproductdescriptionculturePK_cultureID" value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.cultureID}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_cultureID}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodelproductdescriptionculturePK_cultureID}" size="6" maxlength="6"/>
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productmodelproductdescriptioncultureController.selected.modifiedDate}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productmodelproductdescriptioncultureController.selected.modifiedDate}" title="#{messages.CreateProductmodelproductdescriptioncultureTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productmodelproductdescriptioncultureController.saveNew}" value="#{messages.Save}" update="display,:ProductmodelproductdescriptioncultureListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductmodelproductdescriptioncultureCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodel}" for="productmodel" />
+            <p:selectOneMenu id="productmodel" value="#{productmodelproductdescriptioncultureController.selected.productmodel}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodel}" converter="productmodelConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productmodelController.items}"
+                               var="productmodelItem"
+                               itemValue="#{productmodelItem}"
+                               itemLabel="#{productmodelItem.name.toString()}"
+                               />
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductmodelproductdescriptioncultureCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productdescription}" for="productdescription" />
+            <p:selectOneMenu id="productdescription" value="#{productmodelproductdescriptioncultureController.selected.productdescription}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productdescription}" converter="productdescriptionConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productdescriptionController.items}"
+                               var="productdescriptionItem"
+                               itemValue="#{productdescriptionItem}"
+                               itemLabel="#{productdescriptionItem.productDescriptionID.toString()}"
+                               />
 
-        </p:dialog>
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_culture}" for="culture" />
+            <p:selectOneMenu id="culture" value="#{productmodelproductdescriptioncultureController.selected.culture}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_culture}" converter="cultureConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{cultureController.items}"
+                               var="cultureItem"
+                               itemValue="#{cultureItem}"
+                               itemLabel="#{cultureItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

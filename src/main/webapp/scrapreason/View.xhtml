@@ -4,35 +4,30 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ScrapreasonViewDlg" widgetVar="ScrapreasonViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewScrapreasonTitle}" closeOnEscape="true">
+        <coco:viewpage id="ScrapreasonViewForm"
+                       renderedListener="#{scrapreasonController.selected != null}"
+                       widgetVar="ScrapreasonViewDialog">
 
-            <h:form id="ScrapreasonViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{scrapreasonController.selected != null}">
+            <h:outputText value="#{messages.CreateScrapreasonLabel_scrapReasonID}"/>
+            <h:outputText value="#{scrapreasonController.selected.scrapReasonID}"/>
 
-                        <h:outputText value="#{messages.ViewScrapreasonLabel_scrapReasonID}"/>
-                        <h:outputText value="#{scrapreasonController.selected.scrapReasonID}" title="#{messages.ViewScrapreasonTitle_scrapReasonID}"/>
+            <h:outputText value="#{messages.CreateScrapreasonLabel_name}"/>
+            <h:outputText value="#{scrapreasonController.selected.name}"/>
 
-                        <h:outputText value="#{messages.ViewScrapreasonLabel_name}"/>
-                        <h:outputText value="#{scrapreasonController.selected.name}" title="#{messages.ViewScrapreasonTitle_name}"/>
+            <h:outputText value="#{messages.CreateScrapreasonLabel_modifiedDate}"/>
+            <h:outputText value="#{scrapreasonController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewScrapreasonLabel_modifiedDate}"/>
-                        <h:outputText value="#{scrapreasonController.selected.modifiedDate}" title="#{messages.ViewScrapreasonTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ScrapreasonViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

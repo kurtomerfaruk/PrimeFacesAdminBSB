@@ -7,11 +7,15 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,9 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productcosthistory")
@@ -37,22 +42,25 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Productcosthistory.findByStandardCost", query = "SELECT p FROM Productcosthistory p WHERE p.standardCost = :standardCost"),
     @NamedQuery(name = "Productcosthistory.findByModifiedDate", query = "SELECT p FROM Productcosthistory p WHERE p.modifiedDate = :modifiedDate")})
 public class Productcosthistory implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductcosthistoryPK productcosthistoryPK;
     @Column(name = "EndDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "StandardCost")
-    private double standardCost;
+    private BigDecimal standardCost;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Product product;
 
     public Productcosthistory() {
     }
@@ -61,7 +69,7 @@ public class Productcosthistory implements Serializable {
         this.productcosthistoryPK = productcosthistoryPK;
     }
 
-    public Productcosthistory(ProductcosthistoryPK productcosthistoryPK, double standardCost, Date modifiedDate) {
+    public Productcosthistory(ProductcosthistoryPK productcosthistoryPK, BigDecimal standardCost, Date modifiedDate) {
         this.productcosthistoryPK = productcosthistoryPK;
         this.standardCost = standardCost;
         this.modifiedDate = modifiedDate;
@@ -87,11 +95,11 @@ public class Productcosthistory implements Serializable {
         this.endDate = endDate;
     }
 
-    public double getStandardCost() {
+    public BigDecimal getStandardCost() {
         return standardCost;
     }
 
-    public void setStandardCost(double standardCost) {
+    public void setStandardCost(BigDecimal standardCost) {
         this.standardCost = standardCost;
     }
 
@@ -101,6 +109,14 @@ public class Productcosthistory implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override

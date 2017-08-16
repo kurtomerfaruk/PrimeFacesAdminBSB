@@ -21,15 +21,10 @@ import javax.validation.ConstraintViolationException;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com Created on date 27.01.2017 23:11:05
- */
-/**
- * Represents an abstract shell of to be used as JSF Controller to be used in
- * AJAX-enabled applications. No outcomes will be generated from its methods
- * since handling is designed to be done inside one page.
- *
- * @param <T> the concrete Entity type of the Controller bean to be created
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 public abstract class AbstractController<T> implements Serializable {
     

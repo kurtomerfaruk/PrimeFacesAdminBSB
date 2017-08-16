@@ -4,35 +4,36 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="SalesorderheadersalesreasonViewDlg" widgetVar="SalesorderheadersalesreasonViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesorderheadersalesreasonTitle}" closeOnEscape="true">
+        <coco:viewpage id="SalesorderheadersalesreasonViewForm"
+                       renderedListener="#{salesorderheadersalesreasonController.selected != null}"
+                       widgetVar="SalesorderheadersalesreasonViewDialog">
 
-            <h:form id="SalesorderheadersalesreasonViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salesorderheadersalesreasonController.selected != null}">
+            <h:outputText value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesOrderID}"/>
+            <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesOrderID}"/>
 
-                        <h:outputText value="#{messages.ViewSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesOrderID}"/>
-                        <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesOrderID}" title="#{messages.ViewSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesOrderID}"/>
+            <h:outputText value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesReasonID}"/>
+            <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesReasonID}"/>
 
-                        <h:outputText value="#{messages.ViewSalesorderheadersalesreasonLabel_salesorderheadersalesreasonPK_salesReasonID}"/>
-                        <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheadersalesreasonPK.salesReasonID}" title="#{messages.ViewSalesorderheadersalesreasonTitle_salesorderheadersalesreasonPK_salesReasonID}"/>
+            <h:outputText value="#{messages.CreateSalesorderheadersalesreasonLabel_modifiedDate}"/>
+            <h:outputText value="#{salesorderheadersalesreasonController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewSalesorderheadersalesreasonLabel_modifiedDate}"/>
-                        <h:outputText value="#{salesorderheadersalesreasonController.selected.modifiedDate}" title="#{messages.ViewSalesorderheadersalesreasonTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesorderheadersalesreasonViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateSalesorderheadersalesreasonLabel_salesreason}"/>
+            <h:outputText value="#{salesorderheadersalesreasonController.selected.salesreason.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateSalesorderheadersalesreasonLabel_salesorderheader}"/>
+            <h:outputText value="#{salesorderheadersalesreasonController.selected.salesorderheader.salesOrderID}"/>
 
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

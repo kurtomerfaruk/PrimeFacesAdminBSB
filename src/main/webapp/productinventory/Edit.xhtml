@@ -4,48 +4,62 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="ProductinventoryEditDlg" widgetVar="ProductinventoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductinventoryTitle}" closeOnEscape="true">
 
-            <h:form id="ProductinventoryEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productinventoryController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditProductinventoryLabel_productinventoryPK_productID}" for="productinventoryPK_productID" />
-                        <h:outputText id="productinventoryPK_productID" value="#{productinventoryController.selected.productinventoryPK.productID}" />
+        <coco:editpage id="ProductinventoryEditForm"
+                       renderedListener="#{productinventoryController.selected != null}"
+                       widgetVar="ProductinventoryEditDialog"
+                       actionListener="#{productinventoryController.save}"
+                       listForm="ProductinventoryListForm">
 
 
-                        <h:outputLabel value="#{messages.EditProductinventoryLabel_productinventoryPK_locationID}" for="productinventoryPK_locationID" />
-                        <h:outputText id="productinventoryPK_locationID" value="#{productinventoryController.selected.productinventoryPK.locationID}" />
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_productinventoryPK_productID}" for="productinventoryPK_productID" />
+            <p:inputText id="productinventoryPK_productID" value="#{productinventoryController.selected.productinventoryPK.productID}" title="#{messages.CreateProductinventoryTitle_productinventoryPK_productID}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_productinventoryPK_productID}"/>
 
-                        <p:outputLabel value="#{messages.EditProductinventoryLabel_shelf}" for="shelf" />
-                        <p:inputText id="shelf" value="#{productinventoryController.selected.shelf}" title="#{messages.EditProductinventoryTitle_shelf}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_shelf}" size="10" maxlength="10"/>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_productinventoryPK_locationID}" for="productinventoryPK_locationID" />
+            <p:inputText id="productinventoryPK_locationID" value="#{productinventoryController.selected.productinventoryPK.locationID}" title="#{messages.CreateProductinventoryTitle_productinventoryPK_locationID}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_productinventoryPK_locationID}"/>
 
-                        <p:outputLabel value="#{messages.EditProductinventoryLabel_bin}" for="bin" />
-                        <p:inputText id="bin" value="#{productinventoryController.selected.bin}" title="#{messages.EditProductinventoryTitle_bin}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_bin}"/>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_shelf}" for="shelf" />
+            <p:inputText id="shelf" value="#{productinventoryController.selected.shelf}" title="#{messages.CreateProductinventoryTitle_shelf}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_shelf}" size="10" maxlength="10"/>
 
-                        <p:outputLabel value="#{messages.EditProductinventoryLabel_quantity}" for="quantity" />
-                        <p:inputText id="quantity" value="#{productinventoryController.selected.quantity}" title="#{messages.EditProductinventoryTitle_quantity}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_quantity}"/>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_bin}" for="bin" />
+            <p:inputText id="bin" value="#{productinventoryController.selected.bin}" title="#{messages.CreateProductinventoryTitle_bin}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_bin}"/>
 
-                        <p:outputLabel value="#{messages.EditProductinventoryLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productinventoryController.selected.rowguid}" title="#{messages.EditProductinventoryTitle_rowguid}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_quantity}" for="quantity" />
+            <p:inputText id="quantity" value="#{productinventoryController.selected.quantity}" title="#{messages.CreateProductinventoryTitle_quantity}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_quantity}"/>
 
-                        <p:outputLabel value="#{messages.EditProductinventoryLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productinventoryController.selected.modifiedDate}" title="#{messages.EditProductinventoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductinventoryRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productinventoryController.save}" value="#{messages.Save}" update="display,:ProductinventoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductinventoryEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductinventoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{productinventoryController.selected.rowguid}" title="#{messages.CreateProductinventoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productinventoryController.selected.modifiedDate}" title="#{messages.CreateProductinventoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_product}" for="product" />
+            <p:selectOneMenu id="product" value="#{productinventoryController.selected.product}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_product}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productItem"
+                               itemValue="#{productItem}"
+                               itemLabel="#{productItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateProductinventoryLabel_location}" for="location" />
+            <p:selectOneMenu id="location" value="#{productinventoryController.selected.location}" required="true" requiredMessage="#{messages.CreateProductinventoryRequiredMessage_location}" converter="locationConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{locationController.items}"
+                               var="locationItem"
+                               itemValue="#{locationItem}"
+                               itemLabel="#{locationItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

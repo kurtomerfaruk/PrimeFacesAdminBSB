@@ -11,12 +11,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @FacesConverter(value = "locationConverter")
 public class LocationConverter implements Converter {
 
@@ -31,13 +25,13 @@ public class LocationConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    java.lang.Integer getKey(String value) {
-        java.lang.Integer key;
-        key = Integer.valueOf(value);
+    java.lang.Short getKey(String value) {
+        java.lang.Short key;
+        key = Short.valueOf(value);
         return key;
     }
 
-    String getStringKey(java.lang.Integer value) {
+    String getStringKey(java.lang.Short value) {
         StringBuffer sb = new StringBuffer();
         sb.append(value);
         return sb.toString();

@@ -8,24 +8,30 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "currency")
@@ -36,7 +42,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Currency.findByName", query = "SELECT c FROM Currency c WHERE c.name = :name"),
     @NamedQuery(name = "Currency.findByModifiedDate", query = "SELECT c FROM Currency c WHERE c.modifiedDate = :modifiedDate")})
 public class Currency implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,7 +51,7 @@ public class Currency implements Serializable {
     private String currencyCode;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
@@ -54,6 +59,12 @@ public class Currency implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "currency")
+    private List<Countryregioncurrency> countryregioncurrencyList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "toCurrencyCode")
+    private List<Currencyrate> currencyrateList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fromCurrencyCode")
+    private List<Currencyrate> currencyrateList1;
 
     public Currency() {
     }
@@ -90,6 +101,33 @@ public class Currency implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Countryregioncurrency> getCountryregioncurrencyList() {
+        return countryregioncurrencyList;
+    }
+
+    public void setCountryregioncurrencyList(List<Countryregioncurrency> countryregioncurrencyList) {
+        this.countryregioncurrencyList = countryregioncurrencyList;
+    }
+
+    @XmlTransient
+    public List<Currencyrate> getCurrencyrateList() {
+        return currencyrateList;
+    }
+
+    public void setCurrencyrateList(List<Currencyrate> currencyrateList) {
+        this.currencyrateList = currencyrateList;
+    }
+
+    @XmlTransient
+    public List<Currencyrate> getCurrencyrateList1() {
+        return currencyrateList1;
+    }
+
+    public void setCurrencyrateList1(List<Currencyrate> currencyrateList1) {
+        this.currencyrateList1 = currencyrateList1;
     }
 
     @Override

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:createpage id="PurchaseorderheaderCreateForm"
+                         renderedListener="#{purchaseorderheaderController.selected != null}"
+                         widgetVar="PurchaseorderheaderCreateDialog"
+                         actionListener="#{purchaseorderheaderController.saveNew}"
+                         listForm="PurchaseorderheaderListForm">
+
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_revisionNumber}" for="revisionNumber" />
+            <p:inputText id="revisionNumber" value="#{purchaseorderheaderController.selected.revisionNumber}" title="#{messages.CreatePurchaseorderheaderTitle_revisionNumber}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_revisionNumber}"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_status}" for="status" />
+            <p:inputText id="status" value="#{purchaseorderheaderController.selected.status}" title="#{messages.CreatePurchaseorderheaderTitle_status}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_status}"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_orderDate}" for="orderDate" />
+            <p:calendar id="orderDate" locale="tr" pattern="#{messages.dateFormat}" value="#{purchaseorderheaderController.selected.orderDate}" title="#{messages.CreatePurchaseorderheaderTitle_orderDate}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_orderDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_shipDate}" for="shipDate" />
+            <p:calendar id="shipDate" locale="tr" pattern="#{messages.dateFormat}" value="#{purchaseorderheaderController.selected.shipDate}" title="#{messages.CreatePurchaseorderheaderTitle_shipDate}"  mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_subTotal}" for="subTotal" />
+            <p:inputText id="subTotal" value="#{purchaseorderheaderController.selected.subTotal}" title="#{messages.CreatePurchaseorderheaderTitle_subTotal}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_subTotal}"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_taxAmt}" for="taxAmt" />
+            <p:inputText id="taxAmt" value="#{purchaseorderheaderController.selected.taxAmt}" title="#{messages.CreatePurchaseorderheaderTitle_taxAmt}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_taxAmt}"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_freight}" for="freight" />
+            <p:inputText id="freight" value="#{purchaseorderheaderController.selected.freight}" title="#{messages.CreatePurchaseorderheaderTitle_freight}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_freight}"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_totalDue}" for="totalDue" />
+            <p:inputText id="totalDue" value="#{purchaseorderheaderController.selected.totalDue}" title="#{messages.CreatePurchaseorderheaderTitle_totalDue}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_totalDue}"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{purchaseorderheaderController.selected.modifiedDate}" title="#{messages.CreatePurchaseorderheaderTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_vendorID}" for="vendorID" />
+            <p:selectOneMenu id="vendorID" value="#{purchaseorderheaderController.selected.vendorID}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_vendorID}" converter="vendorConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{vendorController.items}"
+                               var="vendorIDItem"
+                               itemValue="#{vendorIDItem}"
+                               itemLabel="#{vendorIDItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_shipMethodID}" for="shipMethodID" />
+            <p:selectOneMenu id="shipMethodID" value="#{purchaseorderheaderController.selected.shipMethodID}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_shipMethodID}" converter="shipmethodConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{shipmethodController.items}"
+                               var="shipMethodIDItem"
+                               itemValue="#{shipMethodIDItem}"
+                               itemLabel="#{shipMethodIDItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_employeeID}" for="employeeID" />
+            <p:selectOneMenu id="employeeID" value="#{purchaseorderheaderController.selected.employeeID}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_employeeID}" converter="employeeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{employeeController.items}"
+                               var="employeeIDItem"
+                               itemValue="#{employeeIDItem}"
+                               itemLabel="#{employeeIDItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
+
+    </ui:composition>
+
+</html>

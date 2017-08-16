@@ -4,38 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="AddresstypeViewDlg" widgetVar="AddresstypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewAddresstypeTitle}" closeOnEscape="true">
+        <coco:viewpage id="AddresstypeViewForm"
+                       renderedListener="#{addresstypeController.selected != null}"
+                       widgetVar="AddresstypeViewDialog">
 
-            <h:form id="AddresstypeViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{addresstypeController.selected != null}">
+            <h:outputText value="#{messages.CreateAddresstypeLabel_addressTypeID}"/>
+            <h:outputText value="#{addresstypeController.selected.addressTypeID}"/>
 
-                        <h:outputText value="#{messages.ViewAddresstypeLabel_addressTypeID}"/>
-                        <h:outputText value="#{addresstypeController.selected.addressTypeID}" title="#{messages.ViewAddresstypeTitle_addressTypeID}"/>
+            <h:outputText value="#{messages.CreateAddresstypeLabel_name}"/>
+            <h:outputText value="#{addresstypeController.selected.name}"/>
 
-                        <h:outputText value="#{messages.ViewAddresstypeLabel_name}"/>
-                        <h:outputText value="#{addresstypeController.selected.name}" title="#{messages.ViewAddresstypeTitle_name}"/>
+            <h:outputText value="#{messages.CreateAddresstypeLabel_rowguid}"/>
+            <h:outputText value="#{addresstypeController.selected.rowguid}"/>
 
-                        <h:outputText value="#{messages.ViewAddresstypeLabel_rowguid}"/>
-                        <h:outputText value="#{addresstypeController.selected.rowguid}" title="#{messages.ViewAddresstypeTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateAddresstypeLabel_modifiedDate}"/>
+            <h:outputText value="#{addresstypeController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewAddresstypeLabel_modifiedDate}"/>
-                        <h:outputText value="#{addresstypeController.selected.modifiedDate}" title="#{messages.ViewAddresstypeTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('AddresstypeViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

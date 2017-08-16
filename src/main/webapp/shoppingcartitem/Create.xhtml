@@ -4,42 +4,42 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ShoppingcartitemCreateDlg" widgetVar="ShoppingcartitemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateShoppingcartitemTitle}" closeOnEscape="true">
+        <coco:createpage id="ShoppingcartitemCreateForm"
+                         renderedListener="#{shoppingcartitemController.selected != null}"
+                         widgetVar="ShoppingcartitemCreateDialog"
+                         actionListener="#{shoppingcartitemController.saveNew}"
+                         listForm="ShoppingcartitemListForm">
 
-            <h:form id="ShoppingcartitemCreateForm">
 
-                <h:panelGroup id="display" rendered="#{shoppingcartitemController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_shoppingCartID}" for="shoppingCartID" />
+            <p:inputText id="shoppingCartID" value="#{shoppingcartitemController.selected.shoppingCartID}" title="#{messages.CreateShoppingcartitemTitle_shoppingCartID}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_shoppingCartID}" size="50" maxlength="50"/>
 
-                        <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_shoppingCartID}" for="shoppingCartID" />
-                        <p:inputText id="shoppingCartID" value="#{shoppingcartitemController.selected.shoppingCartID}" title="#{messages.CreateShoppingcartitemTitle_shoppingCartID}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_shoppingCartID}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_quantity}" for="quantity" />
+            <p:inputText id="quantity" value="#{shoppingcartitemController.selected.quantity}" title="#{messages.CreateShoppingcartitemTitle_quantity}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_quantity}"/>
 
-                        <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_quantity}" for="quantity" />
-                        <p:inputText id="quantity" value="#{shoppingcartitemController.selected.quantity}" title="#{messages.CreateShoppingcartitemTitle_quantity}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_quantity}"/>
+            <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_dateCreated}" for="dateCreated" />
+            <p:calendar id="dateCreated" locale="tr" pattern="#{messages.dateFormat}" value="#{shoppingcartitemController.selected.dateCreated}" title="#{messages.CreateShoppingcartitemTitle_dateCreated}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_dateCreated}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_productID}" for="productID" />
-                        <p:inputText id="productID" value="#{shoppingcartitemController.selected.productID}" title="#{messages.CreateShoppingcartitemTitle_productID}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_productID}"/>
+            <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{shoppingcartitemController.selected.modifiedDate}" title="#{messages.CreateShoppingcartitemTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_dateCreated}" for="dateCreated" />
-                        <p:calendar id="dateCreated" pattern="MM/dd/yyyy HH:mm:ss" value="#{shoppingcartitemController.selected.dateCreated}" title="#{messages.CreateShoppingcartitemTitle_dateCreated}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_dateCreated}" showOn="button"/>
+            <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_productID}" for="productID" />
+            <p:selectOneMenu id="productID" value="#{shoppingcartitemController.selected.productID}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_productID}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productIDItem"
+                               itemValue="#{productIDItem}"
+                               itemLabel="#{productIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.CreateShoppingcartitemLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{shoppingcartitemController.selected.modifiedDate}" title="#{messages.CreateShoppingcartitemTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateShoppingcartitemRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{shoppingcartitemController.saveNew}" value="#{messages.Save}" update="display,:ShoppingcartitemListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ShoppingcartitemCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            </p:selectOneMenu>
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ShoppingcartitemCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:createpage>
 
     </ui:composition>
 

@@ -4,38 +4,39 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="SpecialofferproductViewDlg" widgetVar="SpecialofferproductViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSpecialofferproductTitle}" closeOnEscape="true">
+        <coco:viewpage id="SpecialofferproductViewForm"
+                       renderedListener="#{specialofferproductController.selected != null}"
+                       widgetVar="SpecialofferproductViewDialog">
 
-            <h:form id="SpecialofferproductViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{specialofferproductController.selected != null}">
+            <h:outputText value="#{messages.CreateSpecialofferproductLabel_specialofferproductPK_specialOfferID}"/>
+            <h:outputText value="#{specialofferproductController.selected.specialofferproductPK.specialOfferID}"/>
 
-                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_specialofferproductPK_specialOfferID}"/>
-                        <h:outputText value="#{specialofferproductController.selected.specialofferproductPK.specialOfferID}" title="#{messages.ViewSpecialofferproductTitle_specialofferproductPK_specialOfferID}"/>
+            <h:outputText value="#{messages.CreateSpecialofferproductLabel_specialofferproductPK_productID}"/>
+            <h:outputText value="#{specialofferproductController.selected.specialofferproductPK.productID}"/>
 
-                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_specialofferproductPK_productID}"/>
-                        <h:outputText value="#{specialofferproductController.selected.specialofferproductPK.productID}" title="#{messages.ViewSpecialofferproductTitle_specialofferproductPK_productID}"/>
+            <h:outputText value="#{messages.CreateSpecialofferproductLabel_rowguid}"/>
+            <h:outputText value="#{specialofferproductController.selected.rowguid}"/>
 
-                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_rowguid}"/>
-                        <h:outputText value="#{specialofferproductController.selected.rowguid}" title="#{messages.ViewSpecialofferproductTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateSpecialofferproductLabel_modifiedDate}"/>
+            <h:outputText value="#{specialofferproductController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewSpecialofferproductLabel_modifiedDate}"/>
-                        <h:outputText value="#{specialofferproductController.selected.modifiedDate}" title="#{messages.ViewSpecialofferproductTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('SpecialofferproductViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateSpecialofferproductLabel_specialoffer}"/>
+            <h:outputText value="#{specialofferproductController.selected.specialoffer.description}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateSpecialofferproductLabel_product}"/>
+            <h:outputText value="#{specialofferproductController.selected.product.name}"/>
 
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

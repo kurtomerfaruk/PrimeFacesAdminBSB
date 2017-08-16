@@ -45,7 +45,7 @@ public class SalespersonConverter implements Converter {
         }
         if (object instanceof Salesperson) {
             Salesperson o = (Salesperson) object;
-            return getStringKey(o.getSalesPersonID());
+            return getStringKey(o.getBusinessEntityID());
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Salesperson.class.getName()});
             return null;

@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 /**
  *
  * @author Omer Faruk KURT
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 20/02/2017 13:10:04 
  */
 @FacesConverter(value = "menuTypeConverter")

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSessionListener;
 /**
  *
  * @author Omer Faruk KURT
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 15/02/2017 10:41:04
  */
 public class SessionListeners implements HttpSessionListener, java.io.Serializable {

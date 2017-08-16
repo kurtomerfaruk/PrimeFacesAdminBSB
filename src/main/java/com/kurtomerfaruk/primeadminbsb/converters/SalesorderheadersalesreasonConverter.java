@@ -11,6 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+
 @FacesConverter(value = "salesorderheadersalesreasonConverter")
 public class SalesorderheadersalesreasonConverter implements Converter {
 
@@ -30,25 +31,25 @@ public class SalesorderheadersalesreasonConverter implements Converter {
 
     com.kurtomerfaruk.primeadminbsb.models.SalesorderheadersalesreasonPK getKey(String value) {
         com.kurtomerfaruk.primeadminbsb.models.SalesorderheadersalesreasonPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new com.kurtomerfaruk.primeadminbsb.models.SalesorderheadersalesreasonPK();
-        key.setSalesOrderID(Integer.parseInt(values[0]));
-        key.setSalesReasonID(Integer.parseInt(values[1]));
+            String values[] = value.split(SEPARATOR_ESCAPED);
+            key = new com.kurtomerfaruk.primeadminbsb.models.SalesorderheadersalesreasonPK();
+            key.setSalesOrderID(Integer.parseInt(values[0]));
+            key.setSalesReasonID(Integer.parseInt(values[1]));
         return key;
     }
 
     String getStringKey(com.kurtomerfaruk.primeadminbsb.models.SalesorderheadersalesreasonPK value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value.getSalesOrderID());
-        sb.append(SEPARATOR);
-        sb.append(value.getSalesReasonID());
+            sb.append(value.getSalesOrderID());
+            sb.append(SEPARATOR);
+            sb.append(value.getSalesReasonID());
         return sb.toString();
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null
-                || (object instanceof String && ((String) object).length() == 0)) {
+        if (object == null || 
+            (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
         if (object instanceof Salesorderheadersalesreason) {

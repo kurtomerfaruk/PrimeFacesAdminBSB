@@ -4,64 +4,66 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:view id="ContactViewForm"
-                   widgetVar="ContactViewDialog"
-                   renderedListener="#{contactController.selected != null}">
+        <coco:viewpage id="ContactViewForm"
+                       renderedListener="#{contactController.selected != null}"
+                       widgetVar="ContactViewDialog">
 
-            <h:outputText value="#{messages.ViewContactLabel_contactID}"/>
-            <h:outputText value="#{contactController.selected.contactID}" title="#{messages.ViewContactTitle_contactID}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_nameStyle}"/>
-            <h:selectBooleanCheckbox id="nameStyle" value="#{contactController.selected.nameStyle}" title="#{messages.EditContactTitle_nameStyle}" required="true" requiredMessage="#{messages.EditContactRequiredMessage_nameStyle}" disabled="true"/>
+            <h:outputText value="#{messages.CreateContactLabel_contactID}"/>
+            <h:outputText value="#{contactController.selected.contactID}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_title}"/>
-            <h:outputText value="#{contactController.selected.title}" title="#{messages.ViewContactTitle_title}"/>
+            <h:outputText value="#{messages.CreateContactLabel_nameStyle}"/>
+            <h:selectBooleanCheckbox id="nameStyle" value="#{contactController.selected.nameStyle}" required="true" requiredMessage="#{messages.EditContactRequiredMessage_nameStyle}" disabled="true"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_firstName}"/>
-            <h:outputText value="#{contactController.selected.firstName}" title="#{messages.ViewContactTitle_firstName}"/>
+            <h:outputText value="#{messages.CreateContactLabel_title}"/>
+            <h:outputText value="#{contactController.selected.title}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_middleName}"/>
-            <h:outputText value="#{contactController.selected.middleName}" title="#{messages.ViewContactTitle_middleName}"/>
+            <h:outputText value="#{messages.CreateContactLabel_firstName}"/>
+            <h:outputText value="#{contactController.selected.firstName}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_lastName}"/>
-            <h:outputText value="#{contactController.selected.lastName}" title="#{messages.ViewContactTitle_lastName}"/>
+            <h:outputText value="#{messages.CreateContactLabel_middleName}"/>
+            <h:outputText value="#{contactController.selected.middleName}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_suffix}"/>
-            <h:outputText value="#{contactController.selected.suffix}" title="#{messages.ViewContactTitle_suffix}"/>
+            <h:outputText value="#{messages.CreateContactLabel_lastName}"/>
+            <h:outputText value="#{contactController.selected.lastName}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_emailAddress}"/>
-            <h:outputText value="#{contactController.selected.emailAddress}" title="#{messages.ViewContactTitle_emailAddress}"/>
+            <h:outputText value="#{messages.CreateContactLabel_suffix}"/>
+            <h:outputText value="#{contactController.selected.suffix}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_emailPromotion}"/>
-            <h:outputText value="#{contactController.selected.emailPromotion}" title="#{messages.ViewContactTitle_emailPromotion}"/>
+            <h:outputText value="#{messages.CreateContactLabel_emailAddress}"/>
+            <h:outputText value="#{contactController.selected.emailAddress}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_phone}"/>
-            <h:outputText value="#{contactController.selected.phone}" title="#{messages.ViewContactTitle_phone}"/>
+            <h:outputText value="#{messages.CreateContactLabel_emailPromotion}"/>
+            <h:outputText value="#{contactController.selected.emailPromotion}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_passwordHash}"/>
-            <h:outputText value="#{contactController.selected.passwordHash}" title="#{messages.ViewContactTitle_passwordHash}"/>
+            <h:outputText value="#{messages.CreateContactLabel_phone}"/>
+            <h:outputText value="#{contactController.selected.phone}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_passwordSalt}"/>
-            <h:outputText value="#{contactController.selected.passwordSalt}" title="#{messages.ViewContactTitle_passwordSalt}"/>
+            <h:outputText value="#{messages.CreateContactLabel_passwordHash}"/>
+            <h:outputText value="#{contactController.selected.passwordHash}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_additionalContactInfo}"/>
-            <h:outputText value="#{contactController.selected.additionalContactInfo}" title="#{messages.ViewContactTitle_additionalContactInfo}"/>
+            <h:outputText value="#{messages.CreateContactLabel_passwordSalt}"/>
+            <h:outputText value="#{contactController.selected.passwordSalt}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_rowguid}"/>
-            <h:outputText value="#{contactController.selected.rowguid}" title="#{messages.ViewContactTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateContactLabel_additionalContactInfo}"/>
+            <h:outputText value="#{contactController.selected.additionalContactInfo}"/>
 
-            <h:outputText value="#{messages.ViewContactLabel_modifiedDate}"/>
-            <h:outputText value="#{contactController.selected.modifiedDate}" title="#{messages.ViewContactTitle_modifiedDate}">
-                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            <h:outputText value="#{messages.CreateContactLabel_rowguid}"/>
+            <h:outputText value="#{contactController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreateContactLabel_modifiedDate}"/>
+            <h:outputText value="#{contactController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
             </h:outputText>
 
-        </coco:view>
-
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

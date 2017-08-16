@@ -1,8 +1,8 @@
 package com.kurtomerfaruk.primeadminbsb.converters;
 
-import com.kurtomerfaruk.primeadminbsb.controllers.util.JsfUtil;
 import com.kurtomerfaruk.primeadminbsb.models.Menu;
 import com.kurtomerfaruk.primeadminbsb.services.MenuFacade;
+import com.kurtomerfaruk.primeadminbsb.controllers.util.JsfUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.convert.FacesConverter;
@@ -11,12 +11,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 13.02.2017 09:19:20
- */
 @FacesConverter(value = "menuConverter")
 public class MenuConverter implements Converter {
 

@@ -3,21 +3,30 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Specialoffer;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "specialofferController")
 @ViewScoped
 public class SpecialofferController extends AbstractController<Specialoffer> {
-    private static final long serialVersionUID = -1732827129082843208L;
 
     public SpecialofferController() {
         // Inform the Abstract parent controller of the concrete Specialoffer Entity
         super(Specialoffer.class);
+    }
+
+    /**
+     * Sets the "items" attribute with a collection of Specialofferproduct
+     * entities that are retrieved from Specialoffer?cap_first and returns the
+     * navigation outcome.
+     *
+     * @return navigation outcome for Specialofferproduct page
+     */
+    public String navigateSpecialofferproductList() {
+        if (this.getSelected() != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Specialofferproduct_items", this.getSelected().getSpecialofferproductList());
+        }
+        return "/specialofferproduct/index";
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  *
  * @author Omer Faruk KURT
- * * @blog : http://kurtomerfaruk.com
+ * * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 13/02/2017 12:15:31
  */
 public class Functions {

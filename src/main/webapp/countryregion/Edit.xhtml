@@ -4,35 +4,28 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="CountryregionEditDlg" widgetVar="CountryregionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditCountryregionTitle}" closeOnEscape="true">
 
-            <h:form id="CountryregionEditForm">
+        <coco:editpage id="CountryregionEditForm"
+                       renderedListener="#{countryregionController.selected != null}"
+                       widgetVar="CountryregionEditDialog"
+                       actionListener="#{countryregionController.save}"
+                       listForm="CountryregionListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{countryregionController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateCountryregionLabel_countryRegionCode}" for="countryRegionCode" />
+            <p:inputText id="countryRegionCode" value="#{countryregionController.selected.countryRegionCode}" title="#{messages.CreateCountryregionTitle_countryRegionCode}" required="true" requiredMessage="#{messages.CreateCountryregionRequiredMessage_countryRegionCode}" size="3" maxlength="3"/>
 
-                        <h:outputLabel value="#{messages.EditCountryregionLabel_countryRegionCode}" for="countryRegionCode" />
-                        <h:outputText id="countryRegionCode" value="#{countryregionController.selected.countryRegionCode}" />
+            <p:outputLabel value="#{messages.CreateCountryregionLabel_name}" for="name" />
+            <p:inputText id="name" value="#{countryregionController.selected.name}" title="#{messages.CreateCountryregionTitle_name}" required="true" requiredMessage="#{messages.CreateCountryregionRequiredMessage_name}" size="100" maxlength="100"/>
 
-                        <p:outputLabel value="#{messages.EditCountryregionLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{countryregionController.selected.name}" title="#{messages.EditCountryregionTitle_name}" required="true" requiredMessage="#{messages.EditCountryregionRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateCountryregionLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{countryregionController.selected.modifiedDate}" title="#{messages.CreateCountryregionTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCountryregionRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditCountryregionLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{countryregionController.selected.modifiedDate}" title="#{messages.EditCountryregionTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditCountryregionRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{countryregionController.save}" value="#{messages.Save}" update="display,:CountryregionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CountryregionEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CountryregionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

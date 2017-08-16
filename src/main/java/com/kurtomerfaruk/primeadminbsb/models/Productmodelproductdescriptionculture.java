@@ -12,6 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,9 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productmodelproductdescriptionculture")
@@ -36,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Productmodelproductdescriptionculture.findByCultureID", query = "SELECT p FROM Productmodelproductdescriptionculture p WHERE p.productmodelproductdescriptionculturePK.cultureID = :cultureID"),
     @NamedQuery(name = "Productmodelproductdescriptionculture.findByModifiedDate", query = "SELECT p FROM Productmodelproductdescriptionculture p WHERE p.modifiedDate = :modifiedDate")})
 public class Productmodelproductdescriptionculture implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductmodelproductdescriptionculturePK productmodelproductdescriptionculturePK;
@@ -45,6 +48,15 @@ public class Productmodelproductdescriptionculture implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "ProductModelID", referencedColumnName = "ProductModelID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Productmodel productmodel;
+    @JoinColumn(name = "ProductDescriptionID", referencedColumnName = "ProductDescriptionID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Productdescription productdescription;
+    @JoinColumn(name = "CultureID", referencedColumnName = "CultureID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Culture culture;
 
     public Productmodelproductdescriptionculture() {
     }
@@ -76,6 +88,30 @@ public class Productmodelproductdescriptionculture implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Productmodel getProductmodel() {
+        return productmodel;
+    }
+
+    public void setProductmodel(Productmodel productmodel) {
+        this.productmodel = productmodel;
+    }
+
+    public Productdescription getProductdescription() {
+        return productdescription;
+    }
+
+    public void setProductdescription(Productdescription productdescription) {
+        this.productdescription = productdescription;
+    }
+
+    public Culture getCulture() {
+        return culture;
+    }
+
+    public void setCulture(Culture culture) {
+        this.culture = culture;
     }
 
     @Override

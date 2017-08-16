@@ -4,30 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:view id="ProductcategoryViewForm"
-                   widgetVar="ProductcategoryViewDialog"
-                   renderedListener="#{productcategoryController.selected != null}">
+        <coco:viewpage id="ProductcategoryViewForm"
+                       renderedListener="#{productcategoryController.selected != null}"
+                       widgetVar="ProductcategoryViewDialog">
 
-            <h:outputText value="#{messages.ViewProductcategoryLabel_productCategoryID}"/>
-            <h:outputText value="#{productcategoryController.selected.productCategoryID}" title="#{messages.ViewProductcategoryTitle_productCategoryID}"/>
 
-            <h:outputText value="#{messages.ViewProductcategoryLabel_name}"/>
-            <h:outputText value="#{productcategoryController.selected.name}" title="#{messages.ViewProductcategoryTitle_name}"/>
+            <h:outputText value="#{messages.CreateProductcategoryLabel_productCategoryID}"/>
+            <h:outputText value="#{productcategoryController.selected.productCategoryID}"/>
 
-            <h:outputText value="#{messages.ViewProductcategoryLabel_rowguid}"/>
-            <h:outputText value="#{productcategoryController.selected.rowguid}" title="#{messages.ViewProductcategoryTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateProductcategoryLabel_name}"/>
+            <h:outputText value="#{productcategoryController.selected.name}"/>
 
-            <h:outputText value="#{messages.ViewProductcategoryLabel_modifiedDate}"/>
-            <h:outputText value="#{productcategoryController.selected.modifiedDate}" title="#{messages.ViewProductcategoryTitle_modifiedDate}">
-                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            <h:outputText value="#{messages.CreateProductcategoryLabel_rowguid}"/>
+            <h:outputText value="#{productcategoryController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreateProductcategoryLabel_modifiedDate}"/>
+            <h:outputText value="#{productcategoryController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
             </h:outputText>
 
-        </coco:view>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

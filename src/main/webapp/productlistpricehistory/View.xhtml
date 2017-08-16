@@ -4,45 +4,43 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductlistpricehistoryViewDlg" widgetVar="ProductlistpricehistoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductlistpricehistoryTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductlistpricehistoryViewForm"
+                       renderedListener="#{productlistpricehistoryController.selected != null}"
+                       widgetVar="ProductlistpricehistoryViewDialog">
 
-            <h:form id="ProductlistpricehistoryViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productlistpricehistoryController.selected != null}">
+            <h:outputText value="#{messages.CreateProductlistpricehistoryLabel_productlistpricehistoryPK_productID}"/>
+            <h:outputText value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.productID}"/>
 
-                        <h:outputText value="#{messages.ViewProductlistpricehistoryLabel_productlistpricehistoryPK_productID}"/>
-                        <h:outputText value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.productID}" title="#{messages.ViewProductlistpricehistoryTitle_productlistpricehistoryPK_productID}"/>
+            <h:outputText value="#{messages.CreateProductlistpricehistoryLabel_productlistpricehistoryPK_startDate}"/>
+            <h:outputText value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.startDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductlistpricehistoryLabel_productlistpricehistoryPK_startDate}"/>
-                        <h:outputText value="#{productlistpricehistoryController.selected.productlistpricehistoryPK.startDate}" title="#{messages.ViewProductlistpricehistoryTitle_productlistpricehistoryPK_startDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateProductlistpricehistoryLabel_endDate}"/>
+            <h:outputText value="#{productlistpricehistoryController.selected.endDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductlistpricehistoryLabel_endDate}"/>
-                        <h:outputText value="#{productlistpricehistoryController.selected.endDate}" title="#{messages.ViewProductlistpricehistoryTitle_endDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateProductlistpricehistoryLabel_listPrice}"/>
+            <h:outputText value="#{productlistpricehistoryController.selected.listPrice}"/>
 
-                        <h:outputText value="#{messages.ViewProductlistpricehistoryLabel_listPrice}"/>
-                        <h:outputText value="#{productlistpricehistoryController.selected.listPrice}" title="#{messages.ViewProductlistpricehistoryTitle_listPrice}"/>
+            <h:outputText value="#{messages.CreateProductlistpricehistoryLabel_modifiedDate}"/>
+            <h:outputText value="#{productlistpricehistoryController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductlistpricehistoryLabel_modifiedDate}"/>
-                        <h:outputText value="#{productlistpricehistoryController.selected.modifiedDate}" title="#{messages.ViewProductlistpricehistoryTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductlistpricehistoryViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateProductlistpricehistoryLabel_product}"/>
+            <h:outputText value="#{productlistpricehistoryController.selected.product.name}"/>
 
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

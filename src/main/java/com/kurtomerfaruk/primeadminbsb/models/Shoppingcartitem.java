@@ -11,9 +11,12 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,9 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "shoppingcartitem")
@@ -37,11 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Shoppingcartitem.findByShoppingCartItemID", query = "SELECT s FROM Shoppingcartitem s WHERE s.shoppingCartItemID = :shoppingCartItemID"),
     @NamedQuery(name = "Shoppingcartitem.findByShoppingCartID", query = "SELECT s FROM Shoppingcartitem s WHERE s.shoppingCartID = :shoppingCartID"),
     @NamedQuery(name = "Shoppingcartitem.findByQuantity", query = "SELECT s FROM Shoppingcartitem s WHERE s.quantity = :quantity"),
-    @NamedQuery(name = "Shoppingcartitem.findByProductID", query = "SELECT s FROM Shoppingcartitem s WHERE s.productID = :productID"),
     @NamedQuery(name = "Shoppingcartitem.findByDateCreated", query = "SELECT s FROM Shoppingcartitem s WHERE s.dateCreated = :dateCreated"),
     @NamedQuery(name = "Shoppingcartitem.findByModifiedDate", query = "SELECT s FROM Shoppingcartitem s WHERE s.modifiedDate = :modifiedDate")})
 public class Shoppingcartitem implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,10 +61,6 @@ public class Shoppingcartitem implements Serializable {
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ProductID")
-    private int productID;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "DateCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
@@ -71,6 +69,9 @@ public class Shoppingcartitem implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
+    @ManyToOne(optional = false)
+    private Product productID;
 
     public Shoppingcartitem() {
     }
@@ -79,11 +80,10 @@ public class Shoppingcartitem implements Serializable {
         this.shoppingCartItemID = shoppingCartItemID;
     }
 
-    public Shoppingcartitem(Integer shoppingCartItemID, String shoppingCartID, int quantity, int productID, Date dateCreated, Date modifiedDate) {
+    public Shoppingcartitem(Integer shoppingCartItemID, String shoppingCartID, int quantity, Date dateCreated, Date modifiedDate) {
         this.shoppingCartItemID = shoppingCartItemID;
         this.shoppingCartID = shoppingCartID;
         this.quantity = quantity;
-        this.productID = productID;
         this.dateCreated = dateCreated;
         this.modifiedDate = modifiedDate;
     }
@@ -112,14 +112,6 @@ public class Shoppingcartitem implements Serializable {
         this.quantity = quantity;
     }
 
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -134,6 +126,14 @@ public class Shoppingcartitem implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Product getProductID() {
+        return productID;
+    }
+
+    public void setProductID(Product productID) {
+        this.productID = productID;
     }
 
     @Override

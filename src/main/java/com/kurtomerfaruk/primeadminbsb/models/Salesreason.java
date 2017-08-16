@@ -8,26 +8,32 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "salesreason")
@@ -39,7 +45,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Salesreason.findByReasonType", query = "SELECT s FROM Salesreason s WHERE s.reasonType = :reasonType"),
     @NamedQuery(name = "Salesreason.findByModifiedDate", query = "SELECT s FROM Salesreason s WHERE s.modifiedDate = :modifiedDate")})
 public class Salesreason implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,12 +53,12 @@ public class Salesreason implements Serializable {
     private Integer salesReasonID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "ReasonType")
     private String reasonType;
     @Basic(optional = false)
@@ -61,6 +66,8 @@ public class Salesreason implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salesreason")
+    private List<Salesorderheadersalesreason> salesorderheadersalesreasonList;
 
     public Salesreason() {
     }
@@ -106,6 +113,15 @@ public class Salesreason implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Salesorderheadersalesreason> getSalesorderheadersalesreasonList() {
+        return salesorderheadersalesreasonList;
+    }
+
+    public void setSalesorderheadersalesreasonList(List<Salesorderheadersalesreason> salesorderheadersalesreasonList) {
+        this.salesorderheadersalesreasonList = salesorderheadersalesreasonList;
     }
 
     @Override

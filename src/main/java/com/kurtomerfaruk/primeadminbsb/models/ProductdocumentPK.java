@@ -11,31 +11,33 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Embeddable
 public class ProductdocumentPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "ProductID")
     private int productID;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "DocumentID")
-    private int documentID;
+    @Size(min = 1, max = 255)
+    @Column(name = "DocumentNode")
+    private String documentNode;
 
     public ProductdocumentPK() {
     }
 
-    public ProductdocumentPK(int productID, int documentID) {
+    public ProductdocumentPK(int productID, String documentNode) {
         this.productID = productID;
-        this.documentID = documentID;
+        this.documentNode = documentNode;
     }
 
     public int getProductID() {
@@ -46,19 +48,19 @@ public class ProductdocumentPK implements Serializable {
         this.productID = productID;
     }
 
-    public int getDocumentID() {
-        return documentID;
+    public String getDocumentNode() {
+        return documentNode;
     }
 
-    public void setDocumentID(int documentID) {
-        this.documentID = documentID;
+    public void setDocumentNode(String documentNode) {
+        this.documentNode = documentNode;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) productID;
-        hash += (int) documentID;
+        hash += (documentNode != null ? documentNode.hashCode() : 0);
         return hash;
     }
 
@@ -72,7 +74,7 @@ public class ProductdocumentPK implements Serializable {
         if (this.productID != other.productID) {
             return false;
         }
-        if (this.documentID != other.documentID) {
+        if ((this.documentNode == null && other.documentNode != null) || (this.documentNode != null && !this.documentNode.equals(other.documentNode))) {
             return false;
         }
         return true;
@@ -80,7 +82,7 @@ public class ProductdocumentPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.ProductdocumentPK[ productID=" + productID + ", documentID=" + documentID + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.ProductdocumentPK[ productID=" + productID + ", documentNode=" + documentNode + " ]";
     }
 
 }

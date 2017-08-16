@@ -11,6 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+
 @FacesConverter(value = "productvendorConverter")
 public class ProductvendorConverter implements Converter {
 
@@ -30,25 +31,25 @@ public class ProductvendorConverter implements Converter {
 
     com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK getKey(String value) {
         com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK();
-        key.setProductID(Integer.parseInt(values[0]));
-        key.setVendorID(Integer.parseInt(values[1]));
+            String values[] = value.split(SEPARATOR_ESCAPED);
+            key = new com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK();
+            key.setProductID(Integer.parseInt(values[0]));
+            key.setBusinessEntityID(Integer.parseInt(values[1]));
         return key;
     }
 
     String getStringKey(com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value.getProductID());
-        sb.append(SEPARATOR);
-        sb.append(value.getVendorID());
+            sb.append(value.getProductID());
+            sb.append(SEPARATOR);
+            sb.append(value.getBusinessEntityID());
         return sb.toString();
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null
-                || (object instanceof String && ((String) object).length() == 0)) {
+        if (object == null || 
+            (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
         if (object instanceof Productvendor) {

@@ -4,35 +4,30 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="UnitmeasureViewDlg" widgetVar="UnitmeasureViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewUnitmeasureTitle}" closeOnEscape="true">
+        <coco:viewpage id="UnitmeasureViewForm"
+                       renderedListener="#{unitmeasureController.selected != null}"
+                       widgetVar="UnitmeasureViewDialog">
 
-            <h:form id="UnitmeasureViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{unitmeasureController.selected != null}">
+            <h:outputText value="#{messages.CreateUnitmeasureLabel_unitMeasureCode}"/>
+            <h:outputText value="#{unitmeasureController.selected.unitMeasureCode}"/>
 
-                        <h:outputText value="#{messages.ViewUnitmeasureLabel_unitMeasureCode}"/>
-                        <h:outputText value="#{unitmeasureController.selected.unitMeasureCode}" title="#{messages.ViewUnitmeasureTitle_unitMeasureCode}"/>
+            <h:outputText value="#{messages.CreateUnitmeasureLabel_name}"/>
+            <h:outputText value="#{unitmeasureController.selected.name}"/>
 
-                        <h:outputText value="#{messages.ViewUnitmeasureLabel_name}"/>
-                        <h:outputText value="#{unitmeasureController.selected.name}" title="#{messages.ViewUnitmeasureTitle_name}"/>
+            <h:outputText value="#{messages.CreateUnitmeasureLabel_modifiedDate}"/>
+            <h:outputText value="#{unitmeasureController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewUnitmeasureLabel_modifiedDate}"/>
-                        <h:outputText value="#{unitmeasureController.selected.modifiedDate}" title="#{messages.ViewUnitmeasureTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('UnitmeasureViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

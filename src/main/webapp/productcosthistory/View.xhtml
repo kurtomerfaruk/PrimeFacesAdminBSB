@@ -4,45 +4,43 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductcosthistoryViewDlg" widgetVar="ProductcosthistoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductcosthistoryTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductcosthistoryViewForm"
+                       renderedListener="#{productcosthistoryController.selected != null}"
+                       widgetVar="ProductcosthistoryViewDialog">
 
-            <h:form id="ProductcosthistoryViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productcosthistoryController.selected != null}">
+            <h:outputText value="#{messages.CreateProductcosthistoryLabel_productcosthistoryPK_productID}"/>
+            <h:outputText value="#{productcosthistoryController.selected.productcosthistoryPK.productID}"/>
 
-                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_productcosthistoryPK_productID}"/>
-                        <h:outputText value="#{productcosthistoryController.selected.productcosthistoryPK.productID}" title="#{messages.ViewProductcosthistoryTitle_productcosthistoryPK_productID}"/>
+            <h:outputText value="#{messages.CreateProductcosthistoryLabel_productcosthistoryPK_startDate}"/>
+            <h:outputText value="#{productcosthistoryController.selected.productcosthistoryPK.startDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_productcosthistoryPK_startDate}"/>
-                        <h:outputText value="#{productcosthistoryController.selected.productcosthistoryPK.startDate}" title="#{messages.ViewProductcosthistoryTitle_productcosthistoryPK_startDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateProductcosthistoryLabel_endDate}"/>
+            <h:outputText value="#{productcosthistoryController.selected.endDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_endDate}"/>
-                        <h:outputText value="#{productcosthistoryController.selected.endDate}" title="#{messages.ViewProductcosthistoryTitle_endDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateProductcosthistoryLabel_standardCost}"/>
+            <h:outputText value="#{productcosthistoryController.selected.standardCost}"/>
 
-                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_standardCost}"/>
-                        <h:outputText value="#{productcosthistoryController.selected.standardCost}" title="#{messages.ViewProductcosthistoryTitle_standardCost}"/>
+            <h:outputText value="#{messages.CreateProductcosthistoryLabel_modifiedDate}"/>
+            <h:outputText value="#{productcosthistoryController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductcosthistoryLabel_modifiedDate}"/>
-                        <h:outputText value="#{productcosthistoryController.selected.modifiedDate}" title="#{messages.ViewProductcosthistoryTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductcosthistoryViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateProductcosthistoryLabel_product}"/>
+            <h:outputText value="#{productcosthistoryController.selected.product.name}"/>
 
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

@@ -8,27 +8,32 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productdescription")
@@ -36,9 +41,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Productdescription.findAll", query = "SELECT p FROM Productdescription p"),
     @NamedQuery(name = "Productdescription.findByProductDescriptionID", query = "SELECT p FROM Productdescription p WHERE p.productDescriptionID = :productDescriptionID"),
+    @NamedQuery(name = "Productdescription.findByDescription", query = "SELECT p FROM Productdescription p WHERE p.description = :description"),
+    @NamedQuery(name = "Productdescription.findByRowguid", query = "SELECT p FROM Productdescription p WHERE p.rowguid = :rowguid"),
     @NamedQuery(name = "Productdescription.findByModifiedDate", query = "SELECT p FROM Productdescription p WHERE p.modifiedDate = :modifiedDate")})
 public class Productdescription implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,20 +53,21 @@ public class Productdescription implements Serializable {
     private Integer productDescriptionID;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 16777215)
+    @Size(min = 1, max = 400)
     @Column(name = "Description")
     private String description;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productdescription")
+    private List<Productmodelproductdescriptionculture> productmodelproductdescriptioncultureList;
 
     public Productdescription() {
     }
@@ -69,7 +76,7 @@ public class Productdescription implements Serializable {
         this.productDescriptionID = productDescriptionID;
     }
 
-    public Productdescription(Integer productDescriptionID, String description, byte[] rowguid, Date modifiedDate) {
+    public Productdescription(Integer productDescriptionID, String description, String rowguid, Date modifiedDate) {
         this.productDescriptionID = productDescriptionID;
         this.description = description;
         this.rowguid = rowguid;
@@ -92,11 +99,11 @@ public class Productdescription implements Serializable {
         this.description = description;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -106,6 +113,15 @@ public class Productdescription implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Productmodelproductdescriptionculture> getProductmodelproductdescriptioncultureList() {
+        return productmodelproductdescriptioncultureList;
+    }
+
+    public void setProductmodelproductdescriptioncultureList(List<Productmodelproductdescriptionculture> productmodelproductdescriptioncultureList) {
+        this.productmodelproductdescriptioncultureList = productmodelproductdescriptioncultureList;
     }
 
     @Override

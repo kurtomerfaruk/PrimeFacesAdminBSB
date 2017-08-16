@@ -3,22 +3,44 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Location;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
-
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "locationController")
 @ViewScoped
 public class LocationController extends AbstractController<Location> {
-    private static final long serialVersionUID = -1552597340315653547L;
 
     public LocationController() {
         // Inform the Abstract parent controller of the concrete Location Entity
         super(Location.class);
+    }
+
+    /**
+     * Sets the "items" attribute with a collection of Workorderrouting entities
+     * that are retrieved from Location?cap_first and returns the navigation
+     * outcome.
+     *
+     * @return navigation outcome for Workorderrouting page
+     */
+    public String navigateWorkorderroutingList() {
+        if (this.getSelected() != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Workorderrouting_items", this.getSelected().getWorkorderroutingList());
+        }
+        return "/workorderrouting/index";
+    }
+
+    /**
+     * Sets the "items" attribute with a collection of Productinventory entities
+     * that are retrieved from Location?cap_first and returns the navigation
+     * outcome.
+     *
+     * @return navigation outcome for Productinventory page
+     */
+    public String navigateProductinventoryList() {
+        if (this.getSelected() != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productinventory_items", this.getSelected().getProductinventoryList());
+        }
+        return "/productinventory/index";
     }
 
 }

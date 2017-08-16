@@ -3,7 +3,7 @@ package com.kurtomerfaruk.primeadminbsb.enums;
 /**
  *
  * @author Omer Faruk KURT
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 20/02/2017 13:07:59
  */
 public enum MenuType {

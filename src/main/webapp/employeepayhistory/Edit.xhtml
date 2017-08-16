@@ -4,42 +4,45 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="EmployeepayhistoryEditDlg" widgetVar="EmployeepayhistoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditEmployeepayhistoryTitle}" closeOnEscape="true">
 
-            <h:form id="EmployeepayhistoryEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{employeepayhistoryController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditEmployeepayhistoryLabel_employeepayhistoryPK_employeeID}" for="employeepayhistoryPK_employeeID" />
-                        <h:outputText id="employeepayhistoryPK_employeeID" value="#{employeepayhistoryController.selected.employeepayhistoryPK.employeeID}" />
+        <coco:editpage id="EmployeepayhistoryEditForm"
+                       renderedListener="#{employeepayhistoryController.selected != null}"
+                       widgetVar="EmployeepayhistoryEditDialog"
+                       actionListener="#{employeepayhistoryController.save}"
+                       listForm="EmployeepayhistoryListForm">
 
 
-                        <h:outputLabel value="#{messages.EditEmployeepayhistoryLabel_employeepayhistoryPK_rateChangeDate}" for="employeepayhistoryPK_rateChangeDate" />
-                        <h:outputText id="employeepayhistoryPK_rateChangeDate" value="#{employeepayhistoryController.selected.employeepayhistoryPK.rateChangeDate}" />
+            <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_employeepayhistoryPK_businessEntityID}" for="employeepayhistoryPK_businessEntityID" />
+            <p:inputText id="employeepayhistoryPK_businessEntityID" value="#{employeepayhistoryController.selected.employeepayhistoryPK.businessEntityID}" title="#{messages.CreateEmployeepayhistoryTitle_employeepayhistoryPK_businessEntityID}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_employeepayhistoryPK_businessEntityID}"/>
 
-                        <p:outputLabel value="#{messages.EditEmployeepayhistoryLabel_rate}" for="rate" />
-                        <p:inputText id="rate" value="#{employeepayhistoryController.selected.rate}" title="#{messages.EditEmployeepayhistoryTitle_rate}" required="true" requiredMessage="#{messages.EditEmployeepayhistoryRequiredMessage_rate}"/>
+            <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_employeepayhistoryPK_rateChangeDate}" for="employeepayhistoryPK_rateChangeDate" />
+            <p:calendar id="employeepayhistoryPK_rateChangeDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeepayhistoryController.selected.employeepayhistoryPK.rateChangeDate}" title="#{messages.CreateEmployeepayhistoryTitle_employeepayhistoryPK_rateChangeDate}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_employeepayhistoryPK_rateChangeDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditEmployeepayhistoryLabel_payFrequency}" for="payFrequency" />
-                        <p:inputText id="payFrequency" value="#{employeepayhistoryController.selected.payFrequency}" title="#{messages.EditEmployeepayhistoryTitle_payFrequency}" required="true" requiredMessage="#{messages.EditEmployeepayhistoryRequiredMessage_payFrequency}"/>
+            <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_rate}" for="rate" />
+            <p:inputText id="rate" value="#{employeepayhistoryController.selected.rate}" title="#{messages.CreateEmployeepayhistoryTitle_rate}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_rate}"/>
 
-                        <p:outputLabel value="#{messages.EditEmployeepayhistoryLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeepayhistoryController.selected.modifiedDate}" title="#{messages.EditEmployeepayhistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditEmployeepayhistoryRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{employeepayhistoryController.save}" value="#{messages.Save}" update="display,:EmployeepayhistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmployeepayhistoryEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('EmployeepayhistoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_payFrequency}" for="payFrequency" />
+            <p:inputText id="payFrequency" value="#{employeepayhistoryController.selected.payFrequency}" title="#{messages.CreateEmployeepayhistoryTitle_payFrequency}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_payFrequency}"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeepayhistoryController.selected.modifiedDate}" title="#{messages.CreateEmployeepayhistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateEmployeepayhistoryLabel_employee}" for="employee" />
+            <p:selectOneMenu id="employee" value="#{employeepayhistoryController.selected.employee}" required="true" requiredMessage="#{messages.CreateEmployeepayhistoryRequiredMessage_employee}" converter="employeeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{employeeController.items}"
+                               var="employeeItem"
+                               itemValue="#{employeeItem}"
+                               itemLabel="#{employeeItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

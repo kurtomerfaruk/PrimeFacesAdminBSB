@@ -4,134 +4,174 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="DocumentListForm">
+    <h:form id="DocumentListForm" class="form-height">
 
-        <p:panel header="#{messages.ListDocumentTitle}">
-            <p:contextMenu id="DocumentDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('DocumentListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('DocumentListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('DocumentListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('DocumentListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{documentController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{documentController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{documentController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.documentID}"
-                -->
+        <p:contextMenu id="DocumentDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('DocumentListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('DocumentListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('DocumentListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('DocumentListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Owner #{messages.View}" icon="fa fa-search"  actionListener="#{documentController.prepareOwner}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty documentController.selected.owner}"/>  
+            <p:menuitem value="#{messages.DocumentMenuItem_productdocumentList}" icon="fa fa-search"  action="#{documentController.navigateProductdocumentList}" disabled="#{empty documentController.selected.productdocumentList}" ajax="false"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{documentController.lazyItems}"
+                        rowKey="#{item.documentNode}"
+                        selection="#{documentController.selected}"
+                        filtered="#{documentController.filtered}"
+                        rowselect=":DocumentListForm:datalist:datalist:createButton,:DocumentListForm:datalist:datalist:viewButton,:DocumentListForm:datalist:datalist:editButton,:DocumentListForm:datalist:datalist:deleteButton,:DocumentListForm:DocumentDataTableContextMenu"
+                        rowDblselect="document.getElementById('DocumentListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":DocumentListForm:datalist:datalist:createButton :DocumentListForm:datalist:datalist:viewButton :DocumentListForm:datalist:datalist:editButton :DocumentListForm:datalist:datalist:deleteButton"
+                        selectListener="#{documentController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DocumentDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DocumentDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DocumentListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.documentID}" filterBy="#{item.documentID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListDocumentTitle_documentID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.documentID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.title}" filterBy="#{item.title}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListDocumentTitle_title}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.title}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListDocumentTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.documentNode}" filterBy="#{item.documentNode}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_documentNode}"/>
+                </f:facet>
+                <h:outputText value="#{item.documentNode}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.fileName}" filterBy="#{item.fileName}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListDocumentTitle_fileName}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fileName}"/>
-                </p:column>
+            <p:column sortBy="#{item.documentLevel}" filterBy="#{item.documentLevel}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_documentLevel}"/>
+                </f:facet>
+                <h:outputText value="#{item.documentLevel}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.fileExtension}" filterBy="#{item.fileExtension}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListDocumentTitle_fileExtension}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fileExtension}"/>
-                </p:column>
+            <p:column sortBy="#{item.title}" filterBy="#{item.title}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_title}"/>
+                </f:facet>
+                <h:outputText value="#{item.title}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.revision}" filterBy="#{item.revision}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListDocumentTitle_revision}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.revision}"/>
-                </p:column>
+            <p:column sortBy="#{item.folderFlag}" filterBy="#{item.folderFlag}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_folderFlag}"/>
+                </f:facet>
+                <h:selectBooleanCheckbox id="folderFlag" value="#{item.folderFlag}" title="#{messages.EditDocumentTitle_folderFlag}" required="true" requiredMessage="#{messages.EditDocumentRequiredMessage_folderFlag}" disabled="true"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.changeNumber}" filterBy="#{item.changeNumber}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListDocumentTitle_changeNumber}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.changeNumber}"/>
-                </p:column>
+            <p:column sortBy="#{item.fileName}" filterBy="#{item.fileName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_fileName}"/>
+                </f:facet>
+                <h:outputText value="#{item.fileName}"/>
+            </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.status}" filterBy="#{item.status}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListDocumentTitle_status}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.status}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.documentSummary}" filterBy="#{item.documentSummary}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListDocumentTitle_documentSummary}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.documentSummary}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.document}" filterBy="#{item.document}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListDocumentTitle_document}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.document}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListDocumentTitle_modifiedDate}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.modifiedDate}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                        </h:outputText>
-                                    </p:column>
-                -->
 
-            </p:dataTable>
+            <p:column sortBy="#{item.fileExtension}" filterBy="#{item.fileExtension}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_fileExtension}"/>
+                </f:facet>
+                <h:outputText value="#{item.fileExtension}"/>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{documentController.prepareCreate}" update=":DocumentCreateForm" oncomplete="PF('DocumentCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":DocumentViewForm" oncomplete="PF('DocumentViewDialog').show()" disabled="#{empty documentController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":DocumentEditForm" oncomplete="PF('DocumentEditDialog').show()" disabled="#{empty documentController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{documentController.delete}" update=":growl,datalist" disabled="#{empty documentController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.revision}" filterBy="#{item.revision}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_revision}"/>
+                </f:facet>
+                <h:outputText value="#{item.revision}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.changeNumber}" filterBy="#{item.changeNumber}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_changeNumber}"/>
+                </f:facet>
+                <h:outputText value="#{item.changeNumber}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.status}" filterBy="#{item.status}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_status}"/>
+                </f:facet>
+                <h:outputText value="#{item.status}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.documentSummary}" filterBy="#{item.documentSummary}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListDocumentTitle_documentSummary}"/>
+                </f:facet>
+                <h:outputText value="#{item.documentSummary}"/>
+            </p:column>
+
+            <!--
+                                <p:column sortBy="#{item.document}" filterBy="#{item.document}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListDocumentTitle_document}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.document}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListDocumentTitle_rowguid}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.rowguid}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListDocumentTitle_modifiedDate}"/>
+                                    </f:facet>
+                                    <f:facet name="filter">
+                                        <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                                            <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                                        </p:calendar>
+                                    </f:facet>
+                                    <h:outputText value="#{item.modifiedDate}">
+                                        <f:convertDateTime pattern="#{messages.dateFormat}" />
+                                    </h:outputText>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.owner.businessEntityID}" filterBy="#{item.owner.businessEntityID}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListDocumentTitle_owner}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.owner.businessEntityID}"/>
+                                </p:column>
+            -->
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{documentController.prepareCreate}" update=":DocumentCreateForm:DocumentCreateForm" oncomplete="PF('DocumentCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":DocumentViewForm:DocumentViewForm" oncomplete="PF('DocumentViewDialog').show()" disabled="#{empty documentController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":DocumentEditForm:DocumentEditForm" oncomplete="PF('DocumentEditDialog').show()" disabled="#{empty documentController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{documentController.delete}" update=":growl,datalist" disabled="#{empty documentController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

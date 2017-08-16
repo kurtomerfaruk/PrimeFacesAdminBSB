@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="PersonphoneViewForm"
+                       renderedListener="#{personphoneController.selected != null}"
+                       widgetVar="PersonphoneViewDialog">
+
+
+            <h:outputText value="#{messages.CreatePersonphoneLabel_personphonePK_businessEntityID}"/>
+            <h:outputText value="#{personphoneController.selected.personphonePK.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreatePersonphoneLabel_personphonePK_phoneNumber}"/>
+            <h:outputText value="#{personphoneController.selected.personphonePK.phoneNumber}"/>
+
+            <h:outputText value="#{messages.CreatePersonphoneLabel_personphonePK_phoneNumberTypeID}"/>
+            <h:outputText value="#{personphoneController.selected.personphonePK.phoneNumberTypeID}"/>
+
+            <h:outputText value="#{messages.CreatePersonphoneLabel_modifiedDate}"/>
+            <h:outputText value="#{personphoneController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreatePersonphoneLabel_phonenumbertype}"/>
+            <h:outputText value="#{personphoneController.selected.phonenumbertype.name}"/>
+
+            <h:outputText value="#{messages.CreatePersonphoneLabel_person}"/>
+            <h:outputText value="#{personphoneController.selected.person.nameStyle}"/>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

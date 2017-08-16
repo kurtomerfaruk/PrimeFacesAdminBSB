@@ -8,27 +8,33 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productphoto")
@@ -40,7 +46,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Productphoto.findByLargePhotoFileName", query = "SELECT p FROM Productphoto p WHERE p.largePhotoFileName = :largePhotoFileName"),
     @NamedQuery(name = "Productphoto.findByModifiedDate", query = "SELECT p FROM Productphoto p WHERE p.modifiedDate = :modifiedDate")})
 public class Productphoto implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,6 +69,8 @@ public class Productphoto implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productphoto")
+    private List<Productproductphoto> productproductphotoList;
 
     public Productphoto() {
     }
@@ -123,6 +130,15 @@ public class Productphoto implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Productproductphoto> getProductproductphotoList() {
+        return productproductphotoList;
+    }
+
+    public void setProductproductphotoList(List<Productproductphoto> productproductphotoList) {
+        this.productproductphotoList = productproductphotoList;
     }
 
     @Override

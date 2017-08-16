@@ -4,39 +4,53 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="SpecialofferproductEditDlg" widgetVar="SpecialofferproductEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSpecialofferproductTitle}" closeOnEscape="true">
 
-            <h:form id="SpecialofferproductEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{specialofferproductController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditSpecialofferproductLabel_specialofferproductPK_specialOfferID}" for="specialofferproductPK_specialOfferID" />
-                        <h:outputText id="specialofferproductPK_specialOfferID" value="#{specialofferproductController.selected.specialofferproductPK.specialOfferID}" />
+        <coco:editpage id="SpecialofferproductEditForm"
+                       renderedListener="#{specialofferproductController.selected != null}"
+                       widgetVar="SpecialofferproductEditDialog"
+                       actionListener="#{specialofferproductController.save}"
+                       listForm="SpecialofferproductListForm">
 
 
-                        <h:outputLabel value="#{messages.EditSpecialofferproductLabel_specialofferproductPK_productID}" for="specialofferproductPK_productID" />
-                        <h:outputText id="specialofferproductPK_productID" value="#{specialofferproductController.selected.specialofferproductPK.productID}" />
+            <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_specialofferproductPK_specialOfferID}" for="specialofferproductPK_specialOfferID" />
+            <p:inputText id="specialofferproductPK_specialOfferID" value="#{specialofferproductController.selected.specialofferproductPK.specialOfferID}" title="#{messages.CreateSpecialofferproductTitle_specialofferproductPK_specialOfferID}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_specialofferproductPK_specialOfferID}"/>
 
-                        <p:outputLabel value="#{messages.EditSpecialofferproductLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{specialofferproductController.selected.rowguid}" title="#{messages.EditSpecialofferproductTitle_rowguid}" required="true" requiredMessage="#{messages.EditSpecialofferproductRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_specialofferproductPK_productID}" for="specialofferproductPK_productID" />
+            <p:inputText id="specialofferproductPK_productID" value="#{specialofferproductController.selected.specialofferproductPK.productID}" title="#{messages.CreateSpecialofferproductTitle_specialofferproductPK_productID}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_specialofferproductPK_productID}"/>
 
-                        <p:outputLabel value="#{messages.EditSpecialofferproductLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{specialofferproductController.selected.modifiedDate}" title="#{messages.EditSpecialofferproductTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSpecialofferproductRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{specialofferproductController.save}" value="#{messages.Save}" update="display,:SpecialofferproductListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SpecialofferproductEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SpecialofferproductEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{specialofferproductController.selected.rowguid}" title="#{messages.CreateSpecialofferproductTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{specialofferproductController.selected.modifiedDate}" title="#{messages.CreateSpecialofferproductTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_specialoffer}" for="specialoffer" />
+            <p:selectOneMenu id="specialoffer" value="#{specialofferproductController.selected.specialoffer}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_specialoffer}" converter="specialofferConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{specialofferController.items}"
+                               var="specialofferItem"
+                               itemValue="#{specialofferItem}"
+                               itemLabel="#{specialofferItem.description.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateSpecialofferproductLabel_product}" for="product" />
+            <p:selectOneMenu id="product" value="#{specialofferproductController.selected.product}" required="true" requiredMessage="#{messages.CreateSpecialofferproductRequiredMessage_product}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productItem"
+                               itemValue="#{productItem}"
+                               itemLabel="#{productItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

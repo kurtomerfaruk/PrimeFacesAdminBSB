@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="PersonListForm" class="form-height">
+
+        <p:contextMenu id="PersonDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('PersonListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('PersonListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('PersonListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('PersonListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Businessentity #{messages.View}" icon="fa fa-search"  actionListener="#{personController.prepareBusinessentity}" update=":BusinessentityViewForm" oncomplete="PF('BusinessentityViewDialog').show()" disabled="#{empty personController.selected.businessentity}"/>  
+            <p:menuitem value="#{messages.PersonMenuItem_customerList}" icon="fa fa-search"  action="#{personController.navigateCustomerList}" disabled="#{empty personController.selected.customerList}" ajax="false"/>  
+            <p:menuitem value="Password #{messages.View}" icon="fa fa-search"  actionListener="#{personController.preparePassword}" update=":PasswordViewForm" oncomplete="PF('PasswordViewDialog').show()" disabled="#{empty personController.selected.password}"/>  
+            <p:menuitem value="#{messages.PersonMenuItem_emailaddressList}" icon="fa fa-search"  action="#{personController.navigateEmailaddressList}" disabled="#{empty personController.selected.emailaddressList}" ajax="false"/>  
+            <p:menuitem value="#{messages.PersonMenuItem_personphoneList}" icon="fa fa-search"  action="#{personController.navigatePersonphoneList}" disabled="#{empty personController.selected.personphoneList}" ajax="false"/>  
+            <p:menuitem value="#{messages.PersonMenuItem_businessentitycontactList}" icon="fa fa-search"  action="#{personController.navigateBusinessentitycontactList}" disabled="#{empty personController.selected.businessentitycontactList}" ajax="false"/>  
+            <p:menuitem value="Employee #{messages.View}" icon="fa fa-search"  actionListener="#{personController.prepareEmployee}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty personController.selected.employee}"/>  
+            <p:menuitem value="#{messages.PersonMenuItem_personcreditcardList}" icon="fa fa-search"  action="#{personController.navigatePersoncreditcardList}" disabled="#{empty personController.selected.personcreditcardList}" ajax="false"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{personController.lazyItems}"
+                        rowKey="#{item.businessEntityID}"
+                        selection="#{personController.selected}"
+                        filtered="#{personController.filtered}"
+                        rowselect=":PersonListForm:datalist:datalist:createButton,:PersonListForm:datalist:datalist:viewButton,:PersonListForm:datalist:datalist:editButton,:PersonListForm:datalist:datalist:deleteButton,:PersonListForm:PersonDataTableContextMenu"
+                        rowDblselect="document.getElementById('PersonListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":PersonListForm:datalist:datalist:createButton :PersonListForm:datalist:datalist:viewButton :PersonListForm:datalist:datalist:editButton :PersonListForm:datalist:datalist:deleteButton"
+                        selectListener="#{personController.resetParents}">
+
+
+
+
+            <f:facet name="header">
+                #{messages.ListPersonTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.businessEntityID}" filterBy="#{item.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessEntityID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.personType}" filterBy="#{item.personType}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_personType}"/>
+                </f:facet>
+                <h:outputText value="#{item.personType}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.nameStyle}" filterBy="#{item.nameStyle}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_nameStyle}"/>
+                </f:facet>
+                <h:selectBooleanCheckbox id="nameStyle" value="#{item.nameStyle}" title="#{messages.EditPersonTitle_nameStyle}" required="true" requiredMessage="#{messages.EditPersonRequiredMessage_nameStyle}" disabled="true"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.title}" filterBy="#{item.title}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_title}"/>
+                </f:facet>
+                <h:outputText value="#{item.title}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.firstName}" filterBy="#{item.firstName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_firstName}"/>
+                </f:facet>
+                <h:outputText value="#{item.firstName}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.middleName}" filterBy="#{item.middleName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_middleName}"/>
+                </f:facet>
+                <h:outputText value="#{item.middleName}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.lastName}" filterBy="#{item.lastName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_lastName}"/>
+                </f:facet>
+                <h:outputText value="#{item.lastName}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.suffix}" filterBy="#{item.suffix}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_suffix}"/>
+                </f:facet>
+                <h:outputText value="#{item.suffix}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.emailPromotion}" filterBy="#{item.emailPromotion}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_emailPromotion}"/>
+                </f:facet>
+                <h:outputText value="#{item.emailPromotion}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.additionalContactInfo}" filterBy="#{item.additionalContactInfo}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonTitle_additionalContactInfo}"/>
+                </f:facet>
+                <h:outputText value="#{item.additionalContactInfo}"/>
+            </p:column>
+
+            <!--
+                                <p:column sortBy="#{item.demographics}" filterBy="#{item.demographics}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListPersonTitle_demographics}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.demographics}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListPersonTitle_rowguid}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.rowguid}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListPersonTitle_modifiedDate}"/>
+                                    </f:facet>
+                                    <f:facet name="filter">
+                                        <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                                            <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                                        </p:calendar>
+                                    </f:facet>
+                                    <h:outputText value="#{item.modifiedDate}">
+                                        <f:convertDateTime pattern="#{messages.dateFormat}" />
+                                    </h:outputText>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.businessentity.businessEntityID}" filterBy="#{item.businessentity.businessEntityID}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListPersonTitle_businessentity}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.businessentity.businessEntityID}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.password.businessEntityID}" filterBy="#{item.password.businessEntityID}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListPersonTitle_password}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.password.businessEntityID}"/>
+                                </p:column>
+            -->
+            <!--
+                                <p:column sortBy="#{item.employee.businessEntityID}" filterBy="#{item.employee.businessEntityID}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListPersonTitle_employee}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.employee.businessEntityID}"/>
+                                </p:column>
+            -->
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{personController.prepareCreate}" update=":PersonCreateForm:PersonCreateForm" oncomplete="PF('PersonCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":PersonViewForm:PersonViewForm" oncomplete="PF('PersonViewDialog').show()" disabled="#{empty personController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":PersonEditForm:PersonEditForm" oncomplete="PF('PersonEditDialog').show()" disabled="#{empty personController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{personController.delete}" update=":growl,datalist" disabled="#{empty personController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

@@ -17,7 +17,7 @@ import org.omnifaces.util.Servlets;
 /**
  *
  * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 14/02/2017 09:19:27
  */
 @WebFilter(filterName = "AuthorizationFilter", urlPatterns = {"/*"})

@@ -4,33 +4,25 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="IllustrationCreateDlg" widgetVar="IllustrationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateIllustrationTitle}" closeOnEscape="true">
+        <coco:createpage id="IllustrationCreateForm"
+                         renderedListener="#{illustrationController.selected != null}"
+                         widgetVar="IllustrationCreateDialog"
+                         actionListener="#{illustrationController.saveNew}"
+                         listForm="IllustrationListForm">
 
-            <h:form id="IllustrationCreateForm">
 
-                <h:panelGroup id="display" rendered="#{illustrationController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateIllustrationLabel_diagram}" for="diagram" />
+            <p:inputTextarea rows="4" id="diagram" value="#{illustrationController.selected.diagram}" title="#{messages.CreateIllustrationTitle_diagram}"  styleClass="full-width"/>
 
-                        <p:outputLabel value="#{messages.CreateIllustrationLabel_diagram}" for="diagram" />
-                        <p:inputTextarea rows="4" cols="30" id="diagram" value="#{illustrationController.selected.diagram}" title="#{messages.CreateIllustrationTitle_diagram}" />
+            <p:outputLabel value="#{messages.CreateIllustrationLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{illustrationController.selected.modifiedDate}" title="#{messages.CreateIllustrationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateIllustrationRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateIllustrationLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{illustrationController.selected.modifiedDate}" title="#{messages.CreateIllustrationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateIllustrationRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{illustrationController.saveNew}" value="#{messages.Save}" update="display,:IllustrationListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('IllustrationCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('IllustrationCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:createpage>
 
     </ui:composition>
 

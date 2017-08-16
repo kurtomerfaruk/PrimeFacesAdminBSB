@@ -4,57 +4,52 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="BillofmaterialsViewDlg" widgetVar="BillofmaterialsViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewBillofmaterialsTitle}" closeOnEscape="true">
+        <coco:viewpage id="BillofmaterialsViewForm"
+                       renderedListener="#{billofmaterialsController.selected != null}"
+                       widgetVar="BillofmaterialsViewDialog">
 
-            <h:form id="BillofmaterialsViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{billofmaterialsController.selected != null}">
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_billOfMaterialsID}"/>
+            <h:outputText value="#{billofmaterialsController.selected.billOfMaterialsID}"/>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_billOfMaterialsID}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.billOfMaterialsID}" title="#{messages.ViewBillofmaterialsTitle_billOfMaterialsID}"/>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_startDate}"/>
+            <h:outputText value="#{billofmaterialsController.selected.startDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_productAssemblyID}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.productAssemblyID}" title="#{messages.ViewBillofmaterialsTitle_productAssemblyID}"/>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_endDate}"/>
+            <h:outputText value="#{billofmaterialsController.selected.endDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_componentID}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.componentID}" title="#{messages.ViewBillofmaterialsTitle_componentID}"/>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_BOMLevel}"/>
+            <h:outputText value="#{billofmaterialsController.selected.BOMLevel}"/>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_startDate}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.startDate}" title="#{messages.ViewBillofmaterialsTitle_startDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_perAssemblyQty}"/>
+            <h:outputText value="#{billofmaterialsController.selected.perAssemblyQty}"/>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_endDate}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.endDate}" title="#{messages.ViewBillofmaterialsTitle_endDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_modifiedDate}"/>
+            <h:outputText value="#{billofmaterialsController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_unitMeasureCode}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.unitMeasureCode}" title="#{messages.ViewBillofmaterialsTitle_unitMeasureCode}"/>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_unitMeasureCode}"/>
+            <h:outputText value="#{billofmaterialsController.selected.unitMeasureCode.name}"/>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_BOMLevel}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.BOMLevel}" title="#{messages.ViewBillofmaterialsTitle_BOMLevel}"/>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_productAssemblyID}"/>
+            <h:outputText value="#{billofmaterialsController.selected.productAssemblyID.name}"/>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_perAssemblyQty}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.perAssemblyQty}" title="#{messages.ViewBillofmaterialsTitle_perAssemblyQty}"/>
+            <h:outputText value="#{messages.CreateBillofmaterialsLabel_componentID}"/>
+            <h:outputText value="#{billofmaterialsController.selected.componentID.name}"/>
 
-                        <h:outputText value="#{messages.ViewBillofmaterialsLabel_modifiedDate}"/>
-                        <h:outputText value="#{billofmaterialsController.selected.modifiedDate}" title="#{messages.ViewBillofmaterialsTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('BillofmaterialsViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

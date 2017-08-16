@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="TransactionhistoryarchiveViewForm"
+                       renderedListener="#{transactionhistoryarchiveController.selected != null}"
+                       widgetVar="TransactionhistoryarchiveViewDialog">
+
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_transactionID}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.transactionID}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_productID}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.productID}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_referenceOrderID}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.referenceOrderID}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_referenceOrderLineID}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.referenceOrderLineID}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_transactionDate}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.transactionDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_transactionType}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.transactionType}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_quantity}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.quantity}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_actualCost}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.actualCost}"/>
+
+            <h:outputText value="#{messages.CreateTransactionhistoryarchiveLabel_modifiedDate}"/>
+            <h:outputText value="#{transactionhistoryarchiveController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

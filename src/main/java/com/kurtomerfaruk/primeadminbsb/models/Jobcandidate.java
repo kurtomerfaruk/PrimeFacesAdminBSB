@@ -11,10 +11,13 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,9 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "jobcandidate")
@@ -36,18 +40,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Jobcandidate.findAll", query = "SELECT j FROM Jobcandidate j"),
     @NamedQuery(name = "Jobcandidate.findByJobCandidateID", query = "SELECT j FROM Jobcandidate j WHERE j.jobCandidateID = :jobCandidateID"),
-    @NamedQuery(name = "Jobcandidate.findByEmployeeID", query = "SELECT j FROM Jobcandidate j WHERE j.employeeID = :employeeID"),
     @NamedQuery(name = "Jobcandidate.findByModifiedDate", query = "SELECT j FROM Jobcandidate j WHERE j.modifiedDate = :modifiedDate")})
 public class Jobcandidate implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "JobCandidateID")
     private Integer jobCandidateID;
-    @Column(name = "EmployeeID")
-    private Integer employeeID;
     @Lob
     @Size(max = 65535)
     @Column(name = "Resume")
@@ -57,6 +57,9 @@ public class Jobcandidate implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "BusinessEntityID", referencedColumnName = "BusinessEntityID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee businessEntityID;
 
     public Jobcandidate() {
     }
@@ -78,14 +81,6 @@ public class Jobcandidate implements Serializable {
         this.jobCandidateID = jobCandidateID;
     }
 
-    public Integer getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(Integer employeeID) {
-        this.employeeID = employeeID;
-    }
-
     public String getResume() {
         return resume;
     }
@@ -100,6 +95,14 @@ public class Jobcandidate implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Employee getBusinessEntityID() {
+        return businessEntityID;
+    }
+
+    public void setBusinessEntityID(Employee businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     @Override

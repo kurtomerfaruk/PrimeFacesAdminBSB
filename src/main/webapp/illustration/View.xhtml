@@ -4,35 +4,30 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="IllustrationViewDlg" widgetVar="IllustrationViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewIllustrationTitle}" closeOnEscape="true">
+        <coco:viewpage id="IllustrationViewForm"
+                       renderedListener="#{illustrationController.selected != null}"
+                       widgetVar="IllustrationViewDialog">
 
-            <h:form id="IllustrationViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{illustrationController.selected != null}">
+            <h:outputText value="#{messages.CreateIllustrationLabel_illustrationID}"/>
+            <h:outputText value="#{illustrationController.selected.illustrationID}"/>
 
-                        <h:outputText value="#{messages.ViewIllustrationLabel_illustrationID}"/>
-                        <h:outputText value="#{illustrationController.selected.illustrationID}" title="#{messages.ViewIllustrationTitle_illustrationID}"/>
+            <h:outputText value="#{messages.CreateIllustrationLabel_diagram}"/>
+            <h:outputText value="#{illustrationController.selected.diagram}"/>
 
-                        <h:outputText value="#{messages.ViewIllustrationLabel_diagram}"/>
-                        <h:outputText value="#{illustrationController.selected.diagram}" title="#{messages.ViewIllustrationTitle_diagram}"/>
+            <h:outputText value="#{messages.CreateIllustrationLabel_modifiedDate}"/>
+            <h:outputText value="#{illustrationController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewIllustrationLabel_modifiedDate}"/>
-                        <h:outputText value="#{illustrationController.selected.modifiedDate}" title="#{messages.ViewIllustrationTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('IllustrationViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

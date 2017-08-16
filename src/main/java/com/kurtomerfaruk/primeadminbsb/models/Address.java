@@ -2,27 +2,35 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "address")
@@ -33,11 +41,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Address.findByAddressLine1", query = "SELECT a FROM Address a WHERE a.addressLine1 = :addressLine1"),
     @NamedQuery(name = "Address.findByAddressLine2", query = "SELECT a FROM Address a WHERE a.addressLine2 = :addressLine2"),
     @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city"),
-    @NamedQuery(name = "Address.findByStateProvinceID", query = "SELECT a FROM Address a WHERE a.stateProvinceID = :stateProvinceID"),
     @NamedQuery(name = "Address.findByPostalCode", query = "SELECT a FROM Address a WHERE a.postalCode = :postalCode"),
+    @NamedQuery(name = "Address.findByRowguid", query = "SELECT a FROM Address a WHERE a.rowguid = :rowguid"),
     @NamedQuery(name = "Address.findByModifiedDate", query = "SELECT a FROM Address a WHERE a.modifiedDate = :modifiedDate")})
 public class Address implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,23 +66,31 @@ public class Address implements Serializable {
     private String city;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "StateProvinceID")
-    private int stateProvinceID;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "PostalCode")
     private String postalCode;
+    @Lob
+    @Column(name = "SpatialLocation")
+    private byte[] spatialLocation;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
+    private List<Businessentityaddress> businessentityaddressList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipToAddressID")
+    private List<Salesorderheader> salesorderheaderList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billToAddressID")
+    private List<Salesorderheader> salesorderheaderList1;
+    @JoinColumn(name = "StateProvinceID", referencedColumnName = "StateProvinceID")
+    @ManyToOne(optional = false)
+    private Stateprovince stateProvinceID;
 
     public Address() {
     }
@@ -84,11 +99,10 @@ public class Address implements Serializable {
         this.addressID = addressID;
     }
 
-    public Address(Integer addressID, String addressLine1, String city, int stateProvinceID, String postalCode, byte[] rowguid, Date modifiedDate) {
+    public Address(Integer addressID, String addressLine1, String city, String postalCode, String rowguid, Date modifiedDate) {
         this.addressID = addressID;
         this.addressLine1 = addressLine1;
         this.city = city;
-        this.stateProvinceID = stateProvinceID;
         this.postalCode = postalCode;
         this.rowguid = rowguid;
         this.modifiedDate = modifiedDate;
@@ -126,14 +140,6 @@ public class Address implements Serializable {
         this.city = city;
     }
 
-    public int getStateProvinceID() {
-        return stateProvinceID;
-    }
-
-    public void setStateProvinceID(int stateProvinceID) {
-        this.stateProvinceID = stateProvinceID;
-    }
-
     public String getPostalCode() {
         return postalCode;
     }
@@ -142,11 +148,19 @@ public class Address implements Serializable {
         this.postalCode = postalCode;
     }
 
-    public byte[] getRowguid() {
+    public byte[] getSpatialLocation() {
+        return spatialLocation;
+    }
+
+    public void setSpatialLocation(byte[] spatialLocation) {
+        this.spatialLocation = spatialLocation;
+    }
+
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -156,6 +170,41 @@ public class Address implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Businessentityaddress> getBusinessentityaddressList() {
+        return businessentityaddressList;
+    }
+
+    public void setBusinessentityaddressList(List<Businessentityaddress> businessentityaddressList) {
+        this.businessentityaddressList = businessentityaddressList;
+    }
+
+    @XmlTransient
+    public List<Salesorderheader> getSalesorderheaderList() {
+        return salesorderheaderList;
+    }
+
+    public void setSalesorderheaderList(List<Salesorderheader> salesorderheaderList) {
+        this.salesorderheaderList = salesorderheaderList;
+    }
+
+    @XmlTransient
+    public List<Salesorderheader> getSalesorderheaderList1() {
+        return salesorderheaderList1;
+    }
+
+    public void setSalesorderheaderList1(List<Salesorderheader> salesorderheaderList1) {
+        this.salesorderheaderList1 = salesorderheaderList1;
+    }
+
+    public Stateprovince getStateProvinceID() {
+        return stateProvinceID;
+    }
+
+    public void setStateProvinceID(Stateprovince stateProvinceID) {
+        this.stateProvinceID = stateProvinceID;
     }
 
     @Override

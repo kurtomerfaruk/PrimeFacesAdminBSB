@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.kurtomerfaruk.primeadminbsb.services;
 
 import com.kurtomerfaruk.primeadminbsb.models.Addresstype;
@@ -7,14 +13,13 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Omer Faruk KURT 
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:56:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
  * @mail kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:13:02
  */
 @Stateless
 public class AddresstypeFacade extends AbstractFacade<Addresstype> {
-
     @PersistenceContext(unitName = "ADMINBSB_PU")
     private EntityManager em;
 

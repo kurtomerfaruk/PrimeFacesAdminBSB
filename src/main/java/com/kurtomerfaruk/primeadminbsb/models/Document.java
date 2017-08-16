@@ -8,48 +8,60 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "document")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d"),
-    @NamedQuery(name = "Document.findByDocumentID", query = "SELECT d FROM Document d WHERE d.documentID = :documentID"),
+    @NamedQuery(name = "Document.findByDocumentNode", query = "SELECT d FROM Document d WHERE d.documentNode = :documentNode"),
+    @NamedQuery(name = "Document.findByDocumentLevel", query = "SELECT d FROM Document d WHERE d.documentLevel = :documentLevel"),
     @NamedQuery(name = "Document.findByTitle", query = "SELECT d FROM Document d WHERE d.title = :title"),
+    @NamedQuery(name = "Document.findByFolderFlag", query = "SELECT d FROM Document d WHERE d.folderFlag = :folderFlag"),
+    @NamedQuery(name = "Document.findByFileName", query = "SELECT d FROM Document d WHERE d.fileName = :fileName"),
     @NamedQuery(name = "Document.findByFileExtension", query = "SELECT d FROM Document d WHERE d.fileExtension = :fileExtension"),
     @NamedQuery(name = "Document.findByRevision", query = "SELECT d FROM Document d WHERE d.revision = :revision"),
     @NamedQuery(name = "Document.findByChangeNumber", query = "SELECT d FROM Document d WHERE d.changeNumber = :changeNumber"),
     @NamedQuery(name = "Document.findByStatus", query = "SELECT d FROM Document d WHERE d.status = :status"),
+    @NamedQuery(name = "Document.findByRowguid", query = "SELECT d FROM Document d WHERE d.rowguid = :rowguid"),
     @NamedQuery(name = "Document.findByModifiedDate", query = "SELECT d FROM Document d WHERE d.modifiedDate = :modifiedDate")})
 public class Document implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "DocumentID")
-    private Integer documentID;
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "DocumentNode")
+    private String documentNode;
+    @Column(name = "DocumentLevel")
+    private Short documentLevel;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -57,8 +69,11 @@ public class Document implements Serializable {
     private String title;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 16777215)
+    @Column(name = "FolderFlag")
+    private boolean folderFlag;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 400)
     @Column(name = "FileName")
     private String fileName;
     @Basic(optional = false)
@@ -80,7 +95,7 @@ public class Document implements Serializable {
     @Column(name = "Status")
     private short status;
     @Lob
-    @Size(max = 16777215)
+    @Size(max = 2147483647)
     @Column(name = "DocumentSummary")
     private String documentSummary;
     @Lob
@@ -88,34 +103,54 @@ public class Document implements Serializable {
     private byte[] document;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 64)
+    @Column(name = "rowguid")
+    private String rowguid;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "Owner", referencedColumnName = "BusinessEntityID")
+    @ManyToOne(optional = false)
+    private Employee owner;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
+    private List<Productdocument> productdocumentList;
 
     public Document() {
     }
 
-    public Document(Integer documentID) {
-        this.documentID = documentID;
+    public Document(String documentNode) {
+        this.documentNode = documentNode;
     }
 
-    public Document(Integer documentID, String title, String fileName, String fileExtension, String revision, int changeNumber, short status, Date modifiedDate) {
-        this.documentID = documentID;
+    public Document(String documentNode, String title, boolean folderFlag, String fileName, String fileExtension, String revision, int changeNumber, short status, String rowguid, Date modifiedDate) {
+        this.documentNode = documentNode;
         this.title = title;
+        this.folderFlag = folderFlag;
         this.fileName = fileName;
         this.fileExtension = fileExtension;
         this.revision = revision;
         this.changeNumber = changeNumber;
         this.status = status;
+        this.rowguid = rowguid;
         this.modifiedDate = modifiedDate;
     }
 
-    public Integer getDocumentID() {
-        return documentID;
+    public String getDocumentNode() {
+        return documentNode;
     }
 
-    public void setDocumentID(Integer documentID) {
-        this.documentID = documentID;
+    public void setDocumentNode(String documentNode) {
+        this.documentNode = documentNode;
+    }
+
+    public Short getDocumentLevel() {
+        return documentLevel;
+    }
+
+    public void setDocumentLevel(Short documentLevel) {
+        this.documentLevel = documentLevel;
     }
 
     public String getTitle() {
@@ -124,6 +159,14 @@ public class Document implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean getFolderFlag() {
+        return folderFlag;
+    }
+
+    public void setFolderFlag(boolean folderFlag) {
+        this.folderFlag = folderFlag;
     }
 
     public String getFileName() {
@@ -182,6 +225,14 @@ public class Document implements Serializable {
         this.document = document;
     }
 
+    public String getRowguid() {
+        return rowguid;
+    }
+
+    public void setRowguid(String rowguid) {
+        this.rowguid = rowguid;
+    }
+
     public Date getModifiedDate() {
         return modifiedDate;
     }
@@ -190,10 +241,27 @@ public class Document implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    public Employee getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Employee owner) {
+        this.owner = owner;
+    }
+
+    @XmlTransient
+    public List<Productdocument> getProductdocumentList() {
+        return productdocumentList;
+    }
+
+    public void setProductdocumentList(List<Productdocument> productdocumentList) {
+        this.productdocumentList = productdocumentList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (documentID != null ? documentID.hashCode() : 0);
+        hash += (documentNode != null ? documentNode.hashCode() : 0);
         return hash;
     }
 
@@ -204,7 +272,7 @@ public class Document implements Serializable {
             return false;
         }
         Document other = (Document) object;
-        if ((this.documentID == null && other.documentID != null) || (this.documentID != null && !this.documentID.equals(other.documentID))) {
+        if ((this.documentNode == null && other.documentNode != null) || (this.documentNode != null && !this.documentNode.equals(other.documentNode))) {
             return false;
         }
         return true;
@@ -212,7 +280,7 @@ public class Document implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.Document[ documentID=" + documentID + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.Document[ documentNode=" + documentNode + " ]";
     }
 
 }

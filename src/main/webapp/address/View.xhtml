@@ -8,38 +8,43 @@
 
     <ui:composition>
 
-        <coco:view id="AddressViewForm"
-                   widgetVar="AddressViewDialog"
-                   renderedListener="#{addressController.selected != null}">
+        <coco:viewpage id="AddressViewForm"
+                       renderedListener="#{addressController.selected != null}"
+                       widgetVar="AddressViewDialog">
 
-            <h:outputText value="#{messages.ViewAddressLabel_addressID}"/>
-            <h:outputText value="#{addressController.selected.addressID}" title="#{messages.ViewAddressTitle_addressID}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_addressLine1}"/>
-            <h:outputText value="#{addressController.selected.addressLine1}" title="#{messages.ViewAddressTitle_addressLine1}"/>
+            <h:outputText value="#{messages.CreateAddressLabel_addressID}"/>
+            <h:outputText value="#{addressController.selected.addressID}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_addressLine2}"/>
-            <h:outputText value="#{addressController.selected.addressLine2}" title="#{messages.ViewAddressTitle_addressLine2}"/>
+            <h:outputText value="#{messages.CreateAddressLabel_addressLine1}"/>
+            <h:outputText value="#{addressController.selected.addressLine1}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_city}"/>
-            <h:outputText value="#{addressController.selected.city}" title="#{messages.ViewAddressTitle_city}"/>
+            <h:outputText value="#{messages.CreateAddressLabel_addressLine2}"/>
+            <h:outputText value="#{addressController.selected.addressLine2}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_stateProvinceID}"/>
-            <h:outputText value="#{addressController.selected.stateProvinceID}" title="#{messages.ViewAddressTitle_stateProvinceID}"/>
+            <h:outputText value="#{messages.CreateAddressLabel_city}"/>
+            <h:outputText value="#{addressController.selected.city}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_postalCode}"/>
-            <h:outputText value="#{addressController.selected.postalCode}" title="#{messages.ViewAddressTitle_postalCode}"/>
+            <h:outputText value="#{messages.CreateAddressLabel_postalCode}"/>
+            <h:outputText value="#{addressController.selected.postalCode}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_rowguid}"/>
-            <h:outputText value="#{addressController.selected.rowguid}" title="#{messages.ViewAddressTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateAddressLabel_spatialLocation}"/>
+            <h:outputText value="#{addressController.selected.spatialLocation}"/>
 
-            <h:outputText value="#{messages.ViewAddressLabel_modifiedDate}"/>
-            <h:outputText value="#{addressController.selected.modifiedDate}" title="#{messages.ViewAddressTitle_modifiedDate}">
-                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            <h:outputText value="#{messages.CreateAddressLabel_rowguid}"/>
+            <h:outputText value="#{addressController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreateAddressLabel_modifiedDate}"/>
+            <h:outputText value="#{addressController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
             </h:outputText>
 
-        </coco:view>
+            <h:outputText value="#{messages.CreateAddressLabel_stateProvinceID}"/>
+            <h:outputText value="#{addressController.selected.stateProvinceID.name}"/>
+
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

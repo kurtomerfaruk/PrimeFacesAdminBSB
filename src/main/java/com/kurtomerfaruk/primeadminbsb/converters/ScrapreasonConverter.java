@@ -11,11 +11,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+
 @FacesConverter(value = "scrapreasonConverter")
 public class ScrapreasonConverter implements Converter {
 
     @Inject
     private ScrapreasonFacade ejbFacade;
+
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -25,22 +27,22 @@ public class ScrapreasonConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    java.lang.Integer getKey(String value) {
-        java.lang.Integer key;
-        key = Integer.valueOf(value);
+    java.lang.Short getKey(String value) {
+        java.lang.Short key;
+            key = Short.valueOf(value);
         return key;
     }
 
-    String getStringKey(java.lang.Integer value) {
+    String getStringKey(java.lang.Short value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value);
+            sb.append(value);
         return sb.toString();
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null
-                || (object instanceof String && ((String) object).length() == 0)) {
+        if (object == null || 
+            (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
         if (object instanceof Scrapreason) {

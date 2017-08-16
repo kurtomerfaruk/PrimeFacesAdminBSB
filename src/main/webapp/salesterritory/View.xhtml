@@ -4,56 +4,51 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="SalesterritoryViewDlg" widgetVar="SalesterritoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewSalesterritoryTitle}" closeOnEscape="true">
+        <coco:viewpage id="SalesterritoryViewForm"
+                       renderedListener="#{salesterritoryController.selected != null}"
+                       widgetVar="SalesterritoryViewDialog">
 
-            <h:form id="SalesterritoryViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{salesterritoryController.selected != null}">
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_territoryID}"/>
+            <h:outputText value="#{salesterritoryController.selected.territoryID}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_territoryID}"/>
-                        <h:outputText value="#{salesterritoryController.selected.territoryID}" title="#{messages.ViewSalesterritoryTitle_territoryID}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_name}"/>
+            <h:outputText value="#{salesterritoryController.selected.name}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_name}"/>
-                        <h:outputText value="#{salesterritoryController.selected.name}" title="#{messages.ViewSalesterritoryTitle_name}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_group}"/>
+            <h:outputText value="#{salesterritoryController.selected.group}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_countryRegionCode}"/>
-                        <h:outputText value="#{salesterritoryController.selected.countryRegionCode}" title="#{messages.ViewSalesterritoryTitle_countryRegionCode}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_salesYTD}"/>
+            <h:outputText value="#{salesterritoryController.selected.salesYTD}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_group}"/>
-                        <h:outputText value="#{salesterritoryController.selected.group}" title="#{messages.ViewSalesterritoryTitle_group}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_salesLastYear}"/>
+            <h:outputText value="#{salesterritoryController.selected.salesLastYear}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_salesYTD}"/>
-                        <h:outputText value="#{salesterritoryController.selected.salesYTD}" title="#{messages.ViewSalesterritoryTitle_salesYTD}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_costYTD}"/>
+            <h:outputText value="#{salesterritoryController.selected.costYTD}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_salesLastYear}"/>
-                        <h:outputText value="#{salesterritoryController.selected.salesLastYear}" title="#{messages.ViewSalesterritoryTitle_salesLastYear}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_costLastYear}"/>
+            <h:outputText value="#{salesterritoryController.selected.costLastYear}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_costYTD}"/>
-                        <h:outputText value="#{salesterritoryController.selected.costYTD}" title="#{messages.ViewSalesterritoryTitle_costYTD}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_rowguid}"/>
+            <h:outputText value="#{salesterritoryController.selected.rowguid}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_costLastYear}"/>
-                        <h:outputText value="#{salesterritoryController.selected.costLastYear}" title="#{messages.ViewSalesterritoryTitle_costLastYear}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_modifiedDate}"/>
+            <h:outputText value="#{salesterritoryController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_rowguid}"/>
-                        <h:outputText value="#{salesterritoryController.selected.rowguid}" title="#{messages.ViewSalesterritoryTitle_rowguid}"/>
+            <h:outputText value="#{messages.CreateSalesterritoryLabel_countryRegionCode}"/>
+            <h:outputText value="#{salesterritoryController.selected.countryRegionCode.name}"/>
 
-                        <h:outputText value="#{messages.ViewSalesterritoryLabel_modifiedDate}"/>
-                        <h:outputText value="#{salesterritoryController.selected.modifiedDate}" title="#{messages.ViewSalesterritoryTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('SalesterritoryViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

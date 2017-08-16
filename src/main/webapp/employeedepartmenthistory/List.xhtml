@@ -4,106 +4,147 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="EmployeedepartmenthistoryListForm">
+    <h:form id="EmployeedepartmenthistoryListForm" class="form-height">
 
-        <p:panel header="#{messages.ListEmployeedepartmenthistoryTitle}">
-            <p:contextMenu id="EmployeedepartmenthistoryDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{employeedepartmenthistoryController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{employeedepartmenthistoryController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{employeedepartmenthistoryController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.employeedepartmenthistoryPK}"
-                -->
+        <p:contextMenu id="EmployeedepartmenthistoryDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('EmployeedepartmenthistoryListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Shift #{messages.View}" icon="fa fa-search"  actionListener="#{employeedepartmenthistoryController.prepareShift}" update=":ShiftViewForm" oncomplete="PF('ShiftViewDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected.shift}"/>  
+            <p:menuitem value="Employee #{messages.View}" icon="fa fa-search"  actionListener="#{employeedepartmenthistoryController.prepareEmployee}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected.employee}"/>  
+            <p:menuitem value="Department #{messages.View}" icon="fa fa-search"  actionListener="#{employeedepartmenthistoryController.prepareDepartment}" update=":DepartmentViewForm" oncomplete="PF('DepartmentViewDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected.department}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{employeedepartmenthistoryController.lazyItems}"
+                        rowKey="#{item.employeedepartmenthistoryPK}"
+                        selection="#{employeedepartmenthistoryController.selected}"
+                        filtered="#{employeedepartmenthistoryController.filtered}"
+                        rowselect=":EmployeedepartmenthistoryListForm:datalist:datalist:createButton,:EmployeedepartmenthistoryListForm:datalist:datalist:viewButton,:EmployeedepartmenthistoryListForm:datalist:datalist:editButton,:EmployeedepartmenthistoryListForm:datalist:datalist:deleteButton,:EmployeedepartmenthistoryListForm:EmployeedepartmenthistoryDataTableContextMenu"
+                        rowDblselect="document.getElementById('EmployeedepartmenthistoryListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":EmployeedepartmenthistoryListForm:datalist:datalist:createButton :EmployeedepartmenthistoryListForm:datalist:datalist:viewButton :EmployeedepartmenthistoryListForm:datalist:datalist:editButton :EmployeedepartmenthistoryListForm:datalist:datalist:deleteButton"
+                        selectListener="#{employeedepartmenthistoryController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmployeedepartmenthistoryDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmployeedepartmenthistoryDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmployeedepartmenthistoryListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.employeedepartmenthistoryPK.employeeID}" filterBy="#{item.employeedepartmenthistoryPK.employeeID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_employeeID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeedepartmenthistoryPK.employeeID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.employeedepartmenthistoryPK.departmentID}" filterBy="#{item.employeedepartmenthistoryPK.departmentID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_departmentID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeedepartmenthistoryPK.departmentID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListEmployeedepartmenthistoryTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.employeedepartmenthistoryPK.businessEntityID}" filterBy="#{item.employeedepartmenthistoryPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.employeedepartmenthistoryPK.businessEntityID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.employeedepartmenthistoryPK.shiftID}" filterBy="#{item.employeedepartmenthistoryPK.shiftID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_shiftID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeedepartmenthistoryPK.shiftID}"/>
-                </p:column>
+            <p:column sortBy="#{item.employeedepartmenthistoryPK.departmentID}" filterBy="#{item.employeedepartmenthistoryPK.departmentID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_departmentID}"/>
+                </f:facet>
+                <h:outputText value="#{item.employeedepartmenthistoryPK.departmentID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.employeedepartmenthistoryPK.startDate}" filterBy="#{item.employeedepartmenthistoryPK.startDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_startDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeedepartmenthistoryPK.startDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.employeedepartmenthistoryPK.shiftID}" filterBy="#{item.employeedepartmenthistoryPK.shiftID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_shiftID}"/>
+                </f:facet>
+                <h:outputText value="#{item.employeedepartmenthistoryPK.shiftID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_endDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.endDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.employeedepartmenthistoryPK.startDate}" filterBy="#{item.employeedepartmenthistoryPK.startDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_startDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.employeedepartmenthistoryPK.startDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_endDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.endDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{employeedepartmenthistoryController.prepareCreate}" update=":EmployeedepartmenthistoryCreateForm" oncomplete="PF('EmployeedepartmenthistoryCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":EmployeedepartmenthistoryViewForm" oncomplete="PF('EmployeedepartmenthistoryViewDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":EmployeedepartmenthistoryEditForm" oncomplete="PF('EmployeedepartmenthistoryEditDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{employeedepartmenthistoryController.delete}" update=":growl,datalist" disabled="#{empty employeedepartmenthistoryController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.shift.name}" filterBy="#{item.shift.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_shift}"/>
+                </f:facet>
+                <h:outputText value="#{item.shift.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.employee.businessEntityID}" filterBy="#{item.employee.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_employee}"/>
+                </f:facet>
+                <h:outputText value="#{item.employee.businessEntityID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.department.name}" filterBy="#{item.department.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeedepartmenthistoryTitle_department}"/>
+                </f:facet>
+                <h:outputText value="#{item.department.name}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{employeedepartmenthistoryController.prepareCreate}" update=":EmployeedepartmenthistoryCreateForm:EmployeedepartmenthistoryCreateForm" oncomplete="PF('EmployeedepartmenthistoryCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":EmployeedepartmenthistoryViewForm:EmployeedepartmenthistoryViewForm" oncomplete="PF('EmployeedepartmenthistoryViewDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":EmployeedepartmenthistoryEditForm:EmployeedepartmenthistoryEditForm" oncomplete="PF('EmployeedepartmenthistoryEditDialog').show()" disabled="#{empty employeedepartmenthistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{employeedepartmenthistoryController.delete}" update=":growl,datalist" disabled="#{empty employeedepartmenthistoryController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

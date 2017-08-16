@@ -3,17 +3,17 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Salesterritoryhistory;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "salesterritoryhistoryController")
 @ViewScoped
 public class SalesterritoryhistoryController extends AbstractController<Salesterritoryhistory> {
-    private static final long serialVersionUID = 5439743198730342747L;
+
+    @Inject
+    private SalesterritoryController salesterritoryController;
+    @Inject
+    private SalespersonController salespersonController;
 
     public SalesterritoryhistoryController() {
         // Inform the Abstract parent controller of the concrete Salesterritoryhistory Entity
@@ -21,8 +21,45 @@ public class SalesterritoryhistoryController extends AbstractController<Salester
     }
 
     @Override
+    protected void setEmbeddableKeys() {
+        this.getSelected().getSalesterritoryhistoryPK().setBusinessEntityID(this.getSelected().getSalesperson().getBusinessEntityID());
+        this.getSelected().getSalesterritoryhistoryPK().setTerritoryID(this.getSelected().getSalesterritory().getTerritoryID());
+    }
+
+    @Override
     protected void initializeEmbeddableKey() {
         this.getSelected().setSalesterritoryhistoryPK(new com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK());
     }
 
+    /**
+     * Resets the "selected" attribute of any parent Entity controllers.
+     */
+    public void resetParents() {
+        salesterritoryController.setSelected(null);
+        salespersonController.setSelected(null);
+    }
+
+    /**
+     * Sets the "selected" attribute of the Salesterritory controller in order
+     * to display its data in its View dialog.
+     *
+     * @param event Event object for the widget that triggered an action
+     */
+    public void prepareSalesterritory(ActionEvent event) {
+        if (this.getSelected() != null && salesterritoryController.getSelected() == null) {
+            salesterritoryController.setSelected(this.getSelected().getSalesterritory());
+        }
+    }
+
+    /**
+     * Sets the "selected" attribute of the Salesperson controller in order to
+     * display its data in its View dialog.
+     *
+     * @param event Event object for the widget that triggered an action
+     */
+    public void prepareSalesperson(ActionEvent event) {
+        if (this.getSelected() != null && salespersonController.getSelected() == null) {
+            salespersonController.setSelected(this.getSelected().getSalesperson());
+        }
+    }
 }

@@ -7,14 +7,17 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,9 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "salestaxrate")
@@ -36,13 +40,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Salestaxrate.findAll", query = "SELECT s FROM Salestaxrate s"),
     @NamedQuery(name = "Salestaxrate.findBySalesTaxRateID", query = "SELECT s FROM Salestaxrate s WHERE s.salesTaxRateID = :salesTaxRateID"),
-    @NamedQuery(name = "Salestaxrate.findByStateProvinceID", query = "SELECT s FROM Salestaxrate s WHERE s.stateProvinceID = :stateProvinceID"),
     @NamedQuery(name = "Salestaxrate.findByTaxType", query = "SELECT s FROM Salestaxrate s WHERE s.taxType = :taxType"),
     @NamedQuery(name = "Salestaxrate.findByTaxRate", query = "SELECT s FROM Salestaxrate s WHERE s.taxRate = :taxRate"),
     @NamedQuery(name = "Salestaxrate.findByName", query = "SELECT s FROM Salestaxrate s WHERE s.name = :name"),
+    @NamedQuery(name = "Salestaxrate.findByRowguid", query = "SELECT s FROM Salestaxrate s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Salestaxrate.findByModifiedDate", query = "SELECT s FROM Salestaxrate s WHERE s.modifiedDate = :modifiedDate")})
 public class Salestaxrate implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,31 +54,31 @@ public class Salestaxrate implements Serializable {
     private Integer salesTaxRateID;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "StateProvinceID")
-    private int stateProvinceID;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "TaxType")
     private short taxType;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "TaxRate")
-    private double taxRate;
+    private BigDecimal taxRate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "StateProvinceID", referencedColumnName = "StateProvinceID")
+    @ManyToOne(optional = false)
+    private Stateprovince stateProvinceID;
 
     public Salestaxrate() {
     }
@@ -84,9 +87,8 @@ public class Salestaxrate implements Serializable {
         this.salesTaxRateID = salesTaxRateID;
     }
 
-    public Salestaxrate(Integer salesTaxRateID, int stateProvinceID, short taxType, double taxRate, String name, byte[] rowguid, Date modifiedDate) {
+    public Salestaxrate(Integer salesTaxRateID, short taxType, BigDecimal taxRate, String name, String rowguid, Date modifiedDate) {
         this.salesTaxRateID = salesTaxRateID;
-        this.stateProvinceID = stateProvinceID;
         this.taxType = taxType;
         this.taxRate = taxRate;
         this.name = name;
@@ -102,14 +104,6 @@ public class Salestaxrate implements Serializable {
         this.salesTaxRateID = salesTaxRateID;
     }
 
-    public int getStateProvinceID() {
-        return stateProvinceID;
-    }
-
-    public void setStateProvinceID(int stateProvinceID) {
-        this.stateProvinceID = stateProvinceID;
-    }
-
     public short getTaxType() {
         return taxType;
     }
@@ -118,11 +112,11 @@ public class Salestaxrate implements Serializable {
         this.taxType = taxType;
     }
 
-    public double getTaxRate() {
+    public BigDecimal getTaxRate() {
         return taxRate;
     }
 
-    public void setTaxRate(double taxRate) {
+    public void setTaxRate(BigDecimal taxRate) {
         this.taxRate = taxRate;
     }
 
@@ -134,11 +128,11 @@ public class Salestaxrate implements Serializable {
         this.name = name;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -148,6 +142,14 @@ public class Salestaxrate implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Stateprovince getStateProvinceID() {
+        return stateProvinceID;
+    }
+
+    public void setStateProvinceID(Stateprovince stateProvinceID) {
+        this.stateProvinceID = stateProvinceID;
     }
 
     @Override

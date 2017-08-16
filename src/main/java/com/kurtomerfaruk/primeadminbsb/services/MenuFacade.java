@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 /**
  *
  * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 27.01.2017 23:11:05
  */
 @Stateless

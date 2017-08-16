@@ -4,36 +4,50 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductdocumentCreateDlg" widgetVar="ProductdocumentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductdocumentTitle}" closeOnEscape="true">
+        <coco:createpage id="ProductdocumentCreateForm"
+                         renderedListener="#{productdocumentController.selected != null}"
+                         widgetVar="ProductdocumentCreateDialog"
+                         actionListener="#{productdocumentController.saveNew}"
+                         listForm="ProductdocumentListForm">
 
-            <h:form id="ProductdocumentCreateForm">
 
-                <h:panelGroup id="display" rendered="#{productdocumentController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateProductdocumentLabel_productdocumentPK_productID}" for="productdocumentPK_productID" />
+            <p:inputText id="productdocumentPK_productID" value="#{productdocumentController.selected.productdocumentPK.productID}" title="#{messages.CreateProductdocumentTitle_productdocumentPK_productID}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_productdocumentPK_productID}"/>
 
-                        <p:outputLabel value="#{messages.CreateProductdocumentLabel_productdocumentPK_productID}" for="productdocumentPK_productID" />
-                        <p:inputText id="productdocumentPK_productID" value="#{productdocumentController.selected.productdocumentPK.productID}" title="#{messages.CreateProductdocumentTitle_productdocumentPK_productID}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_productdocumentPK_productID}"/>
+            <p:outputLabel value="#{messages.CreateProductdocumentLabel_productdocumentPK_documentNode}" for="productdocumentPK_documentNode" />
+            <p:inputText id="productdocumentPK_documentNode" value="#{productdocumentController.selected.productdocumentPK.documentNode}" title="#{messages.CreateProductdocumentTitle_productdocumentPK_documentNode}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_productdocumentPK_documentNode}" size="255" maxlength="255"/>
 
-                        <p:outputLabel value="#{messages.CreateProductdocumentLabel_productdocumentPK_documentID}" for="productdocumentPK_documentID" />
-                        <p:inputText id="productdocumentPK_documentID" value="#{productdocumentController.selected.productdocumentPK.documentID}" title="#{messages.CreateProductdocumentTitle_productdocumentPK_documentID}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_productdocumentPK_documentID}"/>
+            <p:outputLabel value="#{messages.CreateProductdocumentLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productdocumentController.selected.modifiedDate}" title="#{messages.CreateProductdocumentTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateProductdocumentLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productdocumentController.selected.modifiedDate}" title="#{messages.CreateProductdocumentTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productdocumentController.saveNew}" value="#{messages.Save}" update="display,:ProductdocumentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductdocumentCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            <p:outputLabel value="#{messages.CreateProductdocumentLabel_product}" for="product" />
+            <p:selectOneMenu id="product" value="#{productdocumentController.selected.product}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_product}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productItem"
+                               itemValue="#{productItem}"
+                               itemLabel="#{productItem.name.toString()}"
+                               />
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductdocumentCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateProductdocumentLabel_document}" for="document" />
+            <p:selectOneMenu id="document" value="#{productdocumentController.selected.document}" required="true" requiredMessage="#{messages.CreateProductdocumentRequiredMessage_document}" converter="documentConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{documentController.items}"
+                               var="documentItem"
+                               itemValue="#{documentItem}"
+                               itemLabel="#{documentItem.fileName.toString()}"
+                               />
 
-        </p:dialog>
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

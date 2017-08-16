@@ -4,42 +4,45 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="ProductcosthistoryEditDlg" widgetVar="ProductcosthistoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductcosthistoryTitle}" closeOnEscape="true">
 
-            <h:form id="ProductcosthistoryEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productcosthistoryController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditProductcosthistoryLabel_productcosthistoryPK_productID}" for="productcosthistoryPK_productID" />
-                        <h:outputText id="productcosthistoryPK_productID" value="#{productcosthistoryController.selected.productcosthistoryPK.productID}" />
+        <coco:editpage id="ProductcosthistoryEditForm"
+                       renderedListener="#{productcosthistoryController.selected != null}"
+                       widgetVar="ProductcosthistoryEditDialog"
+                       actionListener="#{productcosthistoryController.save}"
+                       listForm="ProductcosthistoryListForm">
 
 
-                        <h:outputLabel value="#{messages.EditProductcosthistoryLabel_productcosthistoryPK_startDate}" for="productcosthistoryPK_startDate" />
-                        <h:outputText id="productcosthistoryPK_startDate" value="#{productcosthistoryController.selected.productcosthistoryPK.startDate}" />
+            <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_productcosthistoryPK_productID}" for="productcosthistoryPK_productID" />
+            <p:inputText id="productcosthistoryPK_productID" value="#{productcosthistoryController.selected.productcosthistoryPK.productID}" title="#{messages.CreateProductcosthistoryTitle_productcosthistoryPK_productID}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_productcosthistoryPK_productID}"/>
 
-                        <p:outputLabel value="#{messages.EditProductcosthistoryLabel_endDate}" for="endDate" />
-                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcosthistoryController.selected.endDate}" title="#{messages.EditProductcosthistoryTitle_endDate}"  showOn="button"/>
+            <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_productcosthistoryPK_startDate}" for="productcosthistoryPK_startDate" />
+            <p:calendar id="productcosthistoryPK_startDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productcosthistoryController.selected.productcosthistoryPK.startDate}" title="#{messages.CreateProductcosthistoryTitle_productcosthistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_productcosthistoryPK_startDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditProductcosthistoryLabel_standardCost}" for="standardCost" />
-                        <p:inputText id="standardCost" value="#{productcosthistoryController.selected.standardCost}" title="#{messages.EditProductcosthistoryTitle_standardCost}" required="true" requiredMessage="#{messages.EditProductcosthistoryRequiredMessage_standardCost}"/>
+            <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_endDate}" for="endDate" />
+            <p:calendar id="endDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productcosthistoryController.selected.endDate}" title="#{messages.CreateProductcosthistoryTitle_endDate}"  mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditProductcosthistoryLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcosthistoryController.selected.modifiedDate}" title="#{messages.EditProductcosthistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductcosthistoryRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productcosthistoryController.save}" value="#{messages.Save}" update="display,:ProductcosthistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductcosthistoryEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductcosthistoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_standardCost}" for="standardCost" />
+            <p:inputText id="standardCost" value="#{productcosthistoryController.selected.standardCost}" title="#{messages.CreateProductcosthistoryTitle_standardCost}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_standardCost}"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productcosthistoryController.selected.modifiedDate}" title="#{messages.CreateProductcosthistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateProductcosthistoryLabel_product}" for="product" />
+            <p:selectOneMenu id="product" value="#{productcosthistoryController.selected.product}" required="true" requiredMessage="#{messages.CreateProductcosthistoryRequiredMessage_product}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productItem"
+                               itemValue="#{productItem}"
+                               itemLabel="#{productItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

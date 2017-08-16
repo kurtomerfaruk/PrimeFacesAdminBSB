@@ -4,102 +4,120 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="CustomerListForm">
+    <h:form id="CustomerListForm" class="form-height">
 
-        <p:panel header="#{messages.ListCustomerTitle}">
-            <p:contextMenu id="CustomerDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('CustomerListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('CustomerListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('CustomerListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('CustomerListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{customerController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{customerController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{customerController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.customerID}"
-                -->
+        <p:contextMenu id="CustomerDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('CustomerListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('CustomerListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('CustomerListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('CustomerListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="StoreID #{messages.View}" icon="fa fa-search"  actionListener="#{customerController.prepareStoreID}" update=":StoreViewForm:StoreViewForm" oncomplete="PF('StoreViewDialog').show()" disabled="#{empty customerController.selected.storeID}"/>  
+            <p:menuitem value="TerritoryID #{messages.View}" icon="fa fa-search"  actionListener="#{customerController.prepareTerritoryID}" update=":SalesterritoryViewForm:SalesterritoryViewForm" oncomplete="PF('SalesterritoryViewDialog').show()" disabled="#{empty customerController.selected.territoryID}"/>  
+            <p:menuitem value="PersonID #{messages.View}" icon="fa fa-search"  actionListener="#{customerController.preparePersonID}" update=":PersonViewForm:PersonViewForm" oncomplete="PF('PersonViewDialog').show()" disabled="#{empty customerController.selected.personID}"/>  
+            <p:menuitem value="#{messages.CustomerMenuItem_salesorderheaderList}" icon="fa fa-search"  action="#{customerController.navigateSalesorderheaderList}" disabled="#{empty customerController.selected.salesorderheaderList}" ajax="false"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{customerController.lazyItems}"
+                        rowKey="#{item.customerID}"
+                        selection="#{customerController.selected}"
+                        filtered="#{customerController.filtered}"
+                        rowselect=":CustomerListForm:datalist:datalist:createButton,:CustomerListForm:datalist:datalist:viewButton,:CustomerListForm:datalist:datalist:editButton,:CustomerListForm:datalist:datalist:deleteButton,:CustomerListForm:CustomerDataTableContextMenu"
+                        rowDblselect="document.getElementById('CustomerListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":CustomerListForm:datalist:datalist:createButton :CustomerListForm:datalist:datalist:viewButton :CustomerListForm:datalist:datalist:editButton :CustomerListForm:datalist:datalist:deleteButton"
+                        selectListener="#{customerController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CustomerDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CustomerDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CustomerListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.customerID}" filterBy="#{item.customerID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListCustomerTitle_customerID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.customerID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.territoryID}" filterBy="#{item.territoryID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListCustomerTitle_territoryID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.territoryID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListCustomerTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.customerID}" filterBy="#{item.customerID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_customerID}"/>
+                </f:facet>
+                <h:outputText value="#{item.customerID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.accountNumber}" filterBy="#{item.accountNumber}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListCustomerTitle_accountNumber}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.accountNumber}"/>
-                </p:column>
+            <p:column sortBy="#{item.accountNumber}" filterBy="#{item.accountNumber}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_accountNumber}"/>
+                </f:facet>
+                <h:outputText value="#{item.accountNumber}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.customerType}" filterBy="#{item.customerType}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListCustomerTitle_customerType}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.customerType}"/>
-                </p:column>
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListCustomerTitle_rowguid}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.rowguid}"/>
-                </p:column>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListCustomerTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.storeID.name}" filterBy="#{item.storeID.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_storeID}"/>
+                </f:facet>
+                <h:outputText value="#{item.storeID.name}"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.territoryID.name}" filterBy="#{item.territoryID.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_territoryID}"/>
+                </f:facet>
+                <h:outputText value="#{item.territoryID.name}"/>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{customerController.prepareCreate}" update=":CustomerCreateForm" oncomplete="PF('CustomerCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":CustomerViewForm" oncomplete="PF('CustomerViewDialog').show()" disabled="#{empty customerController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":CustomerEditForm" oncomplete="PF('CustomerEditDialog').show()" disabled="#{empty customerController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{customerController.delete}" update=":growl,datalist" disabled="#{empty customerController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.personID.nameStyle}" filterBy="#{item.personID.nameStyle}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListCustomerTitle_personID}"/>
+                </f:facet>
+                <h:outputText value="#{item.personID.nameStyle}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{customerController.prepareCreate}" update=":CustomerCreateForm:CustomerCreateForm" oncomplete="PF('CustomerCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":CustomerViewForm:CustomerViewForm" oncomplete="PF('CustomerViewDialog').show()" disabled="#{empty customerController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":CustomerEditForm:CustomerEditForm" oncomplete="PF('CustomerEditDialog').show()" disabled="#{empty customerController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{customerController.delete}" update=":growl,datalist" disabled="#{empty customerController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

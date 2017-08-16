@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * @author Omer Faruk KURT
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 14/02/2017 08:51:25
  */
 public class Util {

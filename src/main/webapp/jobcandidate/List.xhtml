@@ -4,86 +4,93 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="JobcandidateListForm">
+    <h:form id="JobcandidateListForm" class="form-height">
 
-        <p:panel header="#{messages.ListJobcandidateTitle}">
-            <p:contextMenu id="JobcandidateDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('JobcandidateListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('JobcandidateListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('JobcandidateListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('JobcandidateListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{jobcandidateController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{jobcandidateController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{jobcandidateController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.jobCandidateID}"
-                -->
+        <p:contextMenu id="JobcandidateDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('JobcandidateListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('JobcandidateListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('JobcandidateListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('JobcandidateListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="BusinessEntityID #{messages.View}" icon="fa fa-search"  actionListener="#{jobcandidateController.prepareBusinessEntityID}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty jobcandidateController.selected.businessEntityID}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{jobcandidateController.lazyItems}"
+                        rowKey="#{item.jobCandidateID}"
+                        selection="#{jobcandidateController.selected}"
+                        filtered="#{jobcandidateController.filtered}"
+                        rowselect=":JobcandidateListForm:datalist:datalist:createButton,:JobcandidateListForm:datalist:datalist:viewButton,:JobcandidateListForm:datalist:datalist:editButton,:JobcandidateListForm:datalist:datalist:deleteButton,:JobcandidateListForm:JobcandidateDataTableContextMenu"
+                        rowDblselect="document.getElementById('JobcandidateListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":JobcandidateListForm:datalist:datalist:createButton :JobcandidateListForm:datalist:datalist:viewButton :JobcandidateListForm:datalist:datalist:editButton :JobcandidateListForm:datalist:datalist:deleteButton"
+                        selectListener="#{jobcandidateController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:JobcandidateDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:JobcandidateDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('JobcandidateListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.jobCandidateID}" filterBy="#{item.jobCandidateID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListJobcandidateTitle_jobCandidateID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.jobCandidateID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.employeeID}" filterBy="#{item.employeeID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListJobcandidateTitle_employeeID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeeID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListJobcandidateTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.jobCandidateID}" filterBy="#{item.jobCandidateID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListJobcandidateTitle_jobCandidateID}"/>
+                </f:facet>
+                <h:outputText value="#{item.jobCandidateID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.resume}" filterBy="#{item.resume}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListJobcandidateTitle_resume}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.resume}"/>
-                </p:column>
+            <p:column sortBy="#{item.resume}" filterBy="#{item.resume}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListJobcandidateTitle_resume}"/>
+                </f:facet>
+                <h:outputText value="#{item.resume}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListJobcandidateTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListJobcandidateTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.businessEntityID.businessEntityID}" filterBy="#{item.businessEntityID.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListJobcandidateTitle_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessEntityID.businessEntityID}"/>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{jobcandidateController.prepareCreate}" update=":JobcandidateCreateForm" oncomplete="PF('JobcandidateCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":JobcandidateViewForm" oncomplete="PF('JobcandidateViewDialog').show()" disabled="#{empty jobcandidateController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":JobcandidateEditForm" oncomplete="PF('JobcandidateEditDialog').show()" disabled="#{empty jobcandidateController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{jobcandidateController.delete}" update=":growl,datalist" disabled="#{empty jobcandidateController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{jobcandidateController.prepareCreate}" update=":JobcandidateCreateForm:JobcandidateCreateForm" oncomplete="PF('JobcandidateCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":JobcandidateViewForm:JobcandidateViewForm" oncomplete="PF('JobcandidateViewDialog').show()" disabled="#{empty jobcandidateController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":JobcandidateEditForm:JobcandidateEditForm" oncomplete="PF('JobcandidateEditDialog').show()" disabled="#{empty jobcandidateController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{jobcandidateController.delete}" update=":growl,datalist" disabled="#{empty jobcandidateController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
 
-        </p:panel>
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

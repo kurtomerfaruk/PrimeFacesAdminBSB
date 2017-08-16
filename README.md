@@ -5,7 +5,7 @@
 * *Application Servers* : Glassfish 4.1
 * *DB* : Mysql 5.x
 
-* *Blog* : http://kurtomerfaruk.com
+* *Blog* : https://ofarukkurt.blogspot.com.tr/
 * *Youtube Channel* : https://www.youtube.com/playlist?list=PLAAVyLs6T7dw3D52uYAWugLQ93K1cbx-a
 
 

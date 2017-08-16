@@ -2,27 +2,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:create id="ProductcategoryCreateForm"
-                     renderedListener="#{productcategoryController.selected != null}"
-                     widgetVar="ProductcategoryCreateDialog"
-                     actionListener="#{productcategoryController.saveNew}"
-                     listForm="ProductcategoryListForm">
+        <coco:createpage id="ProductcategoryCreateForm"
+                         renderedListener="#{productcategoryController.selected != null}"
+                         widgetVar="ProductcategoryCreateDialog"
+                         actionListener="#{productcategoryController.saveNew}"
+                         listForm="ProductcategoryListForm">
+
 
             <p:outputLabel value="#{messages.CreateProductcategoryLabel_name}" for="name" />
-            <p:inputText id="name" value="#{productcategoryController.selected.name}" title="#{messages.CreateProductcategoryTitle_name}" required="true" requiredMessage="#{messages.CreateProductcategoryRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:inputText id="name" value="#{productcategoryController.selected.name}" title="#{messages.CreateProductcategoryTitle_name}" required="true" requiredMessage="#{messages.CreateProductcategoryRequiredMessage_name}" size="100" maxlength="100"/>
 
             <p:outputLabel value="#{messages.CreateProductcategoryLabel_rowguid}" for="rowguid" />
-            <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productcategoryController.selected.rowguid}" title="#{messages.CreateProductcategoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductcategoryRequiredMessage_rowguid}"/>
+            <p:inputText id="rowguid" value="#{productcategoryController.selected.rowguid}" title="#{messages.CreateProductcategoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductcategoryRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
             <p:outputLabel value="#{messages.CreateProductcategoryLabel_modifiedDate}" for="modifiedDate" />
-            <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productcategoryController.selected.modifiedDate}" title="#{messages.CreateProductcategoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductcategoryRequiredMessage_modifiedDate}" showOn="button"/>
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productcategoryController.selected.modifiedDate}" title="#{messages.CreateProductcategoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductcategoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </coco:create>
+        </coco:createpage>
 
     </ui:composition>
 

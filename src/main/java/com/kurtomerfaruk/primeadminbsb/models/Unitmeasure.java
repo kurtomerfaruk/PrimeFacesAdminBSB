@@ -8,24 +8,30 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "unitmeasure")
@@ -36,7 +42,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Unitmeasure.findByName", query = "SELECT u FROM Unitmeasure u WHERE u.name = :name"),
     @NamedQuery(name = "Unitmeasure.findByModifiedDate", query = "SELECT u FROM Unitmeasure u WHERE u.modifiedDate = :modifiedDate")})
 public class Unitmeasure implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,7 +51,7 @@ public class Unitmeasure implements Serializable {
     private String unitMeasureCode;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
@@ -54,6 +59,14 @@ public class Unitmeasure implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unitMeasureCode")
+    private List<Billofmaterials> billofmaterialsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unitMeasureCode")
+    private List<Productvendor> productvendorList;
+    @OneToMany(mappedBy = "weightUnitMeasureCode")
+    private List<Product> productList;
+    @OneToMany(mappedBy = "sizeUnitMeasureCode")
+    private List<Product> productList1;
 
     public Unitmeasure() {
     }
@@ -90,6 +103,42 @@ public class Unitmeasure implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Billofmaterials> getBillofmaterialsList() {
+        return billofmaterialsList;
+    }
+
+    public void setBillofmaterialsList(List<Billofmaterials> billofmaterialsList) {
+        this.billofmaterialsList = billofmaterialsList;
+    }
+
+    @XmlTransient
+    public List<Productvendor> getProductvendorList() {
+        return productvendorList;
+    }
+
+    public void setProductvendorList(List<Productvendor> productvendorList) {
+        this.productvendorList = productvendorList;
+    }
+
+    @XmlTransient
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    @XmlTransient
+    public List<Product> getProductList1() {
+        return productList1;
+    }
+
+    public void setProductList1(List<Product> productList1) {
+        this.productList1 = productList1;
     }
 
     @Override

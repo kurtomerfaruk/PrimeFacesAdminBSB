@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:createpage id="PersoncreditcardCreateForm"
+                         renderedListener="#{personcreditcardController.selected != null}"
+                         widgetVar="PersoncreditcardCreateDialog"
+                         actionListener="#{personcreditcardController.saveNew}"
+                         listForm="PersoncreditcardListForm">
+
+
+            <p:outputLabel value="#{messages.CreatePersoncreditcardLabel_personcreditcardPK_businessEntityID}" for="personcreditcardPK_businessEntityID" />
+            <p:inputText id="personcreditcardPK_businessEntityID" value="#{personcreditcardController.selected.personcreditcardPK.businessEntityID}" title="#{messages.CreatePersoncreditcardTitle_personcreditcardPK_businessEntityID}" required="true" requiredMessage="#{messages.CreatePersoncreditcardRequiredMessage_personcreditcardPK_businessEntityID}"/>
+
+            <p:outputLabel value="#{messages.CreatePersoncreditcardLabel_personcreditcardPK_creditCardID}" for="personcreditcardPK_creditCardID" />
+            <p:inputText id="personcreditcardPK_creditCardID" value="#{personcreditcardController.selected.personcreditcardPK.creditCardID}" title="#{messages.CreatePersoncreditcardTitle_personcreditcardPK_creditCardID}" required="true" requiredMessage="#{messages.CreatePersoncreditcardRequiredMessage_personcreditcardPK_creditCardID}"/>
+
+            <p:outputLabel value="#{messages.CreatePersoncreditcardLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{personcreditcardController.selected.modifiedDate}" title="#{messages.CreatePersoncreditcardTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreatePersoncreditcardRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePersoncreditcardLabel_person}" for="person" />
+            <p:selectOneMenu id="person" value="#{personcreditcardController.selected.person}" required="true" requiredMessage="#{messages.CreatePersoncreditcardRequiredMessage_person}" converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personItem"
+                               itemValue="#{personItem}"
+                               itemLabel="#{personItem.nameStyle.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePersoncreditcardLabel_creditcard}" for="creditcard" />
+            <p:selectOneMenu id="creditcard" value="#{personcreditcardController.selected.creditcard}" required="true" requiredMessage="#{messages.CreatePersoncreditcardRequiredMessage_creditcard}" converter="creditcardConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{creditcardController.items}"
+                               var="creditcardItem"
+                               itemValue="#{creditcardItem}"
+                               itemLabel="#{creditcardItem.creditCardID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
+
+    </ui:composition>
+
+</html>

@@ -2,16 +2,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:create id="SalesorderdetailCreateForm"
-                     renderedListener="#{salesorderdetailController.selected != null}"
-                     widgetVar="SalesorderdetailCreateDialog"
-                     actionListener="#{salesorderdetailController.saveNew}"
-                     listForm="SalesorderdetailListForm">
+        <coco:createpage id="SalesorderdetailCreateForm"
+                         renderedListener="#{salesorderdetailController.selected != null}"
+                         widgetVar="SalesorderdetailCreateDialog"
+                         actionListener="#{salesorderdetailController.saveNew}"
+                         listForm="SalesorderdetailListForm">
+
 
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_salesorderdetailPK_salesOrderID}" for="salesorderdetailPK_salesOrderID" />
             <p:inputText id="salesorderdetailPK_salesOrderID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderID}" title="#{messages.CreateSalesorderdetailTitle_salesorderdetailPK_salesOrderID}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_salesorderdetailPK_salesOrderID}"/>
@@ -25,12 +28,6 @@
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_orderQty}" for="orderQty" />
             <p:inputText id="orderQty" value="#{salesorderdetailController.selected.orderQty}" title="#{messages.CreateSalesorderdetailTitle_orderQty}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_orderQty}"/>
 
-            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_productID}" for="productID" />
-            <p:inputText id="productID" value="#{salesorderdetailController.selected.productID}" title="#{messages.CreateSalesorderdetailTitle_productID}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_productID}"/>
-
-            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_specialOfferID}" for="specialOfferID" />
-            <p:inputText id="specialOfferID" value="#{salesorderdetailController.selected.specialOfferID}" title="#{messages.CreateSalesorderdetailTitle_specialOfferID}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_specialOfferID}"/>
-
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_unitPrice}" for="unitPrice" />
             <p:inputText id="unitPrice" value="#{salesorderdetailController.selected.unitPrice}" title="#{messages.CreateSalesorderdetailTitle_unitPrice}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_unitPrice}"/>
 
@@ -41,13 +38,34 @@
             <p:inputText id="lineTotal" value="#{salesorderdetailController.selected.lineTotal}" title="#{messages.CreateSalesorderdetailTitle_lineTotal}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_lineTotal}"/>
 
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_rowguid}" for="rowguid" />
-            <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesorderdetailController.selected.rowguid}" title="#{messages.CreateSalesorderdetailTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_rowguid}"/>
+            <p:inputText id="rowguid" value="#{salesorderdetailController.selected.rowguid}" title="#{messages.CreateSalesorderdetailTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_modifiedDate}" for="modifiedDate" />
-            <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderdetailController.selected.modifiedDate}" title="#{messages.CreateSalesorderdetailTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_modifiedDate}" showOn="button"/>
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salesorderdetailController.selected.modifiedDate}" title="#{messages.CreateSalesorderdetailTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </coco:create>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_specialofferproduct}" for="specialofferproduct" />
+            <p:selectOneMenu id="specialofferproduct" value="#{salesorderdetailController.selected.specialofferproduct}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_specialofferproduct}" converter="specialofferproductConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{specialofferproductController.items}"
+                               var="specialofferproductItem"
+                               itemValue="#{specialofferproductItem}"
+                               itemLabel="#{specialofferproductItem.specialofferproductPK.toString()}"
+                               />
 
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_salesorderheader}" for="salesorderheader" />
+            <p:selectOneMenu id="salesorderheader" value="#{salesorderdetailController.selected.salesorderheader}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_salesorderheader}" converter="salesorderheaderConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salesorderheaderController.items}"
+                               var="salesorderheaderItem"
+                               itemValue="#{salesorderheaderItem}"
+                               itemLabel="#{salesorderheaderItem.salesOrderID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

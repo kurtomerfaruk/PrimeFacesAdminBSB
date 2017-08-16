@@ -4,36 +4,50 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductmodelillustrationCreateDlg" widgetVar="ProductmodelillustrationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductmodelillustrationTitle}" closeOnEscape="true">
+        <coco:createpage id="ProductmodelillustrationCreateForm"
+                         renderedListener="#{productmodelillustrationController.selected != null}"
+                         widgetVar="ProductmodelillustrationCreateDialog"
+                         actionListener="#{productmodelillustrationController.saveNew}"
+                         listForm="ProductmodelillustrationListForm">
 
-            <h:form id="ProductmodelillustrationCreateForm">
 
-                <h:panelGroup id="display" rendered="#{productmodelillustrationController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_productModelID}" for="productmodelillustrationPK_productModelID" />
+            <p:inputText id="productmodelillustrationPK_productModelID" value="#{productmodelillustrationController.selected.productmodelillustrationPK.productModelID}" title="#{messages.CreateProductmodelillustrationTitle_productmodelillustrationPK_productModelID}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodelillustrationPK_productModelID}"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_productModelID}" for="productmodelillustrationPK_productModelID" />
-                        <p:inputText id="productmodelillustrationPK_productModelID" value="#{productmodelillustrationController.selected.productmodelillustrationPK.productModelID}" title="#{messages.CreateProductmodelillustrationTitle_productmodelillustrationPK_productModelID}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodelillustrationPK_productModelID}"/>
+            <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_illustrationID}" for="productmodelillustrationPK_illustrationID" />
+            <p:inputText id="productmodelillustrationPK_illustrationID" value="#{productmodelillustrationController.selected.productmodelillustrationPK.illustrationID}" title="#{messages.CreateProductmodelillustrationTitle_productmodelillustrationPK_illustrationID}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodelillustrationPK_illustrationID}"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_illustrationID}" for="productmodelillustrationPK_illustrationID" />
-                        <p:inputText id="productmodelillustrationPK_illustrationID" value="#{productmodelillustrationController.selected.productmodelillustrationPK.illustrationID}" title="#{messages.CreateProductmodelillustrationTitle_productmodelillustrationPK_illustrationID}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodelillustrationPK_illustrationID}"/>
+            <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productmodelillustrationController.selected.modifiedDate}" title="#{messages.CreateProductmodelillustrationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productmodelillustrationController.selected.modifiedDate}" title="#{messages.CreateProductmodelillustrationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productmodelillustrationController.saveNew}" value="#{messages.Save}" update="display,:ProductmodelillustrationListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductmodelillustrationCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_productmodel}" for="productmodel" />
+            <p:selectOneMenu id="productmodel" value="#{productmodelillustrationController.selected.productmodel}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_productmodel}" converter="productmodelConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productmodelController.items}"
+                               var="productmodelItem"
+                               itemValue="#{productmodelItem}"
+                               itemLabel="#{productmodelItem.name.toString()}"
+                               />
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductmodelillustrationCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateProductmodelillustrationLabel_illustration}" for="illustration" />
+            <p:selectOneMenu id="illustration" value="#{productmodelillustrationController.selected.illustration}" required="true" requiredMessage="#{messages.CreateProductmodelillustrationRequiredMessage_illustration}" converter="illustrationConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{illustrationController.items}"
+                               var="illustrationItem"
+                               itemValue="#{illustrationItem}"
+                               itemLabel="#{illustrationItem.illustrationID.toString()}"
+                               />
 
-        </p:dialog>
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

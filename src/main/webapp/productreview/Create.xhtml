@@ -4,48 +4,48 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductreviewCreateDlg" widgetVar="ProductreviewCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateProductreviewTitle}" closeOnEscape="true">
+        <coco:createpage id="ProductreviewCreateForm"
+                         renderedListener="#{productreviewController.selected != null}"
+                         widgetVar="ProductreviewCreateDialog"
+                         actionListener="#{productreviewController.saveNew}"
+                         listForm="ProductreviewListForm">
 
-            <h:form id="ProductreviewCreateForm">
 
-                <h:panelGroup id="display" rendered="#{productreviewController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_reviewerName}" for="reviewerName" />
+            <p:inputText id="reviewerName" value="#{productreviewController.selected.reviewerName}" title="#{messages.CreateProductreviewTitle_reviewerName}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_reviewerName}" size="100" maxlength="100"/>
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_productID}" for="productID" />
-                        <p:inputText id="productID" value="#{productreviewController.selected.productID}" title="#{messages.CreateProductreviewTitle_productID}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_productID}"/>
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_reviewDate}" for="reviewDate" />
+            <p:calendar id="reviewDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productreviewController.selected.reviewDate}" title="#{messages.CreateProductreviewTitle_reviewDate}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_reviewDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_reviewerName}" for="reviewerName" />
-                        <p:inputText id="reviewerName" value="#{productreviewController.selected.reviewerName}" title="#{messages.CreateProductreviewTitle_reviewerName}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_emailAddress}" for="emailAddress" />
+            <p:inputText id="emailAddress" value="#{productreviewController.selected.emailAddress}" title="#{messages.CreateProductreviewTitle_emailAddress}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_emailAddress}" size="50" maxlength="50"/>
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_reviewDate}" for="reviewDate" />
-                        <p:calendar id="reviewDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productreviewController.selected.reviewDate}" title="#{messages.CreateProductreviewTitle_reviewDate}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_reviewDate}" showOn="button"/>
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_rating}" for="rating" />
+            <p:inputText id="rating" value="#{productreviewController.selected.rating}" title="#{messages.CreateProductreviewTitle_rating}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_rating}"/>
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_emailAddress}" for="emailAddress" />
-                        <p:inputText id="emailAddress" value="#{productreviewController.selected.emailAddress}" title="#{messages.CreateProductreviewTitle_emailAddress}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_comments}" for="comments" />
+            <p:inputTextarea rows="4" id="comments" value="#{productreviewController.selected.comments}" title="#{messages.CreateProductreviewTitle_comments}"  styleClass="full-width"/>
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_rating}" for="rating" />
-                        <p:inputText id="rating" value="#{productreviewController.selected.rating}" title="#{messages.CreateProductreviewTitle_rating}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_rating}"/>
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productreviewController.selected.modifiedDate}" title="#{messages.CreateProductreviewTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_comments}" for="comments" />
-                        <p:inputTextarea rows="4" cols="30" id="comments" value="#{productreviewController.selected.comments}" title="#{messages.CreateProductreviewTitle_comments}" />
+            <p:outputLabel value="#{messages.CreateProductreviewLabel_productID}" for="productID" />
+            <p:selectOneMenu id="productID" value="#{productreviewController.selected.productID}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_productID}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productIDItem"
+                               itemValue="#{productIDItem}"
+                               itemLabel="#{productIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.CreateProductreviewLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productreviewController.selected.modifiedDate}" title="#{messages.CreateProductreviewTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductreviewRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productreviewController.saveNew}" value="#{messages.Save}" update="display,:ProductreviewListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductreviewCreateDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+            </p:selectOneMenu>
 
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductreviewCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:createpage>
 
     </ui:composition>
 

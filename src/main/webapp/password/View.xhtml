@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="PasswordViewForm"
+                       renderedListener="#{passwordController.selected != null}"
+                       widgetVar="PasswordViewDialog">
+
+
+            <h:outputText value="#{messages.CreatePasswordLabel_businessEntityID}"/>
+            <h:outputText value="#{passwordController.selected.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreatePasswordLabel_passwordHash}"/>
+            <h:outputText value="#{passwordController.selected.passwordHash}"/>
+
+            <h:outputText value="#{messages.CreatePasswordLabel_passwordSalt}"/>
+            <h:outputText value="#{passwordController.selected.passwordSalt}"/>
+
+            <h:outputText value="#{messages.CreatePasswordLabel_rowguid}"/>
+            <h:outputText value="#{passwordController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreatePasswordLabel_modifiedDate}"/>
+            <h:outputText value="#{passwordController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreatePasswordLabel_person}"/>
+            <h:outputText value="#{passwordController.selected.person.nameStyle}"/>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

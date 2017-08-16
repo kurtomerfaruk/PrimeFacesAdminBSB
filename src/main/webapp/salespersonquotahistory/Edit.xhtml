@@ -4,42 +4,45 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="SalespersonquotahistoryEditDlg" widgetVar="SalespersonquotahistoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalespersonquotahistoryTitle}" closeOnEscape="true">
 
-            <h:form id="SalespersonquotahistoryEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{salespersonquotahistoryController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditSalespersonquotahistoryLabel_salespersonquotahistoryPK_salesPersonID}" for="salespersonquotahistoryPK_salesPersonID" />
-                        <h:outputText id="salespersonquotahistoryPK_salesPersonID" value="#{salespersonquotahistoryController.selected.salespersonquotahistoryPK.salesPersonID}" />
+        <coco:editpage id="SalespersonquotahistoryEditForm"
+                       renderedListener="#{salespersonquotahistoryController.selected != null}"
+                       widgetVar="SalespersonquotahistoryEditDialog"
+                       actionListener="#{salespersonquotahistoryController.save}"
+                       listForm="SalespersonquotahistoryListForm">
 
 
-                        <h:outputLabel value="#{messages.EditSalespersonquotahistoryLabel_salespersonquotahistoryPK_quotaDate}" for="salespersonquotahistoryPK_quotaDate" />
-                        <h:outputText id="salespersonquotahistoryPK_quotaDate" value="#{salespersonquotahistoryController.selected.salespersonquotahistoryPK.quotaDate}" />
+            <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salespersonquotahistoryPK_businessEntityID}" for="salespersonquotahistoryPK_businessEntityID" />
+            <p:inputText id="salespersonquotahistoryPK_businessEntityID" value="#{salespersonquotahistoryController.selected.salespersonquotahistoryPK.businessEntityID}" title="#{messages.CreateSalespersonquotahistoryTitle_salespersonquotahistoryPK_businessEntityID}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salespersonquotahistoryPK_businessEntityID}"/>
 
-                        <p:outputLabel value="#{messages.EditSalespersonquotahistoryLabel_salesQuota}" for="salesQuota" />
-                        <p:inputText id="salesQuota" value="#{salespersonquotahistoryController.selected.salesQuota}" title="#{messages.EditSalespersonquotahistoryTitle_salesQuota}" required="true" requiredMessage="#{messages.EditSalespersonquotahistoryRequiredMessage_salesQuota}"/>
+            <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salespersonquotahistoryPK_quotaDate}" for="salespersonquotahistoryPK_quotaDate" />
+            <p:calendar id="salespersonquotahistoryPK_quotaDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salespersonquotahistoryController.selected.salespersonquotahistoryPK.quotaDate}" title="#{messages.CreateSalespersonquotahistoryTitle_salespersonquotahistoryPK_quotaDate}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salespersonquotahistoryPK_quotaDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditSalespersonquotahistoryLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salespersonquotahistoryController.selected.rowguid}" title="#{messages.EditSalespersonquotahistoryTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalespersonquotahistoryRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salesQuota}" for="salesQuota" />
+            <p:inputText id="salesQuota" value="#{salespersonquotahistoryController.selected.salesQuota}" title="#{messages.CreateSalespersonquotahistoryTitle_salesQuota}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salesQuota}"/>
 
-                        <p:outputLabel value="#{messages.EditSalespersonquotahistoryLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salespersonquotahistoryController.selected.modifiedDate}" title="#{messages.EditSalespersonquotahistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalespersonquotahistoryRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{salespersonquotahistoryController.save}" value="#{messages.Save}" update="display,:SalespersonquotahistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalespersonquotahistoryEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalespersonquotahistoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{salespersonquotahistoryController.selected.rowguid}" title="#{messages.CreateSalespersonquotahistoryTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salespersonquotahistoryController.selected.modifiedDate}" title="#{messages.CreateSalespersonquotahistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateSalespersonquotahistoryLabel_salesperson}" for="salesperson" />
+            <p:selectOneMenu id="salesperson" value="#{salespersonquotahistoryController.selected.salesperson}" required="true" requiredMessage="#{messages.CreateSalespersonquotahistoryRequiredMessage_salesperson}" converter="salespersonConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salespersonController.items}"
+                               var="salespersonItem"
+                               itemValue="#{salespersonItem}"
+                               itemLabel="#{salespersonItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

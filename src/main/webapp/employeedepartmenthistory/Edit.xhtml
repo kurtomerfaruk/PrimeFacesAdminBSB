@@ -4,47 +4,70 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="EmployeedepartmenthistoryEditDlg" widgetVar="EmployeedepartmenthistoryEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditEmployeedepartmenthistoryTitle}" closeOnEscape="true">
 
-            <h:form id="EmployeedepartmenthistoryEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{employeedepartmenthistoryController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_employeeID}" for="employeedepartmenthistoryPK_employeeID" />
-                        <h:outputText id="employeedepartmenthistoryPK_employeeID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.employeeID}" />
+        <coco:editpage id="EmployeedepartmenthistoryEditForm"
+                       renderedListener="#{employeedepartmenthistoryController.selected != null}"
+                       widgetVar="EmployeedepartmenthistoryEditDialog"
+                       actionListener="#{employeedepartmenthistoryController.save}"
+                       listForm="EmployeedepartmenthistoryListForm">
 
 
-                        <h:outputLabel value="#{messages.EditEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_departmentID}" for="employeedepartmenthistoryPK_departmentID" />
-                        <h:outputText id="employeedepartmenthistoryPK_departmentID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.departmentID}" />
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_businessEntityID}" for="employeedepartmenthistoryPK_businessEntityID" />
+            <p:inputText id="employeedepartmenthistoryPK_businessEntityID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.businessEntityID}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_businessEntityID}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_businessEntityID}"/>
 
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_departmentID}" for="employeedepartmenthistoryPK_departmentID" />
+            <p:inputText id="employeedepartmenthistoryPK_departmentID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.departmentID}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_departmentID}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_departmentID}"/>
 
-                        <h:outputLabel value="#{messages.EditEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_shiftID}" for="employeedepartmenthistoryPK_shiftID" />
-                        <h:outputText id="employeedepartmenthistoryPK_shiftID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.shiftID}" />
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_shiftID}" for="employeedepartmenthistoryPK_shiftID" />
+            <p:inputText id="employeedepartmenthistoryPK_shiftID" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.shiftID}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_shiftID}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_shiftID}"/>
 
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_startDate}" for="employeedepartmenthistoryPK_startDate" />
+            <p:calendar id="employeedepartmenthistoryPK_startDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.startDate}" title="#{messages.CreateEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_startDate}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employeedepartmenthistoryPK_startDate}" mask="true" navigator="true"/>
 
-                        <h:outputLabel value="#{messages.EditEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_startDate}" for="employeedepartmenthistoryPK_startDate" />
-                        <h:outputText id="employeedepartmenthistoryPK_startDate" value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.startDate}" />
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_endDate}" for="endDate" />
+            <p:calendar id="endDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeedepartmenthistoryController.selected.endDate}" title="#{messages.CreateEmployeedepartmenthistoryTitle_endDate}"  mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditEmployeedepartmenthistoryLabel_endDate}" for="endDate" />
-                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeedepartmenthistoryController.selected.endDate}" title="#{messages.EditEmployeedepartmenthistoryTitle_endDate}"  showOn="button"/>
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeedepartmenthistoryController.selected.modifiedDate}" title="#{messages.CreateEmployeedepartmenthistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditEmployeedepartmenthistoryLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{employeedepartmenthistoryController.selected.modifiedDate}" title="#{messages.EditEmployeedepartmenthistoryTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditEmployeedepartmenthistoryRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{employeedepartmenthistoryController.save}" value="#{messages.Save}" update="display,:EmployeedepartmenthistoryListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmployeedepartmenthistoryEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('EmployeedepartmenthistoryEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_shift}" for="shift" />
+            <p:selectOneMenu id="shift" value="#{employeedepartmenthistoryController.selected.shift}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_shift}" converter="shiftConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{shiftController.items}"
+                               var="shiftItem"
+                               itemValue="#{shiftItem}"
+                               itemLabel="#{shiftItem.name.toString()}"
+                               />
 
-            </h:form>
+            </p:selectOneMenu>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employee}" for="employee" />
+            <p:selectOneMenu id="employee" value="#{employeedepartmenthistoryController.selected.employee}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employee}" converter="employeeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{employeeController.items}"
+                               var="employeeItem"
+                               itemValue="#{employeeItem}"
+                               itemLabel="#{employeeItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_department}" for="department" />
+            <p:selectOneMenu id="department" value="#{employeedepartmenthistoryController.selected.department}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_department}" converter="departmentConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{departmentController.items}"
+                               var="departmentItem"
+                               itemValue="#{departmentItem}"
+                               itemLabel="#{departmentItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

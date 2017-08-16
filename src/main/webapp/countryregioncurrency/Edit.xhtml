@@ -4,36 +4,50 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="CountryregioncurrencyEditDlg" widgetVar="CountryregioncurrencyEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditCountryregioncurrencyTitle}" closeOnEscape="true">
 
-            <h:form id="CountryregioncurrencyEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{countryregioncurrencyController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditCountryregioncurrencyLabel_countryregioncurrencyPK_countryRegionCode}" for="countryregioncurrencyPK_countryRegionCode" />
-                        <h:outputText id="countryregioncurrencyPK_countryRegionCode" value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.countryRegionCode}" />
+        <coco:editpage id="CountryregioncurrencyEditForm"
+                       renderedListener="#{countryregioncurrencyController.selected != null}"
+                       widgetVar="CountryregioncurrencyEditDialog"
+                       actionListener="#{countryregioncurrencyController.save}"
+                       listForm="CountryregioncurrencyListForm">
 
 
-                        <h:outputLabel value="#{messages.EditCountryregioncurrencyLabel_countryregioncurrencyPK_currencyCode}" for="countryregioncurrencyPK_currencyCode" />
-                        <h:outputText id="countryregioncurrencyPK_currencyCode" value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.currencyCode}" />
+            <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_countryregioncurrencyPK_countryRegionCode}" for="countryregioncurrencyPK_countryRegionCode" />
+            <p:inputText id="countryregioncurrencyPK_countryRegionCode" value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.countryRegionCode}" title="#{messages.CreateCountryregioncurrencyTitle_countryregioncurrencyPK_countryRegionCode}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_countryregioncurrencyPK_countryRegionCode}" size="3" maxlength="3"/>
 
-                        <p:outputLabel value="#{messages.EditCountryregioncurrencyLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{countryregioncurrencyController.selected.modifiedDate}" title="#{messages.EditCountryregioncurrencyTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditCountryregioncurrencyRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{countryregioncurrencyController.save}" value="#{messages.Save}" update="display,:CountryregioncurrencyListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CountryregioncurrencyEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CountryregioncurrencyEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_countryregioncurrencyPK_currencyCode}" for="countryregioncurrencyPK_currencyCode" />
+            <p:inputText id="countryregioncurrencyPK_currencyCode" value="#{countryregioncurrencyController.selected.countryregioncurrencyPK.currencyCode}" title="#{messages.CreateCountryregioncurrencyTitle_countryregioncurrencyPK_currencyCode}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_countryregioncurrencyPK_currencyCode}" size="3" maxlength="3"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{countryregioncurrencyController.selected.modifiedDate}" title="#{messages.CreateCountryregioncurrencyTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_currency}" for="currency" />
+            <p:selectOneMenu id="currency" value="#{countryregioncurrencyController.selected.currency}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_currency}" converter="currencyConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{currencyController.items}"
+                               var="currencyItem"
+                               itemValue="#{currencyItem}"
+                               itemLabel="#{currencyItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_countryregion}" for="countryregion" />
+            <p:selectOneMenu id="countryregion" value="#{countryregioncurrencyController.selected.countryregion}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_countryregion}" converter="countryregionConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{countryregionController.items}"
+                               var="countryregionItem"
+                               itemValue="#{countryregionItem}"
+                               itemLabel="#{countryregionItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

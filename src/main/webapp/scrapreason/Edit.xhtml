@@ -4,35 +4,25 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="ScrapreasonEditDlg" widgetVar="ScrapreasonEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditScrapreasonTitle}" closeOnEscape="true">
 
-            <h:form id="ScrapreasonEditForm">
+        <coco:editpage id="ScrapreasonEditForm"
+                       renderedListener="#{scrapreasonController.selected != null}"
+                       widgetVar="ScrapreasonEditDialog"
+                       actionListener="#{scrapreasonController.save}"
+                       listForm="ScrapreasonListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{scrapreasonController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateScrapreasonLabel_name}" for="name" />
+            <p:inputText id="name" value="#{scrapreasonController.selected.name}" title="#{messages.CreateScrapreasonTitle_name}" required="true" requiredMessage="#{messages.CreateScrapreasonRequiredMessage_name}" size="100" maxlength="100"/>
 
-                        <h:outputLabel value="#{messages.EditScrapreasonLabel_scrapReasonID}" for="scrapReasonID" />
-                        <h:outputText id="scrapReasonID" value="#{scrapreasonController.selected.scrapReasonID}" />
+            <p:outputLabel value="#{messages.CreateScrapreasonLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{scrapreasonController.selected.modifiedDate}" title="#{messages.CreateScrapreasonTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateScrapreasonRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditScrapreasonLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{scrapreasonController.selected.name}" title="#{messages.EditScrapreasonTitle_name}" required="true" requiredMessage="#{messages.EditScrapreasonRequiredMessage_name}" size="50" maxlength="50"/>
-
-                        <p:outputLabel value="#{messages.EditScrapreasonLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{scrapreasonController.selected.modifiedDate}" title="#{messages.EditScrapreasonTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditScrapreasonRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{scrapreasonController.save}" value="#{messages.Save}" update="display,:ScrapreasonListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ScrapreasonEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ScrapreasonEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

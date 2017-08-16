@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="PersonphoneListForm" class="form-height">
+
+        <p:contextMenu id="PersonphoneDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('PersonphoneListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('PersonphoneListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('PersonphoneListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('PersonphoneListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Phonenumbertype #{messages.View}" icon="fa fa-search"  actionListener="#{personphoneController.preparePhonenumbertype}" update=":PhonenumbertypeViewForm" oncomplete="PF('PhonenumbertypeViewDialog').show()" disabled="#{empty personphoneController.selected.phonenumbertype}"/>  
+            <p:menuitem value="Person #{messages.View}" icon="fa fa-search"  actionListener="#{personphoneController.preparePerson}" update=":PersonViewForm" oncomplete="PF('PersonViewDialog').show()" disabled="#{empty personphoneController.selected.person}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{personphoneController.lazyItems}"
+                        rowKey="#{item.personphonePK}"
+                        selection="#{personphoneController.selected}"
+                        filtered="#{personphoneController.filtered}"
+                        rowselect=":PersonphoneListForm:datalist:datalist:createButton,:PersonphoneListForm:datalist:datalist:viewButton,:PersonphoneListForm:datalist:datalist:editButton,:PersonphoneListForm:datalist:datalist:deleteButton,:PersonphoneListForm:PersonphoneDataTableContextMenu"
+                        rowDblselect="document.getElementById('PersonphoneListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":PersonphoneListForm:datalist:datalist:createButton :PersonphoneListForm:datalist:datalist:viewButton :PersonphoneListForm:datalist:datalist:editButton :PersonphoneListForm:datalist:datalist:deleteButton"
+                        selectListener="#{personphoneController.resetParents}">
+
+
+
+
+            <f:facet name="header">
+                #{messages.ListPersonphoneTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.personphonePK.businessEntityID}" filterBy="#{item.personphonePK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonphoneTitle_personphonePK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.personphonePK.businessEntityID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.personphonePK.phoneNumber}" filterBy="#{item.personphonePK.phoneNumber}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonphoneTitle_personphonePK_phoneNumber}"/>
+                </f:facet>
+                <h:outputText value="#{item.personphonePK.phoneNumber}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.personphonePK.phoneNumberTypeID}" filterBy="#{item.personphonePK.phoneNumberTypeID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonphoneTitle_personphonePK_phoneNumberTypeID}"/>
+                </f:facet>
+                <h:outputText value="#{item.personphonePK.phoneNumberTypeID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonphoneTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.phonenumbertype.name}" filterBy="#{item.phonenumbertype.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonphoneTitle_phonenumbertype}"/>
+                </f:facet>
+                <h:outputText value="#{item.phonenumbertype.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.person.nameStyle}" filterBy="#{item.person.nameStyle}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersonphoneTitle_person}"/>
+                </f:facet>
+                <h:outputText value="#{item.person.nameStyle}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{personphoneController.prepareCreate}" update=":PersonphoneCreateForm:PersonphoneCreateForm" oncomplete="PF('PersonphoneCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":PersonphoneViewForm:PersonphoneViewForm" oncomplete="PF('PersonphoneViewDialog').show()" disabled="#{empty personphoneController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":PersonphoneEditForm:PersonphoneEditForm" oncomplete="PF('PersonphoneEditDialog').show()" disabled="#{empty personphoneController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{personphoneController.delete}" update=":growl,datalist" disabled="#{empty personphoneController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

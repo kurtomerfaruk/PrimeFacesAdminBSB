@@ -2,19 +2,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:create id="LocationCreateForm"
-                     renderedListener="#{locationController.selected != null}"
-                     widgetVar="LocationCreateDialog"
-                     actionListener="#{locationController.saveNew}"
-                     listForm="LocationListForm">
+        <coco:createpage id="LocationCreateForm"
+                         renderedListener="#{locationController.selected != null}"
+                         widgetVar="LocationCreateDialog"
+                         actionListener="#{locationController.saveNew}"
+                         listForm="LocationListForm">
+
 
             <p:outputLabel value="#{messages.CreateLocationLabel_name}" for="name" />
-            <p:inputText id="name" value="#{locationController.selected.name}" title="#{messages.CreateLocationTitle_name}" required="true" requiredMessage="#{messages.CreateLocationRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:inputText id="name" value="#{locationController.selected.name}" title="#{messages.CreateLocationTitle_name}" required="true" requiredMessage="#{messages.CreateLocationRequiredMessage_name}" size="100" maxlength="100"/>
 
             <p:outputLabel value="#{messages.CreateLocationLabel_costRate}" for="costRate" />
             <p:inputText id="costRate" value="#{locationController.selected.costRate}" title="#{messages.CreateLocationTitle_costRate}" required="true" requiredMessage="#{messages.CreateLocationRequiredMessage_costRate}"/>
@@ -23,9 +26,9 @@
             <p:inputText id="availability" value="#{locationController.selected.availability}" title="#{messages.CreateLocationTitle_availability}" required="true" requiredMessage="#{messages.CreateLocationRequiredMessage_availability}"/>
 
             <p:outputLabel value="#{messages.CreateLocationLabel_modifiedDate}" for="modifiedDate" />
-            <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{locationController.selected.modifiedDate}" title="#{messages.CreateLocationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateLocationRequiredMessage_modifiedDate}" showOn="button"/>
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{locationController.selected.modifiedDate}" title="#{messages.CreateLocationTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateLocationRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </coco:create>
+        </coco:createpage>
 
     </ui:composition>
 

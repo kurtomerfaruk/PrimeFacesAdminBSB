@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:createpage id="BusinessentitycontactCreateForm"
+                         renderedListener="#{businessentitycontactController.selected != null}"
+                         widgetVar="BusinessentitycontactCreateDialog"
+                         actionListener="#{businessentitycontactController.saveNew}"
+                         listForm="BusinessentitycontactListForm">
+
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_businessentitycontactPK_businessEntityID}" for="businessentitycontactPK_businessEntityID" />
+            <p:inputText id="businessentitycontactPK_businessEntityID" value="#{businessentitycontactController.selected.businessentitycontactPK.businessEntityID}" title="#{messages.CreateBusinessentitycontactTitle_businessentitycontactPK_businessEntityID}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_businessentitycontactPK_businessEntityID}"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_businessentitycontactPK_personID}" for="businessentitycontactPK_personID" />
+            <p:inputText id="businessentitycontactPK_personID" value="#{businessentitycontactController.selected.businessentitycontactPK.personID}" title="#{messages.CreateBusinessentitycontactTitle_businessentitycontactPK_personID}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_businessentitycontactPK_personID}"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_businessentitycontactPK_contactTypeID}" for="businessentitycontactPK_contactTypeID" />
+            <p:inputText id="businessentitycontactPK_contactTypeID" value="#{businessentitycontactController.selected.businessentitycontactPK.contactTypeID}" title="#{messages.CreateBusinessentitycontactTitle_businessentitycontactPK_contactTypeID}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_businessentitycontactPK_contactTypeID}"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{businessentitycontactController.selected.rowguid}" title="#{messages.CreateBusinessentitycontactTitle_rowguid}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_rowguid}" size="64" maxlength="64"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{businessentitycontactController.selected.modifiedDate}" title="#{messages.CreateBusinessentitycontactTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_person}" for="person" />
+            <p:selectOneMenu id="person" value="#{businessentitycontactController.selected.person}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_person}" converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personItem"
+                               itemValue="#{personItem}"
+                               itemLabel="#{personItem.nameStyle.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_contacttype}" for="contacttype" />
+            <p:selectOneMenu id="contacttype" value="#{businessentitycontactController.selected.contacttype}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_contacttype}" converter="contacttypeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{contacttypeController.items}"
+                               var="contacttypeItem"
+                               itemValue="#{contacttypeItem}"
+                               itemLabel="#{contacttypeItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateBusinessentitycontactLabel_businessentity}" for="businessentity" />
+            <p:selectOneMenu id="businessentity" value="#{businessentitycontactController.selected.businessentity}" required="true" requiredMessage="#{messages.CreateBusinessentitycontactRequiredMessage_businessentity}" converter="businessentityConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{businessentityController.items}"
+                               var="businessentityItem"
+                               itemValue="#{businessentityItem}"
+                               itemLabel="#{businessentityItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
+
+    </ui:composition>
+
+</html>

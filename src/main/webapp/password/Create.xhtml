@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:createpage id="PasswordCreateForm"
+                         renderedListener="#{passwordController.selected != null}"
+                         widgetVar="PasswordCreateDialog"
+                         actionListener="#{passwordController.saveNew}"
+                         listForm="PasswordListForm">
+
+
+            <p:outputLabel value="#{messages.CreatePasswordLabel_passwordHash}" for="passwordHash" />
+            <p:inputText id="passwordHash" value="#{passwordController.selected.passwordHash}" title="#{messages.CreatePasswordTitle_passwordHash}" required="true" requiredMessage="#{messages.CreatePasswordRequiredMessage_passwordHash}" size="128" maxlength="128"/>
+
+            <p:outputLabel value="#{messages.CreatePasswordLabel_passwordSalt}" for="passwordSalt" />
+            <p:inputText id="passwordSalt" value="#{passwordController.selected.passwordSalt}" title="#{messages.CreatePasswordTitle_passwordSalt}" required="true" requiredMessage="#{messages.CreatePasswordRequiredMessage_passwordSalt}" size="10" maxlength="10"/>
+
+            <p:outputLabel value="#{messages.CreatePasswordLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{passwordController.selected.rowguid}" title="#{messages.CreatePasswordTitle_rowguid}" required="true" requiredMessage="#{messages.CreatePasswordRequiredMessage_rowguid}" size="64" maxlength="64"/>
+
+            <p:outputLabel value="#{messages.CreatePasswordLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{passwordController.selected.modifiedDate}" title="#{messages.CreatePasswordTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreatePasswordRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePasswordLabel_person}" for="person" />
+            <p:selectOneMenu id="person" value="#{passwordController.selected.person}" required="true" requiredMessage="#{messages.CreatePasswordRequiredMessage_person}" converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personItem"
+                               itemValue="#{personItem}"
+                               itemLabel="#{personItem.nameStyle.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
+
+    </ui:composition>
+
+</html>

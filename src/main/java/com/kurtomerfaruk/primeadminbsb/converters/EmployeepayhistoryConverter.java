@@ -11,12 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
+
 @FacesConverter(value = "employeepayhistoryConverter")
 public class EmployeepayhistoryConverter implements Converter {
 
@@ -36,25 +31,25 @@ public class EmployeepayhistoryConverter implements Converter {
 
     com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK getKey(String value) {
         com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK();
-        key.setEmployeeID(Integer.parseInt(values[0]));
-        key.setRateChangeDate(java.sql.Date.valueOf(values[1]));
+            String values[] = value.split(SEPARATOR_ESCAPED);
+            key = new com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK();
+            key.setBusinessEntityID(Integer.parseInt(values[0]));
+            key.setRateChangeDate(java.sql.Date.valueOf(values[1]));
         return key;
     }
 
     String getStringKey(com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value.getEmployeeID());
-        sb.append(SEPARATOR);
-        sb.append(value.getRateChangeDate());
+            sb.append(value.getBusinessEntityID());
+            sb.append(SEPARATOR);
+            sb.append(value.getRateChangeDate());
         return sb.toString();
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null
-                || (object instanceof String && ((String) object).length() == 0)) {
+        if (object == null || 
+            (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
         if (object instanceof Employeepayhistory) {

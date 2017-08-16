@@ -4,48 +4,52 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="EmployeedepartmenthistoryViewDlg" widgetVar="EmployeedepartmenthistoryViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewEmployeedepartmenthistoryTitle}" closeOnEscape="true">
+        <coco:viewpage id="EmployeedepartmenthistoryViewForm"
+                       renderedListener="#{employeedepartmenthistoryController.selected != null}"
+                       widgetVar="EmployeedepartmenthistoryViewDialog">
 
-            <h:form id="EmployeedepartmenthistoryViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{employeedepartmenthistoryController.selected != null}">
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_businessEntityID}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.businessEntityID}"/>
 
-                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_employeeID}"/>
-                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.employeeID}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_employeeID}"/>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_departmentID}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.departmentID}"/>
 
-                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_departmentID}"/>
-                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.departmentID}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_departmentID}"/>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_shiftID}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.shiftID}"/>
 
-                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_shiftID}"/>
-                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.shiftID}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_shiftID}"/>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_startDate}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.startDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_employeedepartmenthistoryPK_startDate}"/>
-                        <h:outputText value="#{employeedepartmenthistoryController.selected.employeedepartmenthistoryPK.startDate}" title="#{messages.ViewEmployeedepartmenthistoryTitle_employeedepartmenthistoryPK_startDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_endDate}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.endDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_endDate}"/>
-                        <h:outputText value="#{employeedepartmenthistoryController.selected.endDate}" title="#{messages.ViewEmployeedepartmenthistoryTitle_endDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_modifiedDate}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewEmployeedepartmenthistoryLabel_modifiedDate}"/>
-                        <h:outputText value="#{employeedepartmenthistoryController.selected.modifiedDate}" title="#{messages.ViewEmployeedepartmenthistoryTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('EmployeedepartmenthistoryViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_shift}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.shift.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_employee}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.employee.businessEntityID}"/>
 
-        </p:dialog>
+            <h:outputText value="#{messages.CreateEmployeedepartmenthistoryLabel_department}"/>
+            <h:outputText value="#{employeedepartmenthistoryController.selected.department.name}"/>
+
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

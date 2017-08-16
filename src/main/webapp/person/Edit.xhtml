@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:editpage id="PersonEditForm"
+                       renderedListener="#{personController.selected != null}"
+                       widgetVar="PersonEditDialog"
+                       actionListener="#{personController.save}"
+                       listForm="PersonListForm">
+
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_businessEntityID}" for="businessEntityID" />
+            <p:inputText id="businessEntityID" value="#{personController.selected.businessEntityID}" title="#{messages.CreatePersonTitle_businessEntityID}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_businessEntityID}"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_personType}" for="personType" />
+            <p:inputText id="personType" value="#{personController.selected.personType}" title="#{messages.CreatePersonTitle_personType}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_personType}" size="2" maxlength="2"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_nameStyle}" for="nameStyle" />
+            <p:selectBooleanCheckbox id="nameStyle" value="#{personController.selected.nameStyle}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_nameStyle}"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_title}" for="title" />
+            <p:inputText id="title" value="#{personController.selected.title}" title="#{messages.CreatePersonTitle_title}" size="8" maxlength="8"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_firstName}" for="firstName" />
+            <p:inputText id="firstName" value="#{personController.selected.firstName}" title="#{messages.CreatePersonTitle_firstName}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_firstName}" size="100" maxlength="100"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_middleName}" for="middleName" />
+            <p:inputText id="middleName" value="#{personController.selected.middleName}" title="#{messages.CreatePersonTitle_middleName}" size="100" maxlength="100"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_lastName}" for="lastName" />
+            <p:inputText id="lastName" value="#{personController.selected.lastName}" title="#{messages.CreatePersonTitle_lastName}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_lastName}" size="100" maxlength="100"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_suffix}" for="suffix" />
+            <p:inputText id="suffix" value="#{personController.selected.suffix}" title="#{messages.CreatePersonTitle_suffix}" size="10" maxlength="10"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_emailPromotion}" for="emailPromotion" />
+            <p:inputText id="emailPromotion" value="#{personController.selected.emailPromotion}" title="#{messages.CreatePersonTitle_emailPromotion}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_emailPromotion}"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_additionalContactInfo}" for="additionalContactInfo" />
+            <p:inputTextarea rows="4" id="additionalContactInfo" value="#{personController.selected.additionalContactInfo}" title="#{messages.CreatePersonTitle_additionalContactInfo}"  styleClass="full-width"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_demographics}" for="demographics" />
+            <p:inputTextarea rows="4" id="demographics" value="#{personController.selected.demographics}" title="#{messages.CreatePersonTitle_demographics}"  styleClass="full-width"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{personController.selected.rowguid}" title="#{messages.CreatePersonTitle_rowguid}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_rowguid}" size="64" maxlength="64"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{personController.selected.modifiedDate}" title="#{messages.CreatePersonTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_businessentity}" for="businessentity" />
+            <p:selectOneMenu id="businessentity" value="#{personController.selected.businessentity}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_businessentity}" converter="businessentityConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{businessentityController.items}"
+                               var="businessentityItem"
+                               itemValue="#{businessentityItem}"
+                               itemLabel="#{businessentityItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_password}" for="password" />
+            <p:selectOneMenu id="password" value="#{personController.selected.password}"  converter="passwordConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{passwordController.items}"
+                               var="passwordItem"
+                               itemValue="#{passwordItem}"
+                               itemLabel="#{passwordItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePersonLabel_employee}" for="employee" />
+            <p:selectOneMenu id="employee" value="#{personController.selected.employee}"  converter="employeeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{employeeController.items}"
+                               var="employeeItem"
+                               itemValue="#{employeeItem}"
+                               itemLabel="#{employeeItem.businessEntityID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
+
+    </ui:composition>
+
+</html>

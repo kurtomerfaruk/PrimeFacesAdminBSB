@@ -4,38 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="DepartmentViewDlg" widgetVar="DepartmentViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewDepartmentTitle}" closeOnEscape="true">
+        <coco:viewpage id="DepartmentViewForm"
+                       renderedListener="#{departmentController.selected != null}"
+                       widgetVar="DepartmentViewDialog">
 
-            <h:form id="DepartmentViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{departmentController.selected != null}">
+            <h:outputText value="#{messages.CreateDepartmentLabel_departmentID}"/>
+            <h:outputText value="#{departmentController.selected.departmentID}"/>
 
-                        <h:outputText value="#{messages.ViewDepartmentLabel_departmentID}"/>
-                        <h:outputText value="#{departmentController.selected.departmentID}" title="#{messages.ViewDepartmentTitle_departmentID}"/>
+            <h:outputText value="#{messages.CreateDepartmentLabel_name}"/>
+            <h:outputText value="#{departmentController.selected.name}"/>
 
-                        <h:outputText value="#{messages.ViewDepartmentLabel_name}"/>
-                        <h:outputText value="#{departmentController.selected.name}" title="#{messages.ViewDepartmentTitle_name}"/>
+            <h:outputText value="#{messages.CreateDepartmentLabel_groupName}"/>
+            <h:outputText value="#{departmentController.selected.groupName}"/>
 
-                        <h:outputText value="#{messages.ViewDepartmentLabel_groupName}"/>
-                        <h:outputText value="#{departmentController.selected.groupName}" title="#{messages.ViewDepartmentTitle_groupName}"/>
+            <h:outputText value="#{messages.CreateDepartmentLabel_modifiedDate}"/>
+            <h:outputText value="#{departmentController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewDepartmentLabel_modifiedDate}"/>
-                        <h:outputText value="#{departmentController.selected.modifiedDate}" title="#{messages.ViewDepartmentTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('DepartmentViewDialog').hide()"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

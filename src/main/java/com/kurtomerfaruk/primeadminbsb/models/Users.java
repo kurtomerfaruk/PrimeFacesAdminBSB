@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 13/02/2017 09:19:27
  */
 @Entity

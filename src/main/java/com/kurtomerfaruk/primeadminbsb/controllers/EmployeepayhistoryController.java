@@ -3,17 +3,15 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Employeepayhistory;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "employeepayhistoryController")
 @ViewScoped
 public class EmployeepayhistoryController extends AbstractController<Employeepayhistory> {
-    private static final long serialVersionUID = 1166138026552117769L;
+
+    @Inject
+    private EmployeeController employeeController;
 
     public EmployeepayhistoryController() {
         // Inform the Abstract parent controller of the concrete Employeepayhistory Entity
@@ -21,8 +19,31 @@ public class EmployeepayhistoryController extends AbstractController<Employeepay
     }
 
     @Override
+    protected void setEmbeddableKeys() {
+        this.getSelected().getEmployeepayhistoryPK().setBusinessEntityID(this.getSelected().getEmployee().getBusinessEntityID());
+    }
+
+    @Override
     protected void initializeEmbeddableKey() {
         this.getSelected().setEmployeepayhistoryPK(new com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK());
     }
 
+    /**
+     * Resets the "selected" attribute of any parent Entity controllers.
+     */
+    public void resetParents() {
+        employeeController.setSelected(null);
+    }
+
+    /**
+     * Sets the "selected" attribute of the Employee controller in order to
+     * display its data in its View dialog.
+     *
+     * @param event Event object for the widget that triggered an action
+     */
+    public void prepareEmployee(ActionEvent event) {
+        if (this.getSelected() != null && employeeController.getSelected() == null) {
+            employeeController.setSelected(this.getSelected().getEmployee());
+        }
+    }
 }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="PersoncreditcardListForm" class="form-height">
+
+        <p:contextMenu id="PersoncreditcardDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('PersoncreditcardListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('PersoncreditcardListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('PersoncreditcardListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('PersoncreditcardListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Person #{messages.View}" icon="fa fa-search"  actionListener="#{personcreditcardController.preparePerson}" update=":PersonViewForm" oncomplete="PF('PersonViewDialog').show()" disabled="#{empty personcreditcardController.selected.person}"/>  
+            <p:menuitem value="Creditcard #{messages.View}" icon="fa fa-search"  actionListener="#{personcreditcardController.prepareCreditcard}" update=":CreditcardViewForm" oncomplete="PF('CreditcardViewDialog').show()" disabled="#{empty personcreditcardController.selected.creditcard}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{personcreditcardController.lazyItems}"
+                        rowKey="#{item.personcreditcardPK}"
+                        selection="#{personcreditcardController.selected}"
+                        filtered="#{personcreditcardController.filtered}"
+                        rowselect=":PersoncreditcardListForm:datalist:datalist:createButton,:PersoncreditcardListForm:datalist:datalist:viewButton,:PersoncreditcardListForm:datalist:datalist:editButton,:PersoncreditcardListForm:datalist:datalist:deleteButton,:PersoncreditcardListForm:PersoncreditcardDataTableContextMenu"
+                        rowDblselect="document.getElementById('PersoncreditcardListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":PersoncreditcardListForm:datalist:datalist:createButton :PersoncreditcardListForm:datalist:datalist:viewButton :PersoncreditcardListForm:datalist:datalist:editButton :PersoncreditcardListForm:datalist:datalist:deleteButton"
+                        selectListener="#{personcreditcardController.resetParents}">
+
+
+
+
+            <f:facet name="header">
+                #{messages.ListPersoncreditcardTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.personcreditcardPK.businessEntityID}" filterBy="#{item.personcreditcardPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersoncreditcardTitle_personcreditcardPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.personcreditcardPK.businessEntityID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.personcreditcardPK.creditCardID}" filterBy="#{item.personcreditcardPK.creditCardID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersoncreditcardTitle_personcreditcardPK_creditCardID}"/>
+                </f:facet>
+                <h:outputText value="#{item.personcreditcardPK.creditCardID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersoncreditcardTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.person.nameStyle}" filterBy="#{item.person.nameStyle}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersoncreditcardTitle_person}"/>
+                </f:facet>
+                <h:outputText value="#{item.person.nameStyle}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.creditcard.creditCardID}" filterBy="#{item.creditcard.creditCardID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListPersoncreditcardTitle_creditcard}"/>
+                </f:facet>
+                <h:outputText value="#{item.creditcard.creditCardID}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{personcreditcardController.prepareCreate}" update=":PersoncreditcardCreateForm:PersoncreditcardCreateForm" oncomplete="PF('PersoncreditcardCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":PersoncreditcardViewForm:PersoncreditcardViewForm" oncomplete="PF('PersoncreditcardViewDialog').show()" disabled="#{empty personcreditcardController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":PersoncreditcardEditForm:PersoncreditcardEditForm" oncomplete="PF('PersoncreditcardEditDialog').show()" disabled="#{empty personcreditcardController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{personcreditcardController.delete}" update=":growl,datalist" disabled="#{empty personcreditcardController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

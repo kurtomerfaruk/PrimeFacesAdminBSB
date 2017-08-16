@@ -7,26 +7,36 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "salesorderheader")
@@ -43,28 +53,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Salesorderheader.findBySalesOrderNumber", query = "SELECT s FROM Salesorderheader s WHERE s.salesOrderNumber = :salesOrderNumber"),
     @NamedQuery(name = "Salesorderheader.findByPurchaseOrderNumber", query = "SELECT s FROM Salesorderheader s WHERE s.purchaseOrderNumber = :purchaseOrderNumber"),
     @NamedQuery(name = "Salesorderheader.findByAccountNumber", query = "SELECT s FROM Salesorderheader s WHERE s.accountNumber = :accountNumber"),
-    @NamedQuery(name = "Salesorderheader.findByCustomerID", query = "SELECT s FROM Salesorderheader s WHERE s.customerID = :customerID"),
-    @NamedQuery(name = "Salesorderheader.findByContactID", query = "SELECT s FROM Salesorderheader s WHERE s.contactID = :contactID"),
-    @NamedQuery(name = "Salesorderheader.findBySalesPersonID", query = "SELECT s FROM Salesorderheader s WHERE s.salesPersonID = :salesPersonID"),
-    @NamedQuery(name = "Salesorderheader.findByTerritoryID", query = "SELECT s FROM Salesorderheader s WHERE s.territoryID = :territoryID"),
-    @NamedQuery(name = "Salesorderheader.findByBillToAddressID", query = "SELECT s FROM Salesorderheader s WHERE s.billToAddressID = :billToAddressID"),
-    @NamedQuery(name = "Salesorderheader.findByShipToAddressID", query = "SELECT s FROM Salesorderheader s WHERE s.shipToAddressID = :shipToAddressID"),
-    @NamedQuery(name = "Salesorderheader.findByShipMethodID", query = "SELECT s FROM Salesorderheader s WHERE s.shipMethodID = :shipMethodID"),
-    @NamedQuery(name = "Salesorderheader.findByCreditCardID", query = "SELECT s FROM Salesorderheader s WHERE s.creditCardID = :creditCardID"),
     @NamedQuery(name = "Salesorderheader.findByCreditCardApprovalCode", query = "SELECT s FROM Salesorderheader s WHERE s.creditCardApprovalCode = :creditCardApprovalCode"),
-    @NamedQuery(name = "Salesorderheader.findByCurrencyRateID", query = "SELECT s FROM Salesorderheader s WHERE s.currencyRateID = :currencyRateID"),
     @NamedQuery(name = "Salesorderheader.findBySubTotal", query = "SELECT s FROM Salesorderheader s WHERE s.subTotal = :subTotal"),
     @NamedQuery(name = "Salesorderheader.findByTaxAmt", query = "SELECT s FROM Salesorderheader s WHERE s.taxAmt = :taxAmt"),
     @NamedQuery(name = "Salesorderheader.findByFreight", query = "SELECT s FROM Salesorderheader s WHERE s.freight = :freight"),
     @NamedQuery(name = "Salesorderheader.findByTotalDue", query = "SELECT s FROM Salesorderheader s WHERE s.totalDue = :totalDue"),
     @NamedQuery(name = "Salesorderheader.findByComment", query = "SELECT s FROM Salesorderheader s WHERE s.comment = :comment"),
+    @NamedQuery(name = "Salesorderheader.findByRowguid", query = "SELECT s FROM Salesorderheader s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Salesorderheader.findByModifiedDate", query = "SELECT s FROM Salesorderheader s WHERE s.modifiedDate = :modifiedDate")})
 public class Salesorderheader implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "SalesOrderID")
     private Integer salesOrderID;
     @Basic(optional = false)
@@ -81,8 +82,6 @@ public class Salesorderheader implements Serializable {
     @Column(name = "DueDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ShipDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date shipDate;
@@ -99,72 +98,73 @@ public class Salesorderheader implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "SalesOrderNumber")
     private String salesOrderNumber;
-    @Size(max = 25)
+    @Size(max = 50)
     @Column(name = "PurchaseOrderNumber")
     private String purchaseOrderNumber;
-    @Size(max = 15)
+    @Size(max = 30)
     @Column(name = "AccountNumber")
     private String accountNumber;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CustomerID")
-    private int customerID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ContactID")
-    private int contactID;
-    @Column(name = "SalesPersonID")
-    private Integer salesPersonID;
-    @Column(name = "TerritoryID")
-    private Integer territoryID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "BillToAddressID")
-    private int billToAddressID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ShipToAddressID")
-    private int shipToAddressID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ShipMethodID")
-    private int shipMethodID;
-    @Column(name = "CreditCardID")
-    private Integer creditCardID;
     @Size(max = 15)
     @Column(name = "CreditCardApprovalCode")
     private String creditCardApprovalCode;
-    @Column(name = "CurrencyRateID")
-    private Integer currencyRateID;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "SubTotal")
-    private double subTotal;
+    private BigDecimal subTotal;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TaxAmt")
-    private double taxAmt;
+    private BigDecimal taxAmt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "Freight")
-    private double freight;
+    private BigDecimal freight;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TotalDue")
-    private double totalDue;
+    private BigDecimal totalDue;
     @Size(max = 128)
     @Column(name = "Comment")
     private String comment;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salesorderheader")
+    private List<Salesorderheadersalesreason> salesorderheadersalesreasonList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salesorderheader")
+    private List<Salesorderdetail> salesorderdetailList;
+    @JoinColumn(name = "ShipMethodID", referencedColumnName = "ShipMethodID")
+    @ManyToOne(optional = false)
+    private Shipmethod shipMethodID;
+    @JoinColumn(name = "TerritoryID", referencedColumnName = "TerritoryID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Salesterritory territoryID;
+    @JoinColumn(name = "SalesPersonID", referencedColumnName = "BusinessEntityID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Salesperson salesPersonID;
+    @JoinColumn(name = "CustomerID", referencedColumnName = "CustomerID")
+    @ManyToOne(optional = false)
+    private Customer customerID;
+    @JoinColumn(name = "CurrencyRateID", referencedColumnName = "CurrencyRateID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Currencyrate currencyRateID;
+    @JoinColumn(name = "CreditCardID", referencedColumnName = "CreditCardID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Creditcard creditCardID;
+    @JoinColumn(name = "ShipToAddressID", referencedColumnName = "AddressID")
+    @ManyToOne(optional = false)
+    private Address shipToAddressID;
+    @JoinColumn(name = "BillToAddressID", referencedColumnName = "AddressID")
+    @ManyToOne(optional = false)
+    private Address billToAddressID;
 
     public Salesorderheader() {
     }
@@ -173,20 +173,14 @@ public class Salesorderheader implements Serializable {
         this.salesOrderID = salesOrderID;
     }
 
-    public Salesorderheader(Integer salesOrderID, short revisionNumber, Date orderDate, Date dueDate, Date shipDate, short status, boolean onlineOrderFlag, String salesOrderNumber, int customerID, int contactID, int billToAddressID, int shipToAddressID, int shipMethodID, double subTotal, double taxAmt, double freight, double totalDue, byte[] rowguid, Date modifiedDate) {
+    public Salesorderheader(Integer salesOrderID, short revisionNumber, Date orderDate, Date dueDate, short status, boolean onlineOrderFlag, String salesOrderNumber, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal freight, BigDecimal totalDue, String rowguid, Date modifiedDate) {
         this.salesOrderID = salesOrderID;
         this.revisionNumber = revisionNumber;
         this.orderDate = orderDate;
         this.dueDate = dueDate;
-        this.shipDate = shipDate;
         this.status = status;
         this.onlineOrderFlag = onlineOrderFlag;
         this.salesOrderNumber = salesOrderNumber;
-        this.customerID = customerID;
-        this.contactID = contactID;
-        this.billToAddressID = billToAddressID;
-        this.shipToAddressID = shipToAddressID;
-        this.shipMethodID = shipMethodID;
         this.subTotal = subTotal;
         this.taxAmt = taxAmt;
         this.freight = freight;
@@ -275,70 +269,6 @@ public class Salesorderheader implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
-    public int getContactID() {
-        return contactID;
-    }
-
-    public void setContactID(int contactID) {
-        this.contactID = contactID;
-    }
-
-    public Integer getSalesPersonID() {
-        return salesPersonID;
-    }
-
-    public void setSalesPersonID(Integer salesPersonID) {
-        this.salesPersonID = salesPersonID;
-    }
-
-    public Integer getTerritoryID() {
-        return territoryID;
-    }
-
-    public void setTerritoryID(Integer territoryID) {
-        this.territoryID = territoryID;
-    }
-
-    public int getBillToAddressID() {
-        return billToAddressID;
-    }
-
-    public void setBillToAddressID(int billToAddressID) {
-        this.billToAddressID = billToAddressID;
-    }
-
-    public int getShipToAddressID() {
-        return shipToAddressID;
-    }
-
-    public void setShipToAddressID(int shipToAddressID) {
-        this.shipToAddressID = shipToAddressID;
-    }
-
-    public int getShipMethodID() {
-        return shipMethodID;
-    }
-
-    public void setShipMethodID(int shipMethodID) {
-        this.shipMethodID = shipMethodID;
-    }
-
-    public Integer getCreditCardID() {
-        return creditCardID;
-    }
-
-    public void setCreditCardID(Integer creditCardID) {
-        this.creditCardID = creditCardID;
-    }
-
     public String getCreditCardApprovalCode() {
         return creditCardApprovalCode;
     }
@@ -347,43 +277,35 @@ public class Salesorderheader implements Serializable {
         this.creditCardApprovalCode = creditCardApprovalCode;
     }
 
-    public Integer getCurrencyRateID() {
-        return currencyRateID;
-    }
-
-    public void setCurrencyRateID(Integer currencyRateID) {
-        this.currencyRateID = currencyRateID;
-    }
-
-    public double getSubTotal() {
+    public BigDecimal getSubTotal() {
         return subTotal;
     }
 
-    public void setSubTotal(double subTotal) {
+    public void setSubTotal(BigDecimal subTotal) {
         this.subTotal = subTotal;
     }
 
-    public double getTaxAmt() {
+    public BigDecimal getTaxAmt() {
         return taxAmt;
     }
 
-    public void setTaxAmt(double taxAmt) {
+    public void setTaxAmt(BigDecimal taxAmt) {
         this.taxAmt = taxAmt;
     }
 
-    public double getFreight() {
+    public BigDecimal getFreight() {
         return freight;
     }
 
-    public void setFreight(double freight) {
+    public void setFreight(BigDecimal freight) {
         this.freight = freight;
     }
 
-    public double getTotalDue() {
+    public BigDecimal getTotalDue() {
         return totalDue;
     }
 
-    public void setTotalDue(double totalDue) {
+    public void setTotalDue(BigDecimal totalDue) {
         this.totalDue = totalDue;
     }
 
@@ -395,11 +317,11 @@ public class Salesorderheader implements Serializable {
         this.comment = comment;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -409,6 +331,88 @@ public class Salesorderheader implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Salesorderheadersalesreason> getSalesorderheadersalesreasonList() {
+        return salesorderheadersalesreasonList;
+    }
+
+    public void setSalesorderheadersalesreasonList(List<Salesorderheadersalesreason> salesorderheadersalesreasonList) {
+        this.salesorderheadersalesreasonList = salesorderheadersalesreasonList;
+    }
+
+    @XmlTransient
+    public List<Salesorderdetail> getSalesorderdetailList() {
+        return salesorderdetailList;
+    }
+
+    public void setSalesorderdetailList(List<Salesorderdetail> salesorderdetailList) {
+        this.salesorderdetailList = salesorderdetailList;
+    }
+
+    public Shipmethod getShipMethodID() {
+        return shipMethodID;
+    }
+
+    public void setShipMethodID(Shipmethod shipMethodID) {
+        this.shipMethodID = shipMethodID;
+    }
+
+    public Salesterritory getTerritoryID() {
+        return territoryID;
+    }
+
+    public void setTerritoryID(Salesterritory territoryID) {
+        this.territoryID = territoryID;
+    }
+
+    public Salesperson getSalesPersonID() {
+        return salesPersonID;
+    }
+
+    public void setSalesPersonID(Salesperson salesPersonID) {
+        this.salesPersonID = salesPersonID;
+    }
+
+    public Customer getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(Customer customerID) {
+        this.customerID = customerID;
+    }
+
+    public Currencyrate getCurrencyRateID() {
+        return currencyRateID;
+    }
+
+    public void setCurrencyRateID(Currencyrate currencyRateID) {
+        this.currencyRateID = currencyRateID;
+    }
+
+    public Creditcard getCreditCardID() {
+        return creditCardID;
+    }
+
+    public void setCreditCardID(Creditcard creditCardID) {
+        this.creditCardID = creditCardID;
+    }
+
+    public Address getShipToAddressID() {
+        return shipToAddressID;
+    }
+
+    public void setShipToAddressID(Address shipToAddressID) {
+        this.shipToAddressID = shipToAddressID;
+    }
+
+    public Address getBillToAddressID() {
+        return billToAddressID;
+    }
+
+    public void setBillToAddressID(Address billToAddressID) {
+        this.billToAddressID = billToAddressID;
     }
 
     @Override

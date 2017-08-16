@@ -13,13 +13,13 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:13:11
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:56:41 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Stateless
 public class ProductlistpricehistoryFacade extends AbstractFacade<Productlistpricehistory> {
-
     @PersistenceContext(unitName = "ADMINBSB_PU")
     private EntityManager em;
 

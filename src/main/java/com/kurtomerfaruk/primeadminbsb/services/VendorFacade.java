@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.kurtomerfaruk.primeadminbsb.services;
 
@@ -8,13 +13,13 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * @Created on date 13/02/2017 09:19:27
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:57:05 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Stateless
 public class VendorFacade extends AbstractFacade<Vendor> {
-
     @PersistenceContext(unitName = "ADMINBSB_PU")
     private EntityManager em;
 

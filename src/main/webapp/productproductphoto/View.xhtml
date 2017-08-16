@@ -4,38 +4,39 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductproductphotoViewDlg" widgetVar="ProductproductphotoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductproductphotoTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductproductphotoViewForm"
+                       renderedListener="#{productproductphotoController.selected != null}"
+                       widgetVar="ProductproductphotoViewDialog">
 
-            <h:form id="ProductproductphotoViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productproductphotoController.selected != null}">
+            <h:outputText value="#{messages.CreateProductproductphotoLabel_productproductphotoPK_productID}"/>
+            <h:outputText value="#{productproductphotoController.selected.productproductphotoPK.productID}"/>
 
-                        <h:outputText value="#{messages.ViewProductproductphotoLabel_productproductphotoPK_productID}"/>
-                        <h:outputText value="#{productproductphotoController.selected.productproductphotoPK.productID}" title="#{messages.ViewProductproductphotoTitle_productproductphotoPK_productID}"/>
+            <h:outputText value="#{messages.CreateProductproductphotoLabel_productproductphotoPK_productPhotoID}"/>
+            <h:outputText value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}"/>
 
-                        <h:outputText value="#{messages.ViewProductproductphotoLabel_productproductphotoPK_productPhotoID}"/>
-                        <h:outputText value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}" title="#{messages.ViewProductproductphotoTitle_productproductphotoPK_productPhotoID}"/>
+            <h:outputText value="#{messages.CreateProductproductphotoLabel_primary}"/>
+            <h:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}" disabled="true"/>
 
-                        <h:outputText value="#{messages.ViewProductproductphotoLabel_primary}"/>
-                        <h:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" title="#{messages.EditProductproductphotoTitle_primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}" disabled="true"/>
+            <h:outputText value="#{messages.CreateProductproductphotoLabel_modifiedDate}"/>
+            <h:outputText value="#{productproductphotoController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductproductphotoLabel_modifiedDate}"/>
-                        <h:outputText value="#{productproductphotoController.selected.modifiedDate}" title="#{messages.ViewProductproductphotoTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductproductphotoViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateProductproductphotoLabel_product}"/>
+            <h:outputText value="#{productproductphotoController.selected.product.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateProductproductphotoLabel_productphoto}"/>
+            <h:outputText value="#{productproductphotoController.selected.productphoto.thumbnailPhotoFileName}"/>
 
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

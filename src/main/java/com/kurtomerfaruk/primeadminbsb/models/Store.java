@@ -8,85 +8,98 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:19 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "store")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s"),
-    @NamedQuery(name = "Store.findByCustomerID", query = "SELECT s FROM Store s WHERE s.customerID = :customerID"),
+    @NamedQuery(name = "Store.findByBusinessEntityID", query = "SELECT s FROM Store s WHERE s.businessEntityID = :businessEntityID"),
     @NamedQuery(name = "Store.findByName", query = "SELECT s FROM Store s WHERE s.name = :name"),
-    @NamedQuery(name = "Store.findBySalesPersonID", query = "SELECT s FROM Store s WHERE s.salesPersonID = :salesPersonID"),
+    @NamedQuery(name = "Store.findByRowguid", query = "SELECT s FROM Store s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Store.findByModifiedDate", query = "SELECT s FROM Store s WHERE s.modifiedDate = :modifiedDate")})
 public class Store implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CustomerID")
-    private Integer customerID;
+    @Column(name = "BusinessEntityID")
+    private Integer businessEntityID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
-    @Column(name = "SalesPersonID")
-    private Integer salesPersonID;
     @Lob
     @Size(max = 65535)
     @Column(name = "Demographics")
     private String demographics;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "SalesPersonID", referencedColumnName = "BusinessEntityID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Salesperson salesPersonID;
+    @JoinColumn(name = "BusinessEntityID", referencedColumnName = "BusinessEntityID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Businessentity businessentity;
+    @OneToMany(mappedBy = "storeID")
+    private List<Customer> customerList;
 
     public Store() {
     }
 
-    public Store(Integer customerID) {
-        this.customerID = customerID;
+    public Store(Integer businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
-    public Store(Integer customerID, String name, byte[] rowguid, Date modifiedDate) {
-        this.customerID = customerID;
+    public Store(Integer businessEntityID, String name, String rowguid, Date modifiedDate) {
+        this.businessEntityID = businessEntityID;
         this.name = name;
         this.rowguid = rowguid;
         this.modifiedDate = modifiedDate;
     }
 
-    public Integer getCustomerID() {
-        return customerID;
+    public Integer getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setCustomerID(Integer customerID) {
-        this.customerID = customerID;
+    public void setBusinessEntityID(Integer businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public String getName() {
@@ -97,14 +110,6 @@ public class Store implements Serializable {
         this.name = name;
     }
 
-    public Integer getSalesPersonID() {
-        return salesPersonID;
-    }
-
-    public void setSalesPersonID(Integer salesPersonID) {
-        this.salesPersonID = salesPersonID;
-    }
-
     public String getDemographics() {
         return demographics;
     }
@@ -113,11 +118,11 @@ public class Store implements Serializable {
         this.demographics = demographics;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -129,10 +134,35 @@ public class Store implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    public Salesperson getSalesPersonID() {
+        return salesPersonID;
+    }
+
+    public void setSalesPersonID(Salesperson salesPersonID) {
+        this.salesPersonID = salesPersonID;
+    }
+
+    public Businessentity getBusinessentity() {
+        return businessentity;
+    }
+
+    public void setBusinessentity(Businessentity businessentity) {
+        this.businessentity = businessentity;
+    }
+
+    @XmlTransient
+    public List<Customer> getCustomerList() {
+        return customerList;
+    }
+
+    public void setCustomerList(List<Customer> customerList) {
+        this.customerList = customerList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (customerID != null ? customerID.hashCode() : 0);
+        hash += (businessEntityID != null ? businessEntityID.hashCode() : 0);
         return hash;
     }
 
@@ -143,7 +173,7 @@ public class Store implements Serializable {
             return false;
         }
         Store other = (Store) object;
-        if ((this.customerID == null && other.customerID != null) || (this.customerID != null && !this.customerID.equals(other.customerID))) {
+        if ((this.businessEntityID == null && other.businessEntityID != null) || (this.businessEntityID != null && !this.businessEntityID.equals(other.businessEntityID))) {
             return false;
         }
         return true;
@@ -151,7 +181,7 @@ public class Store implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.Store[ customerID=" + customerID + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.Store[ businessEntityID=" + businessEntityID + " ]";
     }
 
 }

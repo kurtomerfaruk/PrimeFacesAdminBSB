@@ -3,52 +3,69 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:edit id="SalesorderdetailEditForm"
-                   renderedListener="#{salesorderdetailController.selected != null}"
-                   widgetVar="SalesorderdetailEditDialog"
-                   actionListener="#{salesorderdetailController.save}"
-                   listForm="SalesorderdetailListForm">
-
-            <h:outputLabel value="#{messages.EditSalesorderdetailLabel_salesorderdetailPK_salesOrderID}" for="salesorderdetailPK_salesOrderID" />
-            <h:outputText id="salesorderdetailPK_salesOrderID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderID}" />
+        <coco:editpage id="SalesorderdetailEditForm"
+                       renderedListener="#{salesorderdetailController.selected != null}"
+                       widgetVar="SalesorderdetailEditDialog"
+                       actionListener="#{salesorderdetailController.save}"
+                       listForm="SalesorderdetailListForm">
 
 
-            <h:outputLabel value="#{messages.EditSalesorderdetailLabel_salesorderdetailPK_salesOrderDetailID}" for="salesorderdetailPK_salesOrderDetailID" />
-            <h:outputText id="salesorderdetailPK_salesOrderDetailID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderDetailID}" />
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_salesorderdetailPK_salesOrderID}" for="salesorderdetailPK_salesOrderID" />
+            <p:inputText id="salesorderdetailPK_salesOrderID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderID}" title="#{messages.CreateSalesorderdetailTitle_salesorderdetailPK_salesOrderID}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_salesorderdetailPK_salesOrderID}"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_carrierTrackingNumber}" for="carrierTrackingNumber" />
-            <p:inputText id="carrierTrackingNumber" value="#{salesorderdetailController.selected.carrierTrackingNumber}" title="#{messages.EditSalesorderdetailTitle_carrierTrackingNumber}" size="25" maxlength="25"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_salesorderdetailPK_salesOrderDetailID}" for="salesorderdetailPK_salesOrderDetailID" />
+            <p:inputText id="salesorderdetailPK_salesOrderDetailID" value="#{salesorderdetailController.selected.salesorderdetailPK.salesOrderDetailID}" title="#{messages.CreateSalesorderdetailTitle_salesorderdetailPK_salesOrderDetailID}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_salesorderdetailPK_salesOrderDetailID}"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_orderQty}" for="orderQty" />
-            <p:inputText id="orderQty" value="#{salesorderdetailController.selected.orderQty}" title="#{messages.EditSalesorderdetailTitle_orderQty}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_orderQty}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_carrierTrackingNumber}" for="carrierTrackingNumber" />
+            <p:inputText id="carrierTrackingNumber" value="#{salesorderdetailController.selected.carrierTrackingNumber}" title="#{messages.CreateSalesorderdetailTitle_carrierTrackingNumber}" size="25" maxlength="25"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_productID}" for="productID" />
-            <p:inputText id="productID" value="#{salesorderdetailController.selected.productID}" title="#{messages.EditSalesorderdetailTitle_productID}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_productID}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_orderQty}" for="orderQty" />
+            <p:inputText id="orderQty" value="#{salesorderdetailController.selected.orderQty}" title="#{messages.CreateSalesorderdetailTitle_orderQty}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_orderQty}"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_specialOfferID}" for="specialOfferID" />
-            <p:inputText id="specialOfferID" value="#{salesorderdetailController.selected.specialOfferID}" title="#{messages.EditSalesorderdetailTitle_specialOfferID}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_specialOfferID}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_unitPrice}" for="unitPrice" />
+            <p:inputText id="unitPrice" value="#{salesorderdetailController.selected.unitPrice}" title="#{messages.CreateSalesorderdetailTitle_unitPrice}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_unitPrice}"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_unitPrice}" for="unitPrice" />
-            <p:inputText id="unitPrice" value="#{salesorderdetailController.selected.unitPrice}" title="#{messages.EditSalesorderdetailTitle_unitPrice}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_unitPrice}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_unitPriceDiscount}" for="unitPriceDiscount" />
+            <p:inputText id="unitPriceDiscount" value="#{salesorderdetailController.selected.unitPriceDiscount}" title="#{messages.CreateSalesorderdetailTitle_unitPriceDiscount}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_unitPriceDiscount}"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_unitPriceDiscount}" for="unitPriceDiscount" />
-            <p:inputText id="unitPriceDiscount" value="#{salesorderdetailController.selected.unitPriceDiscount}" title="#{messages.EditSalesorderdetailTitle_unitPriceDiscount}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_unitPriceDiscount}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_lineTotal}" for="lineTotal" />
+            <p:inputText id="lineTotal" value="#{salesorderdetailController.selected.lineTotal}" title="#{messages.CreateSalesorderdetailTitle_lineTotal}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_lineTotal}"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_lineTotal}" for="lineTotal" />
-            <p:inputText id="lineTotal" value="#{salesorderdetailController.selected.lineTotal}" title="#{messages.EditSalesorderdetailTitle_lineTotal}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_lineTotal}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{salesorderdetailController.selected.rowguid}" title="#{messages.CreateSalesorderdetailTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_rowguid}" for="rowguid" />
-            <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salesorderdetailController.selected.rowguid}" title="#{messages.EditSalesorderdetailTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salesorderdetailController.selected.modifiedDate}" title="#{messages.CreateSalesorderdetailTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-            <p:outputLabel value="#{messages.EditSalesorderdetailLabel_modifiedDate}" for="modifiedDate" />
-            <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salesorderdetailController.selected.modifiedDate}" title="#{messages.EditSalesorderdetailTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalesorderdetailRequiredMessage_modifiedDate}" showOn="button"/>
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_specialofferproduct}" for="specialofferproduct" />
+            <p:selectOneMenu id="specialofferproduct" value="#{salesorderdetailController.selected.specialofferproduct}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_specialofferproduct}" converter="specialofferproductConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{specialofferproductController.items}"
+                               var="specialofferproductItem"
+                               itemValue="#{specialofferproductItem}"
+                               itemLabel="#{specialofferproductItem.specialofferproductPK.toString()}"
+                               />
 
-        </coco:edit>
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_salesorderheader}" for="salesorderheader" />
+            <p:selectOneMenu id="salesorderheader" value="#{salesorderdetailController.selected.salesorderheader}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_salesorderheader}" converter="salesorderheaderConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salesorderheaderController.items}"
+                               var="salesorderheaderItem"
+                               itemValue="#{salesorderheaderItem}"
+                               itemLabel="#{salesorderheaderItem.salesOrderID.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

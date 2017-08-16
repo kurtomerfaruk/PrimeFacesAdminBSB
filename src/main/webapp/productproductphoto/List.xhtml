@@ -4,86 +4,108 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="ProductproductphotoListForm">
+    <h:form id="ProductproductphotoListForm" class="form-height">
 
-        <p:panel header="#{messages.ListProductproductphotoTitle}">
-            <p:contextMenu id="ProductproductphotoDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductproductphotoListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductproductphotoListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductproductphotoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductproductphotoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{productproductphotoController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{productproductphotoController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{productproductphotoController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.productproductphotoPK}"
-                -->
+        <p:contextMenu id="ProductproductphotoDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('ProductproductphotoListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductproductphotoListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductproductphotoListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductproductphotoListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Product #{messages.View}" icon="fa fa-search"  actionListener="#{productproductphotoController.prepareProduct}" update=":ProductViewForm" oncomplete="PF('ProductViewDialog').show()" disabled="#{empty productproductphotoController.selected.product}"/>  
+            <p:menuitem value="Productphoto #{messages.View}" icon="fa fa-search"  actionListener="#{productproductphotoController.prepareProductphoto}" update=":ProductphotoViewForm" oncomplete="PF('ProductphotoViewDialog').show()" disabled="#{empty productproductphotoController.selected.productphoto}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{productproductphotoController.lazyItems}"
+                        rowKey="#{item.productproductphotoPK}"
+                        selection="#{productproductphotoController.selected}"
+                        filtered="#{productproductphotoController.filtered}"
+                        rowselect=":ProductproductphotoListForm:datalist:datalist:createButton,:ProductproductphotoListForm:datalist:datalist:viewButton,:ProductproductphotoListForm:datalist:datalist:editButton,:ProductproductphotoListForm:datalist:datalist:deleteButton,:ProductproductphotoListForm:ProductproductphotoDataTableContextMenu"
+                        rowDblselect="document.getElementById('ProductproductphotoListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":ProductproductphotoListForm:datalist:datalist:createButton :ProductproductphotoListForm:datalist:datalist:viewButton :ProductproductphotoListForm:datalist:datalist:editButton :ProductproductphotoListForm:datalist:datalist:deleteButton"
+                        selectListener="#{productproductphotoController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductproductphotoDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductproductphotoDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductproductphotoListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.productproductphotoPK.productID}" filterBy="#{item.productproductphotoPK.productID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductproductphotoTitle_productproductphotoPK_productID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.productproductphotoPK.productID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.productproductphotoPK.productPhotoID}" filterBy="#{item.productproductphotoPK.productPhotoID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductproductphotoTitle_productproductphotoPK_productPhotoID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.productproductphotoPK.productPhotoID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListProductproductphotoTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.productproductphotoPK.productID}" filterBy="#{item.productproductphotoPK.productID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductproductphotoTitle_productproductphotoPK_productID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productproductphotoPK.productID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.primary}" filterBy="#{item.primary}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductproductphotoTitle_primary}"/>
-                    </f:facet>
-                    <h:selectBooleanCheckbox id="primary" value="#{item.primary}" title="#{messages.EditProductproductphotoTitle_primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}" disabled="true"/>
-                </p:column>
+            <p:column sortBy="#{item.productproductphotoPK.productPhotoID}" filterBy="#{item.productproductphotoPK.productPhotoID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductproductphotoTitle_productproductphotoPK_productPhotoID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productproductphotoPK.productPhotoID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductproductphotoTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.primary}" filterBy="#{item.primary}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductproductphotoTitle_primary}"/>
+                </f:facet>
+                <h:selectBooleanCheckbox id="primary" value="#{item.primary}" title="#{messages.EditProductproductphotoTitle_primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}" disabled="true"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductproductphotoTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productproductphotoController.prepareCreate}" update=":ProductproductphotoCreateForm" oncomplete="PF('ProductproductphotoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductproductphotoViewForm" oncomplete="PF('ProductproductphotoViewDialog').show()" disabled="#{empty productproductphotoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductproductphotoEditForm" oncomplete="PF('ProductproductphotoEditDialog').show()" disabled="#{empty productproductphotoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productproductphotoController.delete}" update=":growl,datalist" disabled="#{empty productproductphotoController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.product.name}" filterBy="#{item.product.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductproductphotoTitle_product}"/>
+                </f:facet>
+                <h:outputText value="#{item.product.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.productphoto.thumbnailPhotoFileName}" filterBy="#{item.productphoto.thumbnailPhotoFileName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductproductphotoTitle_productphoto}"/>
+                </f:facet>
+                <h:outputText value="#{item.productphoto.thumbnailPhotoFileName}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{productproductphotoController.prepareCreate}" update=":ProductproductphotoCreateForm:ProductproductphotoCreateForm" oncomplete="PF('ProductproductphotoCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":ProductproductphotoViewForm:ProductproductphotoViewForm" oncomplete="PF('ProductproductphotoViewDialog').show()" disabled="#{empty productproductphotoController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":ProductproductphotoEditForm:ProductproductphotoEditForm" oncomplete="PF('ProductproductphotoEditDialog').show()" disabled="#{empty productproductphotoController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{productproductphotoController.delete}" update=":growl,datalist" disabled="#{empty productproductphotoController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

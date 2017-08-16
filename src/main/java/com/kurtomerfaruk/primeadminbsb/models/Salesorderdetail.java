@@ -7,12 +7,16 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,9 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "salesorderdetail")
@@ -37,14 +42,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Salesorderdetail.findBySalesOrderDetailID", query = "SELECT s FROM Salesorderdetail s WHERE s.salesorderdetailPK.salesOrderDetailID = :salesOrderDetailID"),
     @NamedQuery(name = "Salesorderdetail.findByCarrierTrackingNumber", query = "SELECT s FROM Salesorderdetail s WHERE s.carrierTrackingNumber = :carrierTrackingNumber"),
     @NamedQuery(name = "Salesorderdetail.findByOrderQty", query = "SELECT s FROM Salesorderdetail s WHERE s.orderQty = :orderQty"),
-    @NamedQuery(name = "Salesorderdetail.findByProductID", query = "SELECT s FROM Salesorderdetail s WHERE s.productID = :productID"),
-    @NamedQuery(name = "Salesorderdetail.findBySpecialOfferID", query = "SELECT s FROM Salesorderdetail s WHERE s.specialOfferID = :specialOfferID"),
     @NamedQuery(name = "Salesorderdetail.findByUnitPrice", query = "SELECT s FROM Salesorderdetail s WHERE s.unitPrice = :unitPrice"),
     @NamedQuery(name = "Salesorderdetail.findByUnitPriceDiscount", query = "SELECT s FROM Salesorderdetail s WHERE s.unitPriceDiscount = :unitPriceDiscount"),
     @NamedQuery(name = "Salesorderdetail.findByLineTotal", query = "SELECT s FROM Salesorderdetail s WHERE s.lineTotal = :lineTotal"),
+    @NamedQuery(name = "Salesorderdetail.findByRowguid", query = "SELECT s FROM Salesorderdetail s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Salesorderdetail.findByModifiedDate", query = "SELECT s FROM Salesorderdetail s WHERE s.modifiedDate = :modifiedDate")})
 public class Salesorderdetail implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SalesorderdetailPK salesorderdetailPK;
@@ -55,36 +58,37 @@ public class Salesorderdetail implements Serializable {
     @NotNull
     @Column(name = "OrderQty")
     private short orderQty;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ProductID")
-    private int productID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "SpecialOfferID")
-    private int specialOfferID;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "UnitPrice")
-    private double unitPrice;
+    private BigDecimal unitPrice;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UnitPriceDiscount")
-    private double unitPriceDiscount;
+    private BigDecimal unitPriceDiscount;
     @Basic(optional = false)
     @NotNull
     @Column(name = "LineTotal")
-    private double lineTotal;
+    private BigDecimal lineTotal;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumns({
+        @JoinColumn(name = "SpecialOfferID", referencedColumnName = "SpecialOfferID"),
+        @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")})
+    @ManyToOne(optional = false)
+    private Specialofferproduct specialofferproduct;
+    @JoinColumn(name = "SalesOrderID", referencedColumnName = "SalesOrderID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Salesorderheader salesorderheader;
 
     public Salesorderdetail() {
     }
@@ -93,11 +97,9 @@ public class Salesorderdetail implements Serializable {
         this.salesorderdetailPK = salesorderdetailPK;
     }
 
-    public Salesorderdetail(SalesorderdetailPK salesorderdetailPK, short orderQty, int productID, int specialOfferID, double unitPrice, double unitPriceDiscount, double lineTotal, byte[] rowguid, Date modifiedDate) {
+    public Salesorderdetail(SalesorderdetailPK salesorderdetailPK, short orderQty, BigDecimal unitPrice, BigDecimal unitPriceDiscount, BigDecimal lineTotal, String rowguid, Date modifiedDate) {
         this.salesorderdetailPK = salesorderdetailPK;
         this.orderQty = orderQty;
-        this.productID = productID;
-        this.specialOfferID = specialOfferID;
         this.unitPrice = unitPrice;
         this.unitPriceDiscount = unitPriceDiscount;
         this.lineTotal = lineTotal;
@@ -133,51 +135,35 @@ public class Salesorderdetail implements Serializable {
         this.orderQty = orderQty;
     }
 
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public int getSpecialOfferID() {
-        return specialOfferID;
-    }
-
-    public void setSpecialOfferID(int specialOfferID) {
-        this.specialOfferID = specialOfferID;
-    }
-
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getUnitPriceDiscount() {
+    public BigDecimal getUnitPriceDiscount() {
         return unitPriceDiscount;
     }
 
-    public void setUnitPriceDiscount(double unitPriceDiscount) {
+    public void setUnitPriceDiscount(BigDecimal unitPriceDiscount) {
         this.unitPriceDiscount = unitPriceDiscount;
     }
 
-    public double getLineTotal() {
+    public BigDecimal getLineTotal() {
         return lineTotal;
     }
 
-    public void setLineTotal(double lineTotal) {
+    public void setLineTotal(BigDecimal lineTotal) {
         this.lineTotal = lineTotal;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -187,6 +173,22 @@ public class Salesorderdetail implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Specialofferproduct getSpecialofferproduct() {
+        return specialofferproduct;
+    }
+
+    public void setSpecialofferproduct(Specialofferproduct specialofferproduct) {
+        this.specialofferproduct = specialofferproduct;
+    }
+
+    public Salesorderheader getSalesorderheader() {
+        return salesorderheader;
+    }
+
+    public void setSalesorderheader(Salesorderheader salesorderheader) {
+        this.salesorderheader = salesorderheader;
     }
 
     @Override

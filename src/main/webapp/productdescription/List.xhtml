@@ -4,86 +4,93 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="ProductdescriptionListForm">
+    <h:form id="ProductdescriptionListForm" class="form-height">
 
-        <p:panel header="#{messages.ListProductdescriptionTitle}">
-            <p:contextMenu id="ProductdescriptionDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductdescriptionListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductdescriptionListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductdescriptionListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductdescriptionListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{productdescriptionController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{productdescriptionController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{productdescriptionController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.productDescriptionID}"
-                -->
+        <p:contextMenu id="ProductdescriptionDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('ProductdescriptionListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductdescriptionListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductdescriptionListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductdescriptionListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.ProductdescriptionMenuItem_productmodelproductdescriptioncultureList}" icon="fa fa-search"  action="#{productdescriptionController.navigateProductmodelproductdescriptioncultureList}" disabled="#{empty productdescriptionController.selected.productmodelproductdescriptioncultureList}" ajax="false"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{productdescriptionController.lazyItems}"
+                        rowKey="#{item.productDescriptionID}"
+                        selection="#{productdescriptionController.selected}"
+                        filtered="#{productdescriptionController.filtered}"
+                        rowselect=":ProductdescriptionListForm:datalist:datalist:createButton,:ProductdescriptionListForm:datalist:datalist:viewButton,:ProductdescriptionListForm:datalist:datalist:editButton,:ProductdescriptionListForm:datalist:datalist:deleteButton,:ProductdescriptionListForm:ProductdescriptionDataTableContextMenu"
+                        rowDblselect="document.getElementById('ProductdescriptionListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":ProductdescriptionListForm:datalist:datalist:createButton :ProductdescriptionListForm:datalist:datalist:viewButton :ProductdescriptionListForm:datalist:datalist:editButton :ProductdescriptionListForm:datalist:datalist:deleteButton"
+                        selectListener="#{productdescriptionController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductdescriptionDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductdescriptionDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductdescriptionListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.productDescriptionID}" filterBy="#{item.productDescriptionID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductdescriptionTitle_productDescriptionID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.productDescriptionID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.description}" filterBy="#{item.description}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductdescriptionTitle_description}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.description}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListProductdescriptionTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.productDescriptionID}" filterBy="#{item.productDescriptionID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductdescriptionTitle_productDescriptionID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productDescriptionID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductdescriptionTitle_rowguid}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.rowguid}"/>
-                </p:column>
+            <p:column sortBy="#{item.description}" filterBy="#{item.description}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductdescriptionTitle_description}"/>
+                </f:facet>
+                <h:outputText value="#{item.description}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductdescriptionTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductdescriptionTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductdescriptionTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productdescriptionController.prepareCreate}" update=":ProductdescriptionCreateForm" oncomplete="PF('ProductdescriptionCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductdescriptionViewForm" oncomplete="PF('ProductdescriptionViewDialog').show()" disabled="#{empty productdescriptionController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductdescriptionEditForm" oncomplete="PF('ProductdescriptionEditDialog').show()" disabled="#{empty productdescriptionController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productdescriptionController.delete}" update=":growl,datalist" disabled="#{empty productdescriptionController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{productdescriptionController.prepareCreate}" update=":ProductdescriptionCreateForm:ProductdescriptionCreateForm" oncomplete="PF('ProductdescriptionCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":ProductdescriptionViewForm:ProductdescriptionViewForm" oncomplete="PF('ProductdescriptionViewDialog').show()" disabled="#{empty productdescriptionController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":ProductdescriptionEditForm:ProductdescriptionEditForm" oncomplete="PF('ProductdescriptionEditDialog').show()" disabled="#{empty productdescriptionController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{productdescriptionController.delete}" update=":growl,datalist" disabled="#{empty productdescriptionController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
 
-        </p:panel>
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

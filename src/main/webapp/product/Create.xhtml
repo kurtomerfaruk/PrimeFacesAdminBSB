@@ -2,19 +2,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:create id="ProductCreateForm"
-                     renderedListener="#{productController.selected != null}"
-                     widgetVar="ProductCreateDialog"
-                     actionListener="#{productController.saveNew}"
-                     listForm="ProductListForm">
+        <coco:createpage id="ProductCreateForm"
+                         renderedListener="#{productController.selected != null}"
+                         widgetVar="ProductCreateDialog"
+                         actionListener="#{productController.saveNew}"
+                         listForm="ProductListForm">
+
 
             <p:outputLabel value="#{messages.CreateProductLabel_name}" for="name" />
-            <p:inputText id="name" value="#{productController.selected.name}" title="#{messages.CreateProductTitle_name}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:inputText id="name" value="#{productController.selected.name}" title="#{messages.CreateProductTitle_name}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_name}" size="100" maxlength="100"/>
 
             <p:outputLabel value="#{messages.CreateProductLabel_productNumber}" for="productNumber" />
             <p:inputText id="productNumber" value="#{productController.selected.productNumber}" title="#{messages.CreateProductTitle_productNumber}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_productNumber}" size="25" maxlength="25"/>
@@ -43,12 +46,6 @@
             <p:outputLabel value="#{messages.CreateProductLabel_size}" for="size" />
             <p:inputText id="size" value="#{productController.selected.size}" title="#{messages.CreateProductTitle_size}" size="5" maxlength="5"/>
 
-            <p:outputLabel value="#{messages.CreateProductLabel_sizeUnitMeasureCode}" for="sizeUnitMeasureCode" />
-            <p:inputText id="sizeUnitMeasureCode" value="#{productController.selected.sizeUnitMeasureCode}" title="#{messages.CreateProductTitle_sizeUnitMeasureCode}" size="3" maxlength="3"/>
-
-            <p:outputLabel value="#{messages.CreateProductLabel_weightUnitMeasureCode}" for="weightUnitMeasureCode" />
-            <p:inputText id="weightUnitMeasureCode" value="#{productController.selected.weightUnitMeasureCode}" title="#{messages.CreateProductTitle_weightUnitMeasureCode}" size="3" maxlength="3"/>
-
             <p:outputLabel value="#{messages.CreateProductLabel_weight}" for="weight" />
             <p:inputText id="weight" value="#{productController.selected.weight}" title="#{messages.CreateProductTitle_weight}"/>
 
@@ -64,30 +61,66 @@
             <p:outputLabel value="#{messages.CreateProductLabel_style}" for="style" />
             <p:inputText id="style" value="#{productController.selected.style}" title="#{messages.CreateProductTitle_style}" size="2" maxlength="2"/>
 
-            <p:outputLabel value="#{messages.CreateProductLabel_productSubcategoryID}" for="productSubcategoryID" />
-            <p:inputText id="productSubcategoryID" value="#{productController.selected.productSubcategoryID}" title="#{messages.CreateProductTitle_productSubcategoryID}"/>
-
-            <p:outputLabel value="#{messages.CreateProductLabel_productModelID}" for="productModelID" />
-            <p:inputText id="productModelID" value="#{productController.selected.productModelID}" title="#{messages.CreateProductTitle_productModelID}"/>
-
             <p:outputLabel value="#{messages.CreateProductLabel_sellStartDate}" for="sellStartDate" />
-            <p:calendar id="sellStartDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.sellStartDate}" title="#{messages.CreateProductTitle_sellStartDate}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_sellStartDate}" showOn="button"/>
+            <p:calendar id="sellStartDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productController.selected.sellStartDate}" title="#{messages.CreateProductTitle_sellStartDate}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_sellStartDate}" mask="true" navigator="true"/>
 
             <p:outputLabel value="#{messages.CreateProductLabel_sellEndDate}" for="sellEndDate" />
-            <p:calendar id="sellEndDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.sellEndDate}" title="#{messages.CreateProductTitle_sellEndDate}"  showOn="button"/>
+            <p:calendar id="sellEndDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productController.selected.sellEndDate}" title="#{messages.CreateProductTitle_sellEndDate}"  mask="true" navigator="true"/>
 
             <p:outputLabel value="#{messages.CreateProductLabel_discontinuedDate}" for="discontinuedDate" />
-            <p:calendar id="discontinuedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.discontinuedDate}" title="#{messages.CreateProductTitle_discontinuedDate}"  showOn="button"/>
+            <p:calendar id="discontinuedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productController.selected.discontinuedDate}" title="#{messages.CreateProductTitle_discontinuedDate}"  mask="true" navigator="true"/>
 
             <p:outputLabel value="#{messages.CreateProductLabel_rowguid}" for="rowguid" />
-            <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{productController.selected.rowguid}" title="#{messages.CreateProductTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_rowguid}"/>
+            <p:inputText id="rowguid" value="#{productController.selected.rowguid}" title="#{messages.CreateProductTitle_rowguid}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
             <p:outputLabel value="#{messages.CreateProductLabel_modifiedDate}" for="modifiedDate" />
-            <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productController.selected.modifiedDate}" title="#{messages.CreateProductTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_modifiedDate}" showOn="button"/>
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productController.selected.modifiedDate}" title="#{messages.CreateProductTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
+            <p:outputLabel value="#{messages.CreateProductLabel_weightUnitMeasureCode}" for="weightUnitMeasureCode" />
+            <p:selectOneMenu id="weightUnitMeasureCode" value="#{productController.selected.weightUnitMeasureCode}"  converter="unitmeasureConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{unitmeasureController.items}"
+                               var="weightUnitMeasureCodeItem"
+                               itemValue="#{weightUnitMeasureCodeItem}"
+                               itemLabel="#{weightUnitMeasureCodeItem.name.toString()}"
+                               />
 
-        </coco:create>
+            </p:selectOneMenu>
 
+            <p:outputLabel value="#{messages.CreateProductLabel_sizeUnitMeasureCode}" for="sizeUnitMeasureCode" />
+            <p:selectOneMenu id="sizeUnitMeasureCode" value="#{productController.selected.sizeUnitMeasureCode}"  converter="unitmeasureConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{unitmeasureController.items}"
+                               var="sizeUnitMeasureCodeItem"
+                               itemValue="#{sizeUnitMeasureCodeItem}"
+                               itemLabel="#{sizeUnitMeasureCodeItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateProductLabel_productSubcategoryID}" for="productSubcategoryID" />
+            <p:selectOneMenu id="productSubcategoryID" value="#{productController.selected.productSubcategoryID}"  converter="productsubcategoryConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productsubcategoryController.items}"
+                               var="productSubcategoryIDItem"
+                               itemValue="#{productSubcategoryIDItem}"
+                               itemLabel="#{productSubcategoryIDItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateProductLabel_productModelID}" for="productModelID" />
+            <p:selectOneMenu id="productModelID" value="#{productController.selected.productModelID}"  converter="productmodelConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productmodelController.items}"
+                               var="productModelIDItem"
+                               itemValue="#{productModelIDItem}"
+                               itemLabel="#{productModelIDItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
 
     </ui:composition>
 

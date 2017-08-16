@@ -14,28 +14,28 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Embeddable
 public class ProductvendorPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "ProductID")
     private int productID;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "VendorID")
-    private int vendorID;
+    @Column(name = "BusinessEntityID")
+    private int businessEntityID;
 
     public ProductvendorPK() {
     }
 
-    public ProductvendorPK(int productID, int vendorID) {
+    public ProductvendorPK(int productID, int businessEntityID) {
         this.productID = productID;
-        this.vendorID = vendorID;
+        this.businessEntityID = businessEntityID;
     }
 
     public int getProductID() {
@@ -46,19 +46,19 @@ public class ProductvendorPK implements Serializable {
         this.productID = productID;
     }
 
-    public int getVendorID() {
-        return vendorID;
+    public int getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setVendorID(int vendorID) {
-        this.vendorID = vendorID;
+    public void setBusinessEntityID(int businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) productID;
-        hash += (int) vendorID;
+        hash += (int) businessEntityID;
         return hash;
     }
 
@@ -72,7 +72,7 @@ public class ProductvendorPK implements Serializable {
         if (this.productID != other.productID) {
             return false;
         }
-        if (this.vendorID != other.vendorID) {
+        if (this.businessEntityID != other.businessEntityID) {
             return false;
         }
         return true;
@@ -80,7 +80,7 @@ public class ProductvendorPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK[ productID=" + productID + ", vendorID=" + vendorID + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.ProductvendorPK[ productID=" + productID + ", businessEntityID=" + businessEntityID + " ]";
     }
 
 }

@@ -4,56 +4,62 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="WorkorderEditDlg" widgetVar="WorkorderEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditWorkorderTitle}" closeOnEscape="true">
 
-            <h:form id="WorkorderEditForm">
+        <coco:editpage id="WorkorderEditForm"
+                       renderedListener="#{workorderController.selected != null}"
+                       widgetVar="WorkorderEditDialog"
+                       actionListener="#{workorderController.save}"
+                       listForm="WorkorderListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{workorderController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_orderQty}" for="orderQty" />
+            <p:inputText id="orderQty" value="#{workorderController.selected.orderQty}" title="#{messages.CreateWorkorderTitle_orderQty}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_orderQty}"/>
 
-                        <h:outputLabel value="#{messages.EditWorkorderLabel_workOrderID}" for="workOrderID" />
-                        <h:outputText id="workOrderID" value="#{workorderController.selected.workOrderID}" />
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_stockedQty}" for="stockedQty" />
+            <p:inputText id="stockedQty" value="#{workorderController.selected.stockedQty}" title="#{messages.CreateWorkorderTitle_stockedQty}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_stockedQty}"/>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_productID}" for="productID" />
-                        <p:inputText id="productID" value="#{workorderController.selected.productID}" title="#{messages.EditWorkorderTitle_productID}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_productID}"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_scrappedQty}" for="scrappedQty" />
+            <p:inputText id="scrappedQty" value="#{workorderController.selected.scrappedQty}" title="#{messages.CreateWorkorderTitle_scrappedQty}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_scrappedQty}"/>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_orderQty}" for="orderQty" />
-                        <p:inputText id="orderQty" value="#{workorderController.selected.orderQty}" title="#{messages.EditWorkorderTitle_orderQty}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_orderQty}"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_startDate}" for="startDate" />
+            <p:calendar id="startDate" locale="tr" pattern="#{messages.dateFormat}" value="#{workorderController.selected.startDate}" title="#{messages.CreateWorkorderTitle_startDate}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_startDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_stockedQty}" for="stockedQty" />
-                        <p:inputText id="stockedQty" value="#{workorderController.selected.stockedQty}" title="#{messages.EditWorkorderTitle_stockedQty}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_stockedQty}"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_endDate}" for="endDate" />
+            <p:calendar id="endDate" locale="tr" pattern="#{messages.dateFormat}" value="#{workorderController.selected.endDate}" title="#{messages.CreateWorkorderTitle_endDate}"  mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_scrappedQty}" for="scrappedQty" />
-                        <p:inputText id="scrappedQty" value="#{workorderController.selected.scrappedQty}" title="#{messages.EditWorkorderTitle_scrappedQty}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_scrappedQty}"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_dueDate}" for="dueDate" />
+            <p:calendar id="dueDate" locale="tr" pattern="#{messages.dateFormat}" value="#{workorderController.selected.dueDate}" title="#{messages.CreateWorkorderTitle_dueDate}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_dueDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_startDate}" for="startDate" />
-                        <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderController.selected.startDate}" title="#{messages.EditWorkorderTitle_startDate}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_startDate}" showOn="button"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{workorderController.selected.modifiedDate}" title="#{messages.CreateWorkorderTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_endDate}" for="endDate" />
-                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderController.selected.endDate}" title="#{messages.EditWorkorderTitle_endDate}"  showOn="button"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_scrapReasonID}" for="scrapReasonID" />
+            <p:selectOneMenu id="scrapReasonID" value="#{workorderController.selected.scrapReasonID}"  converter="scrapreasonConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{scrapreasonController.items}"
+                               var="scrapReasonIDItem"
+                               itemValue="#{scrapReasonIDItem}"
+                               itemLabel="#{scrapReasonIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_dueDate}" for="dueDate" />
-                        <p:calendar id="dueDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderController.selected.dueDate}" title="#{messages.EditWorkorderTitle_dueDate}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_dueDate}" showOn="button"/>
+            </p:selectOneMenu>
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_scrapReasonID}" for="scrapReasonID" />
-                        <p:inputText id="scrapReasonID" value="#{workorderController.selected.scrapReasonID}" title="#{messages.EditWorkorderTitle_scrapReasonID}"/>
+            <p:outputLabel value="#{messages.CreateWorkorderLabel_productID}" for="productID" />
+            <p:selectOneMenu id="productID" value="#{workorderController.selected.productID}" required="true" requiredMessage="#{messages.CreateWorkorderRequiredMessage_productID}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productIDItem"
+                               itemValue="#{productIDItem}"
+                               itemLabel="#{productIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.EditWorkorderLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{workorderController.selected.modifiedDate}" title="#{messages.EditWorkorderTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditWorkorderRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{workorderController.save}" value="#{messages.Save}" update="display,:WorkorderListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('WorkorderEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('WorkorderEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

@@ -4,34 +4,36 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <coco:view id="LocationViewForm"
-                   widgetVar="LocationViewDialog"
-                   renderedListener="#{locationController.selected != null}">
+        <coco:viewpage id="LocationViewForm"
+                       renderedListener="#{locationController.selected != null}"
+                       widgetVar="LocationViewDialog">
 
-            <h:outputText value="#{messages.ViewLocationLabel_locationID}"/>
-            <h:outputText value="#{locationController.selected.locationID}" title="#{messages.ViewLocationTitle_locationID}"/>
 
-            <h:outputText value="#{messages.ViewLocationLabel_name}"/>
-            <h:outputText value="#{locationController.selected.name}" title="#{messages.ViewLocationTitle_name}"/>
+            <h:outputText value="#{messages.CreateLocationLabel_locationID}"/>
+            <h:outputText value="#{locationController.selected.locationID}"/>
 
-            <h:outputText value="#{messages.ViewLocationLabel_costRate}"/>
-            <h:outputText value="#{locationController.selected.costRate}" title="#{messages.ViewLocationTitle_costRate}"/>
+            <h:outputText value="#{messages.CreateLocationLabel_name}"/>
+            <h:outputText value="#{locationController.selected.name}"/>
 
-            <h:outputText value="#{messages.ViewLocationLabel_availability}"/>
-            <h:outputText value="#{locationController.selected.availability}" title="#{messages.ViewLocationTitle_availability}"/>
+            <h:outputText value="#{messages.CreateLocationLabel_costRate}"/>
+            <h:outputText value="#{locationController.selected.costRate}"/>
 
-            <h:outputText value="#{messages.ViewLocationLabel_modifiedDate}"/>
-            <h:outputText value="#{locationController.selected.modifiedDate}" title="#{messages.ViewLocationTitle_modifiedDate}">
-                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            <h:outputText value="#{messages.CreateLocationLabel_availability}"/>
+            <h:outputText value="#{locationController.selected.availability}"/>
+
+            <h:outputText value="#{messages.CreateLocationLabel_modifiedDate}"/>
+            <h:outputText value="#{locationController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
             </h:outputText>
 
-        </coco:view>
-
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

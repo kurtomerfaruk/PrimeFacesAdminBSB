@@ -7,54 +7,63 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "salespersonquotahistory")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Salespersonquotahistory.findAll", query = "SELECT s FROM Salespersonquotahistory s"),
-    @NamedQuery(name = "Salespersonquotahistory.findBySalesPersonID", query = "SELECT s FROM Salespersonquotahistory s WHERE s.salespersonquotahistoryPK.salesPersonID = :salesPersonID"),
+    @NamedQuery(name = "Salespersonquotahistory.findByBusinessEntityID", query = "SELECT s FROM Salespersonquotahistory s WHERE s.salespersonquotahistoryPK.businessEntityID = :businessEntityID"),
     @NamedQuery(name = "Salespersonquotahistory.findByQuotaDate", query = "SELECT s FROM Salespersonquotahistory s WHERE s.salespersonquotahistoryPK.quotaDate = :quotaDate"),
     @NamedQuery(name = "Salespersonquotahistory.findBySalesQuota", query = "SELECT s FROM Salespersonquotahistory s WHERE s.salesQuota = :salesQuota"),
+    @NamedQuery(name = "Salespersonquotahistory.findByRowguid", query = "SELECT s FROM Salespersonquotahistory s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Salespersonquotahistory.findByModifiedDate", query = "SELECT s FROM Salespersonquotahistory s WHERE s.modifiedDate = :modifiedDate")})
 public class Salespersonquotahistory implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SalespersonquotahistoryPK salespersonquotahistoryPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "SalesQuota")
-    private double salesQuota;
+    private BigDecimal salesQuota;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "BusinessEntityID", referencedColumnName = "BusinessEntityID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Salesperson salesperson;
 
     public Salespersonquotahistory() {
     }
@@ -63,15 +72,15 @@ public class Salespersonquotahistory implements Serializable {
         this.salespersonquotahistoryPK = salespersonquotahistoryPK;
     }
 
-    public Salespersonquotahistory(SalespersonquotahistoryPK salespersonquotahistoryPK, double salesQuota, byte[] rowguid, Date modifiedDate) {
+    public Salespersonquotahistory(SalespersonquotahistoryPK salespersonquotahistoryPK, BigDecimal salesQuota, String rowguid, Date modifiedDate) {
         this.salespersonquotahistoryPK = salespersonquotahistoryPK;
         this.salesQuota = salesQuota;
         this.rowguid = rowguid;
         this.modifiedDate = modifiedDate;
     }
 
-    public Salespersonquotahistory(int salesPersonID, Date quotaDate) {
-        this.salespersonquotahistoryPK = new SalespersonquotahistoryPK(salesPersonID, quotaDate);
+    public Salespersonquotahistory(int businessEntityID, Date quotaDate) {
+        this.salespersonquotahistoryPK = new SalespersonquotahistoryPK(businessEntityID, quotaDate);
     }
 
     public SalespersonquotahistoryPK getSalespersonquotahistoryPK() {
@@ -82,19 +91,19 @@ public class Salespersonquotahistory implements Serializable {
         this.salespersonquotahistoryPK = salespersonquotahistoryPK;
     }
 
-    public double getSalesQuota() {
+    public BigDecimal getSalesQuota() {
         return salesQuota;
     }
 
-    public void setSalesQuota(double salesQuota) {
+    public void setSalesQuota(BigDecimal salesQuota) {
         this.salesQuota = salesQuota;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -104,6 +113,14 @@ public class Salespersonquotahistory implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Salesperson getSalesperson() {
+        return salesperson;
+    }
+
+    public void setSalesperson(Salesperson salesperson) {
+        this.salesperson = salesperson;
     }
 
     @Override

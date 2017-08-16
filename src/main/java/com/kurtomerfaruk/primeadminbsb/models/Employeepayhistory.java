@@ -7,11 +7,15 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,29 +26,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "employeepayhistory")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employeepayhistory.findAll", query = "SELECT e FROM Employeepayhistory e"),
-    @NamedQuery(name = "Employeepayhistory.findByEmployeeID", query = "SELECT e FROM Employeepayhistory e WHERE e.employeepayhistoryPK.employeeID = :employeeID"),
+    @NamedQuery(name = "Employeepayhistory.findByBusinessEntityID", query = "SELECT e FROM Employeepayhistory e WHERE e.employeepayhistoryPK.businessEntityID = :businessEntityID"),
     @NamedQuery(name = "Employeepayhistory.findByRateChangeDate", query = "SELECT e FROM Employeepayhistory e WHERE e.employeepayhistoryPK.rateChangeDate = :rateChangeDate"),
     @NamedQuery(name = "Employeepayhistory.findByRate", query = "SELECT e FROM Employeepayhistory e WHERE e.rate = :rate"),
     @NamedQuery(name = "Employeepayhistory.findByPayFrequency", query = "SELECT e FROM Employeepayhistory e WHERE e.payFrequency = :payFrequency"),
     @NamedQuery(name = "Employeepayhistory.findByModifiedDate", query = "SELECT e FROM Employeepayhistory e WHERE e.modifiedDate = :modifiedDate")})
 public class Employeepayhistory implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected EmployeepayhistoryPK employeepayhistoryPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "Rate")
-    private double rate;
+    private BigDecimal rate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "PayFrequency")
@@ -54,6 +59,9 @@ public class Employeepayhistory implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "BusinessEntityID", referencedColumnName = "BusinessEntityID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Employee employee;
 
     public Employeepayhistory() {
     }
@@ -62,15 +70,15 @@ public class Employeepayhistory implements Serializable {
         this.employeepayhistoryPK = employeepayhistoryPK;
     }
 
-    public Employeepayhistory(EmployeepayhistoryPK employeepayhistoryPK, double rate, short payFrequency, Date modifiedDate) {
+    public Employeepayhistory(EmployeepayhistoryPK employeepayhistoryPK, BigDecimal rate, short payFrequency, Date modifiedDate) {
         this.employeepayhistoryPK = employeepayhistoryPK;
         this.rate = rate;
         this.payFrequency = payFrequency;
         this.modifiedDate = modifiedDate;
     }
 
-    public Employeepayhistory(int employeeID, Date rateChangeDate) {
-        this.employeepayhistoryPK = new EmployeepayhistoryPK(employeeID, rateChangeDate);
+    public Employeepayhistory(int businessEntityID, Date rateChangeDate) {
+        this.employeepayhistoryPK = new EmployeepayhistoryPK(businessEntityID, rateChangeDate);
     }
 
     public EmployeepayhistoryPK getEmployeepayhistoryPK() {
@@ -81,11 +89,11 @@ public class Employeepayhistory implements Serializable {
         this.employeepayhistoryPK = employeepayhistoryPK;
     }
 
-    public double getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 
@@ -103,6 +111,14 @@ public class Employeepayhistory implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override

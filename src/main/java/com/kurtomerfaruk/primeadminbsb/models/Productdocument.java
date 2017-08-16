@@ -12,6 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,9 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productdocument")
@@ -32,10 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Productdocument.findAll", query = "SELECT p FROM Productdocument p"),
     @NamedQuery(name = "Productdocument.findByProductID", query = "SELECT p FROM Productdocument p WHERE p.productdocumentPK.productID = :productID"),
-    @NamedQuery(name = "Productdocument.findByDocumentID", query = "SELECT p FROM Productdocument p WHERE p.productdocumentPK.documentID = :documentID"),
+    @NamedQuery(name = "Productdocument.findByDocumentNode", query = "SELECT p FROM Productdocument p WHERE p.productdocumentPK.documentNode = :documentNode"),
     @NamedQuery(name = "Productdocument.findByModifiedDate", query = "SELECT p FROM Productdocument p WHERE p.modifiedDate = :modifiedDate")})
 public class Productdocument implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductdocumentPK productdocumentPK;
@@ -44,6 +47,12 @@ public class Productdocument implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Product product;
+    @JoinColumn(name = "DocumentNode", referencedColumnName = "DocumentNode", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Document document;
 
     public Productdocument() {
     }
@@ -57,8 +66,8 @@ public class Productdocument implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    public Productdocument(int productID, int documentID) {
-        this.productdocumentPK = new ProductdocumentPK(productID, documentID);
+    public Productdocument(int productID, String documentNode) {
+        this.productdocumentPK = new ProductdocumentPK(productID, documentNode);
     }
 
     public ProductdocumentPK getProductdocumentPK() {
@@ -75,6 +84,22 @@ public class Productdocument implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
     @Override

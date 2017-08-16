@@ -3,21 +3,30 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Illustration;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "illustrationController")
 @ViewScoped
 public class IllustrationController extends AbstractController<Illustration> {
-    private static final long serialVersionUID = -8296637159604249573L;
 
     public IllustrationController() {
         // Inform the Abstract parent controller of the concrete Illustration Entity
         super(Illustration.class);
+    }
+
+    /**
+     * Sets the "items" attribute with a collection of Productmodelillustration
+     * entities that are retrieved from Illustration?cap_first and returns the
+     * navigation outcome.
+     *
+     * @return navigation outcome for Productmodelillustration page
+     */
+    public String navigateProductmodelillustrationList() {
+        if (this.getSelected() != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productmodelillustration_items", this.getSelected().getProductmodelillustrationList());
+        }
+        return "/productmodelillustration/index";
     }
 
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="BusinessentityaddressListForm" class="form-height">
+
+        <p:contextMenu id="BusinessentityaddressDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('BusinessentityaddressListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('BusinessentityaddressListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('BusinessentityaddressListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('BusinessentityaddressListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Businessentity #{messages.View}" icon="fa fa-search"  actionListener="#{businessentityaddressController.prepareBusinessentity}" update=":BusinessentityViewForm:BusinessentityViewForm" oncomplete="PF('BusinessentityViewDialog').show()" disabled="#{empty businessentityaddressController.selected.businessentity}"/>  
+            <p:menuitem value="Address #{messages.View}" icon="fa fa-search"  actionListener="#{businessentityaddressController.prepareAddress}" update=":AddressViewForm:AddressViewForm" oncomplete="PF('AddressViewDialog').show()" disabled="#{empty businessentityaddressController.selected.address}"/>  
+            <p:menuitem value="Addresstype #{messages.View}" icon="fa fa-search"  actionListener="#{businessentityaddressController.prepareAddresstype}" update=":AddresstypeViewForm:AddresstypeViewForm" oncomplete="PF('AddresstypeViewDialog').show()" disabled="#{empty businessentityaddressController.selected.addresstype}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{businessentityaddressController.lazyItems}"
+                        rowKey="#{item.businessentityaddressPK}"
+                        selection="#{businessentityaddressController.selected}"
+                        filtered="#{businessentityaddressController.filtered}"
+                        rowselect=":BusinessentityaddressListForm:datalist:datalist:createButton,:BusinessentityaddressListForm:datalist:datalist:viewButton,:BusinessentityaddressListForm:datalist:datalist:editButton,:BusinessentityaddressListForm:datalist:datalist:deleteButton,:BusinessentityaddressListForm:BusinessentityaddressDataTableContextMenu"
+                        rowDblselect="document.getElementById('BusinessentityaddressListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":BusinessentityaddressListForm:datalist:datalist:createButton :BusinessentityaddressListForm:datalist:datalist:viewButton :BusinessentityaddressListForm:datalist:datalist:editButton :BusinessentityaddressListForm:datalist:datalist:deleteButton"
+                        selectListener="#{businessentityaddressController.resetParents}">
+
+
+
+
+            <f:facet name="header">
+                #{messages.ListBusinessentityaddressTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.businessentityaddressPK.businessEntityID}" filterBy="#{item.businessentityaddressPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentityaddressPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessentityaddressPK.businessEntityID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.businessentityaddressPK.addressID}" filterBy="#{item.businessentityaddressPK.addressID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentityaddressPK_addressID}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessentityaddressPK.addressID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.businessentityaddressPK.addressTypeID}" filterBy="#{item.businessentityaddressPK.addressTypeID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentityaddressPK_addressTypeID}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessentityaddressPK.addressTypeID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.businessentity.businessEntityID}" filterBy="#{item.businessentity.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentity}"/>
+                </f:facet>
+                <h:outputText value="#{item.businessentity.businessEntityID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.address.addressID}" filterBy="#{item.address.addressID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_address}"/>
+                </f:facet>
+                <h:outputText value="#{item.address.addressID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.addresstype.name}" filterBy="#{item.addresstype.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_addresstype}"/>
+                </f:facet>
+                <h:outputText value="#{item.addresstype.name}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{businessentityaddressController.prepareCreate}" update=":BusinessentityaddressCreateForm:BusinessentityaddressCreateForm" oncomplete="PF('BusinessentityaddressCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":BusinessentityaddressViewForm:BusinessentityaddressViewForm" oncomplete="PF('BusinessentityaddressViewDialog').show()" disabled="#{empty businessentityaddressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":BusinessentityaddressEditForm:BusinessentityaddressEditForm" oncomplete="PF('BusinessentityaddressEditDialog').show()" disabled="#{empty businessentityaddressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{businessentityaddressController.delete}" update=":growl,datalist" disabled="#{empty businessentityaddressController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

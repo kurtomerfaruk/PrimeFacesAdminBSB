@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="PurchaseorderheaderViewForm"
+                       renderedListener="#{purchaseorderheaderController.selected != null}"
+                       widgetVar="PurchaseorderheaderViewDialog">
+
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_purchaseOrderID}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.purchaseOrderID}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_revisionNumber}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.revisionNumber}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_status}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.status}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_orderDate}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.orderDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_shipDate}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.shipDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_subTotal}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.subTotal}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_taxAmt}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.taxAmt}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_freight}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.freight}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_totalDue}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.totalDue}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_modifiedDate}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_vendorID}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.vendorID.name}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_shipMethodID}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.shipMethodID.name}"/>
+
+            <h:outputText value="#{messages.CreatePurchaseorderheaderLabel_employeeID}"/>
+            <h:outputText value="#{purchaseorderheaderController.selected.employeeID.businessEntityID}"/>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

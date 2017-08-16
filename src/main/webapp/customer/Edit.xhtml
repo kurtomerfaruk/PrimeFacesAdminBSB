@@ -4,44 +4,61 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="CustomerEditDlg" widgetVar="CustomerEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditCustomerTitle}" closeOnEscape="true">
 
-            <h:form id="CustomerEditForm">
+        <coco:editpage id="CustomerEditForm"
+                       renderedListener="#{customerController.selected != null}"
+                       widgetVar="CustomerEditDialog"
+                       actionListener="#{customerController.save}"
+                       listForm="CustomerListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{customerController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateCustomerLabel_accountNumber}" for="accountNumber" />
+            <p:inputText id="accountNumber" value="#{customerController.selected.accountNumber}" title="#{messages.CreateCustomerTitle_accountNumber}" required="true" requiredMessage="#{messages.CreateCustomerRequiredMessage_accountNumber}" size="10" maxlength="10"/>
 
-                        <h:outputLabel value="#{messages.EditCustomerLabel_customerID}" for="customerID" />
-                        <h:outputText id="customerID" value="#{customerController.selected.customerID}" />
+            <p:outputLabel value="#{messages.CreateCustomerLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{customerController.selected.rowguid}" title="#{messages.CreateCustomerTitle_rowguid}" required="true" requiredMessage="#{messages.CreateCustomerRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-                        <p:outputLabel value="#{messages.EditCustomerLabel_territoryID}" for="territoryID" />
-                        <p:inputText id="territoryID" value="#{customerController.selected.territoryID}" title="#{messages.EditCustomerTitle_territoryID}"/>
+            <p:outputLabel value="#{messages.CreateCustomerLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{customerController.selected.modifiedDate}" title="#{messages.CreateCustomerTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateCustomerRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditCustomerLabel_accountNumber}" for="accountNumber" />
-                        <p:inputText id="accountNumber" value="#{customerController.selected.accountNumber}" title="#{messages.EditCustomerTitle_accountNumber}" required="true" requiredMessage="#{messages.EditCustomerRequiredMessage_accountNumber}" size="10" maxlength="10"/>
+            <p:outputLabel value="#{messages.CreateCustomerLabel_storeID}" for="storeID" />
+            <p:selectOneMenu id="storeID" value="#{customerController.selected.storeID}"  converter="storeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{storeController.items}"
+                               var="storeIDItem"
+                               itemValue="#{storeIDItem}"
+                               itemLabel="#{storeIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.EditCustomerLabel_customerType}" for="customerType" />
-                        <p:inputText id="customerType" value="#{customerController.selected.customerType}" title="#{messages.EditCustomerTitle_customerType}" required="true" requiredMessage="#{messages.EditCustomerRequiredMessage_customerType}" size="1" maxlength="1"/>
+            </p:selectOneMenu>
 
-                        <p:outputLabel value="#{messages.EditCustomerLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{customerController.selected.rowguid}" title="#{messages.EditCustomerTitle_rowguid}" required="true" requiredMessage="#{messages.EditCustomerRequiredMessage_rowguid}"/>
+            <p:outputLabel value="#{messages.CreateCustomerLabel_territoryID}" for="territoryID" />
+            <p:selectOneMenu id="territoryID" value="#{customerController.selected.territoryID}"  converter="salesterritoryConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{salesterritoryController.items}"
+                               var="territoryIDItem"
+                               itemValue="#{territoryIDItem}"
+                               itemLabel="#{territoryIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.EditCustomerLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{customerController.selected.modifiedDate}" title="#{messages.EditCustomerTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditCustomerRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{customerController.save}" value="#{messages.Save}" update="display,:CustomerListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CustomerEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('CustomerEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            </p:selectOneMenu>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateCustomerLabel_personID}" for="personID" />
+            <p:selectOneMenu id="personID" value="#{customerController.selected.personID}"  converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personIDItem"
+                               itemValue="#{personIDItem}"
+                               itemLabel="#{personIDItem.nameStyle.toString()}"
+                               />
 
-        </p:dialog>
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:editpage id="EmailaddressEditForm"
+                       renderedListener="#{emailaddressController.selected != null}"
+                       widgetVar="EmailaddressEditDialog"
+                       actionListener="#{emailaddressController.save}"
+                       listForm="EmailaddressListForm">
+
+
+            <p:outputLabel value="#{messages.CreateEmailaddressLabel_emailaddressPK_businessEntityID}" for="emailaddressPK_businessEntityID" />
+            <p:inputText id="emailaddressPK_businessEntityID" value="#{emailaddressController.selected.emailaddressPK.businessEntityID}" title="#{messages.CreateEmailaddressTitle_emailaddressPK_businessEntityID}" required="true" requiredMessage="#{messages.CreateEmailaddressRequiredMessage_emailaddressPK_businessEntityID}"/>
+
+            <p:outputLabel value="#{messages.CreateEmailaddressLabel_emailaddressPK_emailAddressID}" for="emailaddressPK_emailAddressID" />
+            <p:inputText id="emailaddressPK_emailAddressID" value="#{emailaddressController.selected.emailaddressPK.emailAddressID}" title="#{messages.CreateEmailaddressTitle_emailaddressPK_emailAddressID}" required="true" requiredMessage="#{messages.CreateEmailaddressRequiredMessage_emailaddressPK_emailAddressID}"/>
+
+            <p:outputLabel value="#{messages.CreateEmailaddressLabel_emailAddress}" for="emailAddress" />
+            <p:inputText id="emailAddress" value="#{emailaddressController.selected.emailAddress}" title="#{messages.CreateEmailaddressTitle_emailAddress}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.CreateEmailaddressLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{emailaddressController.selected.rowguid}" title="#{messages.CreateEmailaddressTitle_rowguid}" required="true" requiredMessage="#{messages.CreateEmailaddressRequiredMessage_rowguid}" size="64" maxlength="64"/>
+
+            <p:outputLabel value="#{messages.CreateEmailaddressLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{emailaddressController.selected.modifiedDate}" title="#{messages.CreateEmailaddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmailaddressRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreateEmailaddressLabel_person}" for="person" />
+            <p:selectOneMenu id="person" value="#{emailaddressController.selected.person}" required="true" requiredMessage="#{messages.CreateEmailaddressRequiredMessage_person}" converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personItem"
+                               itemValue="#{personItem}"
+                               itemLabel="#{personItem.nameStyle.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
+
+    </ui:composition>
+
+</html>

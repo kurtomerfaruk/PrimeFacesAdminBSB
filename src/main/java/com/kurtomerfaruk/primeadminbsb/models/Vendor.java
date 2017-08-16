@@ -8,56 +8,61 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "vendor")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Vendor.findAll", query = "SELECT v FROM Vendor v"),
-    @NamedQuery(name = "Vendor.findByVendorID", query = "SELECT v FROM Vendor v WHERE v.vendorID = :vendorID"),
+    @NamedQuery(name = "Vendor.findByBusinessEntityID", query = "SELECT v FROM Vendor v WHERE v.businessEntityID = :businessEntityID"),
     @NamedQuery(name = "Vendor.findByAccountNumber", query = "SELECT v FROM Vendor v WHERE v.accountNumber = :accountNumber"),
     @NamedQuery(name = "Vendor.findByName", query = "SELECT v FROM Vendor v WHERE v.name = :name"),
     @NamedQuery(name = "Vendor.findByCreditRating", query = "SELECT v FROM Vendor v WHERE v.creditRating = :creditRating"),
     @NamedQuery(name = "Vendor.findByPreferredVendorStatus", query = "SELECT v FROM Vendor v WHERE v.preferredVendorStatus = :preferredVendorStatus"),
     @NamedQuery(name = "Vendor.findByActiveFlag", query = "SELECT v FROM Vendor v WHERE v.activeFlag = :activeFlag"),
+    @NamedQuery(name = "Vendor.findByPurchasingWebServiceURL", query = "SELECT v FROM Vendor v WHERE v.purchasingWebServiceURL = :purchasingWebServiceURL"),
     @NamedQuery(name = "Vendor.findByModifiedDate", query = "SELECT v FROM Vendor v WHERE v.modifiedDate = :modifiedDate")})
 public class Vendor implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "VendorID")
-    private Integer vendorID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Column(name = "BusinessEntityID")
+    private Integer businessEntityID;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
     @Column(name = "AccountNumber")
     private String accountNumber;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
@@ -72,8 +77,7 @@ public class Vendor implements Serializable {
     @NotNull
     @Column(name = "ActiveFlag")
     private boolean activeFlag;
-    @Lob
-    @Size(max = 16777215)
+    @Size(max = 1024)
     @Column(name = "PurchasingWebServiceURL")
     private String purchasingWebServiceURL;
     @Basic(optional = false)
@@ -81,16 +85,23 @@ public class Vendor implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendorID")
+    private List<Purchaseorderheader> purchaseorderheaderList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendor")
+    private List<Productvendor> productvendorList;
+    @JoinColumn(name = "BusinessEntityID", referencedColumnName = "BusinessEntityID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Businessentity businessentity;
 
     public Vendor() {
     }
 
-    public Vendor(Integer vendorID) {
-        this.vendorID = vendorID;
+    public Vendor(Integer businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
-    public Vendor(Integer vendorID, String accountNumber, String name, short creditRating, boolean preferredVendorStatus, boolean activeFlag, Date modifiedDate) {
-        this.vendorID = vendorID;
+    public Vendor(Integer businessEntityID, String accountNumber, String name, short creditRating, boolean preferredVendorStatus, boolean activeFlag, Date modifiedDate) {
+        this.businessEntityID = businessEntityID;
         this.accountNumber = accountNumber;
         this.name = name;
         this.creditRating = creditRating;
@@ -99,12 +110,12 @@ public class Vendor implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    public Integer getVendorID() {
-        return vendorID;
+    public Integer getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setVendorID(Integer vendorID) {
-        this.vendorID = vendorID;
+    public void setBusinessEntityID(Integer businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public String getAccountNumber() {
@@ -163,10 +174,36 @@ public class Vendor implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    @XmlTransient
+    public List<Purchaseorderheader> getPurchaseorderheaderList() {
+        return purchaseorderheaderList;
+    }
+
+    public void setPurchaseorderheaderList(List<Purchaseorderheader> purchaseorderheaderList) {
+        this.purchaseorderheaderList = purchaseorderheaderList;
+    }
+
+    @XmlTransient
+    public List<Productvendor> getProductvendorList() {
+        return productvendorList;
+    }
+
+    public void setProductvendorList(List<Productvendor> productvendorList) {
+        this.productvendorList = productvendorList;
+    }
+
+    public Businessentity getBusinessentity() {
+        return businessentity;
+    }
+
+    public void setBusinessentity(Businessentity businessentity) {
+        this.businessentity = businessentity;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (vendorID != null ? vendorID.hashCode() : 0);
+        hash += (businessEntityID != null ? businessEntityID.hashCode() : 0);
         return hash;
     }
 
@@ -177,7 +214,7 @@ public class Vendor implements Serializable {
             return false;
         }
         Vendor other = (Vendor) object;
-        if ((this.vendorID == null && other.vendorID != null) || (this.vendorID != null && !this.vendorID.equals(other.vendorID))) {
+        if ((this.businessEntityID == null && other.businessEntityID != null) || (this.businessEntityID != null && !this.businessEntityID.equals(other.businessEntityID))) {
             return false;
         }
         return true;
@@ -185,7 +222,7 @@ public class Vendor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.Vendor[ vendorID=" + vendorID + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.Vendor[ businessEntityID=" + businessEntityID + " ]";
     }
 
 }

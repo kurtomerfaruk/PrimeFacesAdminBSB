@@ -4,47 +4,45 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="SalestaxrateEditDlg" widgetVar="SalestaxrateEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditSalestaxrateTitle}" closeOnEscape="true">
 
-            <h:form id="SalestaxrateEditForm">
+        <coco:editpage id="SalestaxrateEditForm"
+                       renderedListener="#{salestaxrateController.selected != null}"
+                       widgetVar="SalestaxrateEditDialog"
+                       actionListener="#{salestaxrateController.save}"
+                       listForm="SalestaxrateListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{salestaxrateController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateSalestaxrateLabel_taxType}" for="taxType" />
+            <p:inputText id="taxType" value="#{salestaxrateController.selected.taxType}" title="#{messages.CreateSalestaxrateTitle_taxType}" required="true" requiredMessage="#{messages.CreateSalestaxrateRequiredMessage_taxType}"/>
 
-                        <h:outputLabel value="#{messages.EditSalestaxrateLabel_salesTaxRateID}" for="salesTaxRateID" />
-                        <h:outputText id="salesTaxRateID" value="#{salestaxrateController.selected.salesTaxRateID}" />
+            <p:outputLabel value="#{messages.CreateSalestaxrateLabel_taxRate}" for="taxRate" />
+            <p:inputText id="taxRate" value="#{salestaxrateController.selected.taxRate}" title="#{messages.CreateSalestaxrateTitle_taxRate}" required="true" requiredMessage="#{messages.CreateSalestaxrateRequiredMessage_taxRate}"/>
 
-                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_stateProvinceID}" for="stateProvinceID" />
-                        <p:inputText id="stateProvinceID" value="#{salestaxrateController.selected.stateProvinceID}" title="#{messages.EditSalestaxrateTitle_stateProvinceID}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_stateProvinceID}"/>
+            <p:outputLabel value="#{messages.CreateSalestaxrateLabel_name}" for="name" />
+            <p:inputText id="name" value="#{salestaxrateController.selected.name}" title="#{messages.CreateSalestaxrateTitle_name}" required="true" requiredMessage="#{messages.CreateSalestaxrateRequiredMessage_name}" size="100" maxlength="100"/>
 
-                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_taxType}" for="taxType" />
-                        <p:inputText id="taxType" value="#{salestaxrateController.selected.taxType}" title="#{messages.EditSalestaxrateTitle_taxType}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_taxType}"/>
+            <p:outputLabel value="#{messages.CreateSalestaxrateLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{salestaxrateController.selected.rowguid}" title="#{messages.CreateSalestaxrateTitle_rowguid}" required="true" requiredMessage="#{messages.CreateSalestaxrateRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_taxRate}" for="taxRate" />
-                        <p:inputText id="taxRate" value="#{salestaxrateController.selected.taxRate}" title="#{messages.EditSalestaxrateTitle_taxRate}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_taxRate}"/>
+            <p:outputLabel value="#{messages.CreateSalestaxrateLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{salestaxrateController.selected.modifiedDate}" title="#{messages.CreateSalestaxrateTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateSalestaxrateRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{salestaxrateController.selected.name}" title="#{messages.EditSalestaxrateTitle_name}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateSalestaxrateLabel_stateProvinceID}" for="stateProvinceID" />
+            <p:selectOneMenu id="stateProvinceID" value="#{salestaxrateController.selected.stateProvinceID}" required="true" requiredMessage="#{messages.CreateSalestaxrateRequiredMessage_stateProvinceID}" converter="stateprovinceConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{stateprovinceController.items}"
+                               var="stateProvinceIDItem"
+                               itemValue="#{stateProvinceIDItem}"
+                               itemLabel="#{stateProvinceIDItem.name.toString()}"
+                               />
 
-                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{salestaxrateController.selected.rowguid}" title="#{messages.EditSalestaxrateTitle_rowguid}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_rowguid}"/>
+            </p:selectOneMenu>
 
-                        <p:outputLabel value="#{messages.EditSalestaxrateLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{salestaxrateController.selected.modifiedDate}" title="#{messages.EditSalestaxrateTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditSalestaxrateRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{salestaxrateController.save}" value="#{messages.Save}" update="display,:SalestaxrateListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SalestaxrateEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('SalestaxrateEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

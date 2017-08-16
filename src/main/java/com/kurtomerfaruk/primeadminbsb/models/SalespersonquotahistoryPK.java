@@ -17,17 +17,17 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Embeddable
 public class SalespersonquotahistoryPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SalesPersonID")
-    private int salesPersonID;
+    @Column(name = "BusinessEntityID")
+    private int businessEntityID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "QuotaDate")
@@ -37,17 +37,17 @@ public class SalespersonquotahistoryPK implements Serializable {
     public SalespersonquotahistoryPK() {
     }
 
-    public SalespersonquotahistoryPK(int salesPersonID, Date quotaDate) {
-        this.salesPersonID = salesPersonID;
+    public SalespersonquotahistoryPK(int businessEntityID, Date quotaDate) {
+        this.businessEntityID = businessEntityID;
         this.quotaDate = quotaDate;
     }
 
-    public int getSalesPersonID() {
-        return salesPersonID;
+    public int getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setSalesPersonID(int salesPersonID) {
-        this.salesPersonID = salesPersonID;
+    public void setBusinessEntityID(int businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public Date getQuotaDate() {
@@ -61,7 +61,7 @@ public class SalespersonquotahistoryPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) salesPersonID;
+        hash += (int) businessEntityID;
         hash += (quotaDate != null ? quotaDate.hashCode() : 0);
         return hash;
     }
@@ -73,7 +73,7 @@ public class SalespersonquotahistoryPK implements Serializable {
             return false;
         }
         SalespersonquotahistoryPK other = (SalespersonquotahistoryPK) object;
-        if (this.salesPersonID != other.salesPersonID) {
+        if (this.businessEntityID != other.businessEntityID) {
             return false;
         }
         if ((this.quotaDate == null && other.quotaDate != null) || (this.quotaDate != null && !this.quotaDate.equals(other.quotaDate))) {
@@ -84,7 +84,7 @@ public class SalespersonquotahistoryPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.SalespersonquotahistoryPK[ salesPersonID=" + salesPersonID + ", quotaDate=" + quotaDate + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.SalespersonquotahistoryPK[ businessEntityID=" + businessEntityID + ", quotaDate=" + quotaDate + " ]";
     }
 
 }

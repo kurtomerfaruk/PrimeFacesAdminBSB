@@ -7,28 +7,34 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "specialoffer")
@@ -44,9 +50,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Specialoffer.findByEndDate", query = "SELECT s FROM Specialoffer s WHERE s.endDate = :endDate"),
     @NamedQuery(name = "Specialoffer.findByMinQty", query = "SELECT s FROM Specialoffer s WHERE s.minQty = :minQty"),
     @NamedQuery(name = "Specialoffer.findByMaxQty", query = "SELECT s FROM Specialoffer s WHERE s.maxQty = :maxQty"),
+    @NamedQuery(name = "Specialoffer.findByRowguid", query = "SELECT s FROM Specialoffer s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Specialoffer.findByModifiedDate", query = "SELECT s FROM Specialoffer s WHERE s.modifiedDate = :modifiedDate")})
 public class Specialoffer implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,10 +64,11 @@ public class Specialoffer implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "Description")
     private String description;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "DiscountPct")
-    private double discountPct;
+    private BigDecimal discountPct;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -90,14 +97,16 @@ public class Specialoffer implements Serializable {
     private Integer maxQty;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "specialoffer")
+    private List<Specialofferproduct> specialofferproductList;
 
     public Specialoffer() {
     }
@@ -106,7 +115,7 @@ public class Specialoffer implements Serializable {
         this.specialOfferID = specialOfferID;
     }
 
-    public Specialoffer(Integer specialOfferID, String description, double discountPct, String type, String category, Date startDate, Date endDate, int minQty, byte[] rowguid, Date modifiedDate) {
+    public Specialoffer(Integer specialOfferID, String description, BigDecimal discountPct, String type, String category, Date startDate, Date endDate, int minQty, String rowguid, Date modifiedDate) {
         this.specialOfferID = specialOfferID;
         this.description = description;
         this.discountPct = discountPct;
@@ -135,11 +144,11 @@ public class Specialoffer implements Serializable {
         this.description = description;
     }
 
-    public double getDiscountPct() {
+    public BigDecimal getDiscountPct() {
         return discountPct;
     }
 
-    public void setDiscountPct(double discountPct) {
+    public void setDiscountPct(BigDecimal discountPct) {
         this.discountPct = discountPct;
     }
 
@@ -191,11 +200,11 @@ public class Specialoffer implements Serializable {
         this.maxQty = maxQty;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -205,6 +214,15 @@ public class Specialoffer implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Specialofferproduct> getSpecialofferproductList() {
+        return specialofferproductList;
+    }
+
+    public void setSpecialofferproductList(List<Specialofferproduct> specialofferproductList) {
+        this.specialofferproductList = specialofferproductList;
     }
 
     @Override

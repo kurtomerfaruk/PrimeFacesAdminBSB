@@ -7,28 +7,34 @@
 package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "shipmethod")
@@ -39,9 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Shipmethod.findByName", query = "SELECT s FROM Shipmethod s WHERE s.name = :name"),
     @NamedQuery(name = "Shipmethod.findByShipBase", query = "SELECT s FROM Shipmethod s WHERE s.shipBase = :shipBase"),
     @NamedQuery(name = "Shipmethod.findByShipRate", query = "SELECT s FROM Shipmethod s WHERE s.shipRate = :shipRate"),
+    @NamedQuery(name = "Shipmethod.findByRowguid", query = "SELECT s FROM Shipmethod s WHERE s.rowguid = :rowguid"),
     @NamedQuery(name = "Shipmethod.findByModifiedDate", query = "SELECT s FROM Shipmethod s WHERE s.modifiedDate = :modifiedDate")})
 public class Shipmethod implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,27 +56,32 @@ public class Shipmethod implements Serializable {
     private Integer shipMethodID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "ShipBase")
-    private double shipBase;
+    private BigDecimal shipBase;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ShipRate")
-    private double shipRate;
+    private BigDecimal shipRate;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipMethodID")
+    private List<Purchaseorderheader> purchaseorderheaderList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipMethodID")
+    private List<Salesorderheader> salesorderheaderList;
 
     public Shipmethod() {
     }
@@ -79,7 +90,7 @@ public class Shipmethod implements Serializable {
         this.shipMethodID = shipMethodID;
     }
 
-    public Shipmethod(Integer shipMethodID, String name, double shipBase, double shipRate, byte[] rowguid, Date modifiedDate) {
+    public Shipmethod(Integer shipMethodID, String name, BigDecimal shipBase, BigDecimal shipRate, String rowguid, Date modifiedDate) {
         this.shipMethodID = shipMethodID;
         this.name = name;
         this.shipBase = shipBase;
@@ -104,27 +115,27 @@ public class Shipmethod implements Serializable {
         this.name = name;
     }
 
-    public double getShipBase() {
+    public BigDecimal getShipBase() {
         return shipBase;
     }
 
-    public void setShipBase(double shipBase) {
+    public void setShipBase(BigDecimal shipBase) {
         this.shipBase = shipBase;
     }
 
-    public double getShipRate() {
+    public BigDecimal getShipRate() {
         return shipRate;
     }
 
-    public void setShipRate(double shipRate) {
+    public void setShipRate(BigDecimal shipRate) {
         this.shipRate = shipRate;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -134,6 +145,24 @@ public class Shipmethod implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Purchaseorderheader> getPurchaseorderheaderList() {
+        return purchaseorderheaderList;
+    }
+
+    public void setPurchaseorderheaderList(List<Purchaseorderheader> purchaseorderheaderList) {
+        this.purchaseorderheaderList = purchaseorderheaderList;
+    }
+
+    @XmlTransient
+    public List<Salesorderheader> getSalesorderheaderList() {
+        return salesorderheaderList;
+    }
+
+    public void setSalesorderheaderList(List<Salesorderheader> salesorderheaderList) {
+        this.salesorderheaderList = salesorderheaderList;
     }
 
     @Override

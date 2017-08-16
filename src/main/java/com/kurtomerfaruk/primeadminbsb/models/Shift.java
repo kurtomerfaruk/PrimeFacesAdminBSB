@@ -8,26 +8,32 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "shift")
@@ -40,42 +46,43 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Shift.findByEndTime", query = "SELECT s FROM Shift s WHERE s.endTime = :endTime"),
     @NamedQuery(name = "Shift.findByModifiedDate", query = "SELECT s FROM Shift s WHERE s.modifiedDate = :modifiedDate")})
 public class Shift implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ShiftID")
-    private Integer shiftID;
+    private Short shiftID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
     @NotNull
     @Column(name = "StartTime")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date startTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "EndTime")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date endTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shift")
+    private List<Employeedepartmenthistory> employeedepartmenthistoryList;
 
     public Shift() {
     }
 
-    public Shift(Integer shiftID) {
+    public Shift(Short shiftID) {
         this.shiftID = shiftID;
     }
 
-    public Shift(Integer shiftID, String name, Date startTime, Date endTime, Date modifiedDate) {
+    public Shift(Short shiftID, String name, Date startTime, Date endTime, Date modifiedDate) {
         this.shiftID = shiftID;
         this.name = name;
         this.startTime = startTime;
@@ -83,11 +90,11 @@ public class Shift implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    public Integer getShiftID() {
+    public Short getShiftID() {
         return shiftID;
     }
 
-    public void setShiftID(Integer shiftID) {
+    public void setShiftID(Short shiftID) {
         this.shiftID = shiftID;
     }
 
@@ -121,6 +128,15 @@ public class Shift implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Employeedepartmenthistory> getEmployeedepartmenthistoryList() {
+        return employeedepartmenthistoryList;
+    }
+
+    public void setEmployeedepartmenthistoryList(List<Employeedepartmenthistory> employeedepartmenthistoryList) {
+        this.employeedepartmenthistoryList = employeedepartmenthistoryList;
     }
 
     @Override

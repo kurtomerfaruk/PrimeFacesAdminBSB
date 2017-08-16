@@ -17,17 +17,17 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Embeddable
 public class EmployeedepartmenthistoryPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EmployeeID")
-    private int employeeID;
+    @Column(name = "BusinessEntityID")
+    private int businessEntityID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "DepartmentID")
@@ -39,25 +39,25 @@ public class EmployeedepartmenthistoryPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "StartDate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
 
     public EmployeedepartmenthistoryPK() {
     }
 
-    public EmployeedepartmenthistoryPK(int employeeID, short departmentID, short shiftID, Date startDate) {
-        this.employeeID = employeeID;
+    public EmployeedepartmenthistoryPK(int businessEntityID, short departmentID, short shiftID, Date startDate) {
+        this.businessEntityID = businessEntityID;
         this.departmentID = departmentID;
         this.shiftID = shiftID;
         this.startDate = startDate;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setBusinessEntityID(int businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public short getDepartmentID() {
@@ -87,7 +87,7 @@ public class EmployeedepartmenthistoryPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) employeeID;
+        hash += (int) businessEntityID;
         hash += (int) departmentID;
         hash += (int) shiftID;
         hash += (startDate != null ? startDate.hashCode() : 0);
@@ -101,7 +101,7 @@ public class EmployeedepartmenthistoryPK implements Serializable {
             return false;
         }
         EmployeedepartmenthistoryPK other = (EmployeedepartmenthistoryPK) object;
-        if (this.employeeID != other.employeeID) {
+        if (this.businessEntityID != other.businessEntityID) {
             return false;
         }
         if (this.departmentID != other.departmentID) {
@@ -118,7 +118,7 @@ public class EmployeedepartmenthistoryPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.EmployeedepartmenthistoryPK[ employeeID=" + employeeID + ", departmentID=" + departmentID + ", shiftID=" + shiftID + ", startDate=" + startDate + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.EmployeedepartmenthistoryPK[ businessEntityID=" + businessEntityID + ", departmentID=" + departmentID + ", shiftID=" + shiftID + ", startDate=" + startDate + " ]";
     }
 
 }

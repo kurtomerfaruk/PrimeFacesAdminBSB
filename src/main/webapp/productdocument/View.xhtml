@@ -4,35 +4,36 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductdocumentViewDlg" widgetVar="ProductdocumentViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductdocumentTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductdocumentViewForm"
+                       renderedListener="#{productdocumentController.selected != null}"
+                       widgetVar="ProductdocumentViewDialog">
 
-            <h:form id="ProductdocumentViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productdocumentController.selected != null}">
+            <h:outputText value="#{messages.CreateProductdocumentLabel_productdocumentPK_productID}"/>
+            <h:outputText value="#{productdocumentController.selected.productdocumentPK.productID}"/>
 
-                        <h:outputText value="#{messages.ViewProductdocumentLabel_productdocumentPK_productID}"/>
-                        <h:outputText value="#{productdocumentController.selected.productdocumentPK.productID}" title="#{messages.ViewProductdocumentTitle_productdocumentPK_productID}"/>
+            <h:outputText value="#{messages.CreateProductdocumentLabel_productdocumentPK_documentNode}"/>
+            <h:outputText value="#{productdocumentController.selected.productdocumentPK.documentNode}"/>
 
-                        <h:outputText value="#{messages.ViewProductdocumentLabel_productdocumentPK_documentID}"/>
-                        <h:outputText value="#{productdocumentController.selected.productdocumentPK.documentID}" title="#{messages.ViewProductdocumentTitle_productdocumentPK_documentID}"/>
+            <h:outputText value="#{messages.CreateProductdocumentLabel_modifiedDate}"/>
+            <h:outputText value="#{productdocumentController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductdocumentLabel_modifiedDate}"/>
-                        <h:outputText value="#{productdocumentController.selected.modifiedDate}" title="#{messages.ViewProductdocumentTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductdocumentViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateProductdocumentLabel_product}"/>
+            <h:outputText value="#{productdocumentController.selected.product.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateProductdocumentLabel_document}"/>
+            <h:outputText value="#{productdocumentController.selected.document.fileName}"/>
 
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

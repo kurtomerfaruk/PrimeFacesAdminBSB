@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:createpage id="PersonphoneCreateForm"
+                         renderedListener="#{personphoneController.selected != null}"
+                         widgetVar="PersonphoneCreateDialog"
+                         actionListener="#{personphoneController.saveNew}"
+                         listForm="PersonphoneListForm">
+
+
+            <p:outputLabel value="#{messages.CreatePersonphoneLabel_personphonePK_businessEntityID}" for="personphonePK_businessEntityID" />
+            <p:inputText id="personphonePK_businessEntityID" value="#{personphoneController.selected.personphonePK.businessEntityID}" title="#{messages.CreatePersonphoneTitle_personphonePK_businessEntityID}" required="true" requiredMessage="#{messages.CreatePersonphoneRequiredMessage_personphonePK_businessEntityID}"/>
+
+            <p:outputLabel value="#{messages.CreatePersonphoneLabel_personphonePK_phoneNumber}" for="personphonePK_phoneNumber" />
+            <p:inputText id="personphonePK_phoneNumber" value="#{personphoneController.selected.personphonePK.phoneNumber}" title="#{messages.CreatePersonphoneTitle_personphonePK_phoneNumber}" required="true" requiredMessage="#{messages.CreatePersonphoneRequiredMessage_personphonePK_phoneNumber}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.CreatePersonphoneLabel_personphonePK_phoneNumberTypeID}" for="personphonePK_phoneNumberTypeID" />
+            <p:inputText id="personphonePK_phoneNumberTypeID" value="#{personphoneController.selected.personphonePK.phoneNumberTypeID}" title="#{messages.CreatePersonphoneTitle_personphonePK_phoneNumberTypeID}" required="true" requiredMessage="#{messages.CreatePersonphoneRequiredMessage_personphonePK_phoneNumberTypeID}"/>
+
+            <p:outputLabel value="#{messages.CreatePersonphoneLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{personphoneController.selected.modifiedDate}" title="#{messages.CreatePersonphoneTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreatePersonphoneRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreatePersonphoneLabel_phonenumbertype}" for="phonenumbertype" />
+            <p:selectOneMenu id="phonenumbertype" value="#{personphoneController.selected.phonenumbertype}" required="true" requiredMessage="#{messages.CreatePersonphoneRequiredMessage_phonenumbertype}" converter="phonenumbertypeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{phonenumbertypeController.items}"
+                               var="phonenumbertypeItem"
+                               itemValue="#{phonenumbertypeItem}"
+                               itemLabel="#{phonenumbertypeItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePersonphoneLabel_person}" for="person" />
+            <p:selectOneMenu id="person" value="#{personphoneController.selected.person}" required="true" requiredMessage="#{messages.CreatePersonphoneRequiredMessage_person}" converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personItem"
+                               itemValue="#{personItem}"
+                               itemLabel="#{personItem.nameStyle.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
+
+    </ui:composition>
+
+</html>

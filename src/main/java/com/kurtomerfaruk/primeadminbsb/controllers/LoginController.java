@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * @author Omer Faruk KURT
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 13/02/2017 12:18:26
  */
 @ManagedBean

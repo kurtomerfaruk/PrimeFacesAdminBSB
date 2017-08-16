@@ -4,35 +4,28 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="UnitmeasureEditDlg" widgetVar="UnitmeasureEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditUnitmeasureTitle}" closeOnEscape="true">
 
-            <h:form id="UnitmeasureEditForm">
+        <coco:editpage id="UnitmeasureEditForm"
+                       renderedListener="#{unitmeasureController.selected != null}"
+                       widgetVar="UnitmeasureEditDialog"
+                       actionListener="#{unitmeasureController.save}"
+                       listForm="UnitmeasureListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{unitmeasureController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateUnitmeasureLabel_unitMeasureCode}" for="unitMeasureCode" />
+            <p:inputText id="unitMeasureCode" value="#{unitmeasureController.selected.unitMeasureCode}" title="#{messages.CreateUnitmeasureTitle_unitMeasureCode}" required="true" requiredMessage="#{messages.CreateUnitmeasureRequiredMessage_unitMeasureCode}" size="3" maxlength="3"/>
 
-                        <h:outputLabel value="#{messages.EditUnitmeasureLabel_unitMeasureCode}" for="unitMeasureCode" />
-                        <h:outputText id="unitMeasureCode" value="#{unitmeasureController.selected.unitMeasureCode}" />
+            <p:outputLabel value="#{messages.CreateUnitmeasureLabel_name}" for="name" />
+            <p:inputText id="name" value="#{unitmeasureController.selected.name}" title="#{messages.CreateUnitmeasureTitle_name}" required="true" requiredMessage="#{messages.CreateUnitmeasureRequiredMessage_name}" size="100" maxlength="100"/>
 
-                        <p:outputLabel value="#{messages.EditUnitmeasureLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{unitmeasureController.selected.name}" title="#{messages.EditUnitmeasureTitle_name}" required="true" requiredMessage="#{messages.EditUnitmeasureRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateUnitmeasureLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{unitmeasureController.selected.modifiedDate}" title="#{messages.CreateUnitmeasureTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateUnitmeasureRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditUnitmeasureLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{unitmeasureController.selected.modifiedDate}" title="#{messages.EditUnitmeasureTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditUnitmeasureRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{unitmeasureController.save}" value="#{messages.Save}" update="display,:UnitmeasureListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UnitmeasureEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('UnitmeasureEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

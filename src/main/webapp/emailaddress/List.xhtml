@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="EmailaddressListForm" class="form-height">
+
+        <p:contextMenu id="EmailaddressDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('EmailaddressListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('EmailaddressListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('EmailaddressListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('EmailaddressListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Person #{messages.View}" icon="fa fa-search"  actionListener="#{emailaddressController.preparePerson}" update=":PersonViewForm" oncomplete="PF('PersonViewDialog').show()" disabled="#{empty emailaddressController.selected.person}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{emailaddressController.lazyItems}"
+                        rowKey="#{item.emailaddressPK}"
+                        selection="#{emailaddressController.selected}"
+                        filtered="#{emailaddressController.filtered}"
+                        rowselect=":EmailaddressListForm:datalist:datalist:createButton,:EmailaddressListForm:datalist:datalist:viewButton,:EmailaddressListForm:datalist:datalist:editButton,:EmailaddressListForm:datalist:datalist:deleteButton,:EmailaddressListForm:EmailaddressDataTableContextMenu"
+                        rowDblselect="document.getElementById('EmailaddressListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":EmailaddressListForm:datalist:datalist:createButton :EmailaddressListForm:datalist:datalist:viewButton :EmailaddressListForm:datalist:datalist:editButton :EmailaddressListForm:datalist:datalist:deleteButton"
+                        selectListener="#{emailaddressController.resetParents}">
+
+
+
+
+            <f:facet name="header">
+                #{messages.ListEmailaddressTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.emailaddressPK.businessEntityID}" filterBy="#{item.emailaddressPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmailaddressTitle_emailaddressPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.emailaddressPK.businessEntityID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.emailaddressPK.emailAddressID}" filterBy="#{item.emailaddressPK.emailAddressID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmailaddressTitle_emailaddressPK_emailAddressID}"/>
+                </f:facet>
+                <h:outputText value="#{item.emailaddressPK.emailAddressID}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.emailAddress}" filterBy="#{item.emailAddress}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmailaddressTitle_emailAddress}"/>
+                </f:facet>
+                <h:outputText value="#{item.emailAddress}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmailaddressTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmailaddressTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.person.nameStyle}" filterBy="#{item.person.nameStyle}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmailaddressTitle_person}"/>
+                </f:facet>
+                <h:outputText value="#{item.person.nameStyle}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{emailaddressController.prepareCreate}" update=":EmailaddressCreateForm:EmailaddressCreateForm" oncomplete="PF('EmailaddressCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":EmailaddressViewForm:EmailaddressViewForm" oncomplete="PF('EmailaddressViewDialog').show()" disabled="#{empty emailaddressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":EmailaddressEditForm:EmailaddressEditForm" oncomplete="PF('EmailaddressEditDialog').show()" disabled="#{empty emailaddressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{emailaddressController.delete}" update=":growl,datalist" disabled="#{empty emailaddressController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

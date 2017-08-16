@@ -45,7 +45,7 @@ public class StoreConverter implements Converter {
         }
         if (object instanceof Store) {
             Store o = (Store) object;
-            return getStringKey(o.getCustomerID());
+            return getStringKey(o.getBusinessEntityID());
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Store.class.getName()});
             return null;

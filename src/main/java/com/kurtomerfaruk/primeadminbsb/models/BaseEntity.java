@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 /**
  *
  * @author Omer Faruk KURT
- * @blog : http://kurtomerfaruk.com
+ * @blog : https://ofarukkurt.blogspot.com.tr/
  * @Created on date 13/02/2017 10:16:49
  */
 @MappedSuperclass

@@ -4,50 +4,54 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="VendorEditDlg" widgetVar="VendorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditVendorTitle}" closeOnEscape="true">
 
-            <h:form id="VendorEditForm">
+        <coco:editpage id="VendorEditForm"
+                       renderedListener="#{vendorController.selected != null}"
+                       widgetVar="VendorEditDialog"
+                       actionListener="#{vendorController.save}"
+                       listForm="VendorListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{vendorController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateVendorLabel_businessEntityID}" for="businessEntityID" />
+            <p:inputText id="businessEntityID" value="#{vendorController.selected.businessEntityID}" title="#{messages.CreateVendorTitle_businessEntityID}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_businessEntityID}"/>
 
-                        <h:outputLabel value="#{messages.EditVendorLabel_vendorID}" for="vendorID" />
-                        <h:outputText id="vendorID" value="#{vendorController.selected.vendorID}" />
+            <p:outputLabel value="#{messages.CreateVendorLabel_accountNumber}" for="accountNumber" />
+            <p:inputText id="accountNumber" value="#{vendorController.selected.accountNumber}" title="#{messages.CreateVendorTitle_accountNumber}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_accountNumber}" size="30" maxlength="30"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_accountNumber}" for="accountNumber" />
-                        <p:inputText id="accountNumber" value="#{vendorController.selected.accountNumber}" title="#{messages.EditVendorTitle_accountNumber}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_accountNumber}" size="15" maxlength="15"/>
+            <p:outputLabel value="#{messages.CreateVendorLabel_name}" for="name" />
+            <p:inputText id="name" value="#{vendorController.selected.name}" title="#{messages.CreateVendorTitle_name}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_name}" size="100" maxlength="100"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{vendorController.selected.name}" title="#{messages.EditVendorTitle_name}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateVendorLabel_creditRating}" for="creditRating" />
+            <p:inputText id="creditRating" value="#{vendorController.selected.creditRating}" title="#{messages.CreateVendorTitle_creditRating}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_creditRating}"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_creditRating}" for="creditRating" />
-                        <p:inputText id="creditRating" value="#{vendorController.selected.creditRating}" title="#{messages.EditVendorTitle_creditRating}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_creditRating}"/>
+            <p:outputLabel value="#{messages.CreateVendorLabel_preferredVendorStatus}" for="preferredVendorStatus" />
+            <p:selectBooleanCheckbox id="preferredVendorStatus" value="#{vendorController.selected.preferredVendorStatus}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_preferredVendorStatus}"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_preferredVendorStatus}" for="preferredVendorStatus" />
-                        <p:selectBooleanCheckbox id="preferredVendorStatus" value="#{vendorController.selected.preferredVendorStatus}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_preferredVendorStatus}"/>
+            <p:outputLabel value="#{messages.CreateVendorLabel_activeFlag}" for="activeFlag" />
+            <p:selectBooleanCheckbox id="activeFlag" value="#{vendorController.selected.activeFlag}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_activeFlag}"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_activeFlag}" for="activeFlag" />
-                        <p:selectBooleanCheckbox id="activeFlag" value="#{vendorController.selected.activeFlag}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_activeFlag}"/>
+            <p:outputLabel value="#{messages.CreateVendorLabel_purchasingWebServiceURL}" for="purchasingWebServiceURL" />
+            <p:inputTextarea rows="4" id="purchasingWebServiceURL" value="#{vendorController.selected.purchasingWebServiceURL}" title="#{messages.CreateVendorTitle_purchasingWebServiceURL}"  styleClass="full-width"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_purchasingWebServiceURL}" for="purchasingWebServiceURL" />
-                        <p:inputTextarea rows="4" cols="30" id="purchasingWebServiceURL" value="#{vendorController.selected.purchasingWebServiceURL}" title="#{messages.EditVendorTitle_purchasingWebServiceURL}" />
+            <p:outputLabel value="#{messages.CreateVendorLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{vendorController.selected.modifiedDate}" title="#{messages.CreateVendorTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditVendorLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vendorController.selected.modifiedDate}" title="#{messages.EditVendorTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditVendorRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{vendorController.save}" value="#{messages.Save}" update="display,:VendorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VendorEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('VendorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateVendorLabel_businessentity}" for="businessentity" />
+            <p:selectOneMenu id="businessentity" value="#{vendorController.selected.businessentity}" required="true" requiredMessage="#{messages.CreateVendorRequiredMessage_businessentity}" converter="businessentityConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{businessentityController.items}"
+                               var="businessentityItem"
+                               itemValue="#{businessentityItem}"
+                               itemLabel="#{businessentityItem.businessEntityID.toString()}"
+                               />
 
-            </h:form>
+            </p:selectOneMenu>
 
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

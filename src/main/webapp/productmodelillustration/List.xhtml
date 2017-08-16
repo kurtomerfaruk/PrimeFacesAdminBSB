@@ -4,78 +4,100 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="ProductmodelillustrationListForm">
+    <h:form id="ProductmodelillustrationListForm" class="form-height">
 
-        <p:panel header="#{messages.ListProductmodelillustrationTitle}">
-            <p:contextMenu id="ProductmodelillustrationDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('ProductmodelillustrationListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductmodelillustrationListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductmodelillustrationListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductmodelillustrationListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{productmodelillustrationController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{productmodelillustrationController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{productmodelillustrationController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.productmodelillustrationPK}"
-                -->
+        <p:contextMenu id="ProductmodelillustrationDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('ProductmodelillustrationListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('ProductmodelillustrationListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('ProductmodelillustrationListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('ProductmodelillustrationListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Productmodel #{messages.View}" icon="fa fa-search"  actionListener="#{productmodelillustrationController.prepareProductmodel}" update=":ProductmodelViewForm" oncomplete="PF('ProductmodelViewDialog').show()" disabled="#{empty productmodelillustrationController.selected.productmodel}"/>  
+            <p:menuitem value="Illustration #{messages.View}" icon="fa fa-search"  actionListener="#{productmodelillustrationController.prepareIllustration}" update=":IllustrationViewForm" oncomplete="PF('IllustrationViewDialog').show()" disabled="#{empty productmodelillustrationController.selected.illustration}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{productmodelillustrationController.lazyItems}"
+                        rowKey="#{item.productmodelillustrationPK}"
+                        selection="#{productmodelillustrationController.selected}"
+                        filtered="#{productmodelillustrationController.filtered}"
+                        rowselect=":ProductmodelillustrationListForm:datalist:datalist:createButton,:ProductmodelillustrationListForm:datalist:datalist:viewButton,:ProductmodelillustrationListForm:datalist:datalist:editButton,:ProductmodelillustrationListForm:datalist:datalist:deleteButton,:ProductmodelillustrationListForm:ProductmodelillustrationDataTableContextMenu"
+                        rowDblselect="document.getElementById('ProductmodelillustrationListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":ProductmodelillustrationListForm:datalist:datalist:createButton :ProductmodelillustrationListForm:datalist:datalist:viewButton :ProductmodelillustrationListForm:datalist:datalist:editButton :ProductmodelillustrationListForm:datalist:datalist:deleteButton"
+                        selectListener="#{productmodelillustrationController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductmodelillustrationDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductmodelillustrationDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductmodelillustrationListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.productmodelillustrationPK.productModelID}" filterBy="#{item.productmodelillustrationPK.productModelID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductmodelillustrationTitle_productmodelillustrationPK_productModelID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.productmodelillustrationPK.productModelID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.productmodelillustrationPK.illustrationID}" filterBy="#{item.productmodelillustrationPK.illustrationID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductmodelillustrationTitle_productmodelillustrationPK_illustrationID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.productmodelillustrationPK.illustrationID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListProductmodelillustrationTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.productmodelillustrationPK.productModelID}" filterBy="#{item.productmodelillustrationPK.productModelID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductmodelillustrationTitle_productmodelillustrationPK_productModelID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productmodelillustrationPK.productModelID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListProductmodelillustrationTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.productmodelillustrationPK.illustrationID}" filterBy="#{item.productmodelillustrationPK.illustrationID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductmodelillustrationTitle_productmodelillustrationPK_illustrationID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productmodelillustrationPK.illustrationID}"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductmodelillustrationTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{productmodelillustrationController.prepareCreate}" update=":ProductmodelillustrationCreateForm" oncomplete="PF('ProductmodelillustrationCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":ProductmodelillustrationViewForm" oncomplete="PF('ProductmodelillustrationViewDialog').show()" disabled="#{empty productmodelillustrationController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":ProductmodelillustrationEditForm" oncomplete="PF('ProductmodelillustrationEditDialog').show()" disabled="#{empty productmodelillustrationController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{productmodelillustrationController.delete}" update=":growl,datalist" disabled="#{empty productmodelillustrationController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.productmodel.name}" filterBy="#{item.productmodel.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductmodelillustrationTitle_productmodel}"/>
+                </f:facet>
+                <h:outputText value="#{item.productmodel.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.illustration.illustrationID}" filterBy="#{item.illustration.illustrationID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListProductmodelillustrationTitle_illustration}"/>
+                </f:facet>
+                <h:outputText value="#{item.illustration.illustrationID}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{productmodelillustrationController.prepareCreate}" update=":ProductmodelillustrationCreateForm:ProductmodelillustrationCreateForm" oncomplete="PF('ProductmodelillustrationCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":ProductmodelillustrationViewForm:ProductmodelillustrationViewForm" oncomplete="PF('ProductmodelillustrationViewDialog').show()" disabled="#{empty productmodelillustrationController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":ProductmodelillustrationEditForm:ProductmodelillustrationEditForm" oncomplete="PF('ProductmodelillustrationEditDialog').show()" disabled="#{empty productmodelillustrationController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{productmodelillustrationController.delete}" update=":growl,datalist" disabled="#{empty productmodelillustrationController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

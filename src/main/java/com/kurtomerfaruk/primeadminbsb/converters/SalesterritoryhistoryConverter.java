@@ -11,6 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+
 @FacesConverter(value = "salesterritoryhistoryConverter")
 public class SalesterritoryhistoryConverter implements Converter {
 
@@ -30,28 +31,28 @@ public class SalesterritoryhistoryConverter implements Converter {
 
     com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK getKey(String value) {
         com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK();
-        key.setSalesPersonID(Integer.parseInt(values[0]));
-        key.setTerritoryID(Integer.parseInt(values[1]));
-        key.setStartDate(java.sql.Date.valueOf(values[2]));
+            String values[] = value.split(SEPARATOR_ESCAPED);
+            key = new com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK();
+            key.setBusinessEntityID(Integer.parseInt(values[0]));
+            key.setTerritoryID(Integer.parseInt(values[1]));
+            key.setStartDate(java.sql.Date.valueOf(values[2]));
         return key;
     }
 
     String getStringKey(com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value.getSalesPersonID());
-        sb.append(SEPARATOR);
-        sb.append(value.getTerritoryID());
-        sb.append(SEPARATOR);
-        sb.append(value.getStartDate());
+            sb.append(value.getBusinessEntityID());
+            sb.append(SEPARATOR);
+            sb.append(value.getTerritoryID());
+            sb.append(SEPARATOR);
+            sb.append(value.getStartDate());
         return sb.toString();
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null
-                || (object instanceof String && ((String) object).length() == 0)) {
+        if (object == null || 
+            (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
         if (object instanceof Salesterritoryhistory) {

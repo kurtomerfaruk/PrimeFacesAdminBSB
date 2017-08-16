@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.kurtomerfaruk.primeadminbsb.services;
 
 import java.util.List;
@@ -10,13 +16,12 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Omer Faruk KURT 
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:31:55 
+ * @blog https://ofarukkurt.blogspot.com.tr/
  * @mail kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:13:01
  */
 public abstract class AbstractFacade<T> {
-
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -194,5 +199,7 @@ public abstract class AbstractFacade<T> {
         }
         return expression;
     }
+
+    
 
 }

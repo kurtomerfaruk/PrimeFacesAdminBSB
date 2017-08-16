@@ -13,6 +13,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,9 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:03
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "workorderrouting")
@@ -35,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Workorderrouting.findByWorkOrderID", query = "SELECT w FROM Workorderrouting w WHERE w.workorderroutingPK.workOrderID = :workOrderID"),
     @NamedQuery(name = "Workorderrouting.findByProductID", query = "SELECT w FROM Workorderrouting w WHERE w.workorderroutingPK.productID = :productID"),
     @NamedQuery(name = "Workorderrouting.findByOperationSequence", query = "SELECT w FROM Workorderrouting w WHERE w.workorderroutingPK.operationSequence = :operationSequence"),
-    @NamedQuery(name = "Workorderrouting.findByLocationID", query = "SELECT w FROM Workorderrouting w WHERE w.locationID = :locationID"),
     @NamedQuery(name = "Workorderrouting.findByScheduledStartDate", query = "SELECT w FROM Workorderrouting w WHERE w.scheduledStartDate = :scheduledStartDate"),
     @NamedQuery(name = "Workorderrouting.findByScheduledEndDate", query = "SELECT w FROM Workorderrouting w WHERE w.scheduledEndDate = :scheduledEndDate"),
     @NamedQuery(name = "Workorderrouting.findByActualStartDate", query = "SELECT w FROM Workorderrouting w WHERE w.actualStartDate = :actualStartDate"),
@@ -45,14 +48,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Workorderrouting.findByActualCost", query = "SELECT w FROM Workorderrouting w WHERE w.actualCost = :actualCost"),
     @NamedQuery(name = "Workorderrouting.findByModifiedDate", query = "SELECT w FROM Workorderrouting w WHERE w.modifiedDate = :modifiedDate")})
 public class Workorderrouting implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected WorkorderroutingPK workorderroutingPK;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "LocationID")
-    private short locationID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ScheduledStartDate")
@@ -75,14 +73,20 @@ public class Workorderrouting implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PlannedCost")
-    private double plannedCost;
+    private BigDecimal plannedCost;
     @Column(name = "ActualCost")
-    private Double actualCost;
+    private BigDecimal actualCost;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "WorkOrderID", referencedColumnName = "WorkOrderID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Workorder workorder;
+    @JoinColumn(name = "LocationID", referencedColumnName = "LocationID")
+    @ManyToOne(optional = false)
+    private Location locationID;
 
     public Workorderrouting() {
     }
@@ -91,9 +95,8 @@ public class Workorderrouting implements Serializable {
         this.workorderroutingPK = workorderroutingPK;
     }
 
-    public Workorderrouting(WorkorderroutingPK workorderroutingPK, short locationID, Date scheduledStartDate, Date scheduledEndDate, double plannedCost, Date modifiedDate) {
+    public Workorderrouting(WorkorderroutingPK workorderroutingPK, Date scheduledStartDate, Date scheduledEndDate, BigDecimal plannedCost, Date modifiedDate) {
         this.workorderroutingPK = workorderroutingPK;
-        this.locationID = locationID;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.plannedCost = plannedCost;
@@ -110,14 +113,6 @@ public class Workorderrouting implements Serializable {
 
     public void setWorkorderroutingPK(WorkorderroutingPK workorderroutingPK) {
         this.workorderroutingPK = workorderroutingPK;
-    }
-
-    public short getLocationID() {
-        return locationID;
-    }
-
-    public void setLocationID(short locationID) {
-        this.locationID = locationID;
     }
 
     public Date getScheduledStartDate() {
@@ -160,19 +155,19 @@ public class Workorderrouting implements Serializable {
         this.actualResourceHrs = actualResourceHrs;
     }
 
-    public double getPlannedCost() {
+    public BigDecimal getPlannedCost() {
         return plannedCost;
     }
 
-    public void setPlannedCost(double plannedCost) {
+    public void setPlannedCost(BigDecimal plannedCost) {
         this.plannedCost = plannedCost;
     }
 
-    public Double getActualCost() {
+    public BigDecimal getActualCost() {
         return actualCost;
     }
 
-    public void setActualCost(Double actualCost) {
+    public void setActualCost(BigDecimal actualCost) {
         this.actualCost = actualCost;
     }
 
@@ -182,6 +177,22 @@ public class Workorderrouting implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Workorder getWorkorder() {
+        return workorder;
+    }
+
+    public void setWorkorder(Workorder workorder) {
+        this.workorder = workorder;
+    }
+
+    public Location getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(Location locationID) {
+        this.locationID = locationID;
     }
 
     @Override

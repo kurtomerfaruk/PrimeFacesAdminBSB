@@ -17,17 +17,17 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Embeddable
 public class EmployeepayhistoryPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EmployeeID")
-    private int employeeID;
+    @Column(name = "BusinessEntityID")
+    private int businessEntityID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "RateChangeDate")
@@ -37,17 +37,17 @@ public class EmployeepayhistoryPK implements Serializable {
     public EmployeepayhistoryPK() {
     }
 
-    public EmployeepayhistoryPK(int employeeID, Date rateChangeDate) {
-        this.employeeID = employeeID;
+    public EmployeepayhistoryPK(int businessEntityID, Date rateChangeDate) {
+        this.businessEntityID = businessEntityID;
         this.rateChangeDate = rateChangeDate;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setBusinessEntityID(int businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public Date getRateChangeDate() {
@@ -61,7 +61,7 @@ public class EmployeepayhistoryPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) employeeID;
+        hash += (int) businessEntityID;
         hash += (rateChangeDate != null ? rateChangeDate.hashCode() : 0);
         return hash;
     }
@@ -73,7 +73,7 @@ public class EmployeepayhistoryPK implements Serializable {
             return false;
         }
         EmployeepayhistoryPK other = (EmployeepayhistoryPK) object;
-        if (this.employeeID != other.employeeID) {
+        if (this.businessEntityID != other.businessEntityID) {
             return false;
         }
         if ((this.rateChangeDate == null && other.rateChangeDate != null) || (this.rateChangeDate != null && !this.rateChangeDate.equals(other.rateChangeDate))) {
@@ -84,7 +84,7 @@ public class EmployeepayhistoryPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK[ employeeID=" + employeeID + ", rateChangeDate=" + rateChangeDate + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.EmployeepayhistoryPK[ businessEntityID=" + businessEntityID + ", rateChangeDate=" + rateChangeDate + " ]";
     }
 
 }

@@ -4,44 +4,34 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="ShipmethodEditDlg" widgetVar="ShipmethodEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditShipmethodTitle}" closeOnEscape="true">
 
-            <h:form id="ShipmethodEditForm">
+        <coco:editpage id="ShipmethodEditForm"
+                       renderedListener="#{shipmethodController.selected != null}"
+                       widgetVar="ShipmethodEditDialog"
+                       actionListener="#{shipmethodController.save}"
+                       listForm="ShipmethodListForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{shipmethodController.selected != null}">
 
+            <p:outputLabel value="#{messages.CreateShipmethodLabel_name}" for="name" />
+            <p:inputText id="name" value="#{shipmethodController.selected.name}" title="#{messages.CreateShipmethodTitle_name}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_name}" size="100" maxlength="100"/>
 
-                        <h:outputLabel value="#{messages.EditShipmethodLabel_shipMethodID}" for="shipMethodID" />
-                        <h:outputText id="shipMethodID" value="#{shipmethodController.selected.shipMethodID}" />
+            <p:outputLabel value="#{messages.CreateShipmethodLabel_shipBase}" for="shipBase" />
+            <p:inputText id="shipBase" value="#{shipmethodController.selected.shipBase}" title="#{messages.CreateShipmethodTitle_shipBase}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_shipBase}"/>
 
-                        <p:outputLabel value="#{messages.EditShipmethodLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{shipmethodController.selected.name}" title="#{messages.EditShipmethodTitle_name}" required="true" requiredMessage="#{messages.EditShipmethodRequiredMessage_name}" size="50" maxlength="50"/>
+            <p:outputLabel value="#{messages.CreateShipmethodLabel_shipRate}" for="shipRate" />
+            <p:inputText id="shipRate" value="#{shipmethodController.selected.shipRate}" title="#{messages.CreateShipmethodTitle_shipRate}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_shipRate}"/>
 
-                        <p:outputLabel value="#{messages.EditShipmethodLabel_shipBase}" for="shipBase" />
-                        <p:inputText id="shipBase" value="#{shipmethodController.selected.shipBase}" title="#{messages.EditShipmethodTitle_shipBase}" required="true" requiredMessage="#{messages.EditShipmethodRequiredMessage_shipBase}"/>
+            <p:outputLabel value="#{messages.CreateShipmethodLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{shipmethodController.selected.rowguid}" title="#{messages.CreateShipmethodTitle_rowguid}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
-                        <p:outputLabel value="#{messages.EditShipmethodLabel_shipRate}" for="shipRate" />
-                        <p:inputText id="shipRate" value="#{shipmethodController.selected.shipRate}" title="#{messages.EditShipmethodTitle_shipRate}" required="true" requiredMessage="#{messages.EditShipmethodRequiredMessage_shipRate}"/>
+            <p:outputLabel value="#{messages.CreateShipmethodLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{shipmethodController.selected.modifiedDate}" title="#{messages.CreateShipmethodTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateShipmethodRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-                        <p:outputLabel value="#{messages.EditShipmethodLabel_rowguid}" for="rowguid" />
-                        <p:inputTextarea rows="4" cols="30" id="rowguid" value="#{shipmethodController.selected.rowguid}" title="#{messages.EditShipmethodTitle_rowguid}" required="true" requiredMessage="#{messages.EditShipmethodRequiredMessage_rowguid}"/>
-
-                        <p:outputLabel value="#{messages.EditShipmethodLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{shipmethodController.selected.modifiedDate}" title="#{messages.EditShipmethodTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditShipmethodRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{shipmethodController.save}" value="#{messages.Save}" update="display,:ShipmethodListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ShipmethodEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ShipmethodEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
+        </coco:editpage>
 
     </ui:composition>
 

@@ -3,21 +3,30 @@ package com.kurtomerfaruk.primeadminbsb.controllers;
 import com.kurtomerfaruk.primeadminbsb.models.Salesreason;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
-/**
- *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com 
- * Created on date 27.01.2017 23:11:05
- */
 @Named(value = "salesreasonController")
 @ViewScoped
 public class SalesreasonController extends AbstractController<Salesreason> {
-    private static final long serialVersionUID = -19299076833917278L;
 
     public SalesreasonController() {
         // Inform the Abstract parent controller of the concrete Salesreason Entity
         super(Salesreason.class);
+    }
+
+    /**
+     * Sets the "items" attribute with a collection of
+     * Salesorderheadersalesreason entities that are retrieved from
+     * Salesreason?cap_first and returns the navigation outcome.
+     *
+     * @return navigation outcome for Salesorderheadersalesreason page
+     */
+    public String navigateSalesorderheadersalesreasonList() {
+        if (this.getSelected() != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Salesorderheadersalesreason_items", this.getSelected().getSalesorderheadersalesreasonList());
+        }
+        return "/salesorderheadersalesreason/index";
     }
 
 }

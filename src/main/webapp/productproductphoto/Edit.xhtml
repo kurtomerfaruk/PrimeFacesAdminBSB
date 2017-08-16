@@ -4,39 +4,53 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
-        <p:dialog id="ProductproductphotoEditDlg" widgetVar="ProductproductphotoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.EditProductproductphotoTitle}" closeOnEscape="true">
 
-            <h:form id="ProductproductphotoEditForm">
-
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productproductphotoController.selected != null}">
-
-
-                        <h:outputLabel value="#{messages.EditProductproductphotoLabel_productproductphotoPK_productID}" for="productproductphotoPK_productID" />
-                        <h:outputText id="productproductphotoPK_productID" value="#{productproductphotoController.selected.productproductphotoPK.productID}" />
+        <coco:editpage id="ProductproductphotoEditForm"
+                       renderedListener="#{productproductphotoController.selected != null}"
+                       widgetVar="ProductproductphotoEditDialog"
+                       actionListener="#{productproductphotoController.save}"
+                       listForm="ProductproductphotoListForm">
 
 
-                        <h:outputLabel value="#{messages.EditProductproductphotoLabel_productproductphotoPK_productPhotoID}" for="productproductphotoPK_productPhotoID" />
-                        <h:outputText id="productproductphotoPK_productPhotoID" value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}" />
+            <p:outputLabel value="#{messages.CreateProductproductphotoLabel_productproductphotoPK_productID}" for="productproductphotoPK_productID" />
+            <p:inputText id="productproductphotoPK_productID" value="#{productproductphotoController.selected.productproductphotoPK.productID}" title="#{messages.CreateProductproductphotoTitle_productproductphotoPK_productID}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_productproductphotoPK_productID}"/>
 
-                        <p:outputLabel value="#{messages.EditProductproductphotoLabel_primary}" for="primary" />
-                        <p:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_primary}"/>
+            <p:outputLabel value="#{messages.CreateProductproductphotoLabel_productproductphotoPK_productPhotoID}" for="productproductphotoPK_productPhotoID" />
+            <p:inputText id="productproductphotoPK_productPhotoID" value="#{productproductphotoController.selected.productproductphotoPK.productPhotoID}" title="#{messages.CreateProductproductphotoTitle_productproductphotoPK_productPhotoID}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_productproductphotoPK_productPhotoID}"/>
 
-                        <p:outputLabel value="#{messages.EditProductproductphotoLabel_modifiedDate}" for="modifiedDate" />
-                        <p:calendar id="modifiedDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{productproductphotoController.selected.modifiedDate}" title="#{messages.EditProductproductphotoTitle_modifiedDate}" required="true" requiredMessage="#{messages.EditProductproductphotoRequiredMessage_modifiedDate}" showOn="button"/>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{productproductphotoController.save}" value="#{messages.Save}" update="display,:ProductproductphotoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductproductphotoEditDialog'));">
-                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmEditMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:commandButton value="#{messages.Cancel}" oncomplete="PF('ProductproductphotoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
+            <p:outputLabel value="#{messages.CreateProductproductphotoLabel_primary}" for="primary" />
+            <p:selectBooleanCheckbox id="primary" value="#{productproductphotoController.selected.primary}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_primary}"/>
 
-            </h:form>
+            <p:outputLabel value="#{messages.CreateProductproductphotoLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{productproductphotoController.selected.modifiedDate}" title="#{messages.CreateProductproductphotoTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 
-        </p:dialog>
+            <p:outputLabel value="#{messages.CreateProductproductphotoLabel_product}" for="product" />
+            <p:selectOneMenu id="product" value="#{productproductphotoController.selected.product}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_product}" converter="productConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productController.items}"
+                               var="productItem"
+                               itemValue="#{productItem}"
+                               itemLabel="#{productItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateProductproductphotoLabel_productphoto}" for="productphoto" />
+            <p:selectOneMenu id="productphoto" value="#{productproductphotoController.selected.productphoto}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_productphoto}" converter="productphotoConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{productphotoController.items}"
+                               var="productphotoItem"
+                               itemValue="#{productphotoItem}"
+                               itemLabel="#{productphotoItem.thumbnailPhotoFileName.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:editpage>
 
     </ui:composition>
 

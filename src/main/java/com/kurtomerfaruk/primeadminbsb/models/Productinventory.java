@@ -12,7 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,9 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productinventory")
@@ -38,9 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Productinventory.findByShelf", query = "SELECT p FROM Productinventory p WHERE p.shelf = :shelf"),
     @NamedQuery(name = "Productinventory.findByBin", query = "SELECT p FROM Productinventory p WHERE p.bin = :bin"),
     @NamedQuery(name = "Productinventory.findByQuantity", query = "SELECT p FROM Productinventory p WHERE p.quantity = :quantity"),
+    @NamedQuery(name = "Productinventory.findByRowguid", query = "SELECT p FROM Productinventory p WHERE p.rowguid = :rowguid"),
     @NamedQuery(name = "Productinventory.findByModifiedDate", query = "SELECT p FROM Productinventory p WHERE p.modifiedDate = :modifiedDate")})
 public class Productinventory implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductinventoryPK productinventoryPK;
@@ -59,14 +62,20 @@ public class Productinventory implements Serializable {
     private short quantity;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 64)
     @Column(name = "rowguid")
-    private byte[] rowguid;
+    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Product product;
+    @JoinColumn(name = "LocationID", referencedColumnName = "LocationID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Location location;
 
     public Productinventory() {
     }
@@ -75,7 +84,7 @@ public class Productinventory implements Serializable {
         this.productinventoryPK = productinventoryPK;
     }
 
-    public Productinventory(ProductinventoryPK productinventoryPK, String shelf, short bin, short quantity, byte[] rowguid, Date modifiedDate) {
+    public Productinventory(ProductinventoryPK productinventoryPK, String shelf, short bin, short quantity, String rowguid, Date modifiedDate) {
         this.productinventoryPK = productinventoryPK;
         this.shelf = shelf;
         this.bin = bin;
@@ -120,11 +129,11 @@ public class Productinventory implements Serializable {
         this.quantity = quantity;
     }
 
-    public byte[] getRowguid() {
+    public String getRowguid() {
         return rowguid;
     }
 
-    public void setRowguid(byte[] rowguid) {
+    public void setRowguid(String rowguid) {
         this.rowguid = rowguid;
     }
 
@@ -134,6 +143,22 @@ public class Productinventory implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

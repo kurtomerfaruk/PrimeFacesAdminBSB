@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:createpage id="BusinessentityCreateForm"
+                         renderedListener="#{businessentityController.selected != null}"
+                         widgetVar="BusinessentityCreateDialog"
+                         actionListener="#{businessentityController.saveNew}"
+                         listForm="BusinessentityListForm">
+
+
+            <p:outputLabel value="#{messages.CreateBusinessentityLabel_rowguid}" for="rowguid" />
+            <p:inputText id="rowguid" value="#{businessentityController.selected.rowguid}" title="#{messages.CreateBusinessentityTitle_rowguid}" required="true" requiredMessage="#{messages.CreateBusinessentityRequiredMessage_rowguid}" size="64" maxlength="64"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentityLabel_modifiedDate}" for="modifiedDate" />
+            <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{businessentityController.selected.modifiedDate}" title="#{messages.CreateBusinessentityTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateBusinessentityRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
+
+            <p:outputLabel value="#{messages.CreateBusinessentityLabel_person}" for="person" />
+            <p:selectOneMenu id="person" value="#{businessentityController.selected.person}"  converter="personConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{personController.items}"
+                               var="personItem"
+                               itemValue="#{personItem}"
+                               itemLabel="#{personItem.nameStyle.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateBusinessentityLabel_store}" for="store" />
+            <p:selectOneMenu id="store" value="#{businessentityController.selected.store}"  converter="storeConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{storeController.items}"
+                               var="storeItem"
+                               itemValue="#{storeItem}"
+                               itemLabel="#{storeItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateBusinessentityLabel_vendor}" for="vendor" />
+            <p:selectOneMenu id="vendor" value="#{businessentityController.selected.vendor}"  converter="vendorConverter" filter="true">
+                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItems value="#{vendorController.items}"
+                               var="vendorItem"
+                               itemValue="#{vendorItem}"
+                               itemLabel="#{vendorItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:createpage>
+
+    </ui:composition>
+
+</html>

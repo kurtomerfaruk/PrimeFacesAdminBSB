@@ -17,17 +17,17 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Embeddable
 public class SalesterritoryhistoryPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SalesPersonID")
-    private int salesPersonID;
+    @Column(name = "BusinessEntityID")
+    private int businessEntityID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TerritoryID")
@@ -41,18 +41,18 @@ public class SalesterritoryhistoryPK implements Serializable {
     public SalesterritoryhistoryPK() {
     }
 
-    public SalesterritoryhistoryPK(int salesPersonID, int territoryID, Date startDate) {
-        this.salesPersonID = salesPersonID;
+    public SalesterritoryhistoryPK(int businessEntityID, int territoryID, Date startDate) {
+        this.businessEntityID = businessEntityID;
         this.territoryID = territoryID;
         this.startDate = startDate;
     }
 
-    public int getSalesPersonID() {
-        return salesPersonID;
+    public int getBusinessEntityID() {
+        return businessEntityID;
     }
 
-    public void setSalesPersonID(int salesPersonID) {
-        this.salesPersonID = salesPersonID;
+    public void setBusinessEntityID(int businessEntityID) {
+        this.businessEntityID = businessEntityID;
     }
 
     public int getTerritoryID() {
@@ -74,7 +74,7 @@ public class SalesterritoryhistoryPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) salesPersonID;
+        hash += (int) businessEntityID;
         hash += (int) territoryID;
         hash += (startDate != null ? startDate.hashCode() : 0);
         return hash;
@@ -87,7 +87,7 @@ public class SalesterritoryhistoryPK implements Serializable {
             return false;
         }
         SalesterritoryhistoryPK other = (SalesterritoryhistoryPK) object;
-        if (this.salesPersonID != other.salesPersonID) {
+        if (this.businessEntityID != other.businessEntityID) {
             return false;
         }
         if (this.territoryID != other.territoryID) {
@@ -101,7 +101,7 @@ public class SalesterritoryhistoryPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK[ salesPersonID=" + salesPersonID + ", territoryID=" + territoryID + ", startDate=" + startDate + " ]";
+        return "com.kurtomerfaruk.primeadminbsb.models.SalesterritoryhistoryPK[ businessEntityID=" + businessEntityID + ", territoryID=" + territoryID + ", startDate=" + startDate + " ]";
     }
 
 }

@@ -4,106 +4,138 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="SalesterritoryhistoryListForm">
+    <h:form id="SalesterritoryhistoryListForm" class="form-height">
 
-        <p:panel header="#{messages.ListSalesterritoryhistoryTitle}">
-            <p:contextMenu id="SalesterritoryhistoryDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('SalesterritoryhistoryListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalesterritoryhistoryListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalesterritoryhistoryListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalesterritoryhistoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{salesterritoryhistoryController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{salesterritoryhistoryController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{salesterritoryhistoryController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.salesterritoryhistoryPK}"
-                -->
+        <p:contextMenu id="SalesterritoryhistoryDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('SalesterritoryhistoryListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('SalesterritoryhistoryListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('SalesterritoryhistoryListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('SalesterritoryhistoryListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Salesterritory #{messages.View}" icon="fa fa-search"  actionListener="#{salesterritoryhistoryController.prepareSalesterritory}" update=":SalesterritoryViewForm" oncomplete="PF('SalesterritoryViewDialog').show()" disabled="#{empty salesterritoryhistoryController.selected.salesterritory}"/>  
+            <p:menuitem value="Salesperson #{messages.View}" icon="fa fa-search"  actionListener="#{salesterritoryhistoryController.prepareSalesperson}" update=":SalespersonViewForm" oncomplete="PF('SalespersonViewDialog').show()" disabled="#{empty salesterritoryhistoryController.selected.salesperson}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{salesterritoryhistoryController.lazyItems}"
+                        rowKey="#{item.salesterritoryhistoryPK}"
+                        selection="#{salesterritoryhistoryController.selected}"
+                        filtered="#{salesterritoryhistoryController.filtered}"
+                        rowselect=":SalesterritoryhistoryListForm:datalist:datalist:createButton,:SalesterritoryhistoryListForm:datalist:datalist:viewButton,:SalesterritoryhistoryListForm:datalist:datalist:editButton,:SalesterritoryhistoryListForm:datalist:datalist:deleteButton,:SalesterritoryhistoryListForm:SalesterritoryhistoryDataTableContextMenu"
+                        rowDblselect="document.getElementById('SalesterritoryhistoryListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":SalesterritoryhistoryListForm:datalist:datalist:createButton :SalesterritoryhistoryListForm:datalist:datalist:viewButton :SalesterritoryhistoryListForm:datalist:datalist:editButton :SalesterritoryhistoryListForm:datalist:datalist:deleteButton"
+                        selectListener="#{salesterritoryhistoryController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalesterritoryhistoryDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SalesterritoryhistoryDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SalesterritoryhistoryListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.salesterritoryhistoryPK.salesPersonID}" filterBy="#{item.salesterritoryhistoryPK.salesPersonID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritoryhistoryPK_salesPersonID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesterritoryhistoryPK.salesPersonID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.salesterritoryhistoryPK.territoryID}" filterBy="#{item.salesterritoryhistoryPK.territoryID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritoryhistoryPK_territoryID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesterritoryhistoryPK.territoryID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListSalesterritoryhistoryTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.salesterritoryhistoryPK.businessEntityID}" filterBy="#{item.salesterritoryhistoryPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritoryhistoryPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesterritoryhistoryPK.businessEntityID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.salesterritoryhistoryPK.startDate}" filterBy="#{item.salesterritoryhistoryPK.startDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritoryhistoryPK_startDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.salesterritoryhistoryPK.startDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.salesterritoryhistoryPK.territoryID}" filterBy="#{item.salesterritoryhistoryPK.territoryID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritoryhistoryPK_territoryID}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesterritoryhistoryPK.territoryID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_endDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.endDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.salesterritoryhistoryPK.startDate}" filterBy="#{item.salesterritoryhistoryPK.startDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritoryhistoryPK_startDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.salesterritoryhistoryPK.startDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_rowguid}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.rowguid}"/>
-                </p:column>
+            <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_endDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.endDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_rowguid}"/>
+                </f:facet>
+                <h:outputText value="#{item.rowguid}"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{salesterritoryhistoryController.prepareCreate}" update=":SalesterritoryhistoryCreateForm" oncomplete="PF('SalesterritoryhistoryCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":SalesterritoryhistoryViewForm" oncomplete="PF('SalesterritoryhistoryViewDialog').show()" disabled="#{empty salesterritoryhistoryController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":SalesterritoryhistoryEditForm" oncomplete="PF('SalesterritoryhistoryEditDialog').show()" disabled="#{empty salesterritoryhistoryController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{salesterritoryhistoryController.delete}" update=":growl,datalist" disabled="#{empty salesterritoryhistoryController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.salesterritory.name}" filterBy="#{item.salesterritory.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesterritory}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesterritory.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.salesperson.businessEntityID}" filterBy="#{item.salesperson.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListSalesterritoryhistoryTitle_salesperson}"/>
+                </f:facet>
+                <h:outputText value="#{item.salesperson.businessEntityID}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{salesterritoryhistoryController.prepareCreate}" update=":SalesterritoryhistoryCreateForm:SalesterritoryhistoryCreateForm" oncomplete="PF('SalesterritoryhistoryCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":SalesterritoryhistoryViewForm:SalesterritoryhistoryViewForm" oncomplete="PF('SalesterritoryhistoryViewDialog').show()" disabled="#{empty salesterritoryhistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":SalesterritoryhistoryEditForm:SalesterritoryhistoryEditForm" oncomplete="PF('SalesterritoryhistoryEditDialog').show()" disabled="#{empty salesterritoryhistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{salesterritoryhistoryController.delete}" update=":growl,datalist" disabled="#{empty salesterritoryhistoryController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

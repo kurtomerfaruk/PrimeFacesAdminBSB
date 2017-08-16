@@ -4,38 +4,42 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductmodelproductdescriptioncultureViewDlg" widgetVar="ProductmodelproductdescriptioncultureViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductmodelproductdescriptioncultureTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductmodelproductdescriptioncultureViewForm"
+                       renderedListener="#{productmodelproductdescriptioncultureController.selected != null}"
+                       widgetVar="ProductmodelproductdescriptioncultureViewDialog">
 
-            <h:form id="ProductmodelproductdescriptioncultureViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productmodelproductdescriptioncultureController.selected != null}">
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productModelID}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productModelID}"/>
 
-                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productModelID}"/>
-                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productModelID}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productModelID}"/>
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productDescriptionID}"/>
 
-                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_productDescriptionID}"/>
-                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.productDescriptionID}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_productDescriptionID}"/>
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_cultureID}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.cultureID}"/>
 
-                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_productmodelproductdescriptionculturePK_cultureID}"/>
-                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodelproductdescriptionculturePK.cultureID}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_productmodelproductdescriptionculturePK_cultureID}"/>
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_modifiedDate}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductmodelproductdescriptioncultureLabel_modifiedDate}"/>
-                        <h:outputText value="#{productmodelproductdescriptioncultureController.selected.modifiedDate}" title="#{messages.ViewProductmodelproductdescriptioncultureTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductmodelproductdescriptioncultureViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodel}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productmodel.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productdescription}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.productdescription.productDescriptionID}"/>
 
-        </p:dialog>
+            <h:outputText value="#{messages.CreateProductmodelproductdescriptioncultureLabel_culture}"/>
+            <h:outputText value="#{productmodelproductdescriptioncultureController.selected.culture.name}"/>
+
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

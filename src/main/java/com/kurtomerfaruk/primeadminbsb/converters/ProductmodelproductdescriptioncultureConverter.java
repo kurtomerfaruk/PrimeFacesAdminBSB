@@ -11,6 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+
 @FacesConverter(value = "productmodelproductdescriptioncultureConverter")
 public class ProductmodelproductdescriptioncultureConverter implements Converter {
 
@@ -30,28 +31,28 @@ public class ProductmodelproductdescriptioncultureConverter implements Converter
 
     com.kurtomerfaruk.primeadminbsb.models.ProductmodelproductdescriptionculturePK getKey(String value) {
         com.kurtomerfaruk.primeadminbsb.models.ProductmodelproductdescriptionculturePK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new com.kurtomerfaruk.primeadminbsb.models.ProductmodelproductdescriptionculturePK();
-        key.setProductModelID(Integer.parseInt(values[0]));
-        key.setProductDescriptionID(Integer.parseInt(values[1]));
-        key.setCultureID(values[2]);
+            String values[] = value.split(SEPARATOR_ESCAPED);
+            key = new com.kurtomerfaruk.primeadminbsb.models.ProductmodelproductdescriptionculturePK();
+            key.setProductModelID(Integer.parseInt(values[0]));
+            key.setProductDescriptionID(Integer.parseInt(values[1]));
+            key.setCultureID(values[2]);
         return key;
     }
 
     String getStringKey(com.kurtomerfaruk.primeadminbsb.models.ProductmodelproductdescriptionculturePK value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(value.getProductModelID());
-        sb.append(SEPARATOR);
-        sb.append(value.getProductDescriptionID());
-        sb.append(SEPARATOR);
-        sb.append(value.getCultureID());
+            sb.append(value.getProductModelID());
+            sb.append(SEPARATOR);
+            sb.append(value.getProductDescriptionID());
+            sb.append(SEPARATOR);
+            sb.append(value.getCultureID());
         return sb.toString();
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null
-                || (object instanceof String && ((String) object).length() == 0)) {
+        if (object == null || 
+            (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
         if (object instanceof Productmodelproductdescriptionculture) {

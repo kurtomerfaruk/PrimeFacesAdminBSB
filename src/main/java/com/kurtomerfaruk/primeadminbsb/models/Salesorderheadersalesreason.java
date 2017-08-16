@@ -12,6 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,9 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:21 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "salesorderheadersalesreason")
@@ -35,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Salesorderheadersalesreason.findBySalesReasonID", query = "SELECT s FROM Salesorderheadersalesreason s WHERE s.salesorderheadersalesreasonPK.salesReasonID = :salesReasonID"),
     @NamedQuery(name = "Salesorderheadersalesreason.findByModifiedDate", query = "SELECT s FROM Salesorderheadersalesreason s WHERE s.modifiedDate = :modifiedDate")})
 public class Salesorderheadersalesreason implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SalesorderheadersalesreasonPK salesorderheadersalesreasonPK;
@@ -44,6 +47,12 @@ public class Salesorderheadersalesreason implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "SalesReasonID", referencedColumnName = "SalesReasonID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Salesreason salesreason;
+    @JoinColumn(name = "SalesOrderID", referencedColumnName = "SalesOrderID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Salesorderheader salesorderheader;
 
     public Salesorderheadersalesreason() {
     }
@@ -75,6 +84,22 @@ public class Salesorderheadersalesreason implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Salesreason getSalesreason() {
+        return salesreason;
+    }
+
+    public void setSalesreason(Salesreason salesreason) {
+        this.salesreason = salesreason;
+    }
+
+    public Salesorderheader getSalesorderheader() {
+        return salesorderheader;
+    }
+
+    public void setSalesorderheader(Salesorderheader salesorderheader) {
+        this.salesorderheader = salesorderheader;
     }
 
     @Override

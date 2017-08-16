@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:viewpage id="PersonViewForm"
+                       renderedListener="#{personController.selected != null}"
+                       widgetVar="PersonViewDialog">
+
+
+            <h:outputText value="#{messages.CreatePersonLabel_businessEntityID}"/>
+            <h:outputText value="#{personController.selected.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_personType}"/>
+            <h:outputText value="#{personController.selected.personType}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_nameStyle}"/>
+            <h:selectBooleanCheckbox id="nameStyle" value="#{personController.selected.nameStyle}" required="true" requiredMessage="#{messages.EditPersonRequiredMessage_nameStyle}" disabled="true"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_title}"/>
+            <h:outputText value="#{personController.selected.title}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_firstName}"/>
+            <h:outputText value="#{personController.selected.firstName}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_middleName}"/>
+            <h:outputText value="#{personController.selected.middleName}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_lastName}"/>
+            <h:outputText value="#{personController.selected.lastName}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_suffix}"/>
+            <h:outputText value="#{personController.selected.suffix}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_emailPromotion}"/>
+            <h:outputText value="#{personController.selected.emailPromotion}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_additionalContactInfo}"/>
+            <h:outputText value="#{personController.selected.additionalContactInfo}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_demographics}"/>
+            <h:outputText value="#{personController.selected.demographics}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_rowguid}"/>
+            <h:outputText value="#{personController.selected.rowguid}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_modifiedDate}"/>
+            <h:outputText value="#{personController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CreatePersonLabel_businessentity}"/>
+            <h:outputText value="#{personController.selected.businessentity.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_password}"/>
+            <h:outputText value="#{personController.selected.password.businessEntityID}"/>
+
+            <h:outputText value="#{messages.CreatePersonLabel_employee}"/>
+            <h:outputText value="#{personController.selected.employee.businessEntityID}"/>
+
+        </coco:viewpage>
+
+    </ui:composition>
+
+</html>
+

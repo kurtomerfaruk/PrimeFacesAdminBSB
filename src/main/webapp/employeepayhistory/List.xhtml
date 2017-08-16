@@ -4,96 +4,114 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="EmployeepayhistoryListForm">
+    <h:form id="EmployeepayhistoryListForm" class="form-height">
 
-        <p:panel header="#{messages.ListEmployeepayhistoryTitle}">
-            <p:contextMenu id="EmployeepayhistoryDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('EmployeepayhistoryListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('EmployeepayhistoryListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('EmployeepayhistoryListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('EmployeepayhistoryListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{employeepayhistoryController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{employeepayhistoryController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{employeepayhistoryController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.employeepayhistoryPK}"
-                -->
+        <p:contextMenu id="EmployeepayhistoryDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('EmployeepayhistoryListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('EmployeepayhistoryListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('EmployeepayhistoryListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('EmployeepayhistoryListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="Employee #{messages.View}" icon="fa fa-search"  actionListener="#{employeepayhistoryController.prepareEmployee}" update=":EmployeeViewForm" oncomplete="PF('EmployeeViewDialog').show()" disabled="#{empty employeepayhistoryController.selected.employee}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{employeepayhistoryController.lazyItems}"
+                        rowKey="#{item.employeepayhistoryPK}"
+                        selection="#{employeepayhistoryController.selected}"
+                        filtered="#{employeepayhistoryController.filtered}"
+                        rowselect=":EmployeepayhistoryListForm:datalist:datalist:createButton,:EmployeepayhistoryListForm:datalist:datalist:viewButton,:EmployeepayhistoryListForm:datalist:datalist:editButton,:EmployeepayhistoryListForm:datalist:datalist:deleteButton,:EmployeepayhistoryListForm:EmployeepayhistoryDataTableContextMenu"
+                        rowDblselect="document.getElementById('EmployeepayhistoryListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":EmployeepayhistoryListForm:datalist:datalist:createButton :EmployeepayhistoryListForm:datalist:datalist:viewButton :EmployeepayhistoryListForm:datalist:datalist:editButton :EmployeepayhistoryListForm:datalist:datalist:deleteButton"
+                        selectListener="#{employeepayhistoryController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmployeepayhistoryDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmployeepayhistoryDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmployeepayhistoryListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.employeepayhistoryPK.employeeID}" filterBy="#{item.employeepayhistoryPK.employeeID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeepayhistoryTitle_employeepayhistoryPK_employeeID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeepayhistoryPK.employeeID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.employeepayhistoryPK.rateChangeDate}" filterBy="#{item.employeepayhistoryPK.rateChangeDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeepayhistoryTitle_employeepayhistoryPK_rateChangeDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.employeepayhistoryPK.rateChangeDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListEmployeepayhistoryTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.employeepayhistoryPK.businessEntityID}" filterBy="#{item.employeepayhistoryPK.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeepayhistoryTitle_employeepayhistoryPK_businessEntityID}"/>
+                </f:facet>
+                <h:outputText value="#{item.employeepayhistoryPK.businessEntityID}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.rate}" filterBy="#{item.rate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeepayhistoryTitle_rate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.rate}"/>
-                </p:column>
+            <p:column sortBy="#{item.employeepayhistoryPK.rateChangeDate}" filterBy="#{item.employeepayhistoryPK.rateChangeDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeepayhistoryTitle_employeepayhistoryPK_rateChangeDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.employeepayhistoryPK.rateChangeDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.payFrequency}" filterBy="#{item.payFrequency}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeepayhistoryTitle_payFrequency}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.payFrequency}"/>
-                </p:column>
+            <p:column sortBy="#{item.rate}" filterBy="#{item.rate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeepayhistoryTitle_rate}"/>
+                </f:facet>
+                <h:outputText value="#{item.rate}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListEmployeepayhistoryTitle_modifiedDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.payFrequency}" filterBy="#{item.payFrequency}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeepayhistoryTitle_payFrequency}"/>
+                </f:facet>
+                <h:outputText value="#{item.payFrequency}"/>
+            </p:column>
 
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeepayhistoryTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{employeepayhistoryController.prepareCreate}" update=":EmployeepayhistoryCreateForm" oncomplete="PF('EmployeepayhistoryCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":EmployeepayhistoryViewForm" oncomplete="PF('EmployeepayhistoryViewDialog').show()" disabled="#{empty employeepayhistoryController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":EmployeepayhistoryEditForm" oncomplete="PF('EmployeepayhistoryEditDialog').show()" disabled="#{empty employeepayhistoryController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{employeepayhistoryController.delete}" update=":growl,datalist" disabled="#{empty employeepayhistoryController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.employee.businessEntityID}" filterBy="#{item.employee.businessEntityID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListEmployeepayhistoryTitle_employee}"/>
+                </f:facet>
+                <h:outputText value="#{item.employee.businessEntityID}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{employeepayhistoryController.prepareCreate}" update=":EmployeepayhistoryCreateForm:EmployeepayhistoryCreateForm" oncomplete="PF('EmployeepayhistoryCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":EmployeepayhistoryViewForm:EmployeepayhistoryViewForm" oncomplete="PF('EmployeepayhistoryViewDialog').show()" disabled="#{empty employeepayhistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":EmployeepayhistoryEditForm:EmployeepayhistoryEditForm" oncomplete="PF('EmployeepayhistoryEditDialog').show()" disabled="#{empty employeepayhistoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{employeepayhistoryController.delete}" update=":growl,datalist" disabled="#{empty employeepayhistoryController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>

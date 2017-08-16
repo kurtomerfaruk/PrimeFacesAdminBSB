@@ -11,10 +11,12 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,9 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:05
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "productreview")
@@ -36,14 +39,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Productreview.findAll", query = "SELECT p FROM Productreview p"),
     @NamedQuery(name = "Productreview.findByProductReviewID", query = "SELECT p FROM Productreview p WHERE p.productReviewID = :productReviewID"),
-    @NamedQuery(name = "Productreview.findByProductID", query = "SELECT p FROM Productreview p WHERE p.productID = :productID"),
     @NamedQuery(name = "Productreview.findByReviewerName", query = "SELECT p FROM Productreview p WHERE p.reviewerName = :reviewerName"),
     @NamedQuery(name = "Productreview.findByReviewDate", query = "SELECT p FROM Productreview p WHERE p.reviewDate = :reviewDate"),
     @NamedQuery(name = "Productreview.findByEmailAddress", query = "SELECT p FROM Productreview p WHERE p.emailAddress = :emailAddress"),
     @NamedQuery(name = "Productreview.findByRating", query = "SELECT p FROM Productreview p WHERE p.rating = :rating"),
+    @NamedQuery(name = "Productreview.findByComments", query = "SELECT p FROM Productreview p WHERE p.comments = :comments"),
     @NamedQuery(name = "Productreview.findByModifiedDate", query = "SELECT p FROM Productreview p WHERE p.modifiedDate = :modifiedDate")})
 public class Productreview implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +54,7 @@ public class Productreview implements Serializable {
     private Integer productReviewID;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ProductID")
-    private int productID;
-    @Size(max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "ReviewerName")
     private String reviewerName;
     @Basic(optional = false)
@@ -62,15 +62,16 @@ public class Productreview implements Serializable {
     @Column(name = "ReviewDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "EmailAddress")
     private String emailAddress;
     @Basic(optional = false)
     @NotNull
     @Column(name = "Rating")
     private int rating;
-    @Lob
-    @Size(max = 16777215)
+    @Size(max = 3850)
     @Column(name = "Comments")
     private String comments;
     @Basic(optional = false)
@@ -78,6 +79,9 @@ public class Productreview implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
+    @ManyToOne(optional = false)
+    private Product productID;
 
     public Productreview() {
     }
@@ -86,10 +90,11 @@ public class Productreview implements Serializable {
         this.productReviewID = productReviewID;
     }
 
-    public Productreview(Integer productReviewID, int productID, Date reviewDate, int rating, Date modifiedDate) {
+    public Productreview(Integer productReviewID, String reviewerName, Date reviewDate, String emailAddress, int rating, Date modifiedDate) {
         this.productReviewID = productReviewID;
-        this.productID = productID;
+        this.reviewerName = reviewerName;
         this.reviewDate = reviewDate;
+        this.emailAddress = emailAddress;
         this.rating = rating;
         this.modifiedDate = modifiedDate;
     }
@@ -100,14 +105,6 @@ public class Productreview implements Serializable {
 
     public void setProductReviewID(Integer productReviewID) {
         this.productReviewID = productReviewID;
-    }
-
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
     }
 
     public String getReviewerName() {
@@ -156,6 +153,14 @@ public class Productreview implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Product getProductID() {
+        return productID;
+    }
+
+    public void setProductID(Product productID) {
+        this.productID = productID;
     }
 
     @Override

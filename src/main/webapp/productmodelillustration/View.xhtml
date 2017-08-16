@@ -4,35 +4,36 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
     <ui:composition>
 
-        <p:dialog id="ProductmodelillustrationViewDlg" widgetVar="ProductmodelillustrationViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{messages.ViewProductmodelillustrationTitle}" closeOnEscape="true">
+        <coco:viewpage id="ProductmodelillustrationViewForm"
+                       renderedListener="#{productmodelillustrationController.selected != null}"
+                       widgetVar="ProductmodelillustrationViewDialog">
 
-            <h:form id="ProductmodelillustrationViewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{productmodelillustrationController.selected != null}">
+            <h:outputText value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_productModelID}"/>
+            <h:outputText value="#{productmodelillustrationController.selected.productmodelillustrationPK.productModelID}"/>
 
-                        <h:outputText value="#{messages.ViewProductmodelillustrationLabel_productmodelillustrationPK_productModelID}"/>
-                        <h:outputText value="#{productmodelillustrationController.selected.productmodelillustrationPK.productModelID}" title="#{messages.ViewProductmodelillustrationTitle_productmodelillustrationPK_productModelID}"/>
+            <h:outputText value="#{messages.CreateProductmodelillustrationLabel_productmodelillustrationPK_illustrationID}"/>
+            <h:outputText value="#{productmodelillustrationController.selected.productmodelillustrationPK.illustrationID}"/>
 
-                        <h:outputText value="#{messages.ViewProductmodelillustrationLabel_productmodelillustrationPK_illustrationID}"/>
-                        <h:outputText value="#{productmodelillustrationController.selected.productmodelillustrationPK.illustrationID}" title="#{messages.ViewProductmodelillustrationTitle_productmodelillustrationPK_illustrationID}"/>
+            <h:outputText value="#{messages.CreateProductmodelillustrationLabel_modifiedDate}"/>
+            <h:outputText value="#{productmodelillustrationController.selected.modifiedDate}">
+                <f:convertDateTime pattern="#{messages.dateFormat}" />
+            </h:outputText>
 
-                        <h:outputText value="#{messages.ViewProductmodelillustrationLabel_modifiedDate}"/>
-                        <h:outputText value="#{productmodelillustrationController.selected.modifiedDate}" title="#{messages.ViewProductmodelillustrationTitle_modifiedDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{messages.Close}" onclick="PF('ProductmodelillustrationViewDialog').hide()"/>
-                </h:panelGroup>
+            <h:outputText value="#{messages.CreateProductmodelillustrationLabel_productmodel}"/>
+            <h:outputText value="#{productmodelillustrationController.selected.productmodel.name}"/>
 
-            </h:form>
+            <h:outputText value="#{messages.CreateProductmodelillustrationLabel_illustration}"/>
+            <h:outputText value="#{productmodelillustrationController.selected.illustration.illustrationID}"/>
 
-        </p:dialog>
+        </coco:viewpage>
 
     </ui:composition>
 
 </html>
+

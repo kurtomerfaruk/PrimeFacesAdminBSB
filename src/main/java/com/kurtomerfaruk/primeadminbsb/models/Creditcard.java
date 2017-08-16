@@ -8,26 +8,32 @@ package com.kurtomerfaruk.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Omer Faruk KURT kurtomerfaruk@gmail.com
- * @blog : http://kurtomerfaruk.com
- * Created on date 27.01.2017 23:11:04
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
  */
 @Entity
 @Table(name = "creditcard")
@@ -41,7 +47,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Creditcard.findByExpYear", query = "SELECT c FROM Creditcard c WHERE c.expYear = :expYear"),
     @NamedQuery(name = "Creditcard.findByModifiedDate", query = "SELECT c FROM Creditcard c WHERE c.modifiedDate = :modifiedDate")})
 public class Creditcard implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,6 +76,10 @@ public class Creditcard implements Serializable {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
+    @OneToMany(mappedBy = "creditCardID")
+    private List<Salesorderheader> salesorderheaderList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creditcard")
+    private List<Personcreditcard> personcreditcardList;
 
     public Creditcard() {
     }
@@ -134,6 +143,24 @@ public class Creditcard implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    @XmlTransient
+    public List<Salesorderheader> getSalesorderheaderList() {
+        return salesorderheaderList;
+    }
+
+    public void setSalesorderheaderList(List<Salesorderheader> salesorderheaderList) {
+        this.salesorderheaderList = salesorderheaderList;
+    }
+
+    @XmlTransient
+    public List<Personcreditcard> getPersoncreditcardList() {
+        return personcreditcardList;
+    }
+
+    public void setPersoncreditcardList(List<Personcreditcard> personcreditcardList) {
+        this.personcreditcardList = personcreditcardList;
     }
 
     @Override

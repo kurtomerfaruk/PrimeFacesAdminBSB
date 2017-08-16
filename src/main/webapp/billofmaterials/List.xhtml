@@ -4,130 +4,149 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
-    <h:form id="BillofmaterialsListForm">
+    <h:form id="BillofmaterialsListForm" class="form-height">
 
-        <p:panel header="#{messages.ListBillofmaterialsTitle}">
-            <p:contextMenu id="BillofmaterialsDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{messages.Create}" onclick="document.getElementById('BillofmaterialsListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{messages.View}" onclick="document.getElementById('BillofmaterialsListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('BillofmaterialsListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('BillofmaterialsListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{billofmaterialsController.lazyItems}"
-                         lazy="true"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{billofmaterialsController.selected}">
-                <!--
-                         To disable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{billofmaterialsController.items}"
-                         lazy="false"
-                         rowKey="HASH{item.billOfMaterialsID}"
-                -->
+        <p:contextMenu id="BillofmaterialsDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.New}" onclick="document.getElementById('BillofmaterialsListForm:datalist:datalist:createButton').click();" icon="fa fa-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('BillofmaterialsListForm:datalist:datalist:viewButton').click();" icon="fa fa-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('BillofmaterialsListForm:datalist:datalist:editButton').click();" icon="fa fa-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('BillofmaterialsListForm:datalist:datalist:deleteButton').click();" icon="fa fa-trash"/>
+            <p:separator/>
+            <p:menuitem value="UnitMeasureCode #{messages.View}" icon="fa fa-search"  actionListener="#{billofmaterialsController.prepareUnitMeasureCode}" update=":UnitmeasureViewForm:UnitmeasureViewForm" oncomplete="PF('UnitmeasureViewDialog').show()" disabled="#{empty billofmaterialsController.selected.unitMeasureCode}"/>  
+            <p:menuitem value="ProductAssemblyID #{messages.View}" icon="fa fa-search"  actionListener="#{billofmaterialsController.prepareProductAssemblyID}" update=":ProductViewForm:ProductViewForm" oncomplete="PF('ProductViewDialog').show()" disabled="#{empty billofmaterialsController.selected.productAssemblyID}"/>  
+            <p:menuitem value="ComponentID #{messages.View}" icon="fa fa-search"  actionListener="#{billofmaterialsController.prepareComponentID}" update=":ProductViewForm:ProductViewForm" oncomplete="PF('ProductViewDialog').show()" disabled="#{empty billofmaterialsController.selected.componentID}"/>  
+        </p:contextMenu>
+        <coco:datatable id="datalist"
+                        value="#{billofmaterialsController.lazyItems}"
+                        rowKey="#{item.billOfMaterialsID}"
+                        selection="#{billofmaterialsController.selected}"
+                        filtered="#{billofmaterialsController.filtered}"
+                        rowselect=":BillofmaterialsListForm:datalist:datalist:createButton,:BillofmaterialsListForm:datalist:datalist:viewButton,:BillofmaterialsListForm:datalist:datalist:editButton,:BillofmaterialsListForm:datalist:datalist:deleteButton,:BillofmaterialsListForm:BillofmaterialsDataTableContextMenu"
+                        rowDblselect="document.getElementById('BillofmaterialsListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":BillofmaterialsListForm:datalist:datalist:createButton :BillofmaterialsListForm:datalist:datalist:viewButton :BillofmaterialsListForm:datalist:datalist:editButton :BillofmaterialsListForm:datalist:datalist:deleteButton"
+                        selectListener="#{billofmaterialsController.resetParents}">
 
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BillofmaterialsDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BillofmaterialsDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BillofmaterialsListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.billOfMaterialsID}" filterBy="#{item.billOfMaterialsID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListBillofmaterialsTitle_billOfMaterialsID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.billOfMaterialsID}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.productAssemblyID}" filterBy="#{item.productAssemblyID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListBillofmaterialsTitle_productAssemblyID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.productAssemblyID}"/>
-                </p:column>
+            <f:facet name="header">
+                #{messages.ListBillofmaterialsTitle}
+            </f:facet>
+
+            <p:column sortBy="#{item.billOfMaterialsID}" filterBy="#{item.billOfMaterialsID}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_billOfMaterialsID}"/>
+                </f:facet>
+                <h:outputText value="#{item.billOfMaterialsID}">
+                    <f:convertNumber pattern="#{messages.numberFormat}"/>
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.componentID}" filterBy="#{item.componentID}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListBillofmaterialsTitle_componentID}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.componentID}"/>
-                </p:column>
+            <p:column sortBy="#{item.startDate}" filterBy="#{item.startDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_startDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.startDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.startDate}" filterBy="#{item.startDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListBillofmaterialsTitle_startDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.startDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_endDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.endDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
 
-                <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListBillofmaterialsTitle_endDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.endDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+            <p:column sortBy="#{item.BOMLevel}" filterBy="#{item.BOMLevel}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_BOMLevel}"/>
+                </f:facet>
+                <h:outputText value="#{item.BOMLevel}"/>
+            </p:column>
 
 
-                <p:column sortBy="#{item.unitMeasureCode}" filterBy="#{item.unitMeasureCode}">
-                    <f:facet name="header">
-                        <h:outputText value="#{messages.ListBillofmaterialsTitle_unitMeasureCode}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.unitMeasureCode}"/>
-                </p:column>
+            <p:column sortBy="#{item.perAssemblyQty}" filterBy="#{item.perAssemblyQty}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_perAssemblyQty}"/>
+                </f:facet>
+                <h:outputText value="#{item.perAssemblyQty}"/>
+            </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.BOMLevel}" filterBy="#{item.BOMLevel}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListBillofmaterialsTitle_BOMLevel}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.BOMLevel}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.perAssemblyQty}" filterBy="#{item.perAssemblyQty}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListBillofmaterialsTitle_perAssemblyQty}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.perAssemblyQty}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{messages.ListBillofmaterialsTitle_modifiedDate}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.modifiedDate}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                        </h:outputText>
-                                    </p:column>
-                -->
 
-            </p:dataTable>
+            <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_modifiedDate}"/>
+                </f:facet>
+                <f:facet name="filter">
+                    <p:calendar pattern="#{messages.dateFormat}" locale="tr" converter="dateConverter"  mask="true" onkeyup="PF('datalistWidget').filter()" size="12" navigator="true">
+                        <p:ajax event="dateSelect" oncomplete="PF('datalistWidget').filter()"/>
+                    </p:calendar>
+                </f:facet>
+                <h:outputText value="#{item.modifiedDate}">
+                    <f:convertDateTime pattern="#{messages.dateFormat}" />
+                </h:outputText>
+            </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{billofmaterialsController.prepareCreate}" update=":BillofmaterialsCreateForm" oncomplete="PF('BillofmaterialsCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{messages.View}" update=":BillofmaterialsViewForm" oncomplete="PF('BillofmaterialsViewDialog').show()" disabled="#{empty billofmaterialsController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{messages.Edit}" update=":BillofmaterialsEditForm" oncomplete="PF('BillofmaterialsEditDialog').show()" disabled="#{empty billofmaterialsController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{billofmaterialsController.delete}" update=":growl,datalist" disabled="#{empty billofmaterialsController.selected}">
-                <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
+            <p:column sortBy="#{item.unitMeasureCode.name}" filterBy="#{item.unitMeasureCode.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_unitMeasureCode}"/>
+                </f:facet>
+                <h:outputText value="#{item.unitMeasureCode.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.productAssemblyID.name}" filterBy="#{item.productAssemblyID.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_productAssemblyID}"/>
+                </f:facet>
+                <h:outputText value="#{item.productAssemblyID.name}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.componentID.name}" filterBy="#{item.componentID.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListBillofmaterialsTitle_componentID}"/>
+                </f:facet>
+                <h:outputText value="#{item.componentID.name}"/>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{billofmaterialsController.prepareCreate}" update=":BillofmaterialsCreateForm:BillofmaterialsCreateForm" oncomplete="PF('BillofmaterialsCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":BillofmaterialsViewForm:BillofmaterialsViewForm" oncomplete="PF('BillofmaterialsViewDialog').show()" disabled="#{empty billofmaterialsController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":BillofmaterialsEditForm:BillofmaterialsEditForm" oncomplete="PF('BillofmaterialsEditDialog').show()" disabled="#{empty billofmaterialsController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{billofmaterialsController.delete}" update=":growl,datalist" disabled="#{empty billofmaterialsController.selected}">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+
         <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>
