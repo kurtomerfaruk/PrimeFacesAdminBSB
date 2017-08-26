@@ -48,7 +48,7 @@
 
             <p:outputLabel value="#{messages.CreateProductvendorLabel_vendor}" for="vendor" />
             <p:selectOneMenu id="vendor" value="#{productvendorController.selected.vendor}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_vendor}" converter="vendorConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{vendorController.items}"
                                var="vendorItem"
                                itemValue="#{vendorItem}"
@@ -59,7 +59,7 @@
 
             <p:outputLabel value="#{messages.CreateProductvendorLabel_unitMeasureCode}" for="unitMeasureCode" />
             <p:selectOneMenu id="unitMeasureCode" value="#{productvendorController.selected.unitMeasureCode}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_unitMeasureCode}" converter="unitmeasureConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{unitmeasureController.items}"
                                var="unitMeasureCodeItem"
                                itemValue="#{unitMeasureCodeItem}"
@@ -70,7 +70,7 @@
 
             <p:outputLabel value="#{messages.CreateProductvendorLabel_product}" for="product" />
             <p:selectOneMenu id="product" value="#{productvendorController.selected.product}" required="true" requiredMessage="#{messages.CreateProductvendorRequiredMessage_product}" converter="productConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productController.items}"
                                var="productItem"
                                itemValue="#{productItem}"

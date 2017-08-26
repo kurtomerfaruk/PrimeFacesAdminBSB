@@ -27,7 +27,7 @@
 
             <p:outputLabel value="#{messages.CreateCustomerLabel_storeID}" for="storeID" />
             <p:selectOneMenu id="storeID" value="#{customerController.selected.storeID}"  converter="storeConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{storeController.items}"
                                var="storeIDItem"
                                itemValue="#{storeIDItem}"
@@ -38,7 +38,7 @@
 
             <p:outputLabel value="#{messages.CreateCustomerLabel_territoryID}" for="territoryID" />
             <p:selectOneMenu id="territoryID" value="#{customerController.selected.territoryID}"  converter="salesterritoryConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salesterritoryController.items}"
                                var="territoryIDItem"
                                itemValue="#{territoryIDItem}"
@@ -49,7 +49,7 @@
 
             <p:outputLabel value="#{messages.CreateCustomerLabel_personID}" for="personID" />
             <p:selectOneMenu id="personID" value="#{customerController.selected.personID}"  converter="personConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{personController.items}"
                                var="personIDItem"
                                itemValue="#{personIDItem}"

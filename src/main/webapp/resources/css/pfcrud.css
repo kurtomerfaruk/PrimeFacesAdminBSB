@@ -293,3 +293,7 @@ div.ui-selectonemenu-filter-container{
     border-width:15px 0px;
 }
 
+.ui-dialog{
+    position: absolute !important;
+}
+

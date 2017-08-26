@@ -30,7 +30,7 @@
 
             <p:outputLabel value="#{messages.CreatePasswordLabel_person}" for="person" />
             <p:selectOneMenu id="person" value="#{passwordController.selected.person}" required="true" requiredMessage="#{messages.CreatePasswordRequiredMessage_person}" converter="personConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{personController.items}"
                                var="personItem"
                                itemValue="#{personItem}"

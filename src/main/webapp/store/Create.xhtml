@@ -30,7 +30,7 @@
 
             <p:outputLabel value="#{messages.CreateStoreLabel_salesPersonID}" for="salesPersonID" />
             <p:selectOneMenu id="salesPersonID" value="#{storeController.selected.salesPersonID}"  converter="salespersonConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salespersonController.items}"
                                var="salesPersonIDItem"
                                itemValue="#{salesPersonIDItem}"
@@ -41,7 +41,7 @@
 
             <p:outputLabel value="#{messages.CreateStoreLabel_businessentity}" for="businessentity" />
             <p:selectOneMenu id="businessentity" value="#{storeController.selected.businessentity}" required="true" requiredMessage="#{messages.CreateStoreRequiredMessage_businessentity}" converter="businessentityConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{businessentityController.items}"
                                var="businessentityItem"
                                itemValue="#{businessentityItem}"

@@ -69,7 +69,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_shipMethodID}" for="shipMethodID" />
             <p:selectOneMenu id="shipMethodID" value="#{salesorderheaderController.selected.shipMethodID}" required="true" requiredMessage="#{messages.CreateSalesorderheaderRequiredMessage_shipMethodID}" converter="shipmethodConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{shipmethodController.items}"
                                var="shipMethodIDItem"
                                itemValue="#{shipMethodIDItem}"
@@ -80,7 +80,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_territoryID}" for="territoryID" />
             <p:selectOneMenu id="territoryID" value="#{salesorderheaderController.selected.territoryID}"  converter="salesterritoryConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salesterritoryController.items}"
                                var="territoryIDItem"
                                itemValue="#{territoryIDItem}"
@@ -91,7 +91,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_salesPersonID}" for="salesPersonID" />
             <p:selectOneMenu id="salesPersonID" value="#{salesorderheaderController.selected.salesPersonID}"  converter="salespersonConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salespersonController.items}"
                                var="salesPersonIDItem"
                                itemValue="#{salesPersonIDItem}"
@@ -102,7 +102,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_customerID}" for="customerID" />
             <p:selectOneMenu id="customerID" value="#{salesorderheaderController.selected.customerID}" required="true" requiredMessage="#{messages.CreateSalesorderheaderRequiredMessage_customerID}" converter="customerConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{customerController.items}"
                                var="customerIDItem"
                                itemValue="#{customerIDItem}"
@@ -113,7 +113,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_currencyRateID}" for="currencyRateID" />
             <p:selectOneMenu id="currencyRateID" value="#{salesorderheaderController.selected.currencyRateID}"  converter="currencyrateConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{currencyrateController.items}"
                                var="currencyRateIDItem"
                                itemValue="#{currencyRateIDItem}"
@@ -124,7 +124,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_creditCardID}" for="creditCardID" />
             <p:selectOneMenu id="creditCardID" value="#{salesorderheaderController.selected.creditCardID}"  converter="creditcardConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{creditcardController.items}"
                                var="creditCardIDItem"
                                itemValue="#{creditCardIDItem}"
@@ -135,7 +135,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_shipToAddressID}" for="shipToAddressID" />
             <p:selectOneMenu id="shipToAddressID" value="#{salesorderheaderController.selected.shipToAddressID}" required="true" requiredMessage="#{messages.CreateSalesorderheaderRequiredMessage_shipToAddressID}" converter="addressConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{addressController.items}"
                                var="shipToAddressIDItem"
                                itemValue="#{shipToAddressIDItem}"
@@ -146,7 +146,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderheaderLabel_billToAddressID}" for="billToAddressID" />
             <p:selectOneMenu id="billToAddressID" value="#{salesorderheaderController.selected.billToAddressID}" required="true" requiredMessage="#{messages.CreateSalesorderheaderRequiredMessage_billToAddressID}" converter="addressConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{addressController.items}"
                                var="billToAddressIDItem"
                                itemValue="#{billToAddressIDItem}"

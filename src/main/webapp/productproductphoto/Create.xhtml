@@ -30,7 +30,7 @@
 
             <p:outputLabel value="#{messages.CreateProductproductphotoLabel_product}" for="product" />
             <p:selectOneMenu id="product" value="#{productproductphotoController.selected.product}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_product}" converter="productConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productController.items}"
                                var="productItem"
                                itemValue="#{productItem}"
@@ -41,7 +41,7 @@
 
             <p:outputLabel value="#{messages.CreateProductproductphotoLabel_productphoto}" for="productphoto" />
             <p:selectOneMenu id="productphoto" value="#{productproductphotoController.selected.productphoto}" required="true" requiredMessage="#{messages.CreateProductproductphotoRequiredMessage_productphoto}" converter="productphotoConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productphotoController.items}"
                                var="productphotoItem"
                                itemValue="#{productphotoItem}"

@@ -45,7 +45,7 @@
 
             <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_vendorID}" for="vendorID" />
             <p:selectOneMenu id="vendorID" value="#{purchaseorderheaderController.selected.vendorID}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_vendorID}" converter="vendorConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{vendorController.items}"
                                var="vendorIDItem"
                                itemValue="#{vendorIDItem}"
@@ -56,7 +56,7 @@
 
             <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_shipMethodID}" for="shipMethodID" />
             <p:selectOneMenu id="shipMethodID" value="#{purchaseorderheaderController.selected.shipMethodID}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_shipMethodID}" converter="shipmethodConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{shipmethodController.items}"
                                var="shipMethodIDItem"
                                itemValue="#{shipMethodIDItem}"
@@ -67,7 +67,7 @@
 
             <p:outputLabel value="#{messages.CreatePurchaseorderheaderLabel_employeeID}" for="employeeID" />
             <p:selectOneMenu id="employeeID" value="#{purchaseorderheaderController.selected.employeeID}" required="true" requiredMessage="#{messages.CreatePurchaseorderheaderRequiredMessage_employeeID}" converter="employeeConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{employeeController.items}"
                                var="employeeIDItem"
                                itemValue="#{employeeIDItem}"

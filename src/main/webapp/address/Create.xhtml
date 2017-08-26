@@ -38,7 +38,7 @@
 
             <p:outputLabel value="#{messages.CreateAddressLabel_stateProvinceID}" for="stateProvinceID" />
             <p:selectOneMenu id="stateProvinceID" value="#{addressController.selected.stateProvinceID}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_stateProvinceID}" converter="stateprovinceConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{stateprovinceController.items}"
                                var="stateProvinceIDItem"
                                itemValue="#{stateProvinceIDItem}"

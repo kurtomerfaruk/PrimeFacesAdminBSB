@@ -36,7 +36,7 @@
 
             <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_shift}" for="shift" />
             <p:selectOneMenu id="shift" value="#{employeedepartmenthistoryController.selected.shift}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_shift}" converter="shiftConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{shiftController.items}"
                                var="shiftItem"
                                itemValue="#{shiftItem}"
@@ -47,7 +47,7 @@
 
             <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_employee}" for="employee" />
             <p:selectOneMenu id="employee" value="#{employeedepartmenthistoryController.selected.employee}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_employee}" converter="employeeConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{employeeController.items}"
                                var="employeeItem"
                                itemValue="#{employeeItem}"
@@ -58,7 +58,7 @@
 
             <p:outputLabel value="#{messages.CreateEmployeedepartmenthistoryLabel_department}" for="department" />
             <p:selectOneMenu id="department" value="#{employeedepartmenthistoryController.selected.department}" required="true" requiredMessage="#{messages.CreateEmployeedepartmenthistoryRequiredMessage_department}" converter="departmentConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{departmentController.items}"
                                var="departmentItem"
                                itemValue="#{departmentItem}"

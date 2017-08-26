@@ -33,7 +33,7 @@
 
             <p:outputLabel value="#{messages.CreateBusinessentityaddressLabel_businessentity}" for="businessentity" />
             <p:selectOneMenu id="businessentity" value="#{businessentityaddressController.selected.businessentity}" required="true" requiredMessage="#{messages.CreateBusinessentityaddressRequiredMessage_businessentity}" converter="businessentityConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{businessentityController.items}"
                                var="businessentityItem"
                                itemValue="#{businessentityItem}"
@@ -44,7 +44,7 @@
 
             <p:outputLabel value="#{messages.CreateBusinessentityaddressLabel_address}" for="address" />
             <p:selectOneMenu id="address" value="#{businessentityaddressController.selected.address}" required="true" requiredMessage="#{messages.CreateBusinessentityaddressRequiredMessage_address}" converter="addressConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{addressController.items}"
                                var="addressItem"
                                itemValue="#{addressItem}"
@@ -55,7 +55,7 @@
 
             <p:outputLabel value="#{messages.CreateBusinessentityaddressLabel_addresstype}" for="addresstype" />
             <p:selectOneMenu id="addresstype" value="#{businessentityaddressController.selected.addresstype}" required="true" requiredMessage="#{messages.CreateBusinessentityaddressRequiredMessage_addresstype}" converter="addresstypeConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{addresstypeController.items}"
                                var="addresstypeItem"
                                itemValue="#{addresstypeItem}"

@@ -45,7 +45,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_specialofferproduct}" for="specialofferproduct" />
             <p:selectOneMenu id="specialofferproduct" value="#{salesorderdetailController.selected.specialofferproduct}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_specialofferproduct}" converter="specialofferproductConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{specialofferproductController.items}"
                                var="specialofferproductItem"
                                itemValue="#{specialofferproductItem}"
@@ -56,7 +56,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesorderdetailLabel_salesorderheader}" for="salesorderheader" />
             <p:selectOneMenu id="salesorderheader" value="#{salesorderdetailController.selected.salesorderheader}" required="true" requiredMessage="#{messages.CreateSalesorderdetailRequiredMessage_salesorderheader}" converter="salesorderheaderConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salesorderheaderController.items}"
                                var="salesorderheaderItem"
                                itemValue="#{salesorderheaderItem}"

@@ -33,7 +33,7 @@
 
             <p:outputLabel value="#{messages.CreateEmailaddressLabel_person}" for="person" />
             <p:selectOneMenu id="person" value="#{emailaddressController.selected.person}" required="true" requiredMessage="#{messages.CreateEmailaddressRequiredMessage_person}" converter="personConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{personController.items}"
                                var="personItem"
                                itemValue="#{personItem}"

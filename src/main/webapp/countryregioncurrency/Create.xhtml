@@ -27,7 +27,7 @@
 
             <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_currency}" for="currency" />
             <p:selectOneMenu id="currency" value="#{countryregioncurrencyController.selected.currency}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_currency}" converter="currencyConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{currencyController.items}"
                                var="currencyItem"
                                itemValue="#{currencyItem}"
@@ -38,7 +38,7 @@
 
             <p:outputLabel value="#{messages.CreateCountryregioncurrencyLabel_countryregion}" for="countryregion" />
             <p:selectOneMenu id="countryregion" value="#{countryregioncurrencyController.selected.countryregion}" required="true" requiredMessage="#{messages.CreateCountryregioncurrencyRequiredMessage_countryregion}" converter="countryregionConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{countryregionController.items}"
                                var="countryregionItem"
                                itemValue="#{countryregionItem}"

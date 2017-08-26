@@ -42,7 +42,7 @@
 
             <p:outputLabel value="#{messages.CreateSalesterritoryLabel_countryRegionCode}" for="countryRegionCode" />
             <p:selectOneMenu id="countryRegionCode" value="#{salesterritoryController.selected.countryRegionCode}" required="true" requiredMessage="#{messages.CreateSalesterritoryRequiredMessage_countryRegionCode}" converter="countryregionConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{countryregionController.items}"
                                var="countryRegionCodeItem"
                                itemValue="#{countryRegionCodeItem}"

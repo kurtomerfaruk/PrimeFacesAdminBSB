@@ -30,7 +30,7 @@
 
             <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productmodel}" for="productmodel" />
             <p:selectOneMenu id="productmodel" value="#{productmodelproductdescriptioncultureController.selected.productmodel}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productmodel}" converter="productmodelConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productmodelController.items}"
                                var="productmodelItem"
                                itemValue="#{productmodelItem}"
@@ -41,7 +41,7 @@
 
             <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_productdescription}" for="productdescription" />
             <p:selectOneMenu id="productdescription" value="#{productmodelproductdescriptioncultureController.selected.productdescription}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_productdescription}" converter="productdescriptionConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productdescriptionController.items}"
                                var="productdescriptionItem"
                                itemValue="#{productdescriptionItem}"
@@ -52,7 +52,7 @@
 
             <p:outputLabel value="#{messages.CreateProductmodelproductdescriptioncultureLabel_culture}" for="culture" />
             <p:selectOneMenu id="culture" value="#{productmodelproductdescriptioncultureController.selected.culture}" required="true" requiredMessage="#{messages.CreateProductmodelproductdescriptioncultureRequiredMessage_culture}" converter="cultureConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{cultureController.items}"
                                var="cultureItem"
                                itemValue="#{cultureItem}"

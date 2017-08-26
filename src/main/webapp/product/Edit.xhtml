@@ -78,7 +78,7 @@
 
             <p:outputLabel value="#{messages.CreateProductLabel_weightUnitMeasureCode}" for="weightUnitMeasureCode" />
             <p:selectOneMenu id="weightUnitMeasureCode" value="#{productController.selected.weightUnitMeasureCode}"  converter="unitmeasureConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{unitmeasureController.items}"
                                var="weightUnitMeasureCodeItem"
                                itemValue="#{weightUnitMeasureCodeItem}"
@@ -89,7 +89,7 @@
 
             <p:outputLabel value="#{messages.CreateProductLabel_sizeUnitMeasureCode}" for="sizeUnitMeasureCode" />
             <p:selectOneMenu id="sizeUnitMeasureCode" value="#{productController.selected.sizeUnitMeasureCode}"  converter="unitmeasureConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{unitmeasureController.items}"
                                var="sizeUnitMeasureCodeItem"
                                itemValue="#{sizeUnitMeasureCodeItem}"
@@ -100,7 +100,7 @@
 
             <p:outputLabel value="#{messages.CreateProductLabel_productSubcategoryID}" for="productSubcategoryID" />
             <p:selectOneMenu id="productSubcategoryID" value="#{productController.selected.productSubcategoryID}"  converter="productsubcategoryConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productsubcategoryController.items}"
                                var="productSubcategoryIDItem"
                                itemValue="#{productSubcategoryIDItem}"
@@ -111,7 +111,7 @@
 
             <p:outputLabel value="#{messages.CreateProductLabel_productModelID}" for="productModelID" />
             <p:selectOneMenu id="productModelID" value="#{productController.selected.productModelID}"  converter="productmodelConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productmodelController.items}"
                                var="productModelIDItem"
                                itemValue="#{productModelIDItem}"

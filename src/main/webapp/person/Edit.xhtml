@@ -57,7 +57,7 @@
 
             <p:outputLabel value="#{messages.CreatePersonLabel_businessentity}" for="businessentity" />
             <p:selectOneMenu id="businessentity" value="#{personController.selected.businessentity}" required="true" requiredMessage="#{messages.CreatePersonRequiredMessage_businessentity}" converter="businessentityConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{businessentityController.items}"
                                var="businessentityItem"
                                itemValue="#{businessentityItem}"
@@ -68,7 +68,7 @@
 
             <p:outputLabel value="#{messages.CreatePersonLabel_password}" for="password" />
             <p:selectOneMenu id="password" value="#{personController.selected.password}"  converter="passwordConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{passwordController.items}"
                                var="passwordItem"
                                itemValue="#{passwordItem}"
@@ -79,7 +79,7 @@
 
             <p:outputLabel value="#{messages.CreatePersonLabel_employee}" for="employee" />
             <p:selectOneMenu id="employee" value="#{personController.selected.employee}"  converter="employeeConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{employeeController.items}"
                                var="employeeItem"
                                itemValue="#{employeeItem}"

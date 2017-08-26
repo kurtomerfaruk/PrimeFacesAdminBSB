@@ -33,7 +33,7 @@
 
             <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_unitMeasureCode}" for="unitMeasureCode" />
             <p:selectOneMenu id="unitMeasureCode" value="#{billofmaterialsController.selected.unitMeasureCode}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_unitMeasureCode}" converter="unitmeasureConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{unitmeasureController.items}"
                                var="unitMeasureCodeItem"
                                itemValue="#{unitMeasureCodeItem}"
@@ -44,7 +44,7 @@
 
             <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_productAssemblyID}" for="productAssemblyID" />
             <p:selectOneMenu id="productAssemblyID" value="#{billofmaterialsController.selected.productAssemblyID}"  converter="productConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productController.items}"
                                var="productAssemblyIDItem"
                                itemValue="#{productAssemblyIDItem}"
@@ -55,7 +55,7 @@
 
             <p:outputLabel value="#{messages.CreateBillofmaterialsLabel_componentID}" for="componentID" />
             <p:selectOneMenu id="componentID" value="#{billofmaterialsController.selected.componentID}" required="true" requiredMessage="#{messages.CreateBillofmaterialsRequiredMessage_componentID}" converter="productConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productController.items}"
                                var="componentIDItem"
                                itemValue="#{componentIDItem}"

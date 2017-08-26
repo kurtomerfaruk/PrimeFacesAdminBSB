@@ -33,7 +33,7 @@
 
             <p:outputLabel value="#{messages.CreateStateprovinceLabel_territoryID}" for="territoryID" />
             <p:selectOneMenu id="territoryID" value="#{stateprovinceController.selected.territoryID}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_territoryID}" converter="salesterritoryConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salesterritoryController.items}"
                                var="territoryIDItem"
                                itemValue="#{territoryIDItem}"
@@ -44,7 +44,7 @@
 
             <p:outputLabel value="#{messages.CreateStateprovinceLabel_countryRegionCode}" for="countryRegionCode" />
             <p:selectOneMenu id="countryRegionCode" value="#{stateprovinceController.selected.countryRegionCode}" required="true" requiredMessage="#{messages.CreateStateprovinceRequiredMessage_countryRegionCode}" converter="countryregionConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{countryregionController.items}"
                                var="countryRegionCodeItem"
                                itemValue="#{countryRegionCodeItem}"

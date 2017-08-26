@@ -48,7 +48,7 @@
 
             <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_purchaseorderheader}" for="purchaseorderheader" />
             <p:selectOneMenu id="purchaseorderheader" value="#{purchaseorderdetailController.selected.purchaseorderheader}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_purchaseorderheader}" converter="purchaseorderheaderConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{purchaseorderheaderController.items}"
                                var="purchaseorderheaderItem"
                                itemValue="#{purchaseorderheaderItem}"
@@ -59,7 +59,7 @@
 
             <p:outputLabel value="#{messages.CreatePurchaseorderdetailLabel_productID}" for="productID" />
             <p:selectOneMenu id="productID" value="#{purchaseorderdetailController.selected.productID}" required="true" requiredMessage="#{messages.CreatePurchaseorderdetailRequiredMessage_productID}" converter="productConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productController.items}"
                                var="productIDItem"
                                itemValue="#{productIDItem}"

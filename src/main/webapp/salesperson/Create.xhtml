@@ -39,7 +39,7 @@
 
             <p:outputLabel value="#{messages.CreateSalespersonLabel_territoryID}" for="territoryID" />
             <p:selectOneMenu id="territoryID" value="#{salespersonController.selected.territoryID}"  converter="salesterritoryConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{salesterritoryController.items}"
                                var="territoryIDItem"
                                itemValue="#{territoryIDItem}"
@@ -50,7 +50,7 @@
 
             <p:outputLabel value="#{messages.CreateSalespersonLabel_employee}" for="employee" />
             <p:selectOneMenu id="employee" value="#{salespersonController.selected.employee}" required="true" requiredMessage="#{messages.CreateSalespersonRequiredMessage_employee}" converter="employeeConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{employeeController.items}"
                                var="employeeItem"
                                itemValue="#{employeeItem}"

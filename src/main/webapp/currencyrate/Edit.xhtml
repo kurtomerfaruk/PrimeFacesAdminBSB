@@ -30,7 +30,7 @@
 
             <p:outputLabel value="#{messages.CreateCurrencyrateLabel_toCurrencyCode}" for="toCurrencyCode" />
             <p:selectOneMenu id="toCurrencyCode" value="#{currencyrateController.selected.toCurrencyCode}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_toCurrencyCode}" converter="currencyConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{currencyController.items}"
                                var="toCurrencyCodeItem"
                                itemValue="#{toCurrencyCodeItem}"
@@ -41,7 +41,7 @@
 
             <p:outputLabel value="#{messages.CreateCurrencyrateLabel_fromCurrencyCode}" for="fromCurrencyCode" />
             <p:selectOneMenu id="fromCurrencyCode" value="#{currencyrateController.selected.fromCurrencyCode}" required="true" requiredMessage="#{messages.CreateCurrencyrateRequiredMessage_fromCurrencyCode}" converter="currencyConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{currencyController.items}"
                                var="fromCurrencyCodeItem"
                                itemValue="#{fromCurrencyCodeItem}"

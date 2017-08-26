@@ -51,7 +51,7 @@
 
             <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_workorder}" for="workorder" />
             <p:selectOneMenu id="workorder" value="#{workorderroutingController.selected.workorder}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_workorder}" converter="workorderConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{workorderController.items}"
                                var="workorderItem"
                                itemValue="#{workorderItem}"
@@ -62,7 +62,7 @@
 
             <p:outputLabel value="#{messages.CreateWorkorderroutingLabel_locationID}" for="locationID" />
             <p:selectOneMenu id="locationID" value="#{workorderroutingController.selected.locationID}" required="true" requiredMessage="#{messages.CreateWorkorderroutingRequiredMessage_locationID}" converter="locationConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{locationController.items}"
                                var="locationIDItem"
                                itemValue="#{locationIDItem}"

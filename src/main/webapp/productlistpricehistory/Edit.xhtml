@@ -33,7 +33,7 @@
 
             <p:outputLabel value="#{messages.CreateProductlistpricehistoryLabel_product}" for="product" />
             <p:selectOneMenu id="product" value="#{productlistpricehistoryController.selected.product}" required="true" requiredMessage="#{messages.CreateProductlistpricehistoryRequiredMessage_product}" converter="productConverter" filter="true">
-                <f:selectItem itemLabel="#{messages.seciniz}"/>
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
                 <f:selectItems value="#{productController.items}"
                                var="productItem"
                                itemValue="#{productItem}"
