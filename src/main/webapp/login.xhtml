@@ -48,7 +48,7 @@
             
             <p:focus for="userName"/>
 
-            <div class="login-box">
+            <div class="login-box" style="margin-top: -15px">
                 <div class="logo">
                     <a href="javascript:void(0);">Admin<b>BSB</b></a>
                     <small>Admin BootStrap Based - Material Design</small>
@@ -72,6 +72,11 @@
                                 <p:password class="form-control" value="#{loginController.password}" required="true" label="Password" pt:placeholder="Password"/>
                             </div>
                         </div>
+                        <div class="input-group">
+                            <div class="form-line">
+                                <p:captcha id="captcha" label="captcha" requiredMessage="Captcha is required" />
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-xs-8 p-t-5">
                                 <!--                                <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
@@ -80,7 +85,7 @@
                             </div>
                             <div class="col-xs-6 pull-right">
                                 <p:defaultCommand target="loginButton" />
-                                <p:commandLink id="loginButton" class="btn btn-block bg-pink waves-effect" action="#{loginController.login}" update="growlLogin">
+                                <p:commandLink ajax="false" id="loginButton" class="btn btn-block bg-pink waves-effect" action="#{loginController.login}" update="growlLogin">
                                     <i class="material-icons">lock_open</i>
                                     <h:outputText style="margin-left: 20px" value="SIGN IN"/>
                                 </p:commandLink>
