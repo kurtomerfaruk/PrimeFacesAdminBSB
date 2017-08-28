@@ -6,6 +6,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,8 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     ,
     @NamedQuery(name = "Address.findByPostalCode", query = "SELECT a FROM Address a WHERE a.postalCode = :postalCode")
     ,
-    @NamedQuery(name = "Address.findByRowguid", query = "SELECT a FROM Address a WHERE a.rowguid = :rowguid")
-    ,
     @NamedQuery(name = "Address.findByModifiedDate", query = "SELECT a FROM Address a WHERE a.modifiedDate = :modifiedDate")})
 public class Address extends BaseEntity implements Serializable {
 
@@ -76,11 +75,11 @@ public class Address extends BaseEntity implements Serializable {
     @Lob
     @Column(name = "SpatialLocation")
     private byte[] spatialLocation;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "address",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Businessentityaddress> businessentityaddressList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipToAddressID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipToAddressID",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Salesorderheader> salesorderheaderList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billToAddressID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billToAddressID",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Salesorderheader> salesorderheaderList1;
     @JoinColumn(name = "StateProvinceID", referencedColumnName = "StateProvinceID")
     @ManyToOne(optional = false)

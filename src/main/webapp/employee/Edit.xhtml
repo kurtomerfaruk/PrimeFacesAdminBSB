@@ -58,9 +58,6 @@
             <p:outputLabel value="#{messages.CreateEmployeeLabel_currentFlag}" for="currentFlag" />
             <p:selectBooleanCheckbox id="currentFlag" value="#{employeeController.selected.currentFlag}" required="true" requiredMessage="#{messages.CreateEmployeeRequiredMessage_currentFlag}"/>
 
-            <p:outputLabel value="#{messages.CreateEmployeeLabel_rowguid}" for="rowguid" />
-            <p:inputText id="rowguid" value="#{employeeController.selected.rowguid}" title="#{messages.CreateEmployeeTitle_rowguid}" required="true" requiredMessage="#{messages.CreateEmployeeRequiredMessage_rowguid}" size="64" maxlength="64"/>
-
             <p:outputLabel value="#{messages.CreateEmployeeLabel_modifiedDate}" for="modifiedDate" />
             <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeeController.selected.modifiedDate}" title="#{messages.CreateEmployeeTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmployeeRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 

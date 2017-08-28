@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Businessentity.findAll", query = "SELECT b FROM Businessentity b"),
     @NamedQuery(name = "Businessentity.findByBusinessEntityID", query = "SELECT b FROM Businessentity b WHERE b.businessEntityID = :businessEntityID"),
-    @NamedQuery(name = "Businessentity.findByRowguid", query = "SELECT b FROM Businessentity b WHERE b.rowguid = :rowguid"),
     @NamedQuery(name = "Businessentity.findByModifiedDate", query = "SELECT b FROM Businessentity b WHERE b.modifiedDate = :modifiedDate")})
 public class Businessentity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;

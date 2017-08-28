@@ -122,4 +122,9 @@
         <param-value>6LdvgxcUAAAAAAJzKTicGtQGWpu-_wza8YjNw8ZC</param-value>
     </context-param>
     <!--PrimeFaces Captcha-->
+    
+    <context-param>
+        <param-name>facelets.REFRESH_PERIOD</param-name>
+        <param-value>1</param-value>
+    </context-param>
 </web-app>

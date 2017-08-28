@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
@@ -54,9 +53,6 @@
 
             <p:outputLabel value="#{messages.CreateEmployeeLabel_currentFlag}" for="currentFlag" />
             <p:selectBooleanCheckbox id="currentFlag" value="#{employeeController.selected.currentFlag}" required="true" requiredMessage="#{messages.CreateEmployeeRequiredMessage_currentFlag}"/>
-
-            <p:outputLabel value="#{messages.CreateEmployeeLabel_rowguid}" for="rowguid" />
-            <p:inputText id="rowguid" value="#{employeeController.selected.rowguid}" title="#{messages.CreateEmployeeTitle_rowguid}" required="true" requiredMessage="#{messages.CreateEmployeeRequiredMessage_rowguid}" size="64" maxlength="64"/>
 
             <p:outputLabel value="#{messages.CreateEmployeeLabel_modifiedDate}" for="modifiedDate" />
             <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{employeeController.selected.modifiedDate}" title="#{messages.CreateEmployeeTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateEmployeeRequiredMessage_modifiedDate}" mask="true" navigator="true"/>

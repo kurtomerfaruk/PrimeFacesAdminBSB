@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.blogspot.ofarukkurt.primeadminbsb.models;
 
 import java.io.Serializable;
@@ -54,7 +48,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findByVacationHours", query = "SELECT e FROM Employee e WHERE e.vacationHours = :vacationHours"),
     @NamedQuery(name = "Employee.findBySickLeaveHours", query = "SELECT e FROM Employee e WHERE e.sickLeaveHours = :sickLeaveHours"),
     @NamedQuery(name = "Employee.findByCurrentFlag", query = "SELECT e FROM Employee e WHERE e.currentFlag = :currentFlag"),
-    @NamedQuery(name = "Employee.findByRowguid", query = "SELECT e FROM Employee e WHERE e.rowguid = :rowguid"),
     @NamedQuery(name = "Employee.findByModifiedDate", query = "SELECT e FROM Employee e WHERE e.modifiedDate = :modifiedDate")})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -119,11 +112,6 @@ public class Employee implements Serializable {
     private boolean currentFlag;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "rowguid")
-    private String rowguid;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
@@ -163,7 +151,6 @@ public class Employee implements Serializable {
         this.vacationHours = vacationHours;
         this.sickLeaveHours = sickLeaveHours;
         this.currentFlag = currentFlag;
-        this.rowguid = rowguid;
         this.modifiedDate = modifiedDate;
     }
 
@@ -277,14 +264,6 @@ public class Employee implements Serializable {
 
     public void setCurrentFlag(boolean currentFlag) {
         this.currentFlag = currentFlag;
-    }
-
-    public String getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(String rowguid) {
-        this.rowguid = rowguid;
     }
 
     public Date getModifiedDate() {

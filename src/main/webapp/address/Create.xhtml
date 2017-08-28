@@ -30,9 +30,6 @@
             <p:outputLabel value="#{messages.CreateAddressLabel_spatialLocation}" for="spatialLocation" />
             <p:inputTextarea rows="4" id="spatialLocation" value="#{addressController.selected.spatialLocation}" title="#{messages.CreateAddressTitle_spatialLocation}"  styleClass="full-width"/>
 
-            <p:outputLabel value="#{messages.CreateAddressLabel_rowguid}" for="rowguid" />
-            <p:inputText id="rowguid" value="#{addressController.selected.rowguid}" title="#{messages.CreateAddressTitle_rowguid}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_rowguid}" size="64" maxlength="64"/>
-
             <p:outputLabel value="#{messages.CreateAddressLabel_modifiedDate}" for="modifiedDate" />
             <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{addressController.selected.modifiedDate}" title="#{messages.CreateAddressTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 

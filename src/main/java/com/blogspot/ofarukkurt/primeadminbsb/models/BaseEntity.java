@@ -23,9 +23,6 @@ public class BaseEntity {
     @Column(name = "ModifiedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
-    @Lob
-    @Column(name = "rowguid")
-    private byte[] rowguid;
 
     public Date getModifiedDate() {
         return modifiedDate;
@@ -35,26 +32,15 @@ public class BaseEntity {
         this.modifiedDate = modifiedDate;
     }
 
-    public byte[] getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(byte[] rowguid) {
-        this.rowguid = rowguid;
-    }
 
     @PrePersist
     public void prePersist() {
         modifiedDate = new Date();
-        UUID uuid = UUID.randomUUID();
-        rowguid =Functions.asBytes(uuid);
     }
 
     @PreUpdate
     public void preUpdate() {
         modifiedDate = new Date();
-        UUID uuid = UUID.randomUUID();
-        rowguid =Functions.asBytes(uuid);
     }
 
 }

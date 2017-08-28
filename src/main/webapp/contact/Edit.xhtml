@@ -52,9 +52,6 @@
             <p:outputLabel value="#{messages.CreateContactLabel_additionalContactInfo}" for="additionalContactInfo" />
             <p:inputTextarea rows="4" id="additionalContactInfo" value="#{contactController.selected.additionalContactInfo}" title="#{messages.CreateContactTitle_additionalContactInfo}"  styleClass="full-width"/>
 
-            <p:outputLabel value="#{messages.CreateContactLabel_rowguid}" for="rowguid" />
-            <p:inputTextarea rows="4" id="rowguid" value="#{contactController.selected.rowguid}" title="#{messages.CreateContactTitle_rowguid}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_rowguid}" styleClass="full-width"/>
-
             <p:outputLabel value="#{messages.CreateContactLabel_modifiedDate}" for="modifiedDate" />
             <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{contactController.selected.modifiedDate}" title="#{messages.CreateContactTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_modifiedDate}" mask="true" navigator="true"/>
 

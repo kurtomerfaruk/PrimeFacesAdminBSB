@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.blogspot.ofarukkurt.primeadminbsb.models;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -21,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,20 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Businessentityaddress.findAll", query = "SELECT b FROM Businessentityaddress b"),
-    @NamedQuery(name = "Businessentityaddress.findByBusinessEntityID", query = "SELECT b FROM Businessentityaddress b WHERE b.businessentityaddressPK.businessEntityID = :businessEntityID"),
-    @NamedQuery(name = "Businessentityaddress.findByAddressID", query = "SELECT b FROM Businessentityaddress b WHERE b.businessentityaddressPK.addressID = :addressID"),
-    @NamedQuery(name = "Businessentityaddress.findByAddressTypeID", query = "SELECT b FROM Businessentityaddress b WHERE b.businessentityaddressPK.addressTypeID = :addressTypeID"),
-    @NamedQuery(name = "Businessentityaddress.findByRowguid", query = "SELECT b FROM Businessentityaddress b WHERE b.rowguid = :rowguid"),
     @NamedQuery(name = "Businessentityaddress.findByModifiedDate", query = "SELECT b FROM Businessentityaddress b WHERE b.modifiedDate = :modifiedDate")})
 public class Businessentityaddress implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected BusinessentityaddressPK businessentityaddressPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "rowguid")
-    private String rowguid;
+    @Column(name = "BusinessEntityAddressID")
+    private Integer businessEntityAddressID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
@@ -68,34 +56,21 @@ public class Businessentityaddress implements Serializable {
     public Businessentityaddress() {
     }
 
-    public Businessentityaddress(BusinessentityaddressPK businessentityaddressPK) {
-        this.businessentityaddressPK = businessentityaddressPK;
+    public Businessentityaddress(Integer businessEntityAddressID) {
+        this.businessEntityAddressID = businessEntityAddressID;
     }
 
-    public Businessentityaddress(BusinessentityaddressPK businessentityaddressPK, String rowguid, Date modifiedDate) {
-        this.businessentityaddressPK = businessentityaddressPK;
-        this.rowguid = rowguid;
+    public Businessentityaddress(Integer businessEntityAddressID, Date modifiedDate) {
+        this.businessEntityAddressID = businessEntityAddressID;
         this.modifiedDate = modifiedDate;
     }
 
-    public Businessentityaddress(int businessEntityID, int addressID, int addressTypeID) {
-        this.businessentityaddressPK = new BusinessentityaddressPK(businessEntityID, addressID, addressTypeID);
+    public Integer getBusinessEntityAddressID() {
+        return businessEntityAddressID;
     }
 
-    public BusinessentityaddressPK getBusinessentityaddressPK() {
-        return businessentityaddressPK;
-    }
-
-    public void setBusinessentityaddressPK(BusinessentityaddressPK businessentityaddressPK) {
-        this.businessentityaddressPK = businessentityaddressPK;
-    }
-
-    public String getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(String rowguid) {
-        this.rowguid = rowguid;
+    public void setBusinessEntityAddressID(Integer businessEntityAddressID) {
+        this.businessEntityAddressID = businessEntityAddressID;
     }
 
     public Date getModifiedDate() {
@@ -133,7 +108,7 @@ public class Businessentityaddress implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (businessentityaddressPK != null ? businessentityaddressPK.hashCode() : 0);
+        hash += (businessEntityAddressID != null ? businessEntityAddressID.hashCode() : 0);
         return hash;
     }
 
@@ -144,7 +119,7 @@ public class Businessentityaddress implements Serializable {
             return false;
         }
         Businessentityaddress other = (Businessentityaddress) object;
-        if ((this.businessentityaddressPK == null && other.businessentityaddressPK != null) || (this.businessentityaddressPK != null && !this.businessentityaddressPK.equals(other.businessentityaddressPK))) {
+        if ((this.businessEntityAddressID == null && other.businessEntityAddressID != null) || (this.businessEntityAddressID != null && !this.businessEntityAddressID.equals(other.businessEntityAddressID))) {
             return false;
         }
         return true;
@@ -152,7 +127,7 @@ public class Businessentityaddress implements Serializable {
 
     @Override
     public String toString() {
-        return "com.blogspot.ofarukkurt.primeadminbsb.models.Businessentityaddress[ businessentityaddressPK=" + businessentityaddressPK + " ]";
+        return "com.blogspot.ofarukkurt.primeadminbsb.models.Businessentityaddress[ businessEntityAddressID=" + businessEntityAddressID + " ]";
     }
 
 }

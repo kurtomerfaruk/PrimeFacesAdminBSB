@@ -2,8 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
 
@@ -51,9 +49,6 @@
 
             <p:outputLabel value="#{messages.CreateContactLabel_additionalContactInfo}" for="additionalContactInfo" />
             <p:inputTextarea rows="4" id="additionalContactInfo" value="#{contactController.selected.additionalContactInfo}" title="#{messages.CreateContactTitle_additionalContactInfo}"  styleClass="full-width"/>
-
-            <p:outputLabel value="#{messages.CreateContactLabel_rowguid}" for="rowguid" />
-            <p:inputTextarea rows="4" id="rowguid" value="#{contactController.selected.rowguid}" title="#{messages.CreateContactTitle_rowguid}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_rowguid}" styleClass="full-width"/>
 
             <p:outputLabel value="#{messages.CreateContactLabel_modifiedDate}" for="modifiedDate" />
             <p:calendar id="modifiedDate" locale="tr" pattern="#{messages.dateFormat}" value="#{contactController.selected.modifiedDate}" title="#{messages.CreateContactTitle_modifiedDate}" required="true" requiredMessage="#{messages.CreateContactRequiredMessage_modifiedDate}" mask="true" navigator="true"/>

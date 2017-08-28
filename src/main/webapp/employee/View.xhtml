@@ -60,9 +60,6 @@
             <h:outputText value="#{messages.CreateEmployeeLabel_currentFlag}"/>
             <h:selectBooleanCheckbox id="currentFlag" value="#{employeeController.selected.currentFlag}" required="true" requiredMessage="#{messages.EditEmployeeRequiredMessage_currentFlag}" disabled="true"/>
 
-            <h:outputText value="#{messages.CreateEmployeeLabel_rowguid}"/>
-            <h:outputText value="#{employeeController.selected.rowguid}"/>
-
             <h:outputText value="#{messages.CreateEmployeeLabel_modifiedDate}"/>
             <h:outputText value="#{employeeController.selected.modifiedDate}">
                 <f:convertDateTime pattern="#{messages.dateFormat}" />

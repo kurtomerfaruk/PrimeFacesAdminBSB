@@ -29,23 +29,15 @@ public class BusinessentityaddressConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    com.blogspot.ofarukkurt.primeadminbsb.models.BusinessentityaddressPK getKey(String value) {
-        com.blogspot.ofarukkurt.primeadminbsb.models.BusinessentityaddressPK key;
-            String values[] = value.split(SEPARATOR_ESCAPED);
-            key = new com.blogspot.ofarukkurt.primeadminbsb.models.BusinessentityaddressPK();
-            key.setBusinessEntityID(Integer.parseInt(values[0]));
-            key.setAddressID(Integer.parseInt(values[1]));
-            key.setAddressTypeID(Integer.parseInt(values[2]));
+    java.lang.Integer getKey(String value) {
+        java.lang.Integer key;
+        key = Integer.valueOf(value);
         return key;
     }
 
-    String getStringKey(com.blogspot.ofarukkurt.primeadminbsb.models.BusinessentityaddressPK value) {
+    String getStringKey(java.lang.Integer value) {
         StringBuffer sb = new StringBuffer();
-            sb.append(value.getBusinessEntityID());
-            sb.append(SEPARATOR);
-            sb.append(value.getAddressID());
-            sb.append(SEPARATOR);
-            sb.append(value.getAddressTypeID());
+        sb.append(value);
         return sb.toString();
     }
 
@@ -57,7 +49,7 @@ public class BusinessentityaddressConverter implements Converter {
         }
         if (object instanceof Businessentityaddress) {
             Businessentityaddress o = (Businessentityaddress) object;
-            return getStringKey(o.getBusinessentityaddressPK());
+            return getStringKey(o.getBusinessEntityAddressID());
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Businessentityaddress.class.getName()});
             return null;

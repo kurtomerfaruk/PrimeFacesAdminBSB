@@ -35,8 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     ,
     @NamedQuery(name = "Addresstype.findByName", query = "SELECT a FROM Addresstype a WHERE a.name = :name")
     ,
-    @NamedQuery(name = "Addresstype.findByRowguid", query = "SELECT a FROM Addresstype a WHERE a.rowguid = :rowguid")
-    ,
     @NamedQuery(name = "Addresstype.findByModifiedDate", query = "SELECT a FROM Addresstype a WHERE a.modifiedDate = :modifiedDate")})
 public class Addresstype extends BaseEntity implements Serializable {
 

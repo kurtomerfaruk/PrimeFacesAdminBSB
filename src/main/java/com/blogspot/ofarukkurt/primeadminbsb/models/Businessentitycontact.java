@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.blogspot.ofarukkurt.primeadminbsb.models;
 
 import java.io.Serializable;
@@ -39,17 +33,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Businessentitycontact.findByBusinessEntityID", query = "SELECT b FROM Businessentitycontact b WHERE b.businessentitycontactPK.businessEntityID = :businessEntityID"),
     @NamedQuery(name = "Businessentitycontact.findByPersonID", query = "SELECT b FROM Businessentitycontact b WHERE b.businessentitycontactPK.personID = :personID"),
     @NamedQuery(name = "Businessentitycontact.findByContactTypeID", query = "SELECT b FROM Businessentitycontact b WHERE b.businessentitycontactPK.contactTypeID = :contactTypeID"),
-    @NamedQuery(name = "Businessentitycontact.findByRowguid", query = "SELECT b FROM Businessentitycontact b WHERE b.rowguid = :rowguid"),
     @NamedQuery(name = "Businessentitycontact.findByModifiedDate", query = "SELECT b FROM Businessentitycontact b WHERE b.modifiedDate = :modifiedDate")})
 public class Businessentitycontact implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected BusinessentitycontactPK businessentitycontactPK;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "rowguid")
-    private String rowguid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ModifiedDate")
@@ -72,9 +60,8 @@ public class Businessentitycontact implements Serializable {
         this.businessentitycontactPK = businessentitycontactPK;
     }
 
-    public Businessentitycontact(BusinessentitycontactPK businessentitycontactPK, String rowguid, Date modifiedDate) {
+    public Businessentitycontact(BusinessentitycontactPK businessentitycontactPK,  Date modifiedDate) {
         this.businessentitycontactPK = businessentitycontactPK;
-        this.rowguid = rowguid;
         this.modifiedDate = modifiedDate;
     }
 
@@ -88,14 +75,6 @@ public class Businessentitycontact implements Serializable {
 
     public void setBusinessentitycontactPK(BusinessentitycontactPK businessentitycontactPK) {
         this.businessentitycontactPK = businessentitycontactPK;
-    }
-
-    public String getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(String rowguid) {
-        this.rowguid = rowguid;
     }
 
     public Date getModifiedDate() {

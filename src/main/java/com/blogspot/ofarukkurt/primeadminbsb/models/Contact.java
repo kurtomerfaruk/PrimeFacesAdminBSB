@@ -23,9 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "contact")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")
-    , @NamedQuery(name = "Contact.findByContactID", query = "SELECT c FROM Contact c WHERE c.contactID = :contactID")
-    , @NamedQuery(name = "Contact.findByNameStyle", query = "SELECT c FROM Contact c WHERE c.nameStyle = :nameStyle")
+    @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c"), 
+    @NamedQuery(name = "Contact.findByContactID", query = "SELECT c FROM Contact c WHERE c.contactID = :contactID"), 
+    @NamedQuery(name = "Contact.findByNameStyle", query = "SELECT c FROM Contact c WHERE c.nameStyle = :nameStyle")
     , @NamedQuery(name = "Contact.findByTitle", query = "SELECT c FROM Contact c WHERE c.title = :title")
     , @NamedQuery(name = "Contact.findByFirstName", query = "SELECT c FROM Contact c WHERE c.firstName = :firstName")
     , @NamedQuery(name = "Contact.findByMiddleName", query = "SELECT c FROM Contact c WHERE c.middleName = :middleName")
@@ -215,7 +215,6 @@ public class Contact extends BaseEntity implements Serializable {
         this.additionalContactInfo = additionalContactInfo;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -240,5 +239,5 @@ public class Contact extends BaseEntity implements Serializable {
     public String toString() {
         return "com.blogspot.ofarukkurt.primeadminbsb.models.Contact[ contactID=" + contactID + " ]";
     }
-    
+
 }

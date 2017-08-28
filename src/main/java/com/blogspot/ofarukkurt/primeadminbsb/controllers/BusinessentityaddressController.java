@@ -31,17 +31,7 @@ public class BusinessentityaddressController extends AbstractController<Business
         super(Businessentityaddress.class);
     }
 
-    @Override
-    protected void setEmbeddableKeys() {
-        this.getSelected().getBusinessentityaddressPK().setBusinessEntityID(this.getSelected().getBusinessentity().getBusinessEntityID());
-        this.getSelected().getBusinessentityaddressPK().setAddressID(this.getSelected().getAddress().getAddressID());
-        this.getSelected().getBusinessentityaddressPK().setAddressTypeID(this.getSelected().getAddresstype().getAddressTypeID());
-    }
 
-    @Override
-    protected void initializeEmbeddableKey() {
-        this.getSelected().setBusinessentityaddressPK(new com.blogspot.ofarukkurt.primeadminbsb.models.BusinessentityaddressPK());
-    }
 
     /**
      * Resets the "selected" attribute of any parent Entity controllers.

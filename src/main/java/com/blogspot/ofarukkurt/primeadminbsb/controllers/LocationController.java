@@ -10,6 +10,11 @@ import javax.inject.Inject;
 @ViewScoped
 public class LocationController extends AbstractController<Location> {
 
+    private static final long serialVersionUID = 1012106826774642883L;
+    
+    @Inject
+    private MenuController menuController;
+
     public LocationController() {
         // Inform the Abstract parent controller of the concrete Location Entity
         super(Location.class);
@@ -20,13 +25,12 @@ public class LocationController extends AbstractController<Location> {
      * that are retrieved from Location?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Workorderrouting page
      */
-    public String navigateWorkorderroutingList() {
+    public void navigateWorkorderroutingList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Workorderrouting_items", this.getSelected().getWorkorderroutingList());
         }
-        return "/workorderrouting/index";
+        menuController.setPageLink("/workorderrouting/index");
     }
 
     /**
@@ -34,13 +38,12 @@ public class LocationController extends AbstractController<Location> {
      * that are retrieved from Location?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Productinventory page
      */
-    public String navigateProductinventoryList() {
+    public void navigateProductinventoryList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productinventory_items", this.getSelected().getProductinventoryList());
         }
-        return "/productinventory/index";
+        menuController.setPageLink("/productinventory/index");
     }
 
 }

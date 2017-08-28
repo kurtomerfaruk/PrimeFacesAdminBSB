@@ -87,14 +87,6 @@
             </p:column>
 
 
-            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                <f:facet name="header">
-                    <h:outputText value="#{messages.ListAddressTitle_rowguid}"/>
-                </f:facet>
-                <h:outputText value="#{item.rowguid}"/>
-            </p:column>
-
-
             <p:column sortBy="#{item.modifiedDate}" filterBy="#{item.modifiedDate}">
                 <f:facet name="header">
                     <h:outputText value="#{messages.ListAddressTitle_modifiedDate}"/>
@@ -122,7 +114,7 @@
                     <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.New}" actionListener="#{addressController.prepareCreate}" update=":AddressCreateForm:AddressCreateForm" oncomplete="PF('AddressCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                     <p:commandButton id="viewButton"   styleClass="btn btn-info"  icon="fa fa-search" value="#{messages.View}" update=":AddressViewForm:AddressViewForm" oncomplete="PF('AddressViewDialog').show()" disabled="#{empty addressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                     <p:commandButton id="editButton" styleClass="btn btn-success" icon="fa fa-pencil" value="#{messages.Edit}" update=":AddressEditForm:AddressEditForm" oncomplete="PF('AddressEditDialog').show()" disabled="#{empty addressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{addressController.delete}" update=":growl,datalist" disabled="#{empty addressController.selected}">
+                    <p:commandButton id="deleteButton" styleClass="btn btn-danger" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{addressController.delete}" update=":growl,datalist" disabled="#{empty addressController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                         <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
                     </p:commandButton>
                 </div>

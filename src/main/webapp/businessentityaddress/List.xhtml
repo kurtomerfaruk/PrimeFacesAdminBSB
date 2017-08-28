@@ -21,7 +21,7 @@
         </p:contextMenu>
         <coco:datatable id="datalist"
                         value="#{businessentityaddressController.lazyItems}"
-                        rowKey="#{item.businessentityaddressPK.businessEntityID}"
+                        rowKey="#{item.businessEntityAddressID}"
                         selection="#{businessentityaddressController.selected}"
                         filtered="#{businessentityaddressController.filtered}"
                         rowselect=":BusinessentityaddressListForm:datalist:datalist:createButton,:BusinessentityaddressListForm:datalist:datalist:viewButton,:BusinessentityaddressListForm:datalist:datalist:editButton,:BusinessentityaddressListForm:datalist:datalist:deleteButton,:BusinessentityaddressListForm:BusinessentityaddressDataTableContextMenu"
@@ -36,35 +36,11 @@
                 #{messages.ListBusinessentityaddressTitle}
             </f:facet>
 
-            <p:column sortBy="#{item.businessentityaddressPK.businessEntityID}" filterBy="#{item.businessentityaddressPK.businessEntityID}">
+            <p:column sortBy="#{item.businessEntityAddressID}" filterBy="#{item.businessEntityAddressID}">
                 <f:facet name="header">
                     <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentityaddressPK_businessEntityID}"/>
                 </f:facet>
-                <h:outputText value="#{item.businessentityaddressPK.businessEntityID}"/>
-            </p:column>
-
-
-            <p:column sortBy="#{item.businessentityaddressPK.addressID}" filterBy="#{item.businessentityaddressPK.addressID}">
-                <f:facet name="header">
-                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentityaddressPK_addressID}"/>
-                </f:facet>
-                <h:outputText value="#{item.businessentityaddressPK.addressID}"/>
-            </p:column>
-
-
-            <p:column sortBy="#{item.businessentityaddressPK.addressTypeID}" filterBy="#{item.businessentityaddressPK.addressTypeID}">
-                <f:facet name="header">
-                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_businessentityaddressPK_addressTypeID}"/>
-                </f:facet>
-                <h:outputText value="#{item.businessentityaddressPK.addressTypeID}"/>
-            </p:column>
-
-
-            <p:column sortBy="#{item.rowguid}" filterBy="#{item.rowguid}">
-                <f:facet name="header">
-                    <h:outputText value="#{messages.ListBusinessentityaddressTitle_rowguid}"/>
-                </f:facet>
-                <h:outputText value="#{item.rowguid}"/>
+                <h:outputText value="#{item.businessEntityAddressID}"/>
             </p:column>
 
 
