@@ -1,53 +1,50 @@
 package com.blogspot.ofarukkurt.primeadminbsb.controllers;
 
-import com.blogspot.ofarukkurt.primeadminbsb.services.AbstractFacade;
-import com.blogspot.ofarukkurt.primeadminbsb.services.LazyEntityDataModel;
+import com.blogspot.ofarukkurt.primeadminbsb.controllers.util.Functions;
 import com.blogspot.ofarukkurt.primeadminbsb.controllers.util.JsfUtil;
-import java.io.Serializable;
-import java.util.ArrayList;
+import com.blogspot.ofarukkurt.primeadminbsb.services.AbstractFacade;
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-
-import java.util.ResourceBundle;
-import javax.ejb.EJBException;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 /**
  *
  * @author Omer Faruk KURT
- * @Created on date 10/08/2017 19:30:22 
+ * @Created on date 10/08/2017 19:30:22
  * @blog https://ofarukkurt.blogspot.com.tr/
  * @mail kurtomerfaruk@gmail.com
  */
-public abstract class AbstractController<T> implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    
+public abstract class AbstractController<T> implements java.io.Serializable {
+
     @Inject
     private AbstractFacade<T> ejbFacade;
     private Class<T> itemClass;
     private T selected;
     private Collection<T> items;
-    private LazyEntityDataModel<T> lazyItems;
+    private LazyDataModel<T> lazyItems;
     private List<T> filtered;
-    
-    private enum PersistAction {
+    private Object paramItems;
 
+    private enum PersistAction {
         CREATE,
         DELETE,
         UPDATE
     }
-    
+
     public AbstractController() {
     }
-    
+
     public AbstractController(Class<T> itemClass) {
         this.itemClass = itemClass;
     }
@@ -78,7 +75,7 @@ public abstract class AbstractController<T> implements Serializable {
     protected void setEmbeddableKeys() {
         // Nothing to do if entity does not have any embeddable key.
     }
-    
+
     ;
 
     /**
@@ -115,31 +112,79 @@ public abstract class AbstractController<T> implements Serializable {
      *
      * @return Entity-specific Lazy Data Model
      */
-    public LazyEntityDataModel<T> getLazyItems() {
+    public LazyDataModel<T> getLazyItems() {
         if (lazyItems == null) {
-            lazyItems = new LazyEntityDataModel<>(this.ejbFacade);
+            lazyItems = new LazyDataModel<T>() {
+                private static final long serialVersionUID = -8177390222856482289L;
+                List<T> result;
+
+                @Override
+                public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, java.util.Map<String, Object> filters) {
+
+                    if (getParamItems() != null) {
+                        result = (List<T>) paramItems;
+                        lazyItems.setRowCount(result.size());
+                    } else {
+                        result = ejbFacade.loadLazy(first, pageSize, sortField, sortOrder, filters);
+                        lazyItems.setRowCount(ejbFacade.count(filters));
+                    }
+
+                    return result;
+                }
+
+                @Override
+                public T getRowData(String rowKey) {
+                    if (Functions.pkFieldType(itemClass).contains("Short")) {
+                        return rowKey.equals("null") ? null : (T) ejbFacade.find(Short.parseShort(rowKey));
+                    } else if (Functions.pkFieldType(itemClass).contains("Integer")) {
+                        return rowKey.equals("null") ? null : (T) ejbFacade.find(Integer.parseInt(rowKey));
+                    } else if (Functions.pkFieldType(itemClass).contains("Long")) {
+                        return rowKey.equals("null") ? null : (T) ejbFacade.find(Long.parseLong(rowKey));
+                    } else if (Functions.pkFieldType(itemClass).contains("PK")) {
+                        String className = Functions.pkFieldType(itemClass).split(" ")[1];
+                        String[] subClass = className.split("\\.");
+                        String subClassName = subClass[subClass.length - 1];
+                        try {
+                            return rowKey.equals("null") ? null : (T) ejbFacade.findPK(Functions.firstLetterLowerCase(subClassName) + "." + Functions.getPKType(className),Functions.getCast(Functions.subClassFieldType(className), rowKey) );
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(AbstractController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        return null;
+                    } else {
+                        return null;
+                    }
+                }
+            };
         }
         return lazyItems;
     }
-    
-    public void setLazyItems(LazyEntityDataModel<T> lazyItems) {
+
+    public void setLazyItems(LazyDataModel<T> lazyItems) {
         this.lazyItems = lazyItems;
     }
-    
-    public void setLazyItems(Collection<T> items) {
-        if (items instanceof List) {
-            lazyItems = new LazyEntityDataModel<>((List<T>) items);
-        } else {
-            lazyItems = new LazyEntityDataModel<>(new ArrayList<>(items));
-        }
-    }
-    
+
+    /**
+     *
+     * @return
+     */
     public List<T> getFiltered() {
         return filtered;
     }
-    
+
+    /**
+     *
+     * @param filtered
+     */
     public void setFiltered(List<T> filtered) {
         this.filtered = filtered;
+    }
+
+    public Object getParamItems() {
+        return paramItems;
+    }
+
+    public void setParamItems(Object paramItems) {
+        this.paramItems = paramItems;
     }
 
     /**
@@ -149,7 +194,7 @@ public abstract class AbstractController<T> implements Serializable {
      * data layer
      */
     public void save(ActionEvent event) {
-        String msg = ResourceBundle.getBundle("/messages").getString(itemClass.getSimpleName() + "Updated");
+        String msg = ResourceBundle.getBundle("/messages").getString("Updated");
         persist(PersistAction.UPDATE, msg);
     }
 
@@ -160,7 +205,7 @@ public abstract class AbstractController<T> implements Serializable {
      * the data layer
      */
     public void saveNew(ActionEvent event) {
-        String msg = ResourceBundle.getBundle("/messages").getString(itemClass.getSimpleName() + "Created");
+        String msg = ResourceBundle.getBundle("/messages").getString("Created");
         persist(PersistAction.CREATE, msg);
         if (!isValidationFailed()) {
             items = null; // Invalidate list of items to trigger re-query.
@@ -175,7 +220,7 @@ public abstract class AbstractController<T> implements Serializable {
      * the data layer
      */
     public void delete(ActionEvent event) {
-        String msg = ResourceBundle.getBundle("/messages").getString(itemClass.getSimpleName() + "Deleted");
+        String msg = ResourceBundle.getBundle("/messages").getString("Deleted");
         persist(PersistAction.DELETE, msg);
         if (!isValidationFailed()) {
             selected = null; // Remove selection
@@ -198,12 +243,12 @@ public abstract class AbstractController<T> implements Serializable {
         if (selected != null) {
             this.setEmbeddableKeys();
             try {
-                if (persistAction == PersistAction.DELETE) {
-                    this.ejbFacade.remove(selected);
-                } else if (persistAction == PersistAction.CREATE) {
+                if (persistAction == PersistAction.CREATE) {
                     this.ejbFacade.create(selected);
-                } else {
+                } else if (persistAction == PersistAction.UPDATE) {
                     this.ejbFacade.edit(selected);
+                } else {
+                    this.ejbFacade.remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -271,21 +316,19 @@ public abstract class AbstractController<T> implements Serializable {
         return JsfUtil.getComponentMessages(clientComponent, defaultMessage);
     }
 
+    public void resetParents() {
+
+    }
+
     /**
      * Retrieve a collection of Entity items for a specific Controller from
      * another JSF page via Request parameters.
      */
     @PostConstruct
     public void initParams() {
-        Object paramItems = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(itemClass.getSimpleName() + "_items");
+        paramItems = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(itemClass.getSimpleName() + "_items");
         if (paramItems != null) {
             setItems((Collection<T>) paramItems);
-            setLazyItems((Collection<T>) paramItems);
         }
     }
-    
-    public void resetParents() {
-        
-    }
-    
 }

@@ -4,6 +4,7 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Culture;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -18,6 +19,9 @@ import javax.faces.context.FacesContext;
 public class CultureController extends AbstractController<Culture> {
 
     private static final long serialVersionUID = 7325172819749776330L;
+    
+    @Inject
+    private MenuController menuController;
 
     public CultureController() {
         // Inform the Abstract parent controller of the concrete Culture Entity
@@ -29,13 +33,12 @@ public class CultureController extends AbstractController<Culture> {
      * Productmodelproductdescriptionculture entities that are retrieved from
      * Culture?cap_first and returns the navigation outcome.
      *
-     * @return navigation outcome for Productmodelproductdescriptionculture page
      */
-    public String navigateProductmodelproductdescriptioncultureList() {
+    public void navigateProductmodelproductdescriptioncultureList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productmodelproductdescriptionculture_items", this.getSelected().getProductmodelproductdescriptioncultureList());
         }
-        return "/productmodelproductdescriptionculture/index";
+        menuController.setPageLink("/productmodelproductdescriptionculture/index");
     }
 
 }

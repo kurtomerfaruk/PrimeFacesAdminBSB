@@ -21,7 +21,7 @@
         </p:contextMenu>
         <coco:datatable id="datalist"
                         value="#{businessentitycontactController.lazyItems}"
-                        rowKey="#{item.businessentitycontactPK}"
+                        rowKey="#{item.businessentitycontactPK.businessEntityID}"
                         selection="#{businessentitycontactController.selected}"
                         filtered="#{businessentitycontactController.filtered}"
                         rowselect=":BusinessentitycontactListForm:datalist:datalist:createButton,:BusinessentitycontactListForm:datalist:datalist:viewButton,:BusinessentitycontactListForm:datalist:datalist:editButton,:BusinessentitycontactListForm:datalist:datalist:deleteButton,:BusinessentitycontactListForm:BusinessentitycontactDataTableContextMenu"

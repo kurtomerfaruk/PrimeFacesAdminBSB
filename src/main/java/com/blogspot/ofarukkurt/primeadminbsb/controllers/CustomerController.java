@@ -17,6 +17,8 @@ public class CustomerController extends AbstractController<Customer> {
     private SalesterritoryController territoryIDController;
     @Inject
     private PersonController personIDController;
+    @Inject
+    private MenuController menuController;
 
     public CustomerController() {
         // Inform the Abstract parent controller of the concrete Customer Entity
@@ -26,6 +28,7 @@ public class CustomerController extends AbstractController<Customer> {
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         storeIDController.setSelected(null);
         territoryIDController.setSelected(null);
@@ -73,13 +76,12 @@ public class CustomerController extends AbstractController<Customer> {
      * that are retrieved from Customer?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Salesorderheader page
      */
-    public String navigateSalesorderheaderList() {
+    public void navigateSalesorderheaderList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Salesorderheader_items", this.getSelected().getSalesorderheaderList());
         }
-        return "/salesorderheader/index";
+        menuController.setPageLink("/salesorderheader/index");
     }
 
 }

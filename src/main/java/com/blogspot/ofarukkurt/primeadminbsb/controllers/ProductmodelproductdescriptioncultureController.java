@@ -6,6 +6,14 @@ import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "productmodelproductdescriptioncultureController")
 @ViewScoped
 public class ProductmodelproductdescriptioncultureController extends AbstractController<Productmodelproductdescriptionculture> {

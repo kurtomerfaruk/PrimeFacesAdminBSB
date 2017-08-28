@@ -20,7 +20,7 @@
         </p:contextMenu>
         <coco:datatable id="datalist"
                         value="#{countryregioncurrencyController.lazyItems}"
-                        rowKey="#{item.countryregioncurrencyPK}"
+                        rowKey="#{item.countryregioncurrencyPK.currencyCode}"
                         selection="#{countryregioncurrencyController.selected}"
                         filtered="#{countryregioncurrencyController.filtered}"
                         rowselect=":CountryregioncurrencyListForm:datalist:datalist:createButton,:CountryregioncurrencyListForm:datalist:datalist:viewButton,:CountryregioncurrencyListForm:datalist:datalist:editButton,:CountryregioncurrencyListForm:datalist:datalist:deleteButton,:CountryregioncurrencyListForm:CountryregioncurrencyDataTableContextMenu"

@@ -1,7 +1,6 @@
 package com.blogspot.ofarukkurt.primeadminbsb.models;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +11,6 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Contact.findByPasswordHash", query = "SELECT c FROM Contact c WHERE c.passwordHash = :passwordHash")
     , @NamedQuery(name = "Contact.findByPasswordSalt", query = "SELECT c FROM Contact c WHERE c.passwordSalt = :passwordSalt")
     , @NamedQuery(name = "Contact.findByModifiedDate", query = "SELECT c FROM Contact c WHERE c.modifiedDate = :modifiedDate")})
-public class Contact implements Serializable {
+public class Contact extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -96,16 +93,6 @@ public class Contact implements Serializable {
     @Size(max = 16777215)
     @Column(name = "AdditionalContactInfo")
     private String additionalContactInfo;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Column(name = "rowguid")
-    private byte[] rowguid;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ModifiedDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
 
     public Contact() {
     }
@@ -114,7 +101,7 @@ public class Contact implements Serializable {
         this.contactID = contactID;
     }
 
-    public Contact(Integer contactID, boolean nameStyle, String firstName, String lastName, int emailPromotion, String passwordHash, String passwordSalt, byte[] rowguid, Date modifiedDate) {
+    public Contact(Integer contactID, boolean nameStyle, String firstName, String lastName, int emailPromotion, String passwordHash, String passwordSalt) {
         this.contactID = contactID;
         this.nameStyle = nameStyle;
         this.firstName = firstName;
@@ -122,8 +109,6 @@ public class Contact implements Serializable {
         this.emailPromotion = emailPromotion;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
-        this.rowguid = rowguid;
-        this.modifiedDate = modifiedDate;
     }
 
     public Integer getContactID() {
@@ -230,21 +215,6 @@ public class Contact implements Serializable {
         this.additionalContactInfo = additionalContactInfo;
     }
 
-    public byte[] getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(byte[] rowguid) {
-        this.rowguid = rowguid;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
 
     @Override
     public int hashCode() {

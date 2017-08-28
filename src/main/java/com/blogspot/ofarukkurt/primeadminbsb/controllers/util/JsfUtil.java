@@ -2,6 +2,7 @@ package com.blogspot.ofarukkurt.primeadminbsb.controllers.util;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -88,7 +89,19 @@ public class JsfUtil {
         }
         return "";
     }
+
+    public static String message(String message) {
+        return getBundle().getString(message);
+    }
+
+    public static ResourceBundle getBundle() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle bundle = ResourceBundle.getBundle("/messages", context.getViewRoot().getLocale());
+        return bundle;
+    }
+
     
+
     public static void addExclamationMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);

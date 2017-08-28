@@ -9,6 +9,9 @@ import javax.inject.Inject;
 @Named(value = "currencyController")
 @ViewScoped
 public class CurrencyController extends AbstractController<Currency> {
+    
+    @Inject
+    private MenuController menuController;
 
     public CurrencyController() {
         // Inform the Abstract parent controller of the concrete Currency Entity
@@ -20,13 +23,12 @@ public class CurrencyController extends AbstractController<Currency> {
      * entities that are retrieved from Currency?cap_first and returns the
      * navigation outcome.
      *
-     * @return navigation outcome for Countryregioncurrency page
      */
-    public String navigateCountryregioncurrencyList() {
+    public void navigateCountryregioncurrencyList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Countryregioncurrency_items", this.getSelected().getCountryregioncurrencyList());
         }
-        return "/countryregioncurrency/index";
+        menuController.setPageLink("/countryregioncurrency/index");
     }
 
     /**
@@ -34,13 +36,12 @@ public class CurrencyController extends AbstractController<Currency> {
      * that are retrieved from Currency?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Currencyrate page
      */
-    public String navigateCurrencyrateList() {
+    public void navigateCurrencyrateList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Currencyrate_items", this.getSelected().getCurrencyrateList());
         }
-        return "/currencyrate/index";
+        menuController.setPageLink("/currencyrate/index");
     }
 
     /**
@@ -50,11 +51,11 @@ public class CurrencyController extends AbstractController<Currency> {
      *
      * @return navigation outcome for Currencyrate page
      */
-    public String navigateCurrencyrateList1() {
+    public void navigateCurrencyrateList1() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Currencyrate_items", this.getSelected().getCurrencyrateList1());
         }
-        return "/currencyrate/index";
+        menuController.setPageLink("/currencyrate/index");
     }
 
 }

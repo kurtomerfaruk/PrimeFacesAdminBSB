@@ -25,13 +25,14 @@ public class CountryregioncurrencyPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "CountryRegionCode")
-    private String countryRegionCode;
+    @Column(name = "CurrencyCode")
+    private String currencyCode;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "CurrencyCode")
-    private String currencyCode;
+    @Column(name = "CountryRegionCode")
+    private String countryRegionCode;
+    
 
     public CountryregioncurrencyPK() {
     }

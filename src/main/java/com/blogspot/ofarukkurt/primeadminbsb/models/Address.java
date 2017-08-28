@@ -1,13 +1,11 @@
 package com.blogspot.ofarukkurt.primeadminbsb.models;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  *
  * @author Omer Faruk KURT
- * @Created on date 10/08/2017 19:30:22 
+ * @Created on date 10/08/2017 19:30:22
  * @blog https://ofarukkurt.blogspot.com.tr/
  * @mail kurtomerfaruk@gmail.com
  */
@@ -36,15 +32,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "address")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a"),
-    @NamedQuery(name = "Address.findByAddressID", query = "SELECT a FROM Address a WHERE a.addressID = :addressID"),
-    @NamedQuery(name = "Address.findByAddressLine1", query = "SELECT a FROM Address a WHERE a.addressLine1 = :addressLine1"),
-    @NamedQuery(name = "Address.findByAddressLine2", query = "SELECT a FROM Address a WHERE a.addressLine2 = :addressLine2"),
-    @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city"),
-    @NamedQuery(name = "Address.findByPostalCode", query = "SELECT a FROM Address a WHERE a.postalCode = :postalCode"),
-    @NamedQuery(name = "Address.findByRowguid", query = "SELECT a FROM Address a WHERE a.rowguid = :rowguid"),
+    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
+    ,
+    @NamedQuery(name = "Address.findByAddressID", query = "SELECT a FROM Address a WHERE a.addressID = :addressID")
+    ,
+    @NamedQuery(name = "Address.findByAddressLine1", query = "SELECT a FROM Address a WHERE a.addressLine1 = :addressLine1")
+    ,
+    @NamedQuery(name = "Address.findByAddressLine2", query = "SELECT a FROM Address a WHERE a.addressLine2 = :addressLine2")
+    ,
+    @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city")
+    ,
+    @NamedQuery(name = "Address.findByPostalCode", query = "SELECT a FROM Address a WHERE a.postalCode = :postalCode")
+    ,
+    @NamedQuery(name = "Address.findByRowguid", query = "SELECT a FROM Address a WHERE a.rowguid = :rowguid")
+    ,
     @NamedQuery(name = "Address.findByModifiedDate", query = "SELECT a FROM Address a WHERE a.modifiedDate = :modifiedDate")})
-public class Address implements Serializable {
+public class Address extends BaseEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,16 +76,6 @@ public class Address implements Serializable {
     @Lob
     @Column(name = "SpatialLocation")
     private byte[] spatialLocation;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "rowguid")
-    private String rowguid;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ModifiedDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
     private List<Businessentityaddress> businessentityaddressList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipToAddressID")
@@ -99,13 +93,11 @@ public class Address implements Serializable {
         this.addressID = addressID;
     }
 
-    public Address(Integer addressID, String addressLine1, String city, String postalCode, String rowguid, Date modifiedDate) {
+    public Address(Integer addressID, String addressLine1, String city, String postalCode) {
         this.addressID = addressID;
         this.addressLine1 = addressLine1;
         this.city = city;
         this.postalCode = postalCode;
-        this.rowguid = rowguid;
-        this.modifiedDate = modifiedDate;
     }
 
     public Integer getAddressID() {
@@ -154,22 +146,6 @@ public class Address implements Serializable {
 
     public void setSpatialLocation(byte[] spatialLocation) {
         this.spatialLocation = spatialLocation;
-    }
-
-    public String getRowguid() {
-        return rowguid;
-    }
-
-    public void setRowguid(String rowguid) {
-        this.rowguid = rowguid;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 
     @XmlTransient

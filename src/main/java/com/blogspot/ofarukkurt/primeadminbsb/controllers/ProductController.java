@@ -7,6 +7,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "productController")
 @ViewScoped
 public class ProductController extends AbstractController<Product> {
@@ -19,6 +27,8 @@ public class ProductController extends AbstractController<Product> {
     private ProductsubcategoryController productSubcategoryIDController;
     @Inject
     private ProductmodelController productModelIDController;
+    @Inject
+    private MenuController menuController;
 
     public ProductController() {
         // Inform the Abstract parent controller of the concrete Product Entity
@@ -28,6 +38,7 @@ public class ProductController extends AbstractController<Product> {
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         weightUnitMeasureCodeController.setSelected(null);
         sizeUnitMeasureCodeController.setSelected(null);
@@ -40,13 +51,12 @@ public class ProductController extends AbstractController<Product> {
      * entities that are retrieved from Product?cap_first and returns the
      * navigation outcome.
      *
-     * @return navigation outcome for Transactionhistory page
      */
-    public String navigateTransactionhistoryList() {
+    public void navigateTransactionhistoryList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Transactionhistory_items", this.getSelected().getTransactionhistoryList());
         }
-        return "/transactionhistory/index";
+        menuController.setPageLink("/transactionhistory/index");
     }
 
     /**
@@ -54,13 +64,12 @@ public class ProductController extends AbstractController<Product> {
      * entities that are retrieved from Product?cap_first and returns the
      * navigation outcome.
      *
-     * @return navigation outcome for Productproductphoto page
      */
-    public String navigateProductproductphotoList() {
+    public void navigateProductproductphotoList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productproductphoto_items", this.getSelected().getProductproductphotoList());
         }
-        return "/productproductphoto/index";
+        menuController.setPageLink("/productproductphoto/index");
     }
 
     /**
@@ -68,13 +77,12 @@ public class ProductController extends AbstractController<Product> {
      * entities that are retrieved from Product?cap_first and returns the
      * navigation outcome.
      *
-     * @return navigation outcome for Purchaseorderdetail page
      */
-    public String navigatePurchaseorderdetailList() {
+    public void navigatePurchaseorderdetailList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Purchaseorderdetail_items", this.getSelected().getPurchaseorderdetailList());
         }
-        return "/purchaseorderdetail/index";
+        menuController.setPageLink("/purchaseorderdetail/index");
     }
 
     /**
@@ -82,13 +90,12 @@ public class ProductController extends AbstractController<Product> {
      * that are retrieved from Product?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Billofmaterials page
      */
-    public String navigateBillofmaterialsList() {
+    public void navigateBillofmaterialsList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Billofmaterials_items", this.getSelected().getBillofmaterialsList());
         }
-        return "/billofmaterials/index";
+        menuController.setPageLink("/billofmaterials/index");
     }
 
     /**
@@ -96,13 +103,12 @@ public class ProductController extends AbstractController<Product> {
      * that are retrieved from Product?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Billofmaterials page
      */
-    public String navigateBillofmaterialsList1() {
+    public void navigateBillofmaterialsList1() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Billofmaterials_items", this.getSelected().getBillofmaterialsList1());
         }
-        return "/billofmaterials/index";
+        menuController.setPageLink("/billofmaterials/index");
     }
 
     /**
@@ -110,13 +116,12 @@ public class ProductController extends AbstractController<Product> {
      * entities that are retrieved from Product?cap_first and returns the
      * navigation outcome.
      *
-     * @return navigation outcome for Specialofferproduct page
      */
-    public String navigateSpecialofferproductList() {
+    public void navigateSpecialofferproductList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Specialofferproduct_items", this.getSelected().getSpecialofferproductList());
         }
-        return "/specialofferproduct/index";
+        menuController.setPageLink("/specialofferproduct/index");
     }
 
     /**
@@ -126,11 +131,11 @@ public class ProductController extends AbstractController<Product> {
      *
      * @return navigation outcome for Productlistpricehistory page
      */
-    public String navigateProductlistpricehistoryList() {
+    public void navigateProductlistpricehistoryList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productlistpricehistory_items", this.getSelected().getProductlistpricehistoryList());
         }
-        return "/productlistpricehistory/index";
+        menuController.setPageLink("/productlistpricehistory/index");
     }
 
     /**
@@ -138,13 +143,12 @@ public class ProductController extends AbstractController<Product> {
      * that are retrieved from Product?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Productvendor page
      */
-    public String navigateProductvendorList() {
+    public void navigateProductvendorList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productvendor_items", this.getSelected().getProductvendorList());
         }
-        return "/productvendor/index";
+        menuController.setPageLink("/productvendor/index");
     }
 
     /**
@@ -152,13 +156,12 @@ public class ProductController extends AbstractController<Product> {
      * that are retrieved from Product?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Shoppingcartitem page
      */
-    public String navigateShoppingcartitemList() {
+    public void navigateShoppingcartitemList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Shoppingcartitem_items", this.getSelected().getShoppingcartitemList());
         }
-        return "/shoppingcartitem/index";
+        menuController.setPageLink("/shoppingcartitem/index");
     }
 
     /**
@@ -166,13 +169,12 @@ public class ProductController extends AbstractController<Product> {
      * that are retrieved from Product?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Productdocument page
      */
-    public String navigateProductdocumentList() {
+    public void navigateProductdocumentList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productdocument_items", this.getSelected().getProductdocumentList());
         }
-        return "/productdocument/index";
+        menuController.setPageLink("/productdocument/index");
     }
 
     /**
@@ -180,13 +182,12 @@ public class ProductController extends AbstractController<Product> {
      * entities that are retrieved from Product?cap_first and returns the
      * navigation outcome.
      *
-     * @return navigation outcome for Productcosthistory page
      */
-    public String navigateProductcosthistoryList() {
+    public void navigateProductcosthistoryList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productcosthistory_items", this.getSelected().getProductcosthistoryList());
         }
-        return "/productcosthistory/index";
+        menuController.setPageLink("/productcosthistory/index");
     }
 
     /**
@@ -196,11 +197,11 @@ public class ProductController extends AbstractController<Product> {
      *
      * @return navigation outcome for Productinventory page
      */
-    public String navigateProductinventoryList() {
+    public void navigateProductinventoryList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productinventory_items", this.getSelected().getProductinventoryList());
         }
-        return "/productinventory/index";
+        menuController.setPageLink("/productinventory/index");
     }
 
     /**
@@ -255,13 +256,12 @@ public class ProductController extends AbstractController<Product> {
      * Sets the "items" attribute with a collection of Workorder entities that
      * are retrieved from Product?cap_first and returns the navigation outcome.
      *
-     * @return navigation outcome for Workorder page
      */
-    public String navigateWorkorderList() {
+    public void navigateWorkorderList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Workorder_items", this.getSelected().getWorkorderList());
         }
-        return "/workorder/index";
+        menuController.setPageLink("/workorder/index");
     }
 
     /**
@@ -269,13 +269,12 @@ public class ProductController extends AbstractController<Product> {
      * that are retrieved from Product?cap_first and returns the navigation
      * outcome.
      *
-     * @return navigation outcome for Productreview page
      */
-    public String navigateProductreviewList() {
+    public void navigateProductreviewList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productreview_items", this.getSelected().getProductreviewList());
         }
-        return "/productreview/index";
+        menuController.setPageLink("/productreview/index");
     }
 
 }

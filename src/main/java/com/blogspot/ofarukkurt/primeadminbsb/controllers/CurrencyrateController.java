@@ -15,6 +15,8 @@ public class CurrencyrateController extends AbstractController<Currencyrate> {
     private CurrencyController toCurrencyCodeController;
     @Inject
     private CurrencyController fromCurrencyCodeController;
+    @Inject
+    private MenuController menuController;
 
     public CurrencyrateController() {
         // Inform the Abstract parent controller of the concrete Currencyrate Entity
@@ -24,6 +26,7 @@ public class CurrencyrateController extends AbstractController<Currencyrate> {
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         toCurrencyCodeController.setSelected(null);
         fromCurrencyCodeController.setSelected(null);
@@ -60,11 +63,11 @@ public class CurrencyrateController extends AbstractController<Currencyrate> {
      *
      * @return navigation outcome for Salesorderheader page
      */
-    public String navigateSalesorderheaderList() {
+    public void navigateSalesorderheaderList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Salesorderheader_items", this.getSelected().getSalesorderheaderList());
         }
-        return "/salesorderheader/index";
+        menuController.setPageLink("/salesorderheader/index");
     }
 
 }

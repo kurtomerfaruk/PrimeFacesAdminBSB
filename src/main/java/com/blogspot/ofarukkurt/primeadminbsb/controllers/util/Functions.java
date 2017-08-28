@@ -26,7 +26,7 @@ public class Functions {
         bb.putLong(uuid.getLeastSignificantBits());
         return bb.array();
     }
-    
+
     public static String crypto(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -41,5 +41,59 @@ public class Functions {
             System.err.println(ex);
         }
         return null;
+    }
+
+    public static Object getCast(String value, String rowKey) {
+        Object obj=null;
+        if (value.contains("String")) {
+            obj= rowKey;
+        } else if (value.contains("Short")) {
+            obj= Short.parseShort(rowKey);
+        } else if (value.contains("Integer") || value.contains("int")) {
+            obj= Integer.parseInt(rowKey);
+        } 
+        return obj;
+    }
+    
+    public static String pkFieldType(Class clazz) {
+
+        for (java.lang.reflect.Field field : clazz.getDeclaredFields()) {
+            java.lang.annotation.Annotation[] annotations = field.getDeclaredAnnotations();
+            for (java.lang.annotation.Annotation annotation : annotations) {
+                if (annotation.toString().contains("javax.persistence.Id")) {
+                    return field.getType().toString();
+                } else if (annotation.toString().contains("javax.persistence.EmbeddedId")) {
+                    return field.getType().toString();
+                }
+            }
+        }
+        return null;
+    }
+
+    public static String subClassFieldType(String className) {
+        try {
+            Class clazz = Class.forName(className);
+            java.lang.reflect.Field field = clazz.getDeclaredFields()[0];
+            return field.getType().toString();
+        } catch (ClassNotFoundException e) {
+            return "";
+        }
+    }
+
+    public static String getPKType(String className) throws ClassNotFoundException {
+        Class clazz = Class.forName(className);
+        java.lang.reflect.Field field = clazz.getDeclaredFields()[0];
+        return field.getName();
+    }
+
+    public static Object stringToClass(String className) throws ClassNotFoundException {
+        Class clazz = Class.forName(className.split(" ")[1]);
+        return clazz;
+    }
+
+    public static String firstLetterLowerCase(String value) {
+        char first = Character.toLowerCase(value.charAt(0));
+        String fullName = first + value.substring(1);
+        return fullName;
     }
 }

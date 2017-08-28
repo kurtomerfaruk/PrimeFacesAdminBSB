@@ -6,9 +6,20 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "productcategoryController")
 @ViewScoped
 public class ProductcategoryController extends AbstractController<Productcategory> {
+    
+    @Inject
+    private MenuController menuController;
 
     public ProductcategoryController() {
         // Inform the Abstract parent controller of the concrete Productcategory Entity
@@ -20,13 +31,12 @@ public class ProductcategoryController extends AbstractController<Productcategor
      * entities that are retrieved from Productcategory?cap_first and returns
      * the navigation outcome.
      *
-     * @return navigation outcome for Productsubcategory page
      */
-    public String navigateProductsubcategoryList() {
+    public void navigateProductsubcategoryList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productsubcategory_items", this.getSelected().getProductsubcategoryList());
         }
-        return "/productsubcategory/index";
+        menuController.setPageLink("/productsubcategory/index");
     }
 
 }

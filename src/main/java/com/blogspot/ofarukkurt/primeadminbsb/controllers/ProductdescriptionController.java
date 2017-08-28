@@ -6,9 +6,20 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "productdescriptionController")
 @ViewScoped
 public class ProductdescriptionController extends AbstractController<Productdescription> {
+    
+    @Inject
+    private MenuController menuController;
 
     public ProductdescriptionController() {
         // Inform the Abstract parent controller of the concrete Productdescription Entity
@@ -20,13 +31,12 @@ public class ProductdescriptionController extends AbstractController<Productdesc
      * Productmodelproductdescriptionculture entities that are retrieved from
      * Productdescription?cap_first and returns the navigation outcome.
      *
-     * @return navigation outcome for Productmodelproductdescriptionculture page
      */
-    public String navigateProductmodelproductdescriptioncultureList() {
+    public void navigateProductmodelproductdescriptioncultureList() {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Productmodelproductdescriptionculture_items", this.getSelected().getProductmodelproductdescriptioncultureList());
         }
-        return "/productmodelproductdescriptionculture/index";
+        menuController.setPageLink("/productmodelproductdescriptionculture/index");
     }
 
 }
