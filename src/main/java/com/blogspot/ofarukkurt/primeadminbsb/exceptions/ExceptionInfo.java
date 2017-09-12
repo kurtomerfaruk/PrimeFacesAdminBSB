@@ -13,6 +13,7 @@ import java.util.Date;
 public class ExceptionInfo implements Serializable {
 
     public static final String ATTRIBUTE_NAME = ExceptionInfo.class.getName();
+    private static final long serialVersionUID = 4416715688644628424L;
 
     private Throwable exception;
     private String type;

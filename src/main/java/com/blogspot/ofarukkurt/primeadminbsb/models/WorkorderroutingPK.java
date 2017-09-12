@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class WorkorderroutingPK implements Serializable {
+
+    private static final long serialVersionUID = -5639014236458012296L;
     @Basic(optional = false)
     @NotNull
     @Column(name = "WorkOrderID")

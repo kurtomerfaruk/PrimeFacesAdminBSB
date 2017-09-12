@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class ProductmodelproductdescriptionculturePK implements Serializable {
+
+    private static final long serialVersionUID = 5218701105531821363L;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ProductModelID")
