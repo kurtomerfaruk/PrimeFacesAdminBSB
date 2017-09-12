@@ -56,6 +56,71 @@
         <p:idleMonitor timeout="#{session.maxInactiveInterval*1000}"
                        onidle="PF('expire').show();">
         </p:idleMonitor>
+        
+        <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
+                                update="exceptionDialog"
+                                onexception="PF('exceptionDialog').show();" />
+
+        <p:ajaxExceptionHandler type="java.lang.Throwable"
+                                update="exceptionDialog"
+                                onexception="PF('exceptionDialog').show()" />
+        <p:ajaxExceptionHandler type="javax.el.PropertyNotFoundException"
+                                update="exceptionDialog"
+                                onexception="PF('exceptionDialog').show()" />
+
+        <p:dialog id="exceptionDialog" 
+                  header="#{messages.exception} '#{pfExceptionHandler.type}'" 
+                  widgetVar="exceptionDialog"
+                  styleClass="box box-red"
+                  height="400"
+                  closeOnEscape="true"
+                  responsive="true"
+                  resizable="false"
+                  modal="true"
+                  appendTo="@(body)">
+
+            
+
+            <div class="card">
+                <div class="header bg-orange">
+                    #{messages.exception} '#{pfExceptionHandler.type}'
+                </div>
+                <div class="body" style="overflow: auto">
+                    <p:panelGrid columns="2" class="no-border full-width">
+                        
+                        <h:outputText value="#{messages.exceptionType}"/>
+                        <h:outputText value="#{pfExceptionHandler.type}"/>
+                        
+                        <h:outputText value="#{messages.exceptionMessage}"/> 
+                        <h:outputText value="#{pfExceptionHandler.message}"/>
+
+                        <h:outputText value="#{messages.exceptionDateTime}"/>
+                        <h:outputText value="#{pfExceptionHandler.formattedTimestamp}"/>
+
+                        <h:outputText value="#{messages.exceptionPath}"/>
+                        <h:outputText value="#{pfExceptionHandler.firstRowException}"/>
+                    </p:panelGrid>
+                    <br/>
+                    <h:outputText value="#{messages.technicDetailMessage}" class="input-lg text-center text-red"/>
+                    <br/>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="header bg-pink">
+                    #{messages.technicDetail}
+                </div>
+                <div class="body" style="overflow: auto">
+                    StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" /> <br />
+
+                    <p:button onclick="document.location.href = document.location.href;"
+                              value="Reload!"
+                              rendered="#{pfExceptionHandler.type == 'javax.faces.application.ViewExpiredException'}" />
+                </div>
+            </div>
+
+
+        </p:dialog>
 
         <p:dialog header="Session Expired" 
                   widgetVar="expire" 

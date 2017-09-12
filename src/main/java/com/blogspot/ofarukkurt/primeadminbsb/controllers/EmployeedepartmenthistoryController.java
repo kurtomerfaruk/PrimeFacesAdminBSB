@@ -6,9 +6,19 @@ import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "employeedepartmenthistoryController")
 @ViewScoped
 public class EmployeedepartmenthistoryController extends AbstractController<Employeedepartmenthistory> {
+
+    private static final long serialVersionUID = 3613457309399886084L;
 
     @Inject
     private ShiftController shiftController;

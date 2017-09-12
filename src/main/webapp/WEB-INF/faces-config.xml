@@ -16,4 +16,15 @@
         </converter>
         <!-- Enum Converter -->
     </application>
+    
+    <application>
+        <el-resolver>
+            com.blogspot.ofarukkurt.primeadminbsb.exceptions.PrimeExceptionHandlerELResolver
+        </el-resolver>
+    </application>
+    <factory>
+        <exception-handler-factory>
+            com.blogspot.ofarukkurt.primeadminbsb.exceptions.PrimeExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
 </faces-config>
