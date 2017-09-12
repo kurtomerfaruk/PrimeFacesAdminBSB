@@ -4,11 +4,20 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Department;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
 
 @Named(value = "departmentController")
 @ViewScoped
 public class DepartmentController extends AbstractController<Department> {
+
+    private static final long serialVersionUID = 4134924636036330760L;
 
     public DepartmentController() {
         // Inform the Abstract parent controller of the concrete Department Entity

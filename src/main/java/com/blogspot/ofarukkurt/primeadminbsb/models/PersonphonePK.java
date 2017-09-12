@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class PersonphonePK implements Serializable {
+
+    private static final long serialVersionUID = 2287663174233673159L;
     @Basic(optional = false)
     @NotNull
     @Column(name = "BusinessEntityID")

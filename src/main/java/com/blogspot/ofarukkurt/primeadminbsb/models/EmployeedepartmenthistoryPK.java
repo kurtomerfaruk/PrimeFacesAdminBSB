@@ -24,6 +24,8 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class EmployeedepartmenthistoryPK implements Serializable {
+
+    private static final long serialVersionUID = -3961775547332591962L;
     @Basic(optional = false)
     @NotNull
     @Column(name = "BusinessEntityID")

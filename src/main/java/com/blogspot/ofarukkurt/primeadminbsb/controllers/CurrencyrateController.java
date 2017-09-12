@@ -7,9 +7,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "currencyrateController")
 @ViewScoped
 public class CurrencyrateController extends AbstractController<Currencyrate> {
+
+    private static final long serialVersionUID = -5274811536923081118L;
 
     @Inject
     private CurrencyController toCurrencyCodeController;

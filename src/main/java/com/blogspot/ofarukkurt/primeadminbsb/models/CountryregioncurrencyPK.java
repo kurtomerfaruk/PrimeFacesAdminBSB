@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class CountryregioncurrencyPK implements Serializable {
+
+    private static final long serialVersionUID = 2911910930427735510L;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)

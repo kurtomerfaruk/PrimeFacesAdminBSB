@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class PersoncreditcardPK implements Serializable {
+
+    private static final long serialVersionUID = 7805002158672361542L;
     @Basic(optional = false)
     @NotNull
     @Column(name = "BusinessEntityID")

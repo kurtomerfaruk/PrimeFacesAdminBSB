@@ -7,9 +7,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "customerController")
 @ViewScoped
 public class CustomerController extends AbstractController<Customer> {
+
+    private static final long serialVersionUID = 8384038458508762385L;
 
     @Inject
     private StoreController storeIDController;

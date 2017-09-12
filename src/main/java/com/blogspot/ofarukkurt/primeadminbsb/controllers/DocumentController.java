@@ -7,9 +7,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:22 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "documentController")
 @ViewScoped
 public class DocumentController extends AbstractController<Document> {
+
+    private static final long serialVersionUID = -8093743556278243392L;
 
     @Inject
     private EmployeeController ownerController;
