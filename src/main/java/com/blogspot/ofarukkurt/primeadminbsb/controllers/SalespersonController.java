@@ -11,6 +11,8 @@ import javax.inject.Inject;
 @ViewScoped
 public class SalespersonController extends AbstractController<Salesperson> {
 
+    private static final long serialVersionUID = 1787310491720821110L;
+
     @Inject
     private SalesterritoryController territoryIDController;
     @Inject

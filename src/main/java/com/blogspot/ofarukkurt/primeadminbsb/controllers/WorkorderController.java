@@ -7,9 +7,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "workorderController")
 @ViewScoped
 public class WorkorderController extends AbstractController<Workorder> {
+
+    private static final long serialVersionUID = -5747254000597236936L;
 
     @Inject
     private ScrapreasonController scrapReasonIDController;

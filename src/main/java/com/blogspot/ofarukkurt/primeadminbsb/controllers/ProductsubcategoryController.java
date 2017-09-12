@@ -19,6 +19,8 @@ import javax.inject.Inject;
 @ViewScoped
 public class ProductsubcategoryController extends AbstractController<Productsubcategory> {
 
+    private static final long serialVersionUID = -3079162338539539405L;
+
     @Inject
     private ProductcategoryController productCategoryIDController;
 

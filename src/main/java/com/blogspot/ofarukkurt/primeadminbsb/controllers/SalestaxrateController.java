@@ -10,6 +10,8 @@ import javax.inject.Inject;
 @ViewScoped
 public class SalestaxrateController extends AbstractController<Salestaxrate> {
 
+    private static final long serialVersionUID = -4467191172267941277L;
+
     @Inject
     private StateprovinceController stateProvinceIDController;
 

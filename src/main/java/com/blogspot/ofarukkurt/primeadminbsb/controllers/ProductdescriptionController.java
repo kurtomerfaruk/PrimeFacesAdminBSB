@@ -17,6 +17,8 @@ import javax.inject.Inject;
 @Named(value = "productdescriptionController")
 @ViewScoped
 public class ProductdescriptionController extends AbstractController<Productdescription> {
+
+    private static final long serialVersionUID = 4898802665043037044L;
     
     @Inject
     private MenuController menuController;

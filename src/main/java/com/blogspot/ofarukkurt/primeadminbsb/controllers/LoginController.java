@@ -73,7 +73,7 @@ public class LoginController implements java.io.Serializable {
 
     public void login() {
         try {
-            if (!username.equals("") && !username.equals(null) && !password.equals("") && !password.equals(null)) {
+            if (!username.equals("") && username == null && !password.equals("") && password==null) {
                 users = userService.userValid(username, password);
             }
 

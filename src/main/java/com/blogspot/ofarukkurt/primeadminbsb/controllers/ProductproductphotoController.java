@@ -18,6 +18,8 @@ import javax.inject.Inject;
 @ViewScoped
 public class ProductproductphotoController extends AbstractController<Productproductphoto> {
 
+    private static final long serialVersionUID = -3211833828544270858L;
+
     @Inject
     private ProductController productController;
     @Inject

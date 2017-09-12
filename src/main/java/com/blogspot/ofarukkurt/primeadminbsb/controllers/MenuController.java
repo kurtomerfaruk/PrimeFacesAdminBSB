@@ -109,7 +109,7 @@ public class MenuController extends AbstractController<Menu> {
     }
 
     public List<String> completeIcon(String query) {
-        List<String> filteredIcons = new ArrayList<String>();
+        List<String> filteredIcons = new ArrayList<>();
 
         for (String icon : iconList) {
             if (icon.toLowerCase().contains(query)) {

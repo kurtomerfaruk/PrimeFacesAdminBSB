@@ -7,9 +7,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "stateprovinceController")
 @ViewScoped
 public class StateprovinceController extends AbstractController<Stateprovince> {
+
+    private static final long serialVersionUID = 1859273414280504781L;
 
     @Inject
     private SalesterritoryController territoryIDController;

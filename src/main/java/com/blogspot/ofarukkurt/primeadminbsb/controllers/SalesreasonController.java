@@ -4,11 +4,20 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Salesreason;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
 
 @Named(value = "salesreasonController")
 @ViewScoped
 public class SalesreasonController extends AbstractController<Salesreason> {
+
+    private static final long serialVersionUID = -2891329020726054365L;
 
     public SalesreasonController() {
         // Inform the Abstract parent controller of the concrete Salesreason Entity

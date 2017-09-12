@@ -4,11 +4,20 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Unitmeasure;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
 
 @Named(value = "unitmeasureController")
 @ViewScoped
 public class UnitmeasureController extends AbstractController<Unitmeasure> {
+
+    private static final long serialVersionUID = -7918464673163901032L;
 
     public UnitmeasureController() {
         // Inform the Abstract parent controller of the concrete Unitmeasure Entity

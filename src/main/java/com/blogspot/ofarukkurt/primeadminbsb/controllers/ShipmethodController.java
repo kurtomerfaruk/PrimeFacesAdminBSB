@@ -4,11 +4,21 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Shipmethod;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 
 @Named(value = "shipmethodController")
 @ViewScoped
 public class ShipmethodController extends AbstractController<Shipmethod> {
+
+    private static final long serialVersionUID = -8116172943716458082L;
 
     public ShipmethodController() {
         // Inform the Abstract parent controller of the concrete Shipmethod Entity

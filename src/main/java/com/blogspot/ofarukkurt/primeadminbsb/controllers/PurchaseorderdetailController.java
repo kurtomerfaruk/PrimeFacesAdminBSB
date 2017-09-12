@@ -6,9 +6,19 @@ import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "purchaseorderdetailController")
 @ViewScoped
 public class PurchaseorderdetailController extends AbstractController<Purchaseorderdetail> {
+
+    private static final long serialVersionUID = 3996082047784602234L;
 
     @Inject
     private PurchaseorderheaderController purchaseorderheaderController;

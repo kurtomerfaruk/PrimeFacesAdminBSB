@@ -4,11 +4,20 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Illustration;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
 
 @Named(value = "illustrationController")
 @ViewScoped
 public class IllustrationController extends AbstractController<Illustration> {
+
+    private static final long serialVersionUID = 8766263905219819744L;
 
     public IllustrationController() {
         // Inform the Abstract parent controller of the concrete Illustration Entity

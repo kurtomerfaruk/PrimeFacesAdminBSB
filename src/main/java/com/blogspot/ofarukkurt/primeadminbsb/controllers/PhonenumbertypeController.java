@@ -4,11 +4,20 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Phonenumbertype;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
 
 @Named(value = "phonenumbertypeController")
 @ViewScoped
 public class PhonenumbertypeController extends AbstractController<Phonenumbertype> {
+
+    private static final long serialVersionUID = 4240653831639442171L;
 
     public PhonenumbertypeController() {
         // Inform the Abstract parent controller of the concrete Phonenumbertype Entity

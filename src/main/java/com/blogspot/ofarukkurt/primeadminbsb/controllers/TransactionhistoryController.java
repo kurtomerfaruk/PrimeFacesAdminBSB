@@ -6,9 +6,19 @@ import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "transactionhistoryController")
 @ViewScoped
 public class TransactionhistoryController extends AbstractController<Transactionhistory> {
+
+    private static final long serialVersionUID = 5032752740552217217L;
 
     @Inject
     private ProductController productIDController;
@@ -21,6 +31,7 @@ public class TransactionhistoryController extends AbstractController<Transaction
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         productIDController.setSelected(null);
     }

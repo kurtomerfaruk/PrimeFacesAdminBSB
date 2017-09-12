@@ -7,9 +7,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "employeeController")
 @ViewScoped
 public class EmployeeController extends AbstractController<Employee> {
+
+    private static final long serialVersionUID = -3007240899390936793L;
 
     @Inject
     private SalespersonController salespersonController;
@@ -24,6 +34,7 @@ public class EmployeeController extends AbstractController<Employee> {
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         salespersonController.setSelected(null);
         personController.setSelected(null);

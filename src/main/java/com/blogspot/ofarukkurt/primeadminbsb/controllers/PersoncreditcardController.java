@@ -10,6 +10,8 @@ import javax.inject.Inject;
 @ViewScoped
 public class PersoncreditcardController extends AbstractController<Personcreditcard> {
 
+    private static final long serialVersionUID = 7819017431269006128L;
+
     @Inject
     private PersonController personController;
     @Inject
@@ -34,6 +36,7 @@ public class PersoncreditcardController extends AbstractController<Personcreditc
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         personController.setSelected(null);
         creditcardController.setSelected(null);

@@ -17,6 +17,8 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class ProductphotoController extends AbstractController<Productphoto> {
 
+    private static final long serialVersionUID = 5785781509085714699L;
+
     public ProductphotoController() {
         // Inform the Abstract parent controller of the concrete Productphoto Entity
         super(Productphoto.class);

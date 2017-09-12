@@ -4,11 +4,20 @@ import com.blogspot.ofarukkurt.primeadminbsb.models.Shift;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
 
 @Named(value = "shiftController")
 @ViewScoped
 public class ShiftController extends AbstractController<Shift> {
+
+    private static final long serialVersionUID = -3272255085728875528L;
 
     public ShiftController() {
         // Inform the Abstract parent controller of the concrete Shift Entity

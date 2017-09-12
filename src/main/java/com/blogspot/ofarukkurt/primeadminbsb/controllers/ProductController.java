@@ -19,6 +19,8 @@ import javax.inject.Inject;
 @ViewScoped
 public class ProductController extends AbstractController<Product> {
 
+    private static final long serialVersionUID = 2051076775017458861L;
+
     @Inject
     private UnitmeasureController weightUnitMeasureCodeController;
     @Inject

@@ -6,9 +6,19 @@ import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
+/**
+ *
+ * @author Omer Faruk KURT
+ * @Created on date 10/08/2017 19:30:20 
+ * @blog https://ofarukkurt.blogspot.com.tr/
+ * @mail kurtomerfaruk@gmail.com
+ */
+
 @Named(value = "passwordController")
 @ViewScoped
 public class PasswordController extends AbstractController<Password> {
+
+    private static final long serialVersionUID = -5624707988394034225L;
 
     @Inject
     private PersonController personController;
@@ -21,6 +31,7 @@ public class PasswordController extends AbstractController<Password> {
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
+    @Override
     public void resetParents() {
         personController.setSelected(null);
     }
